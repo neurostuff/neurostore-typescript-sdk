@@ -404,6 +404,42 @@ export interface ConditionReturn {
     'user'?: string | null;
 }
 /**
+ * descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
+ * @export
+ * @interface Entity
+ */
+export interface Entity {
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'level'?: EntityLevelEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'analysis'?: string;
+}
+
+export const EntityLevelEnum = {
+    Run: 'run',
+    Session: 'session',
+    Subject: 'subject',
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+
+export type EntityLevelEnum = typeof EntityLevelEnum[keyof typeof EntityLevelEnum];
+
+/**
  * representation of a statistical brain image
  * @export
  * @interface Image
@@ -457,6 +493,12 @@ export interface Image {
      * @memberof Image
      */
     'add_date'?: string | null;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof Image
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -531,6 +573,12 @@ export interface ImageReturn {
      * @memberof ImageReturn
      */
     'add_date'?: string | null;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageReturn
+     */
+    'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -742,6 +790,12 @@ export interface Point {
      * @memberof Point
      */
     'value'?: Array<string | PointValue & ReadOnly>;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof Point
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -828,6 +882,12 @@ export interface PointReturn {
      * @memberof PointReturn
      */
     'value'?: Array<string | PointValue & ReadOnly>;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof PointReturn
+     */
+    'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
