@@ -427,6 +427,30 @@ export interface Entity {
      * @memberof Entity
      */
     'analysis'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'updated_at'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'user'?: string | null;
 }
 
 export const EntityLevelEnum = {
@@ -438,6 +462,42 @@ export const EntityLevelEnum = {
 } as const;
 
 export type EntityLevelEnum = typeof EntityLevelEnum[keyof typeof EntityLevelEnum];
+
+/**
+ * 
+ * @export
+ * @interface EntityAllOf
+ */
+export interface EntityAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntityAllOf
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EntityAllOf
+     */
+    'level'?: EntityAllOfLevelEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EntityAllOf
+     */
+    'analysis'?: string;
+}
+
+export const EntityAllOfLevelEnum = {
+    Run: 'run',
+    Session: 'session',
+    Subject: 'subject',
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+
+export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
 
 /**
  * representation of a statistical brain image
@@ -948,6 +1008,37 @@ export interface ReadOnly {
      * who owns the resource
      * @type {string}
      * @memberof ReadOnly
+     */
+    'user'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ReadOnly1
+ */
+export interface ReadOnly1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReadOnly1
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReadOnly1
+     */
+    'updated_at'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReadOnly1
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReadOnly1
      */
     'user'?: string | null;
 }
