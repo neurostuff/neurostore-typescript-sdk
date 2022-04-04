@@ -428,25 +428,19 @@ export interface Entity {
      */
     'analysis'?: string;
     /**
-     * 
+     * short UUID specifying the location of this resource
      * @type {string}
      * @memberof Entity
      */
     'id'?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof Entity
-     */
-    'updated_at'?: string | null;
-    /**
-     * 
+     * time the resource was created on the database
      * @type {string}
      * @memberof Entity
      */
     'created_at'?: string;
     /**
-     * 
+     * who owns the resource
      * @type {string}
      * @memberof Entity
      */
@@ -1008,37 +1002,6 @@ export interface ReadOnly {
      * who owns the resource
      * @type {string}
      * @memberof ReadOnly
-     */
-    'user'?: string | null;
-}
-/**
- * 
- * @export
- * @interface ReadOnly1
- */
-export interface ReadOnly1 {
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadOnly1
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadOnly1
-     */
-    'updated_at'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadOnly1
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ReadOnly1
      */
     'user'?: string | null;
 }
