@@ -404,6 +404,96 @@ export interface ConditionReturn {
     'user'?: string | null;
 }
 /**
+ * descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
+ * @export
+ * @interface Entity
+ */
+export interface Entity {
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'level'?: EntityLevelEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'analysis'?: string;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof Entity
+     */
+    'id'?: string;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof Entity
+     */
+    'created_at'?: string;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof Entity
+     */
+    'user'?: string | null;
+}
+
+export const EntityLevelEnum = {
+    Run: 'run',
+    Session: 'session',
+    Subject: 'subject',
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+
+export type EntityLevelEnum = typeof EntityLevelEnum[keyof typeof EntityLevelEnum];
+
+/**
+ * 
+ * @export
+ * @interface EntityAllOf
+ */
+export interface EntityAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntityAllOf
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EntityAllOf
+     */
+    'level'?: EntityAllOfLevelEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof EntityAllOf
+     */
+    'analysis'?: string;
+}
+
+export const EntityAllOfLevelEnum = {
+    Run: 'run',
+    Session: 'session',
+    Subject: 'subject',
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+
+export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
+
+/**
  * representation of a statistical brain image
  * @export
  * @interface Image
@@ -457,6 +547,12 @@ export interface Image {
      * @memberof Image
      */
     'add_date'?: string | null;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof Image
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -531,6 +627,12 @@ export interface ImageReturn {
      * @memberof ImageReturn
      */
     'add_date'?: string | null;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageReturn
+     */
+    'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -742,6 +844,12 @@ export interface Point {
      * @memberof Point
      */
     'value'?: Array<string | PointValue & ReadOnly>;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof Point
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -828,6 +936,12 @@ export interface PointReturn {
      * @memberof PointReturn
      */
     'value'?: Array<string | PointValue & ReadOnly>;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof PointReturn
+     */
+    'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
