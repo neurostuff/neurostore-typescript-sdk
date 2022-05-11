@@ -1773,43 +1773,43 @@ export interface StudyReturnAllOf {
     'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
- * A collection of studies (e.g., publications) where each study is unit of publishable content.
+ * A collection of studies (e.g., publications).
  * @export
  * @interface Studyset
  */
 export interface Studyset {
     /**
-     * 
+     * Descriptive and human readable name of the studyset.
      * @type {string}
      * @memberof Studyset
      */
     'name'?: string | null;
     /**
-     * 
+     * A longform description of the studyset.
      * @type {string}
      * @memberof Studyset
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/source the studyset is connected to if the studyset was published.
      * @type {string}
      * @memberof Studyset
      */
     'publication'?: string | null;
     /**
-     * 
+     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
      * @type {string}
      * @memberof Studyset
      */
     'doi'?: string | null;
     /**
-     * 
+     * If the article connected to the studyset was published on PubMed, then link the ID here.
      * @type {string}
      * @memberof Studyset
      */
     'pmid'?: string | null;
     /**
-     * 
+     * The collection of studies.
      * @type {Array<Study | string>}
      * @memberof Studyset
      */
@@ -1822,31 +1822,31 @@ export interface Studyset {
  */
 export interface StudysetBase {
     /**
-     * 
+     * Descriptive and human readable name of the studyset.
      * @type {string}
      * @memberof StudysetBase
      */
     'name'?: string | null;
     /**
-     * 
+     * A longform description of the studyset.
      * @type {string}
      * @memberof StudysetBase
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/source the studyset is connected to if the studyset was published.
      * @type {string}
      * @memberof StudysetBase
      */
     'publication'?: string | null;
     /**
-     * 
+     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
      * @type {string}
      * @memberof StudysetBase
      */
     'doi'?: string | null;
     /**
-     * 
+     * If the article connected to the studyset was published on PubMed, then link the ID here.
      * @type {string}
      * @memberof StudysetBase
      */
@@ -1878,7 +1878,7 @@ export interface StudysetList {
  */
 export interface StudysetRelationships {
     /**
-     * 
+     * The collection of studies.
      * @type {Array<Study | string>}
      * @memberof StudysetRelationships
      */
@@ -1891,31 +1891,31 @@ export interface StudysetRelationships {
  */
 export interface StudysetReturn {
     /**
-     * 
+     * Descriptive and human readable name of the studyset.
      * @type {string}
      * @memberof StudysetReturn
      */
     'name'?: string | null;
     /**
-     * 
+     * A longform description of the studyset.
      * @type {string}
      * @memberof StudysetReturn
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/source the studyset is connected to if the studyset was published.
      * @type {string}
      * @memberof StudysetReturn
      */
     'publication'?: string | null;
     /**
-     * 
+     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
      * @type {string}
      * @memberof StudysetReturn
      */
     'doi'?: string | null;
     /**
-     * 
+     * If the article connected to the studyset was published on PubMed, then link the ID here.
      * @type {string}
      * @memberof StudysetReturn
      */
