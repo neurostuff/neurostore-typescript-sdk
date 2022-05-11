@@ -28,18 +28,6 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
  */
 export interface Analysis {
     /**
-     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
-     * @type {Array<string | Condition & ReadOnly>}
-     * @memberof Analysis
-     */
-    'conditions'?: Array<string | Condition & ReadOnly>;
-    /**
-     * 
-     * @type {Array<string | Image & ReadOnly>}
-     * @memberof Analysis
-     */
-    'images'?: Array<string | Image & ReadOnly>;
-    /**
      * 
      * @type {string}
      * @memberof Analysis
@@ -47,10 +35,10 @@ export interface Analysis {
     'name'?: string | null;
     /**
      * 
-     * @type {Array<string | Point & ReadOnly>}
+     * @type {string}
      * @memberof Analysis
      */
-    'points'?: Array<string | Point & ReadOnly>;
+    'description'?: string | null;
     /**
      * weight applied to each condition, must be the same length as condition
      * @type {Array<number>}
@@ -58,17 +46,54 @@ export interface Analysis {
      */
     'weights'?: Array<number>;
     /**
-     * 
-     * @type {string}
+     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
+     * @type {Array<Condition | string>}
      * @memberof Analysis
      */
-    'description'?: string | null;
+    'conditions'?: Array<Condition | string>;
+    /**
+     * 
+     * @type {Array<Image | string>}
+     * @memberof Analysis
+     */
+    'images'?: Array<Image | string>;
+    /**
+     * 
+     * @type {Array<Point | string>}
+     * @memberof Analysis
+     */
+    'points'?: Array<Point | string>;
+    /**
+     * 
+     * @type {Study | string}
+     * @memberof Analysis
+     */
+    'study'?: Study | string;
+}
+/**
+ * 
+ * @export
+ * @interface AnalysisBase
+ */
+export interface AnalysisBase {
     /**
      * 
      * @type {string}
-     * @memberof Analysis
+     * @memberof AnalysisBase
      */
-    'study'?: string;
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisBase
+     */
+    'description'?: string | null;
+    /**
+     * weight applied to each condition, must be the same length as condition
+     * @type {Array<number>}
+     * @memberof AnalysisBase
+     */
+    'weights'?: Array<number>;
 }
 /**
  * 
@@ -92,21 +117,40 @@ export interface AnalysisList {
 /**
  * 
  * @export
+ * @interface AnalysisRelationships
+ */
+export interface AnalysisRelationships {
+    /**
+     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
+     * @type {Array<Condition | string>}
+     * @memberof AnalysisRelationships
+     */
+    'conditions'?: Array<Condition | string>;
+    /**
+     * 
+     * @type {Array<Image | string>}
+     * @memberof AnalysisRelationships
+     */
+    'images'?: Array<Image | string>;
+    /**
+     * 
+     * @type {Array<Point | string>}
+     * @memberof AnalysisRelationships
+     */
+    'points'?: Array<Point | string>;
+    /**
+     * 
+     * @type {Study | string}
+     * @memberof AnalysisRelationships
+     */
+    'study'?: Study | string;
+}
+/**
+ * 
+ * @export
  * @interface AnalysisReturn
  */
 export interface AnalysisReturn {
-    /**
-     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
-     * @type {Array<string | Condition & ReadOnly>}
-     * @memberof AnalysisReturn
-     */
-    'conditions'?: Array<string | Condition & ReadOnly>;
-    /**
-     * 
-     * @type {Array<string | Image & ReadOnly>}
-     * @memberof AnalysisReturn
-     */
-    'images'?: Array<string | Image & ReadOnly>;
     /**
      * 
      * @type {string}
@@ -115,28 +159,16 @@ export interface AnalysisReturn {
     'name'?: string | null;
     /**
      * 
-     * @type {Array<string | Point & ReadOnly>}
+     * @type {string}
      * @memberof AnalysisReturn
      */
-    'points'?: Array<string | Point & ReadOnly>;
+    'description'?: string | null;
     /**
      * weight applied to each condition, must be the same length as condition
      * @type {Array<number>}
      * @memberof AnalysisReturn
      */
     'weights'?: Array<number>;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisReturn
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisReturn
-     */
-    'study'?: string;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -150,11 +182,78 @@ export interface AnalysisReturn {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof AnalysisReturn
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AnalysisReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {ImageReturn | string}
+     * @memberof AnalysisReturn
+     */
+    'images'?: ImageReturn | string;
+    /**
+     * 
+     * @type {PointReturn | string}
+     * @memberof AnalysisReturn
+     */
+    'points'?: PointReturn | string;
+    /**
+     * 
+     * @type {ConditionReturn | string}
+     * @memberof AnalysisReturn
+     */
+    'conditions'?: ConditionReturn | string;
+}
+/**
+ * 
+ * @export
+ * @interface AnalysisReturnAllOf
+ */
+export interface AnalysisReturnAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturnAllOf
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {ImageReturn | string}
+     * @memberof AnalysisReturnAllOf
+     */
+    'images'?: ImageReturn | string;
+    /**
+     * 
+     * @type {PointReturn | string}
+     * @memberof AnalysisReturnAllOf
+     */
+    'points'?: PointReturn | string;
+    /**
+     * 
+     * @type {ConditionReturn | string}
+     * @memberof AnalysisReturnAllOf
+     */
+    'conditions'?: ConditionReturn | string;
 }
 /**
  * 
@@ -162,12 +261,6 @@ export interface AnalysisReturn {
  * @interface Annotation
  */
 export interface Annotation {
-    /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'studyset'?: string;
     /**
      * 
      * @type {string}
@@ -182,44 +275,57 @@ export interface Annotation {
     'description'?: string | null;
     /**
      * 
-     * @type {Array<AnnotationNote & ReadOnly>}
-     * @memberof Annotation
-     */
-    'notes'?: Array<AnnotationNote & ReadOnly>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'source_updated_at'?: string | null;
-    /**
-     * 
      * @type {object}
      * @memberof Annotation
      */
     'metadata'?: object | null;
     /**
      * 
-     * @type {boolean}
+     * @type {object}
      * @memberof Annotation
      */
-    'public'?: boolean;
+    'note_keys'?: object | null;
+    /**
+     * 
+     * @type {Studyset | string}
+     * @memberof Annotation
+     */
+    'studyset'?: Studyset | string;
+    /**
+     * 
+     * @type {Array<NoteCollection>}
+     * @memberof Annotation
+     */
+    'notes'?: Array<NoteCollection>;
+}
+/**
+ * 
+ * @export
+ * @interface AnnotationBase
+ */
+export interface AnnotationBase {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationBase
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationBase
+     */
+    'description'?: string | null;
     /**
      * 
      * @type {object}
-     * @memberof Annotation
+     * @memberof AnnotationBase
+     */
+    'metadata'?: object | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof AnnotationBase
      */
     'note_keys'?: object | null;
 }
@@ -264,70 +370,53 @@ export interface AnnotationList {
 /**
  * 
  * @export
- * @interface AnnotationNote
+ * @interface AnnotationRelationships
  */
-export interface AnnotationNote {
+export interface AnnotationRelationships {
     /**
      * 
-     * @type {string}
-     * @memberof AnnotationNote
+     * @type {Studyset | string}
+     * @memberof AnnotationRelationships
      */
-    'analysis'?: string;
+    'studyset'?: Studyset | string;
     /**
      * 
-     * @type {string}
-     * @memberof AnnotationNote
+     * @type {Array<NoteCollection>}
+     * @memberof AnnotationRelationships
      */
-    'study'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'study_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'annotation'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'analysis_name'?: string | null;
-    /**
-     * 
-     * @type {object}
-     * @memberof AnnotationNote
-     */
-    'note'?: object | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof AnnotationNote
-     */
-    'study_year'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'publication'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'authors'?: string | null;
+    'notes'?: Array<NoteCollection>;
 }
 /**
  * @type AnnotationReturn
  * @export
  */
-export type AnnotationReturn = Annotation & ReadOnly | AnnotationExport;
+export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & object | AnnotationExport;
 
+/**
+ * 
+ * @export
+ * @interface Clone
+ */
+export interface Clone {
+    /**
+     * 
+     * @type {string}
+     * @memberof Clone
+     */
+    'source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Clone
+     */
+    'source_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Clone
+     */
+    'source_updated_at'?: string;
+}
 /**
  * 
  * @export
@@ -344,6 +433,25 @@ export interface Condition {
      * condition description
      * @type {string}
      * @memberof Condition
+     */
+    'description'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ConditionBase
+ */
+export interface ConditionBase {
+    /**
+     * condition name
+     * @type {string}
+     * @memberof ConditionBase
+     */
+    'name'?: string | null;
+    /**
+     * condition description
+     * @type {string}
+     * @memberof ConditionBase
      */
     'description'?: string | null;
 }
@@ -397,11 +505,23 @@ export interface ConditionReturn {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof ConditionReturn
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof ConditionReturn
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConditionReturn
+     */
+    'public'?: boolean;
 }
 /**
  * descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
@@ -440,11 +560,23 @@ export interface Entity {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof Entity
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Entity
+     */
+    'public'?: boolean;
 }
 
 export const EntityLevelEnum = {
@@ -494,7 +626,7 @@ export const EntityAllOfLevelEnum = {
 export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
 
 /**
- * representation of a statistical brain image
+ * 
  * @export
  * @interface Image
  */
@@ -530,18 +662,6 @@ export interface Image {
      */
     'value_type'?: string | null;
     /**
-     * name of the analysis
-     * @type {string}
-     * @memberof Image
-     */
-    'analysis_name'?: string | null;
-    /**
-     * ID of the analysis this image came from
-     * @type {string}
-     * @memberof Image
-     */
-    'analysis'?: string;
-    /**
      * date the image was added
      * @type {string}
      * @memberof Image
@@ -549,10 +669,53 @@ export interface Image {
     'add_date'?: string | null;
     /**
      * 
-     * @type {Array<Entity>}
+     * @type {Analysis | string}
      * @memberof Image
      */
-    'entities'?: Array<Entity>;
+    'analysis'?: Analysis | string;
+}
+/**
+ * 
+ * @export
+ * @interface ImageBase
+ */
+export interface ImageBase {
+    /**
+     * metadata from image
+     * @type {object}
+     * @memberof ImageBase
+     */
+    'metadata'?: object | null;
+    /**
+     * URL to image file
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'url'?: string | null;
+    /**
+     * name of the image file
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'filename'?: string | null;
+    /**
+     * the template space the image is in
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'space'?: string | null;
+    /**
+     * The values the image represents
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'value_type'?: string | null;
+    /**
+     * date the image was added
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'add_date'?: string | null;
 }
 /**
  * 
@@ -572,6 +735,19 @@ export interface ImageList {
      * @memberof ImageList
      */
     'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface ImageRelationships
+ */
+export interface ImageRelationships {
+    /**
+     * 
+     * @type {Analysis | string}
+     * @memberof ImageRelationships
+     */
+    'analysis'?: Analysis | string;
 }
 /**
  * 
@@ -610,29 +786,11 @@ export interface ImageReturn {
      */
     'value_type'?: string | null;
     /**
-     * name of the analysis
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'analysis_name'?: string | null;
-    /**
-     * ID of the analysis this image came from
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'analysis'?: string;
-    /**
      * date the image was added
      * @type {string}
      * @memberof ImageReturn
      */
     'add_date'?: string | null;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof ImageReturn
-     */
-    'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -646,11 +804,66 @@ export interface ImageReturn {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof ImageReturn
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImageReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageReturn
+     */
+    'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'analysis_name'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ImageReturnAllOf
+ */
+export interface ImageReturnAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturnAllOf
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageReturnAllOf
+     */
+    'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturnAllOf
+     */
+    'analysis_name'?: string;
 }
 /**
  * 
@@ -779,7 +992,210 @@ export interface Metadata {
     'unique_count'?: number;
 }
 /**
- * a coordinate in the brain
+ * 
+ * @export
+ * @interface NoteCollection
+ */
+export interface NoteCollection {
+    /**
+     * 
+     * @type {object}
+     * @memberof NoteCollection
+     */
+    'note'?: object | null;
+    /**
+     * 
+     * @type {Analysis | string}
+     * @memberof NoteCollection
+     */
+    'analysis'?: Analysis | string;
+    /**
+     * 
+     * @type {Annotation | string}
+     * @memberof NoteCollection
+     */
+    'annotation'?: Annotation | string;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionBase
+ */
+export interface NoteCollectionBase {
+    /**
+     * 
+     * @type {object}
+     * @memberof NoteCollectionBase
+     */
+    'note'?: object | null;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionRelationships
+ */
+export interface NoteCollectionRelationships {
+    /**
+     * 
+     * @type {Analysis | string}
+     * @memberof NoteCollectionRelationships
+     */
+    'analysis'?: Analysis | string;
+    /**
+     * 
+     * @type {Annotation | string}
+     * @memberof NoteCollectionRelationships
+     */
+    'annotation'?: Annotation | string;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionReturn
+ */
+export interface NoteCollectionReturn {
+    /**
+     * 
+     * @type {object}
+     * @memberof NoteCollectionReturn
+     */
+    'note'?: object | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'id'?: string;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'updated_at'?: string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NoteCollectionReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'analysis_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'study_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'annotation'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'study_year'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'publication'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'authors'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionReturnAllOf
+ */
+export interface NoteCollectionReturnAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'analysis_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'study_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'annotation'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'study_year'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'publication'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'authors'?: string;
+}
+/**
+ * 
  * @export
  * @interface Point
  */
@@ -804,52 +1220,53 @@ export interface Point {
     'kind'?: string | null;
     /**
      * 
-     * @type {number}
-     * @memberof Point
-     */
-    'x'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Point
-     */
-    'y'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Point
-     */
-    'z'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Point
-     */
-    'analysis'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Point
-     */
-    'image'?: string | null;
-    /**
-     * 
      * @type {string}
      * @memberof Point
      */
     'label_id'?: string | null;
     /**
      * 
-     * @type {Array<string | PointValue & ReadOnly>}
+     * @type {Image}
      * @memberof Point
      */
-    'value'?: Array<string | PointValue & ReadOnly>;
+    'image'?: Image | null;
     /**
      * 
-     * @type {Array<Entity>}
+     * @type {Array<PointValue | string>}
      * @memberof Point
      */
-    'entities'?: Array<Entity>;
+    'value'?: Array<PointValue | string>;
+}
+/**
+ * 
+ * @export
+ * @interface PointBase
+ */
+export interface PointBase {
+    /**
+     * location of the point
+     * @type {Array<number>}
+     * @memberof PointBase
+     */
+    'coordinates'?: Array<number>;
+    /**
+     * template space used to determine coordinate (TAL or MNI or UNKNOWN)
+     * @type {string}
+     * @memberof PointBase
+     */
+    'space'?: string | null;
+    /**
+     * method of how point was derived (e.g., center of mass)
+     * @type {string}
+     * @memberof PointBase
+     */
+    'kind'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointBase
+     */
+    'label_id'?: string | null;
 }
 /**
  * 
@@ -869,6 +1286,25 @@ export interface PointList {
      * @memberof PointList
      */
     'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface PointRelationships
+ */
+export interface PointRelationships {
+    /**
+     * 
+     * @type {Image}
+     * @memberof PointRelationships
+     */
+    'image'?: Image | null;
+    /**
+     * 
+     * @type {Array<PointValue | string>}
+     * @memberof PointRelationships
+     */
+    'value'?: Array<PointValue | string>;
 }
 /**
  * 
@@ -896,6 +1332,54 @@ export interface PointReturn {
     'kind'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'label_id'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'id'?: string;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'updated_at'?: string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PointReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {PointValue | string}
+     * @memberof PointReturn
+     */
+    'value'?: PointValue | string;
+    /**
+     * 
      * @type {number}
      * @memberof PointReturn
      */
@@ -914,52 +1398,53 @@ export interface PointReturn {
     'z'?: number;
     /**
      * 
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'analysis'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'image'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'label_id'?: string | null;
-    /**
-     * 
-     * @type {Array<string | PointValue & ReadOnly>}
-     * @memberof PointReturn
-     */
-    'value'?: Array<string | PointValue & ReadOnly>;
-    /**
-     * 
      * @type {Array<Entity>}
      * @memberof PointReturn
      */
     'entities'?: Array<Entity>;
+}
+/**
+ * 
+ * @export
+ * @interface PointReturnAllOf
+ */
+export interface PointReturnAllOf {
     /**
-     * short UUID specifying the location of this resource
+     * 
      * @type {string}
-     * @memberof PointReturn
+     * @memberof PointReturnAllOf
      */
-    'id'?: string;
+    'image'?: string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof PointReturn
+     * 
+     * @type {PointValue | string}
+     * @memberof PointReturnAllOf
      */
-    'created_at'?: string;
+    'value'?: PointValue | string;
     /**
-     * who owns the resource
-     * @type {string}
-     * @memberof PointReturn
+     * 
+     * @type {number}
+     * @memberof PointReturnAllOf
      */
-    'user'?: string | null;
+    'x'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointReturnAllOf
+     */
+    'y'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointReturnAllOf
+     */
+    'z'?: number;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof PointReturnAllOf
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -981,42 +1466,48 @@ export interface PointValue {
     'value'?: number | null;
 }
 /**
- * common read-only attributes
+ * common resource attributes
  * @export
- * @interface ReadOnly
+ * @interface ResourceAttributes
  */
-export interface ReadOnly {
+export interface ResourceAttributes {
     /**
      * short UUID specifying the location of this resource
      * @type {string}
-     * @memberof ReadOnly
+     * @memberof ResourceAttributes
      */
     'id'?: string;
     /**
      * time the resource was created on the database
      * @type {string}
-     * @memberof ReadOnly
+     * @memberof ResourceAttributes
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof ResourceAttributes
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
-     * @memberof ReadOnly
+     * @memberof ResourceAttributes
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResourceAttributes
+     */
+    'public'?: boolean;
 }
 /**
- * attributes of a study/published paper
+ * 
  * @export
  * @interface Study
  */
 export interface Study {
-    /**
-     * 
-     * @type {Array<string | ReadOnly & Analysis>}
-     * @memberof Study
-     */
-    'analyses'?: Array<string | ReadOnly & Analysis>;
     /**
      * digital object identifier of the study
      * @type {string}
@@ -1054,12 +1545,6 @@ export interface Study {
      */
     'pmid'?: string | null;
     /**
-     * whether the study is visible to everyone or just you
-     * @type {boolean}
-     * @memberof Study
-     */
-    'public'?: boolean;
-    /**
      * 
      * @type {string}
      * @memberof Study
@@ -1067,26 +1552,69 @@ export interface Study {
     'authors'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof Study
      */
-    'source'?: string | null;
+    'year'?: number | null;
+    /**
+     * 
+     * @type {Array<Analysis | string>}
+     * @memberof Study
+     */
+    'analyses'?: Array<Analysis | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudyBase
+ */
+export interface StudyBase {
+    /**
+     * digital object identifier of the study
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'doi'?: string | null;
+    /**
+     * title of the study
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'name'?: string | null;
+    /**
+     * other metadata associated with the study
+     * @type {object}
+     * @memberof StudyBase
+     */
+    'metadata'?: object | null;
     /**
      * 
      * @type {string}
-     * @memberof Study
+     * @memberof StudyBase
      */
-    'source_id'?: string | null;
+    'description'?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof Study
+     * @memberof StudyBase
      */
-    'source_updated_at'?: string | null;
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'pmid'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'authors'?: string | null;
     /**
      * 
      * @type {number}
-     * @memberof Study
+     * @memberof StudyBase
      */
     'year'?: number | null;
 }
@@ -1112,15 +1640,22 @@ export interface StudyList {
 /**
  * 
  * @export
+ * @interface StudyRelationships
+ */
+export interface StudyRelationships {
+    /**
+     * 
+     * @type {Array<Analysis | string>}
+     * @memberof StudyRelationships
+     */
+    'analyses'?: Array<Analysis | string>;
+}
+/**
+ * 
+ * @export
  * @interface StudyReturn
  */
 export interface StudyReturn {
-    /**
-     * 
-     * @type {Array<string | ReadOnly & Analysis>}
-     * @memberof StudyReturn
-     */
-    'analyses'?: Array<string | ReadOnly & Analysis>;
     /**
      * digital object identifier of the study
      * @type {string}
@@ -1158,35 +1693,11 @@ export interface StudyReturn {
      */
     'pmid'?: string | null;
     /**
-     * whether the study is visible to everyone or just you
-     * @type {boolean}
-     * @memberof StudyReturn
-     */
-    'public'?: boolean;
-    /**
      * 
      * @type {string}
      * @memberof StudyReturn
      */
     'authors'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'source_updated_at'?: string | null;
     /**
      * 
      * @type {number}
@@ -1206,11 +1717,60 @@ export interface StudyReturn {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof StudyReturn
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StudyReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'source'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'source_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'source_updated_at'?: string;
+    /**
+     * 
+     * @type {Array<AnalysisReturn | string>}
+     * @memberof StudyReturn
+     */
+    'analyses'?: Array<AnalysisReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudyReturnAllOf
+ */
+export interface StudyReturnAllOf {
+    /**
+     * 
+     * @type {Array<AnalysisReturn | string>}
+     * @memberof StudyReturnAllOf
+     */
+    'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
  * 
@@ -1250,22 +1810,47 @@ export interface Studyset {
     'pmid'?: string | null;
     /**
      * 
-     * @type {Array<Study & ReadOnly | string>}
+     * @type {Array<Study | string>}
      * @memberof Studyset
      */
-    'studies'?: Array<Study & ReadOnly | string>;
+    'studies'?: Array<Study | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetBase
+ */
+export interface StudysetBase {
     /**
      * 
      * @type {string}
-     * @memberof Studyset
+     * @memberof StudysetBase
      */
-    'user'?: string | null;
+    'name'?: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof Studyset
+     * @type {string}
+     * @memberof StudysetBase
      */
-    'public'?: boolean;
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetBase
+     */
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetBase
+     */
+    'doi'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetBase
+     */
+    'pmid'?: string | null;
 }
 /**
  * 
@@ -1285,6 +1870,19 @@ export interface StudysetList {
      * @memberof StudysetList
      */
     'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetRelationships
+ */
+export interface StudysetRelationships {
+    /**
+     * 
+     * @type {Array<Study | string>}
+     * @memberof StudysetRelationships
+     */
+    'studies'?: Array<Study | string>;
 }
 /**
  * 
@@ -1323,11 +1921,23 @@ export interface StudysetReturn {
      */
     'pmid'?: string | null;
     /**
-     * 
-     * @type {Array<Study & ReadOnly | string>}
+     * short UUID specifying the location of this resource
+     * @type {string}
      * @memberof StudysetReturn
      */
-    'studies'?: Array<Study & ReadOnly | string>;
+    'id'?: string;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'updated_at'?: string | null;
     /**
      * who owns the resource
      * @type {string}
@@ -1341,17 +1951,42 @@ export interface StudysetReturn {
      */
     'public'?: boolean;
     /**
-     * short UUID specifying the location of this resource
+     * 
      * @type {string}
      * @memberof StudysetReturn
      */
-    'id'?: string;
+    'source'?: string;
     /**
-     * time the resource was created on the database
+     * 
      * @type {string}
      * @memberof StudysetReturn
      */
-    'created_at'?: string;
+    'source_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'source_updated_at'?: string;
+    /**
+     * 
+     * @type {StudyReturn | string}
+     * @memberof StudysetReturn
+     */
+    'studies'?: StudyReturn | string;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetReturnAllOf
+ */
+export interface StudysetReturnAllOf {
+    /**
+     * 
+     * @type {StudyReturn | string}
+     * @memberof StudysetReturnAllOf
+     */
+    'studies'?: StudyReturn | string;
 }
 /**
  * 
