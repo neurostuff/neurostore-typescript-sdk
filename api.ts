@@ -1773,7 +1773,7 @@ export interface StudyReturnAllOf {
     'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
- * 
+ * A collection of studies (e.g., publications) where each study is unit of publishable content.
  * @export
  * @interface Studyset
  */
