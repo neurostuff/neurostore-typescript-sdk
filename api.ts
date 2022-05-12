@@ -28,43 +28,43 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
  */
 export interface Analysis {
     /**
-     * 
+     * A name of the contrast being performed.
      * @type {string}
      * @memberof Analysis
      */
     'name'?: string | null;
     /**
-     * 
+     * A long form description of how the contrast was performed
      * @type {string}
      * @memberof Analysis
      */
     'description'?: string | null;
     /**
-     * weight applied to each condition, must be the same length as condition
+     * Weight applied to each condition, must be the same length as the conditions attribute.
      * @type {Array<number>}
      * @memberof Analysis
      */
     'weights'?: Array<number>;
     /**
-     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
+     * Array of conditions (e.g., 2-back, memory, etc.) that must be the same length as the weights attribute. Either is an array of condition objects or strings that point to condition objects.
      * @type {Array<Condition | string>}
      * @memberof Analysis
      */
     'conditions'?: Array<Condition | string>;
     /**
-     * 
+     * Statistical images (e.g., beta, t-statistic, and/or z-statistic images) where each voxel gets a value. Either represented as an array of image objects or strings linking to image objects.
      * @type {Array<Image | string>}
      * @memberof Analysis
      */
     'images'?: Array<Image | string>;
     /**
-     * 
+     * Coordinates of significance associated with the contrast. Either an array of point objects or an array of strings linking to point objects.
      * @type {Array<Point | string>}
      * @memberof Analysis
      */
     'points'?: Array<Point | string>;
     /**
-     * 
+     * The study this analysis is associated with. Each analysis can only be associated to one and only one study, but a study can have multiple analyses.
      * @type {Study | string}
      * @memberof Analysis
      */
@@ -77,19 +77,19 @@ export interface Analysis {
  */
 export interface AnalysisBase {
     /**
-     * 
+     * A name of the contrast being performed.
      * @type {string}
      * @memberof AnalysisBase
      */
     'name'?: string | null;
     /**
-     * 
+     * A long form description of how the contrast was performed
      * @type {string}
      * @memberof AnalysisBase
      */
     'description'?: string | null;
     /**
-     * weight applied to each condition, must be the same length as condition
+     * Weight applied to each condition, must be the same length as the conditions attribute.
      * @type {Array<number>}
      * @memberof AnalysisBase
      */
@@ -121,25 +121,25 @@ export interface AnalysisList {
  */
 export interface AnalysisRelationships {
     /**
-     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
+     * Array of conditions (e.g., 2-back, memory, etc.) that must be the same length as the weights attribute. Either is an array of condition objects or strings that point to condition objects.
      * @type {Array<Condition | string>}
      * @memberof AnalysisRelationships
      */
     'conditions'?: Array<Condition | string>;
     /**
-     * 
+     * Statistical images (e.g., beta, t-statistic, and/or z-statistic images) where each voxel gets a value. Either represented as an array of image objects or strings linking to image objects.
      * @type {Array<Image | string>}
      * @memberof AnalysisRelationships
      */
     'images'?: Array<Image | string>;
     /**
-     * 
+     * Coordinates of significance associated with the contrast. Either an array of point objects or an array of strings linking to point objects.
      * @type {Array<Point | string>}
      * @memberof AnalysisRelationships
      */
     'points'?: Array<Point | string>;
     /**
-     * 
+     * The study this analysis is associated with. Each analysis can only be associated to one and only one study, but a study can have multiple analyses.
      * @type {Study | string}
      * @memberof AnalysisRelationships
      */
@@ -152,19 +152,19 @@ export interface AnalysisRelationships {
  */
 export interface AnalysisReturn {
     /**
-     * 
+     * A name of the contrast being performed.
      * @type {string}
      * @memberof AnalysisReturn
      */
     'name'?: string | null;
     /**
-     * 
+     * A long form description of how the contrast was performed
      * @type {string}
      * @memberof AnalysisReturn
      */
     'description'?: string | null;
     /**
-     * weight applied to each condition, must be the same length as condition
+     * Weight applied to each condition, must be the same length as the conditions attribute.
      * @type {Array<number>}
      * @memberof AnalysisReturn
      */
@@ -256,43 +256,43 @@ export interface AnalysisReturnAllOf {
     'conditions'?: ConditionReturn | string;
 }
 /**
- * 
+ * A container for \"subjective\" information about each analysis in the studyset, such as exclusion criteria or whether the analysis needs commenting.
  * @export
  * @interface Annotation
  */
 export interface Annotation {
     /**
-     * 
+     * Descriptive name for the annotation.
      * @type {string}
      * @memberof Annotation
      */
     'name'?: string;
     /**
-     * 
+     * Long form description of the annotation.
      * @type {string}
      * @memberof Annotation
      */
     'description'?: string | null;
     /**
-     * 
+     * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
      * @type {object}
      * @memberof Annotation
      */
     'metadata'?: object | null;
     /**
-     * 
+     * The keys (columns) in the annotation and the key\'s respective type.
      * @type {object}
      * @memberof Annotation
      */
     'note_keys'?: object | null;
     /**
-     * 
+     * The studyset the annotation is associated with. Each annotation is associated with one and only one studyset, but a studyset can have multiple annotations. The representation can either be a studyset object or a string indicating the location to find the studyset object.
      * @type {Studyset | string}
      * @memberof Annotation
      */
     'studyset'?: Studyset | string;
     /**
-     * 
+     * The collection of notes for each analysis within the studyset. Each analysis will have all note_keys with the appropriately typed values.
      * @type {Array<NoteCollection>}
      * @memberof Annotation
      */
@@ -305,25 +305,25 @@ export interface Annotation {
  */
 export interface AnnotationBase {
     /**
-     * 
+     * Descriptive name for the annotation.
      * @type {string}
      * @memberof AnnotationBase
      */
     'name'?: string;
     /**
-     * 
+     * Long form description of the annotation.
      * @type {string}
      * @memberof AnnotationBase
      */
     'description'?: string | null;
     /**
-     * 
+     * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
      * @type {object}
      * @memberof AnnotationBase
      */
     'metadata'?: object | null;
     /**
-     * 
+     * The keys (columns) in the annotation and the key\'s respective type.
      * @type {object}
      * @memberof AnnotationBase
      */
@@ -374,13 +374,13 @@ export interface AnnotationList {
  */
 export interface AnnotationRelationships {
     /**
-     * 
+     * The studyset the annotation is associated with. Each annotation is associated with one and only one studyset, but a studyset can have multiple annotations. The representation can either be a studyset object or a string indicating the location to find the studyset object.
      * @type {Studyset | string}
      * @memberof AnnotationRelationships
      */
     'studyset'?: Studyset | string;
     /**
-     * 
+     * The collection of notes for each analysis within the studyset. Each analysis will have all note_keys with the appropriately typed values.
      * @type {Array<NoteCollection>}
      * @memberof AnnotationRelationships
      */
@@ -998,19 +998,19 @@ export interface Metadata {
  */
 export interface NoteCollection {
     /**
-     * 
+     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
      * @type {object}
      * @memberof NoteCollection
      */
     'note'?: object | null;
     /**
-     * 
+     * The analysis the note collection is associated with. Either represented as an analysis object or a string pointing to the location of the analysis object.
      * @type {Analysis | string}
      * @memberof NoteCollection
      */
     'analysis'?: Analysis | string;
     /**
-     * 
+     * The annotation this collection of notes is associated with. Either represented as an annotation object or a string pointing to the location of the annotation object.
      * @type {Annotation | string}
      * @memberof NoteCollection
      */
@@ -1023,7 +1023,7 @@ export interface NoteCollection {
  */
 export interface NoteCollectionBase {
     /**
-     * 
+     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
      * @type {object}
      * @memberof NoteCollectionBase
      */
@@ -1036,13 +1036,13 @@ export interface NoteCollectionBase {
  */
 export interface NoteCollectionRelationships {
     /**
-     * 
+     * The analysis the note collection is associated with. Either represented as an analysis object or a string pointing to the location of the analysis object.
      * @type {Analysis | string}
      * @memberof NoteCollectionRelationships
      */
     'analysis'?: Analysis | string;
     /**
-     * 
+     * The annotation this collection of notes is associated with. Either represented as an annotation object or a string pointing to the location of the annotation object.
      * @type {Annotation | string}
      * @memberof NoteCollectionRelationships
      */
@@ -1055,7 +1055,7 @@ export interface NoteCollectionRelationships {
  */
 export interface NoteCollectionReturn {
     /**
-     * 
+     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
      * @type {object}
      * @memberof NoteCollectionReturn
      */
@@ -1503,61 +1503,61 @@ export interface ResourceAttributes {
     'public'?: boolean;
 }
 /**
- * 
+ * A publishable unit of research.
  * @export
  * @interface Study
  */
 export interface Study {
     /**
-     * digital object identifier of the study
+     * Digital object identifier of the study.
      * @type {string}
      * @memberof Study
      */
     'doi'?: string | null;
     /**
-     * title of the study
+     * Title of the study.
      * @type {string}
      * @memberof Study
      */
     'name'?: string | null;
     /**
-     * other metadata associated with the study
+     * Metadata associated with the study not covered by the other study attributes.
      * @type {object}
      * @memberof Study
      */
     'metadata'?: object | null;
     /**
-     * 
+     * Long form description of the study, typically the abstract.
      * @type {string}
      * @memberof Study
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/place of publication for the study.
      * @type {string}
      * @memberof Study
      */
     'publication'?: string | null;
     /**
-     * 
+     * If the study was published on PubMed, place the PubMed ID here.
      * @type {string}
      * @memberof Study
      */
     'pmid'?: string | null;
     /**
-     * 
+     * The authors on the publication of this study.
      * @type {string}
      * @memberof Study
      */
     'authors'?: string | null;
     /**
-     * 
+     * The year this study was published.
      * @type {number}
      * @memberof Study
      */
     'year'?: number | null;
     /**
-     * 
+     * The analyses making up the study. A study can have one or more analyses, since each analysis represents a contrast of conditions, where psychological, behavioral, pharmacological, or group based. Either represented as an analysis object or a string pointing to the location of the analysis object.
      * @type {Array<Analysis | string>}
      * @memberof Study
      */
@@ -1570,49 +1570,49 @@ export interface Study {
  */
 export interface StudyBase {
     /**
-     * digital object identifier of the study
+     * Digital object identifier of the study.
      * @type {string}
      * @memberof StudyBase
      */
     'doi'?: string | null;
     /**
-     * title of the study
+     * Title of the study.
      * @type {string}
      * @memberof StudyBase
      */
     'name'?: string | null;
     /**
-     * other metadata associated with the study
+     * Metadata associated with the study not covered by the other study attributes.
      * @type {object}
      * @memberof StudyBase
      */
     'metadata'?: object | null;
     /**
-     * 
+     * Long form description of the study, typically the abstract.
      * @type {string}
      * @memberof StudyBase
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/place of publication for the study.
      * @type {string}
      * @memberof StudyBase
      */
     'publication'?: string | null;
     /**
-     * 
+     * If the study was published on PubMed, place the PubMed ID here.
      * @type {string}
      * @memberof StudyBase
      */
     'pmid'?: string | null;
     /**
-     * 
+     * The authors on the publication of this study.
      * @type {string}
      * @memberof StudyBase
      */
     'authors'?: string | null;
     /**
-     * 
+     * The year this study was published.
      * @type {number}
      * @memberof StudyBase
      */
@@ -1644,7 +1644,7 @@ export interface StudyList {
  */
 export interface StudyRelationships {
     /**
-     * 
+     * The analyses making up the study. A study can have one or more analyses, since each analysis represents a contrast of conditions, where psychological, behavioral, pharmacological, or group based. Either represented as an analysis object or a string pointing to the location of the analysis object.
      * @type {Array<Analysis | string>}
      * @memberof StudyRelationships
      */
@@ -1657,49 +1657,49 @@ export interface StudyRelationships {
  */
 export interface StudyReturn {
     /**
-     * digital object identifier of the study
+     * Digital object identifier of the study.
      * @type {string}
      * @memberof StudyReturn
      */
     'doi'?: string | null;
     /**
-     * title of the study
+     * Title of the study.
      * @type {string}
      * @memberof StudyReturn
      */
     'name'?: string | null;
     /**
-     * other metadata associated with the study
+     * Metadata associated with the study not covered by the other study attributes.
      * @type {object}
      * @memberof StudyReturn
      */
     'metadata'?: object | null;
     /**
-     * 
+     * Long form description of the study, typically the abstract.
      * @type {string}
      * @memberof StudyReturn
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/place of publication for the study.
      * @type {string}
      * @memberof StudyReturn
      */
     'publication'?: string | null;
     /**
-     * 
+     * If the study was published on PubMed, place the PubMed ID here.
      * @type {string}
      * @memberof StudyReturn
      */
     'pmid'?: string | null;
     /**
-     * 
+     * The authors on the publication of this study.
      * @type {string}
      * @memberof StudyReturn
      */
     'authors'?: string | null;
     /**
-     * 
+     * The year this study was published.
      * @type {number}
      * @memberof StudyReturn
      */
