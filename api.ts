@@ -22,7 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
- * 
+ * A contrast of weighted conditions with associated statistical results.
  * @export
  * @interface Analysis
  */
@@ -418,19 +418,19 @@ export interface Clone {
     'source_updated_at'?: string;
 }
 /**
- * 
+ * Base component making up constrasts.
  * @export
  * @interface Condition
  */
 export interface Condition {
     /**
-     * condition name
+     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
      * @type {string}
      * @memberof Condition
      */
     'name'?: string | null;
     /**
-     * condition description
+     * Long form description of how the condition is operationalized and/or specific meaning.
      * @type {string}
      * @memberof Condition
      */
@@ -443,13 +443,13 @@ export interface Condition {
  */
 export interface ConditionBase {
     /**
-     * condition name
+     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
      * @type {string}
      * @memberof ConditionBase
      */
     'name'?: string | null;
     /**
-     * condition description
+     * Long form description of how the condition is operationalized and/or specific meaning.
      * @type {string}
      * @memberof ConditionBase
      */
@@ -481,13 +481,13 @@ export interface ConditionList {
  */
 export interface ConditionReturn {
     /**
-     * condition name
+     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
      * @type {string}
      * @memberof ConditionReturn
      */
     'name'?: string | null;
     /**
-     * condition description
+     * Long form description of how the condition is operationalized and/or specific meaning.
      * @type {string}
      * @memberof ConditionReturn
      */
@@ -626,49 +626,49 @@ export const EntityAllOfLevelEnum = {
 export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
 
 /**
- * 
+ * A description of a brain image linking to the actual nifti file.
  * @export
  * @interface Image
  */
 export interface Image {
     /**
-     * metadata from image
+     * Metadata about image such as software and version used and other relevant data about how the image was produced.
      * @type {object}
      * @memberof Image
      */
     'metadata'?: object | null;
     /**
-     * URL to image file
+     * URL to image file.
      * @type {string}
      * @memberof Image
      */
     'url'?: string | null;
     /**
-     * name of the image file
+     * Name of the image file.
      * @type {string}
      * @memberof Image
      */
     'filename'?: string | null;
     /**
-     * the template space the image is in
+     * The template space the image is in (e.g., MNI 
      * @type {string}
      * @memberof Image
      */
     'space'?: string | null;
     /**
-     * The values the image represents
+     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
      * @type {string}
      * @memberof Image
      */
     'value_type'?: string | null;
     /**
-     * date the image was added
+     * Date the image was added.
      * @type {string}
      * @memberof Image
      */
     'add_date'?: string | null;
     /**
-     * 
+     * Analysis the image is associated with. Each image is associated with one and only one analysis, but an analysis can have multiple images. Either an analysis object or a string linking to an analysis object.
      * @type {Analysis | string}
      * @memberof Image
      */
@@ -681,37 +681,37 @@ export interface Image {
  */
 export interface ImageBase {
     /**
-     * metadata from image
+     * Metadata about image such as software and version used and other relevant data about how the image was produced.
      * @type {object}
      * @memberof ImageBase
      */
     'metadata'?: object | null;
     /**
-     * URL to image file
+     * URL to image file.
      * @type {string}
      * @memberof ImageBase
      */
     'url'?: string | null;
     /**
-     * name of the image file
+     * Name of the image file.
      * @type {string}
      * @memberof ImageBase
      */
     'filename'?: string | null;
     /**
-     * the template space the image is in
+     * The template space the image is in (e.g., MNI 
      * @type {string}
      * @memberof ImageBase
      */
     'space'?: string | null;
     /**
-     * The values the image represents
+     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
      * @type {string}
      * @memberof ImageBase
      */
     'value_type'?: string | null;
     /**
-     * date the image was added
+     * Date the image was added.
      * @type {string}
      * @memberof ImageBase
      */
@@ -743,7 +743,7 @@ export interface ImageList {
  */
 export interface ImageRelationships {
     /**
-     * 
+     * Analysis the image is associated with. Each image is associated with one and only one analysis, but an analysis can have multiple images. Either an analysis object or a string linking to an analysis object.
      * @type {Analysis | string}
      * @memberof ImageRelationships
      */
@@ -756,37 +756,37 @@ export interface ImageRelationships {
  */
 export interface ImageReturn {
     /**
-     * metadata from image
+     * Metadata about image such as software and version used and other relevant data about how the image was produced.
      * @type {object}
      * @memberof ImageReturn
      */
     'metadata'?: object | null;
     /**
-     * URL to image file
+     * URL to image file.
      * @type {string}
      * @memberof ImageReturn
      */
     'url'?: string | null;
     /**
-     * name of the image file
+     * Name of the image file.
      * @type {string}
      * @memberof ImageReturn
      */
     'filename'?: string | null;
     /**
-     * the template space the image is in
+     * The template space the image is in (e.g., MNI 
      * @type {string}
      * @memberof ImageReturn
      */
     'space'?: string | null;
     /**
-     * The values the image represents
+     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
      * @type {string}
      * @memberof ImageReturn
      */
     'value_type'?: string | null;
     /**
-     * date the image was added
+     * Date the image was added.
      * @type {string}
      * @memberof ImageReturn
      */
@@ -1195,47 +1195,53 @@ export interface NoteCollectionReturnAllOf {
     'authors'?: string;
 }
 /**
- * 
+ * A three dimensional coordinate representing a significant statistical peak associated with an analysis.
  * @export
  * @interface Point
  */
 export interface Point {
     /**
-     * location of the point
+     * Location of the significant coordinate in three dimensional space.
      * @type {Array<number>}
      * @memberof Point
      */
     'coordinates'?: Array<number>;
     /**
-     * template space used to determine coordinate (TAL or MNI or UNKNOWN)
+     * Template space used to determine coordinate Examples include TAL or MNI.
      * @type {string}
      * @memberof Point
      */
     'space'?: string | null;
     /**
-     * method of how point was derived (e.g., center of mass)
+     * Method of how point was derived (e.g., center of mass)
      * @type {string}
      * @memberof Point
      */
     'kind'?: string | null;
     /**
-     * 
+     * If the point is associated with an image, this is the value the point takes in that image.
      * @type {string}
      * @memberof Point
      */
     'label_id'?: string | null;
     /**
-     * 
-     * @type {Image}
+     * Statistical image the point was derived from. Either points to an image object or a string linking to an image object.
+     * @type {Image | string}
      * @memberof Point
      */
-    'image'?: Image | null;
+    'image'?: Image | string | null;
     /**
-     * 
-     * @type {Array<PointValue | string>}
+     * An array of values at this point since each value could represent a beta, t-statistic and/or z-statistic, etc.
+     * @type {Array<PointValue>}
      * @memberof Point
      */
-    'value'?: Array<PointValue | string>;
+    'value'?: Array<PointValue>;
+    /**
+     * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
+     * @type {Analysis | string}
+     * @memberof Point
+     */
+    'analysis'?: Analysis | string;
 }
 /**
  * 
@@ -1244,25 +1250,25 @@ export interface Point {
  */
 export interface PointBase {
     /**
-     * location of the point
+     * Location of the significant coordinate in three dimensional space.
      * @type {Array<number>}
      * @memberof PointBase
      */
     'coordinates'?: Array<number>;
     /**
-     * template space used to determine coordinate (TAL or MNI or UNKNOWN)
+     * Template space used to determine coordinate Examples include TAL or MNI.
      * @type {string}
      * @memberof PointBase
      */
     'space'?: string | null;
     /**
-     * method of how point was derived (e.g., center of mass)
+     * Method of how point was derived (e.g., center of mass)
      * @type {string}
      * @memberof PointBase
      */
     'kind'?: string | null;
     /**
-     * 
+     * If the point is associated with an image, this is the value the point takes in that image.
      * @type {string}
      * @memberof PointBase
      */
@@ -1294,17 +1300,23 @@ export interface PointList {
  */
 export interface PointRelationships {
     /**
-     * 
-     * @type {Image}
+     * Statistical image the point was derived from. Either points to an image object or a string linking to an image object.
+     * @type {Image | string}
      * @memberof PointRelationships
      */
-    'image'?: Image | null;
+    'image'?: Image | string | null;
     /**
-     * 
-     * @type {Array<PointValue | string>}
+     * An array of values at this point since each value could represent a beta, t-statistic and/or z-statistic, etc.
+     * @type {Array<PointValue>}
      * @memberof PointRelationships
      */
-    'value'?: Array<PointValue | string>;
+    'value'?: Array<PointValue>;
+    /**
+     * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
+     * @type {Analysis | string}
+     * @memberof PointRelationships
+     */
+    'analysis'?: Analysis | string;
 }
 /**
  * 
@@ -1313,25 +1325,25 @@ export interface PointRelationships {
  */
 export interface PointReturn {
     /**
-     * location of the point
+     * Location of the significant coordinate in three dimensional space.
      * @type {Array<number>}
      * @memberof PointReturn
      */
     'coordinates'?: Array<number>;
     /**
-     * template space used to determine coordinate (TAL or MNI or UNKNOWN)
+     * Template space used to determine coordinate Examples include TAL or MNI.
      * @type {string}
      * @memberof PointReturn
      */
     'space'?: string | null;
     /**
-     * method of how point was derived (e.g., center of mass)
+     * Method of how point was derived (e.g., center of mass)
      * @type {string}
      * @memberof PointReturn
      */
     'kind'?: string | null;
     /**
-     * 
+     * If the point is associated with an image, this is the value the point takes in that image.
      * @type {string}
      * @memberof PointReturn
      */
@@ -1453,13 +1465,13 @@ export interface PointReturnAllOf {
  */
 export interface PointValue {
     /**
-     * 
+     * The kind of statistic the value represents, whether it is variance, beta, t-statistic, or z-statistic.
      * @type {string}
      * @memberof PointValue
      */
     'kind'?: string | null;
     /**
-     * 
+     * The value of the point for the \"kind\" of statistic.
      * @type {number}
      * @memberof PointValue
      */
