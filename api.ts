@@ -1952,10 +1952,10 @@ export interface StudysetReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {StudyReturn | string}
+     * @type {Array<StudyReturn | string>}
      * @memberof StudysetReturn
      */
-    'studies'?: StudyReturn | string;
+    'studies'?: Array<StudyReturn | string>;
 }
 /**
  * 
@@ -1965,10 +1965,10 @@ export interface StudysetReturn {
 export interface StudysetReturnAllOf {
     /**
      * 
-     * @type {StudyReturn | string}
+     * @type {Array<StudyReturn | string>}
      * @memberof StudysetReturnAllOf
      */
-    'studies'?: StudyReturn | string;
+    'studies'?: Array<StudyReturn | string>;
 }
 /**
  * 
