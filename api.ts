@@ -174,7 +174,7 @@ export interface AnalysisReturn {
      * @type {string}
      * @memberof AnalysisReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -497,7 +497,7 @@ export interface ConditionReturn {
      * @type {string}
      * @memberof ConditionReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -552,7 +552,7 @@ export interface Entity {
      * @type {string}
      * @memberof Entity
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -796,7 +796,7 @@ export interface ImageReturn {
      * @type {string}
      * @memberof ImageReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -1323,7 +1323,7 @@ export interface PointReturn {
      * @type {string}
      * @memberof PointReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -1458,7 +1458,7 @@ export interface ResourceAttributes {
      * @type {string}
      * @memberof ResourceAttributes
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -1691,7 +1691,7 @@ export interface StudyReturn {
      * @type {string}
      * @memberof StudyReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -1907,7 +1907,7 @@ export interface StudysetReturn {
      * @type {string}
      * @memberof StudysetReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
