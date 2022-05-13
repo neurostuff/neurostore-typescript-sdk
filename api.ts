@@ -1061,36 +1061,6 @@ export interface NoteCollectionReturn {
      */
     'note'?: object | null;
     /**
-     * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
-    'id'?: string;
-    /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
-    'user'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof NoteCollectionReturn
-     */
-    'public'?: boolean;
-    /**
      * 
      * @type {string}
      * @memberof NoteCollectionReturn
