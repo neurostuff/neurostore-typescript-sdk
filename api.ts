@@ -207,22 +207,22 @@ export interface AnalysisReturn {
     'study'?: string;
     /**
      * 
-     * @type {ImageReturn | string}
+     * @type {Array<ImageReturn | string>}
      * @memberof AnalysisReturn
      */
-    'images'?: ImageReturn | string;
+    'images'?: Array<ImageReturn | string>;
     /**
      * 
-     * @type {PointReturn | string}
+     * @type {Array<PointReturn | string>}
      * @memberof AnalysisReturn
      */
-    'points'?: PointReturn | string;
+    'points'?: Array<PointReturn | string>;
     /**
      * 
-     * @type {ConditionReturn | string}
+     * @type {Array<ConditionReturn | string>}
      * @memberof AnalysisReturn
      */
-    'conditions'?: ConditionReturn | string;
+    'conditions'?: Array<ConditionReturn | string>;
 }
 /**
  * 
@@ -238,22 +238,22 @@ export interface AnalysisReturnAllOf {
     'study'?: string;
     /**
      * 
-     * @type {ImageReturn | string}
+     * @type {Array<ImageReturn | string>}
      * @memberof AnalysisReturnAllOf
      */
-    'images'?: ImageReturn | string;
+    'images'?: Array<ImageReturn | string>;
     /**
      * 
-     * @type {PointReturn | string}
+     * @type {Array<PointReturn | string>}
      * @memberof AnalysisReturnAllOf
      */
-    'points'?: PointReturn | string;
+    'points'?: Array<PointReturn | string>;
     /**
      * 
-     * @type {ConditionReturn | string}
+     * @type {Array<ConditionReturn | string>}
      * @memberof AnalysisReturnAllOf
      */
-    'conditions'?: ConditionReturn | string;
+    'conditions'?: Array<ConditionReturn | string>;
 }
 /**
  * A container for \"subjective\" information about each analysis in the studyset, such as exclusion criteria or whether the analysis needs commenting.
