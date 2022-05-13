@@ -266,7 +266,7 @@ export interface Annotation {
      * @type {string}
      * @memberof Annotation
      */
-    'name'?: string;
+    'name'?: string | null;
     /**
      * Long form description of the annotation.
      * @type {string}
@@ -309,7 +309,7 @@ export interface AnnotationBase {
      * @type {string}
      * @memberof AnnotationBase
      */
-    'name'?: string;
+    'name'?: string | null;
     /**
      * Long form description of the annotation.
      * @type {string}
@@ -403,19 +403,19 @@ export interface Clone {
      * @type {string}
      * @memberof Clone
      */
-    'source'?: string;
+    'source'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof Clone
      */
-    'source_id'?: string;
+    'source_id'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof Clone
      */
-    'source_updated_at'?: string;
+    'source_updated_at'?: string | null;
 }
 /**
  * Base component making up constrasts.
@@ -1751,19 +1751,19 @@ export interface StudyReturn {
      * @type {string}
      * @memberof StudyReturn
      */
-    'source'?: string;
+    'source'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof StudyReturn
      */
-    'source_id'?: string;
+    'source_id'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof StudyReturn
      */
-    'source_updated_at'?: string;
+    'source_updated_at'?: string | null;
     /**
      * 
      * @type {Array<AnalysisReturn | string>}
@@ -1967,19 +1967,19 @@ export interface StudysetReturn {
      * @type {string}
      * @memberof StudysetReturn
      */
-    'source'?: string;
+    'source'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof StudysetReturn
      */
-    'source_id'?: string;
+    'source_id'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof StudysetReturn
      */
-    'source_updated_at'?: string;
+    'source_updated_at'?: string | null;
     /**
      * 
      * @type {StudyReturn | string}
