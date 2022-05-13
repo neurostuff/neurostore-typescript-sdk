@@ -838,7 +838,7 @@ export interface ImageReturn {
      * @type {string}
      * @memberof ImageReturn
      */
-    'analysis_name'?: string;
+    'analysis_name'?: string | null;
 }
 /**
  * 
@@ -863,7 +863,7 @@ export interface ImageReturnAllOf {
      * @type {string}
      * @memberof ImageReturnAllOf
      */
-    'analysis_name'?: string;
+    'analysis_name'?: string | null;
 }
 /**
  * 
@@ -1101,7 +1101,7 @@ export interface NoteCollectionReturn {
      * @type {string}
      * @memberof NoteCollectionReturn
      */
-    'analysis_name'?: string;
+    'analysis_name'?: string | null;
     /**
      * 
      * @type {string}
@@ -1113,7 +1113,7 @@ export interface NoteCollectionReturn {
      * @type {string}
      * @memberof NoteCollectionReturn
      */
-    'study_name'?: string;
+    'study_name'?: string | null;
     /**
      * 
      * @type {string}
@@ -1125,19 +1125,19 @@ export interface NoteCollectionReturn {
      * @type {string}
      * @memberof NoteCollectionReturn
      */
-    'study_year'?: string;
+    'study_year'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof NoteCollectionReturn
      */
-    'publication'?: string;
+    'publication'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof NoteCollectionReturn
      */
-    'authors'?: string;
+    'authors'?: string | null;
 }
 /**
  * 
@@ -1156,7 +1156,7 @@ export interface NoteCollectionReturnAllOf {
      * @type {string}
      * @memberof NoteCollectionReturnAllOf
      */
-    'analysis_name'?: string;
+    'analysis_name'?: string | null;
     /**
      * 
      * @type {string}
@@ -1168,7 +1168,7 @@ export interface NoteCollectionReturnAllOf {
      * @type {string}
      * @memberof NoteCollectionReturnAllOf
      */
-    'study_name'?: string;
+    'study_name'?: string | null;
     /**
      * 
      * @type {string}
@@ -1180,19 +1180,19 @@ export interface NoteCollectionReturnAllOf {
      * @type {string}
      * @memberof NoteCollectionReturnAllOf
      */
-    'study_year'?: string;
+    'study_year'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof NoteCollectionReturnAllOf
      */
-    'publication'?: string;
+    'publication'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof NoteCollectionReturnAllOf
      */
-    'authors'?: string;
+    'authors'?: string | null;
 }
 /**
  * A three dimensional coordinate representing a significant statistical peak associated with an analysis.
@@ -1383,7 +1383,7 @@ export interface PointReturn {
      * @type {string}
      * @memberof PointReturn
      */
-    'image'?: string;
+    'image'?: string | null;
     /**
      * 
      * @type {PointValue | string}
@@ -1426,7 +1426,7 @@ export interface PointReturnAllOf {
      * @type {string}
      * @memberof PointReturnAllOf
      */
-    'image'?: string;
+    'image'?: string | null;
     /**
      * 
      * @type {PointValue | string}
