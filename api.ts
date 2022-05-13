@@ -1092,10 +1092,10 @@ export interface NoteCollectionReturn {
     'annotation'?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof NoteCollectionReturn
      */
-    'study_year'?: string | null;
+    'study_year'?: number | null;
     /**
      * 
      * @type {string}
@@ -1147,10 +1147,10 @@ export interface NoteCollectionReturnAllOf {
     'annotation'?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof NoteCollectionReturnAllOf
      */
-    'study_year'?: string | null;
+    'study_year'?: number | null;
     /**
      * 
      * @type {string}
