@@ -346,7 +346,7 @@ export interface AnnotationExport {
      * @type {string}
      * @memberof AnnotationExport
      */
-    'annotation_csv'?: string;
+    'annotation_csv': string;
 }
 /**
  * 
