@@ -1205,7 +1205,7 @@ export interface Point {
      * @type {Array<PointValue>}
      * @memberof Point
      */
-    'value'?: Array<PointValue>;
+    'values'?: Array<PointValue>;
     /**
      * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
      * @type {Analysis | string}
@@ -1280,7 +1280,7 @@ export interface PointRelationships {
      * @type {Array<PointValue>}
      * @memberof PointRelationships
      */
-    'value'?: Array<PointValue>;
+    'values'?: Array<PointValue>;
     /**
      * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
      * @type {Analysis | string}
