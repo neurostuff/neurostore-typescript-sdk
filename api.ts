@@ -22,53 +22,78 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
- * 
+ * A contrast of weighted conditions with associated statistical results.
  * @export
  * @interface Analysis
  */
 export interface Analysis {
     /**
-     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
-     * @type {Array<string | Condition & ReadOnly>}
-     * @memberof Analysis
-     */
-    'conditions'?: Array<string | Condition & ReadOnly>;
-    /**
-     * 
-     * @type {Array<string | Image & ReadOnly>}
-     * @memberof Analysis
-     */
-    'images'?: Array<string | Image & ReadOnly>;
-    /**
-     * 
+     * A name of the contrast being performed.
      * @type {string}
      * @memberof Analysis
      */
     'name'?: string | null;
     /**
-     * 
-     * @type {Array<string | Point & ReadOnly>}
-     * @memberof Analysis
-     */
-    'points'?: Array<string | Point & ReadOnly>;
-    /**
-     * weight applied to each condition, must be the same length as condition
-     * @type {Array<number>}
-     * @memberof Analysis
-     */
-    'weights'?: Array<number>;
-    /**
-     * 
+     * A long form description of how the contrast was performed
      * @type {string}
      * @memberof Analysis
      */
     'description'?: string | null;
     /**
-     * 
-     * @type {string}
+     * Weight applied to each condition, must be the same length as the conditions attribute.
+     * @type {Array<number>}
      * @memberof Analysis
      */
-    'study'?: string;
+    'weights'?: Array<number>;
+    /**
+     * Array of conditions (e.g., 2-back, memory, etc.) that must be the same length as the weights attribute. Either is an array of condition objects or strings that point to condition objects.
+     * @type {Array<Condition | string>}
+     * @memberof Analysis
+     */
+    'conditions'?: Array<Condition | string>;
+    /**
+     * Statistical images (e.g., beta, t-statistic, and/or z-statistic images) where each voxel gets a value. Either represented as an array of image objects or strings linking to image objects.
+     * @type {Array<Image | string>}
+     * @memberof Analysis
+     */
+    'images'?: Array<Image | string>;
+    /**
+     * Coordinates of significance associated with the contrast. Either an array of point objects or an array of strings linking to point objects.
+     * @type {Array<Point | string>}
+     * @memberof Analysis
+     */
+    'points'?: Array<Point | string>;
+    /**
+     * The study this analysis is associated with. Each analysis can only be associated to one and only one study, but a study can have multiple analyses.
+     * @type {Study | string}
+     * @memberof Analysis
+     */
+    'study'?: Study | string;
+}
+/**
+ * 
+ * @export
+ * @interface AnalysisBase
+ */
+export interface AnalysisBase {
+    /**
+     * A name of the contrast being performed.
+     * @type {string}
+     * @memberof AnalysisBase
+     */
+    'name'?: string | null;
+    /**
+     * A long form description of how the contrast was performed
+     * @type {string}
+     * @memberof AnalysisBase
+     */
+    'description'?: string | null;
+    /**
+     * Weight applied to each condition, must be the same length as the conditions attribute.
+     * @type {Array<number>}
+     * @memberof AnalysisBase
+     */
+    'weights'?: Array<number>;
 }
 /**
  * 
@@ -92,57 +117,64 @@ export interface AnalysisList {
 /**
  * 
  * @export
+ * @interface AnalysisRelationships
+ */
+export interface AnalysisRelationships {
+    /**
+     * Array of conditions (e.g., 2-back, memory, etc.) that must be the same length as the weights attribute. Either is an array of condition objects or strings that point to condition objects.
+     * @type {Array<Condition | string>}
+     * @memberof AnalysisRelationships
+     */
+    'conditions'?: Array<Condition | string>;
+    /**
+     * Statistical images (e.g., beta, t-statistic, and/or z-statistic images) where each voxel gets a value. Either represented as an array of image objects or strings linking to image objects.
+     * @type {Array<Image | string>}
+     * @memberof AnalysisRelationships
+     */
+    'images'?: Array<Image | string>;
+    /**
+     * Coordinates of significance associated with the contrast. Either an array of point objects or an array of strings linking to point objects.
+     * @type {Array<Point | string>}
+     * @memberof AnalysisRelationships
+     */
+    'points'?: Array<Point | string>;
+    /**
+     * The study this analysis is associated with. Each analysis can only be associated to one and only one study, but a study can have multiple analyses.
+     * @type {Study | string}
+     * @memberof AnalysisRelationships
+     */
+    'study'?: Study | string;
+}
+/**
+ * 
+ * @export
  * @interface AnalysisReturn
  */
 export interface AnalysisReturn {
     /**
-     * array of conditions (e.g., 2-back, memory, etc.) that must be the same length as weight.
-     * @type {Array<string | Condition & ReadOnly>}
-     * @memberof AnalysisReturn
-     */
-    'conditions'?: Array<string | Condition & ReadOnly>;
-    /**
-     * 
-     * @type {Array<string | Image & ReadOnly>}
-     * @memberof AnalysisReturn
-     */
-    'images'?: Array<string | Image & ReadOnly>;
-    /**
-     * 
+     * A name of the contrast being performed.
      * @type {string}
      * @memberof AnalysisReturn
      */
     'name'?: string | null;
     /**
-     * 
-     * @type {Array<string | Point & ReadOnly>}
-     * @memberof AnalysisReturn
-     */
-    'points'?: Array<string | Point & ReadOnly>;
-    /**
-     * weight applied to each condition, must be the same length as condition
-     * @type {Array<number>}
-     * @memberof AnalysisReturn
-     */
-    'weights'?: Array<number>;
-    /**
-     * 
+     * A long form description of how the contrast was performed
      * @type {string}
      * @memberof AnalysisReturn
      */
     'description'?: string | null;
     /**
-     * 
-     * @type {string}
+     * Weight applied to each condition, must be the same length as the conditions attribute.
+     * @type {Array<number>}
      * @memberof AnalysisReturn
      */
-    'study'?: string;
+    'weights'?: Array<number>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof AnalysisReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -150,76 +182,150 @@ export interface AnalysisReturn {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof AnalysisReturn
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AnalysisReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {Array<ImageReturn | string>}
+     * @memberof AnalysisReturn
+     */
+    'images'?: Array<ImageReturn | string>;
+    /**
+     * 
+     * @type {Array<PointReturn | string>}
+     * @memberof AnalysisReturn
+     */
+    'points'?: Array<PointReturn | string>;
+    /**
+     * 
+     * @type {Array<ConditionReturn | string>}
+     * @memberof AnalysisReturn
+     */
+    'conditions'?: Array<ConditionReturn | string>;
 }
 /**
  * 
+ * @export
+ * @interface AnalysisReturnAllOf
+ */
+export interface AnalysisReturnAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturnAllOf
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {Array<ImageReturn | string>}
+     * @memberof AnalysisReturnAllOf
+     */
+    'images'?: Array<ImageReturn | string>;
+    /**
+     * 
+     * @type {Array<PointReturn | string>}
+     * @memberof AnalysisReturnAllOf
+     */
+    'points'?: Array<PointReturn | string>;
+    /**
+     * 
+     * @type {Array<ConditionReturn | string>}
+     * @memberof AnalysisReturnAllOf
+     */
+    'conditions'?: Array<ConditionReturn | string>;
+}
+/**
+ * A container for \"subjective\" information about each analysis in the studyset, such as exclusion criteria or whether the analysis needs commenting.
  * @export
  * @interface Annotation
  */
 export interface Annotation {
     /**
-     * 
+     * Descriptive name for the annotation.
      * @type {string}
      * @memberof Annotation
      */
-    'studyset'?: string;
+    'name'?: string | null;
     /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'name'?: string;
-    /**
-     * 
+     * Long form description of the annotation.
      * @type {string}
      * @memberof Annotation
      */
     'description'?: string | null;
     /**
-     * 
-     * @type {Array<AnnotationNote & ReadOnly>}
-     * @memberof Annotation
-     */
-    'notes'?: Array<AnnotationNote & ReadOnly>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Annotation
-     */
-    'source_updated_at'?: string | null;
-    /**
-     * 
+     * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
      * @type {object}
      * @memberof Annotation
      */
     'metadata'?: object | null;
     /**
-     * 
-     * @type {boolean}
-     * @memberof Annotation
-     */
-    'public'?: boolean;
-    /**
-     * 
+     * The keys (columns) in the annotation and the key\'s respective type.
      * @type {object}
      * @memberof Annotation
+     */
+    'note_keys'?: object | null;
+    /**
+     * The studyset the annotation is associated with. Each annotation is associated with one and only one studyset, but a studyset can have multiple annotations. The representation can either be a studyset object or a string indicating the location to find the studyset object.
+     * @type {Studyset | string}
+     * @memberof Annotation
+     */
+    'studyset'?: Studyset | string;
+    /**
+     * The collection of notes for each analysis within the studyset. Each analysis will have all note_keys with the appropriately typed values.
+     * @type {Array<NoteCollection>}
+     * @memberof Annotation
+     */
+    'notes'?: Array<NoteCollection>;
+}
+/**
+ * 
+ * @export
+ * @interface AnnotationBase
+ */
+export interface AnnotationBase {
+    /**
+     * Descriptive name for the annotation.
+     * @type {string}
+     * @memberof AnnotationBase
+     */
+    'name'?: string | null;
+    /**
+     * Long form description of the annotation.
+     * @type {string}
+     * @memberof AnnotationBase
+     */
+    'description'?: string | null;
+    /**
+     * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
+     * @type {object}
+     * @memberof AnnotationBase
+     */
+    'metadata'?: object | null;
+    /**
+     * The keys (columns) in the annotation and the key\'s respective type.
+     * @type {object}
+     * @memberof AnnotationBase
      */
     'note_keys'?: object | null;
 }
@@ -240,7 +346,7 @@ export interface AnnotationExport {
      * @type {string}
      * @memberof AnnotationExport
      */
-    'annotation_csv'?: string;
+    'annotation_csv': string;
 }
 /**
  * 
@@ -264,86 +370,88 @@ export interface AnnotationList {
 /**
  * 
  * @export
- * @interface AnnotationNote
+ * @interface AnnotationRelationships
  */
-export interface AnnotationNote {
+export interface AnnotationRelationships {
     /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
+     * The studyset the annotation is associated with. Each annotation is associated with one and only one studyset, but a studyset can have multiple annotations. The representation can either be a studyset object or a string indicating the location to find the studyset object.
+     * @type {Studyset | string}
+     * @memberof AnnotationRelationships
      */
-    'analysis'?: string;
+    'studyset'?: Studyset | string;
     /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
+     * The collection of notes for each analysis within the studyset. Each analysis will have all note_keys with the appropriately typed values.
+     * @type {Array<NoteCollection>}
+     * @memberof AnnotationRelationships
      */
-    'study'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'study_name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'annotation'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'analysis_name'?: string | null;
-    /**
-     * 
-     * @type {object}
-     * @memberof AnnotationNote
-     */
-    'note'?: object | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof AnnotationNote
-     */
-    'study_year'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'publication'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationNote
-     */
-    'authors'?: string | null;
+    'notes'?: Array<NoteCollection>;
 }
 /**
  * @type AnnotationReturn
  * @export
  */
-export type AnnotationReturn = Annotation & ReadOnly | AnnotationExport;
+export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & object | AnnotationExport;
 
 /**
  * 
+ * @export
+ * @interface Clone
+ */
+export interface Clone {
+    /**
+     * 
+     * @type {string}
+     * @memberof Clone
+     */
+    'source'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Clone
+     */
+    'source_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Clone
+     */
+    'source_updated_at'?: string | null;
+}
+/**
+ * Base component making up constrasts.
  * @export
  * @interface Condition
  */
 export interface Condition {
     /**
-     * condition name
+     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
      * @type {string}
      * @memberof Condition
      */
     'name'?: string | null;
     /**
-     * condition description
+     * Long form description of how the condition is operationalized and/or specific meaning.
      * @type {string}
      * @memberof Condition
+     */
+    'description'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ConditionBase
+ */
+export interface ConditionBase {
+    /**
+     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
+     * @type {string}
+     * @memberof ConditionBase
+     */
+    'name'?: string | null;
+    /**
+     * Long form description of how the condition is operationalized and/or specific meaning.
+     * @type {string}
+     * @memberof ConditionBase
      */
     'description'?: string | null;
 }
@@ -373,13 +481,13 @@ export interface ConditionList {
  */
 export interface ConditionReturn {
     /**
-     * condition name
+     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
      * @type {string}
      * @memberof ConditionReturn
      */
     'name'?: string | null;
     /**
-     * condition description
+     * Long form description of how the condition is operationalized and/or specific meaning.
      * @type {string}
      * @memberof ConditionReturn
      */
@@ -389,7 +497,7 @@ export interface ConditionReturn {
      * @type {string}
      * @memberof ConditionReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -397,11 +505,23 @@ export interface ConditionReturn {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof ConditionReturn
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof ConditionReturn
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConditionReturn
+     */
+    'public'?: boolean;
 }
 /**
  * descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
@@ -432,7 +552,7 @@ export interface Entity {
      * @type {string}
      * @memberof Entity
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -440,11 +560,23 @@ export interface Entity {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof Entity
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Entity
+     */
+    'public'?: boolean;
 }
 
 export const EntityLevelEnum = {
@@ -494,65 +626,96 @@ export const EntityAllOfLevelEnum = {
 export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
 
 /**
- * representation of a statistical brain image
+ * A description of a brain image linking to the actual nifti file.
  * @export
  * @interface Image
  */
 export interface Image {
     /**
-     * metadata from image
+     * Metadata about image such as software and version used and other relevant data about how the image was produced.
      * @type {object}
      * @memberof Image
      */
     'metadata'?: object | null;
     /**
-     * URL to image file
+     * URL to image file.
      * @type {string}
      * @memberof Image
      */
     'url'?: string | null;
     /**
-     * name of the image file
+     * Name of the image file.
      * @type {string}
      * @memberof Image
      */
     'filename'?: string | null;
     /**
-     * the template space the image is in
+     * The template space the image is in (e.g., MNI 
      * @type {string}
      * @memberof Image
      */
     'space'?: string | null;
     /**
-     * The values the image represents
+     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
      * @type {string}
      * @memberof Image
      */
     'value_type'?: string | null;
     /**
-     * name of the analysis
-     * @type {string}
-     * @memberof Image
-     */
-    'analysis_name'?: string | null;
-    /**
-     * ID of the analysis this image came from
-     * @type {string}
-     * @memberof Image
-     */
-    'analysis'?: string;
-    /**
-     * date the image was added
+     * Date the image was added.
      * @type {string}
      * @memberof Image
      */
     'add_date'?: string | null;
     /**
-     * 
-     * @type {Array<Entity>}
+     * Analysis the image is associated with. Each image is associated with one and only one analysis, but an analysis can have multiple images. Either an analysis object or a string linking to an analysis object.
+     * @type {Analysis | string}
      * @memberof Image
      */
-    'entities'?: Array<Entity>;
+    'analysis'?: Analysis | string;
+}
+/**
+ * 
+ * @export
+ * @interface ImageBase
+ */
+export interface ImageBase {
+    /**
+     * Metadata about image such as software and version used and other relevant data about how the image was produced.
+     * @type {object}
+     * @memberof ImageBase
+     */
+    'metadata'?: object | null;
+    /**
+     * URL to image file.
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'url'?: string | null;
+    /**
+     * Name of the image file.
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'filename'?: string | null;
+    /**
+     * The template space the image is in (e.g., MNI 
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'space'?: string | null;
+    /**
+     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'value_type'?: string | null;
+    /**
+     * Date the image was added.
+     * @type {string}
+     * @memberof ImageBase
+     */
+    'add_date'?: string | null;
 }
 /**
  * 
@@ -576,69 +739,64 @@ export interface ImageList {
 /**
  * 
  * @export
+ * @interface ImageRelationships
+ */
+export interface ImageRelationships {
+    /**
+     * Analysis the image is associated with. Each image is associated with one and only one analysis, but an analysis can have multiple images. Either an analysis object or a string linking to an analysis object.
+     * @type {Analysis | string}
+     * @memberof ImageRelationships
+     */
+    'analysis'?: Analysis | string;
+}
+/**
+ * 
+ * @export
  * @interface ImageReturn
  */
 export interface ImageReturn {
     /**
-     * metadata from image
+     * Metadata about image such as software and version used and other relevant data about how the image was produced.
      * @type {object}
      * @memberof ImageReturn
      */
     'metadata'?: object | null;
     /**
-     * URL to image file
+     * URL to image file.
      * @type {string}
      * @memberof ImageReturn
      */
     'url'?: string | null;
     /**
-     * name of the image file
+     * Name of the image file.
      * @type {string}
      * @memberof ImageReturn
      */
     'filename'?: string | null;
     /**
-     * the template space the image is in
+     * The template space the image is in (e.g., MNI 
      * @type {string}
      * @memberof ImageReturn
      */
     'space'?: string | null;
     /**
-     * The values the image represents
+     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
      * @type {string}
      * @memberof ImageReturn
      */
     'value_type'?: string | null;
     /**
-     * name of the analysis
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'analysis_name'?: string | null;
-    /**
-     * ID of the analysis this image came from
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'analysis'?: string;
-    /**
-     * date the image was added
+     * Date the image was added.
      * @type {string}
      * @memberof ImageReturn
      */
     'add_date'?: string | null;
     /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof ImageReturn
-     */
-    'entities'?: Array<Entity>;
-    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof ImageReturn
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -646,11 +804,66 @@ export interface ImageReturn {
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
      * @memberof ImageReturn
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ImageReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageReturn
+     */
+    'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'analysis_name'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ImageReturnAllOf
+ */
+export interface ImageReturnAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturnAllOf
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageReturnAllOf
+     */
+    'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturnAllOf
+     */
+    'analysis_name'?: string | null;
 }
 /**
  * 
@@ -779,77 +992,257 @@ export interface Metadata {
     'unique_count'?: number;
 }
 /**
- * a coordinate in the brain
+ * 
  * @export
- * @interface Point
+ * @interface NoteCollection
  */
-export interface Point {
+export interface NoteCollection {
     /**
-     * location of the point
-     * @type {Array<number>}
-     * @memberof Point
+     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
+     * @type {object}
+     * @memberof NoteCollection
      */
-    'coordinates'?: Array<number>;
+    'note'?: object | null;
     /**
-     * template space used to determine coordinate (TAL or MNI or UNKNOWN)
+     * The analysis the note collection is associated with. Either represented as an analysis object or a string pointing to the location of the analysis object.
+     * @type {Analysis | string}
+     * @memberof NoteCollection
+     */
+    'analysis'?: Analysis | string;
+    /**
+     * The annotation this collection of notes is associated with. Either represented as an annotation object or a string pointing to the location of the annotation object.
+     * @type {Annotation | string}
+     * @memberof NoteCollection
+     */
+    'annotation'?: Annotation | string;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionBase
+ */
+export interface NoteCollectionBase {
+    /**
+     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
+     * @type {object}
+     * @memberof NoteCollectionBase
+     */
+    'note'?: object | null;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionRelationships
+ */
+export interface NoteCollectionRelationships {
+    /**
+     * The analysis the note collection is associated with. Either represented as an analysis object or a string pointing to the location of the analysis object.
+     * @type {Analysis | string}
+     * @memberof NoteCollectionRelationships
+     */
+    'analysis'?: Analysis | string;
+    /**
+     * The annotation this collection of notes is associated with. Either represented as an annotation object or a string pointing to the location of the annotation object.
+     * @type {Annotation | string}
+     * @memberof NoteCollectionRelationships
+     */
+    'annotation'?: Annotation | string;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionReturn
+ */
+export interface NoteCollectionReturn {
+    /**
+     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
+     * @type {object}
+     * @memberof NoteCollectionReturn
+     */
+    'note'?: object | null;
+    /**
+     * 
      * @type {string}
-     * @memberof Point
-     */
-    'space'?: string | null;
-    /**
-     * method of how point was derived (e.g., center of mass)
-     * @type {string}
-     * @memberof Point
-     */
-    'kind'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof Point
-     */
-    'x'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Point
-     */
-    'y'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Point
-     */
-    'z'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Point
+     * @memberof NoteCollectionReturn
      */
     'analysis'?: string;
     /**
      * 
      * @type {string}
-     * @memberof Point
+     * @memberof NoteCollectionReturn
      */
-    'image'?: string | null;
+    'analysis_name'?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'study_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'annotation'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof NoteCollectionReturn
+     */
+    'study_year'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'authors'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface NoteCollectionReturnAllOf
+ */
+export interface NoteCollectionReturnAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'analysis_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'study_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'annotation'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'study_year'?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'authors'?: string | null;
+}
+/**
+ * A three dimensional coordinate representing a significant statistical peak associated with an analysis.
+ * @export
+ * @interface Point
+ */
+export interface Point {
+    /**
+     * Location of the significant coordinate in three dimensional space.
+     * @type {Array<number>}
+     * @memberof Point
+     */
+    'coordinates'?: Array<number>;
+    /**
+     * Template space used to determine coordinate Examples include TAL or MNI.
+     * @type {string}
+     * @memberof Point
+     */
+    'space'?: string | null;
+    /**
+     * Method of how point was derived (e.g., center of mass)
+     * @type {string}
+     * @memberof Point
+     */
+    'kind'?: string | null;
+    /**
+     * If the point is associated with an image, this is the value the point takes in that image.
      * @type {string}
      * @memberof Point
      */
     'label_id'?: string | null;
     /**
-     * 
-     * @type {Array<string | PointValue & ReadOnly>}
+     * Statistical image the point was derived from. Either points to an image object or a string linking to an image object.
+     * @type {Image | string}
      * @memberof Point
      */
-    'value'?: Array<string | PointValue & ReadOnly>;
+    'image'?: Image | string | null;
     /**
-     * 
-     * @type {Array<Entity>}
+     * An array of values at this point since each value could represent a beta, t-statistic and/or z-statistic, etc.
+     * @type {Array<PointValue>}
      * @memberof Point
      */
-    'entities'?: Array<Entity>;
+    'values'?: Array<PointValue>;
+    /**
+     * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
+     * @type {Analysis | string}
+     * @memberof Point
+     */
+    'analysis'?: Analysis | string;
+}
+/**
+ * 
+ * @export
+ * @interface PointBase
+ */
+export interface PointBase {
+    /**
+     * Location of the significant coordinate in three dimensional space.
+     * @type {Array<number>}
+     * @memberof PointBase
+     */
+    'coordinates'?: Array<number>;
+    /**
+     * Template space used to determine coordinate Examples include TAL or MNI.
+     * @type {string}
+     * @memberof PointBase
+     */
+    'space'?: string | null;
+    /**
+     * Method of how point was derived (e.g., center of mass)
+     * @type {string}
+     * @memberof PointBase
+     */
+    'kind'?: string | null;
+    /**
+     * If the point is associated with an image, this is the value the point takes in that image.
+     * @type {string}
+     * @memberof PointBase
+     */
+    'label_id'?: string | null;
 }
 /**
  * 
@@ -873,27 +1266,100 @@ export interface PointList {
 /**
  * 
  * @export
+ * @interface PointRelationships
+ */
+export interface PointRelationships {
+    /**
+     * Statistical image the point was derived from. Either points to an image object or a string linking to an image object.
+     * @type {Image | string}
+     * @memberof PointRelationships
+     */
+    'image'?: Image | string | null;
+    /**
+     * An array of values at this point since each value could represent a beta, t-statistic and/or z-statistic, etc.
+     * @type {Array<PointValue>}
+     * @memberof PointRelationships
+     */
+    'values'?: Array<PointValue>;
+    /**
+     * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
+     * @type {Analysis | string}
+     * @memberof PointRelationships
+     */
+    'analysis'?: Analysis | string;
+}
+/**
+ * 
+ * @export
  * @interface PointReturn
  */
 export interface PointReturn {
     /**
-     * location of the point
+     * Location of the significant coordinate in three dimensional space.
      * @type {Array<number>}
      * @memberof PointReturn
      */
     'coordinates'?: Array<number>;
     /**
-     * template space used to determine coordinate (TAL or MNI or UNKNOWN)
+     * Template space used to determine coordinate Examples include TAL or MNI.
      * @type {string}
      * @memberof PointReturn
      */
     'space'?: string | null;
     /**
-     * method of how point was derived (e.g., center of mass)
+     * Method of how point was derived (e.g., center of mass)
      * @type {string}
      * @memberof PointReturn
      */
     'kind'?: string | null;
+    /**
+     * If the point is associated with an image, this is the value the point takes in that image.
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'label_id'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'id': string;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'updated_at'?: string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PointReturn
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'image'?: string | null;
+    /**
+     * 
+     * @type {PointValue | string}
+     * @memberof PointReturn
+     */
+    'value'?: PointValue | string;
     /**
      * 
      * @type {number}
@@ -914,52 +1380,53 @@ export interface PointReturn {
     'z'?: number;
     /**
      * 
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'analysis'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'image'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'label_id'?: string | null;
-    /**
-     * 
-     * @type {Array<string | PointValue & ReadOnly>}
-     * @memberof PointReturn
-     */
-    'value'?: Array<string | PointValue & ReadOnly>;
-    /**
-     * 
      * @type {Array<Entity>}
      * @memberof PointReturn
      */
     'entities'?: Array<Entity>;
+}
+/**
+ * 
+ * @export
+ * @interface PointReturnAllOf
+ */
+export interface PointReturnAllOf {
     /**
-     * short UUID specifying the location of this resource
+     * 
      * @type {string}
-     * @memberof PointReturn
+     * @memberof PointReturnAllOf
      */
-    'id'?: string;
+    'image'?: string | null;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof PointReturn
+     * 
+     * @type {PointValue | string}
+     * @memberof PointReturnAllOf
      */
-    'created_at'?: string;
+    'value'?: PointValue | string;
     /**
-     * who owns the resource
-     * @type {string}
-     * @memberof PointReturn
+     * 
+     * @type {number}
+     * @memberof PointReturnAllOf
      */
-    'user'?: string | null;
+    'x'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointReturnAllOf
+     */
+    'y'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointReturnAllOf
+     */
+    'z'?: number;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof PointReturnAllOf
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -968,125 +1435,168 @@ export interface PointReturn {
  */
 export interface PointValue {
     /**
-     * 
+     * The kind of statistic the value represents, whether it is variance, beta, t-statistic, or z-statistic.
      * @type {string}
      * @memberof PointValue
      */
     'kind'?: string | null;
     /**
-     * 
+     * The value of the point for the \"kind\" of statistic.
      * @type {number}
      * @memberof PointValue
      */
     'value'?: number | null;
 }
 /**
- * common read-only attributes
+ * common resource attributes
  * @export
- * @interface ReadOnly
+ * @interface ResourceAttributes
  */
-export interface ReadOnly {
+export interface ResourceAttributes {
     /**
      * short UUID specifying the location of this resource
      * @type {string}
-     * @memberof ReadOnly
+     * @memberof ResourceAttributes
      */
-    'id'?: string;
+    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
-     * @memberof ReadOnly
+     * @memberof ResourceAttributes
      */
     'created_at'?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof ResourceAttributes
+     */
+    'updated_at'?: string | null;
+    /**
      * who owns the resource
      * @type {string}
-     * @memberof ReadOnly
+     * @memberof ResourceAttributes
      */
     'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ResourceAttributes
+     */
+    'public'?: boolean;
 }
 /**
- * attributes of a study/published paper
+ * A publishable unit of research.
  * @export
  * @interface Study
  */
 export interface Study {
     /**
-     * 
-     * @type {Array<string | ReadOnly & Analysis>}
-     * @memberof Study
-     */
-    'analyses'?: Array<string | ReadOnly & Analysis>;
-    /**
-     * digital object identifier of the study
+     * Digital object identifier of the study.
      * @type {string}
      * @memberof Study
      */
     'doi'?: string | null;
     /**
-     * title of the study
+     * Title of the study.
      * @type {string}
      * @memberof Study
      */
     'name'?: string | null;
     /**
-     * other metadata associated with the study
+     * Metadata associated with the study not covered by the other study attributes.
      * @type {object}
      * @memberof Study
      */
     'metadata'?: object | null;
     /**
-     * 
+     * Long form description of the study, typically the abstract.
      * @type {string}
      * @memberof Study
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/place of publication for the study.
      * @type {string}
      * @memberof Study
      */
     'publication'?: string | null;
     /**
-     * 
+     * If the study was published on PubMed, place the PubMed ID here.
      * @type {string}
      * @memberof Study
      */
     'pmid'?: string | null;
     /**
-     * whether the study is visible to everyone or just you
-     * @type {boolean}
-     * @memberof Study
-     */
-    'public'?: boolean;
-    /**
-     * 
+     * The authors on the publication of this study.
      * @type {string}
      * @memberof Study
      */
     'authors'?: string | null;
     /**
-     * 
-     * @type {string}
-     * @memberof Study
-     */
-    'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Study
-     */
-    'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Study
-     */
-    'source_updated_at'?: string | null;
-    /**
-     * 
+     * The year this study was published.
      * @type {number}
      * @memberof Study
+     */
+    'year'?: number | null;
+    /**
+     * The analyses making up the study. A study can have one or more analyses, since each analysis represents a contrast of conditions, where psychological, behavioral, pharmacological, or group based. Either represented as an analysis object or a string pointing to the location of the analysis object.
+     * @type {Array<Analysis | string>}
+     * @memberof Study
+     */
+    'analyses'?: Array<Analysis | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudyBase
+ */
+export interface StudyBase {
+    /**
+     * Digital object identifier of the study.
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'doi'?: string | null;
+    /**
+     * Title of the study.
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'name'?: string | null;
+    /**
+     * Metadata associated with the study not covered by the other study attributes.
+     * @type {object}
+     * @memberof StudyBase
+     */
+    'metadata'?: object | null;
+    /**
+     * Long form description of the study, typically the abstract.
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'description'?: string | null;
+    /**
+     * The journal/place of publication for the study.
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'publication'?: string | null;
+    /**
+     * If the study was published on PubMed, place the PubMed ID here.
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'pmid'?: string | null;
+    /**
+     * The authors on the publication of this study.
+     * @type {string}
+     * @memberof StudyBase
+     */
+    'authors'?: string | null;
+    /**
+     * The year this study was published.
+     * @type {number}
+     * @memberof StudyBase
      */
     'year'?: number | null;
 }
@@ -1112,63 +1622,100 @@ export interface StudyList {
 /**
  * 
  * @export
+ * @interface StudyRelationships
+ */
+export interface StudyRelationships {
+    /**
+     * The analyses making up the study. A study can have one or more analyses, since each analysis represents a contrast of conditions, where psychological, behavioral, pharmacological, or group based. Either represented as an analysis object or a string pointing to the location of the analysis object.
+     * @type {Array<Analysis | string>}
+     * @memberof StudyRelationships
+     */
+    'analyses'?: Array<Analysis | string>;
+}
+/**
+ * 
+ * @export
  * @interface StudyReturn
  */
 export interface StudyReturn {
     /**
-     * 
-     * @type {Array<string | ReadOnly & Analysis>}
-     * @memberof StudyReturn
-     */
-    'analyses'?: Array<string | ReadOnly & Analysis>;
-    /**
-     * digital object identifier of the study
+     * Digital object identifier of the study.
      * @type {string}
      * @memberof StudyReturn
      */
     'doi'?: string | null;
     /**
-     * title of the study
+     * Title of the study.
      * @type {string}
      * @memberof StudyReturn
      */
     'name'?: string | null;
     /**
-     * other metadata associated with the study
+     * Metadata associated with the study not covered by the other study attributes.
      * @type {object}
      * @memberof StudyReturn
      */
     'metadata'?: object | null;
     /**
-     * 
+     * Long form description of the study, typically the abstract.
      * @type {string}
      * @memberof StudyReturn
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/place of publication for the study.
      * @type {string}
      * @memberof StudyReturn
      */
     'publication'?: string | null;
     /**
-     * 
+     * If the study was published on PubMed, place the PubMed ID here.
      * @type {string}
      * @memberof StudyReturn
      */
     'pmid'?: string | null;
     /**
-     * whether the study is visible to everyone or just you
-     * @type {boolean}
+     * The authors on the publication of this study.
+     * @type {string}
      * @memberof StudyReturn
      */
-    'public'?: boolean;
+    'authors'?: string | null;
+    /**
+     * The year this study was published.
+     * @type {number}
+     * @memberof StudyReturn
+     */
+    'year'?: number | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'id': string;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'created_at'?: string;
     /**
      * 
      * @type {string}
      * @memberof StudyReturn
      */
-    'authors'?: string | null;
+    'updated_at'?: string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'user'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StudyReturn
+     */
+    'public'?: boolean;
     /**
      * 
      * @type {string}
@@ -1189,83 +1736,103 @@ export interface StudyReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {number}
+     * @type {Array<AnalysisReturn | string>}
      * @memberof StudyReturn
      */
-    'year'?: number | null;
-    /**
-     * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'id'?: string;
-    /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'created_at'?: string;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'user'?: string | null;
+    'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
  * 
+ * @export
+ * @interface StudyReturnAllOf
+ */
+export interface StudyReturnAllOf {
+    /**
+     * 
+     * @type {Array<AnalysisReturn | string>}
+     * @memberof StudyReturnAllOf
+     */
+    'analyses'?: Array<AnalysisReturn | string>;
+}
+/**
+ * A collection of studies (e.g., publications).
  * @export
  * @interface Studyset
  */
 export interface Studyset {
     /**
-     * 
+     * Descriptive and human readable name of the studyset.
      * @type {string}
      * @memberof Studyset
      */
     'name'?: string | null;
     /**
-     * 
+     * A longform description of the studyset.
      * @type {string}
      * @memberof Studyset
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/source the studyset is connected to if the studyset was published.
      * @type {string}
      * @memberof Studyset
      */
     'publication'?: string | null;
     /**
-     * 
+     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
      * @type {string}
      * @memberof Studyset
      */
     'doi'?: string | null;
     /**
-     * 
+     * If the article connected to the studyset was published on PubMed, then link the ID here.
      * @type {string}
      * @memberof Studyset
      */
     'pmid'?: string | null;
     /**
-     * 
-     * @type {Array<Study & ReadOnly | string>}
+     * The collection of studies.
+     * @type {Array<Study | string>}
      * @memberof Studyset
      */
-    'studies'?: Array<Study & ReadOnly | string>;
+    'studies'?: Array<Study | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetBase
+ */
+export interface StudysetBase {
     /**
-     * 
+     * Descriptive and human readable name of the studyset.
      * @type {string}
-     * @memberof Studyset
+     * @memberof StudysetBase
      */
-    'user'?: string | null;
+    'name'?: string | null;
     /**
-     * 
-     * @type {boolean}
-     * @memberof Studyset
+     * A longform description of the studyset.
+     * @type {string}
+     * @memberof StudysetBase
      */
-    'public'?: boolean;
+    'description'?: string | null;
+    /**
+     * The journal/source the studyset is connected to if the studyset was published.
+     * @type {string}
+     * @memberof StudysetBase
+     */
+    'publication'?: string | null;
+    /**
+     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
+     * @type {string}
+     * @memberof StudysetBase
+     */
+    'doi'?: string | null;
+    /**
+     * If the article connected to the studyset was published on PubMed, then link the ID here.
+     * @type {string}
+     * @memberof StudysetBase
+     */
+    'pmid'?: string | null;
 }
 /**
  * 
@@ -1289,45 +1856,70 @@ export interface StudysetList {
 /**
  * 
  * @export
+ * @interface StudysetRelationships
+ */
+export interface StudysetRelationships {
+    /**
+     * The collection of studies.
+     * @type {Array<Study | string>}
+     * @memberof StudysetRelationships
+     */
+    'studies'?: Array<Study | string>;
+}
+/**
+ * 
+ * @export
  * @interface StudysetReturn
  */
 export interface StudysetReturn {
     /**
-     * 
+     * Descriptive and human readable name of the studyset.
      * @type {string}
      * @memberof StudysetReturn
      */
     'name'?: string | null;
     /**
-     * 
+     * A longform description of the studyset.
      * @type {string}
      * @memberof StudysetReturn
      */
     'description'?: string | null;
     /**
-     * 
+     * The journal/source the studyset is connected to if the studyset was published.
      * @type {string}
      * @memberof StudysetReturn
      */
     'publication'?: string | null;
     /**
-     * 
+     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
      * @type {string}
      * @memberof StudysetReturn
      */
     'doi'?: string | null;
     /**
-     * 
+     * If the article connected to the studyset was published on PubMed, then link the ID here.
      * @type {string}
      * @memberof StudysetReturn
      */
     'pmid'?: string | null;
     /**
-     * 
-     * @type {Array<Study & ReadOnly | string>}
+     * short UUID specifying the location of this resource
+     * @type {string}
      * @memberof StudysetReturn
      */
-    'studies'?: Array<Study & ReadOnly | string>;
+    'id': string;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'updated_at'?: string | null;
     /**
      * who owns the resource
      * @type {string}
@@ -1341,17 +1933,42 @@ export interface StudysetReturn {
      */
     'public'?: boolean;
     /**
-     * short UUID specifying the location of this resource
+     * 
      * @type {string}
      * @memberof StudysetReturn
      */
-    'id'?: string;
+    'source'?: string | null;
     /**
-     * time the resource was created on the database
+     * 
      * @type {string}
      * @memberof StudysetReturn
      */
-    'created_at'?: string;
+    'source_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'source_updated_at'?: string | null;
+    /**
+     * 
+     * @type {Array<StudyReturn | string>}
+     * @memberof StudysetReturn
+     */
+    'studies'?: Array<StudyReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetReturnAllOf
+ */
+export interface StudysetReturnAllOf {
+    /**
+     * 
+     * @type {Array<StudyReturn | string>}
+     * @memberof StudysetReturnAllOf
+     */
+    'studies'?: Array<StudyReturn | string>;
 }
 /**
  * 
