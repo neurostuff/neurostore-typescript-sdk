@@ -256,7 +256,7 @@ export interface AnalysisReturnAllOf {
     'conditions'?: Array<ConditionReturn | string>;
 }
 /**
- * A container for \"subjective\" information about each analysis in the studyset, such as exclusion criteria or whether the analysis needs commenting.
+ * 
  * @export
  * @interface Annotation
  */
@@ -418,7 +418,7 @@ export interface Clone {
     'source_updated_at'?: string | null;
 }
 /**
- * Base component making up constrasts.
+ * 
  * @export
  * @interface Condition
  */
@@ -1165,7 +1165,7 @@ export interface NoteCollectionReturnAllOf {
     'authors'?: string | null;
 }
 /**
- * A three dimensional coordinate representing a significant statistical peak associated with an analysis.
+ * 
  * @export
  * @interface Point
  */
@@ -1435,17 +1435,11 @@ export interface PointReturnAllOf {
  */
 export interface PointValue {
     /**
-     * The kind of statistic the value represents, whether it is variance, beta, t-statistic, or z-statistic.
+     * 
      * @type {string}
      * @memberof PointValue
      */
-    'kind'?: string | null;
-    /**
-     * The value of the point for the \"kind\" of statistic.
-     * @type {number}
-     * @memberof PointValue
-     */
-    'value'?: number | null;
+    'id'?: string;
 }
 /**
  * common resource attributes
@@ -1831,43 +1825,6 @@ export interface StudysetBase {
      * If the article connected to the studyset was published on PubMed, then link the ID here.
      * @type {string}
      * @memberof StudysetBase
-     */
-    'pmid'?: string | null;
-}
-/**
- * 
- * @export
- * @interface StudysetBase1
- */
-export interface StudysetBase1 {
-    /**
-     * Descriptive and human readable name of the studyset.
-     * @type {string}
-     * @memberof StudysetBase1
-     */
-    'name'?: string | null;
-    /**
-     * A longform description of the studyset.
-     * @type {string}
-     * @memberof StudysetBase1
-     */
-    'description'?: string | null;
-    /**
-     * The journal/source the studyset is connected to if the studyset was published.
-     * @type {string}
-     * @memberof StudysetBase1
-     */
-    'publication'?: string | null;
-    /**
-     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
-     * @type {string}
-     * @memberof StudysetBase1
-     */
-    'doi'?: string | null;
-    /**
-     * If the article connected to the studyset was published on PubMed, then link the ID here.
-     * @type {string}
-     * @memberof StudysetBase1
      */
     'pmid'?: string | null;
 }
