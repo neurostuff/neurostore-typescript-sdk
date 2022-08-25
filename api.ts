@@ -256,7 +256,7 @@ export interface AnalysisReturnAllOf {
     'conditions'?: Array<ConditionReturn | string>;
 }
 /**
- * 
+ * an annotation describes each analysis within a studyset with typically subjective information pertinant to the analysis (like inclusion/exclusion criteria) as opposed to an immutable attribute about the analysis (like sample size).
  * @export
  * @interface Annotation
  */
@@ -280,7 +280,7 @@ export interface Annotation {
      */
     'metadata'?: object | null;
     /**
-     * The keys (columns) in the annotation and the key\'s respective type.
+     * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
      * @type {object}
      * @memberof Annotation
      */
@@ -323,7 +323,7 @@ export interface AnnotationBase {
      */
     'metadata'?: object | null;
     /**
-     * The keys (columns) in the annotation and the key\'s respective type.
+     * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
      * @type {object}
      * @memberof AnnotationBase
      */
@@ -418,7 +418,7 @@ export interface Clone {
     'source_updated_at'?: string | null;
 }
 /**
- * 
+ * A representative term for a psychological, pharmacological, medical, or physical state.
  * @export
  * @interface Condition
  */
@@ -626,7 +626,7 @@ export const EntityAllOfLevelEnum = {
 export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
 
 /**
- * A description of a brain image linking to the actual nifti file.
+ * A description of a brain image linking to the actual nifti file (typically on neurovault).
  * @export
  * @interface Image
  */
@@ -992,7 +992,7 @@ export interface Metadata {
     'unique_count'?: number;
 }
 /**
- * 
+ * The storage object for all notes within an annotation for a single analysis.
  * @export
  * @interface NoteCollection
  */
@@ -1165,7 +1165,7 @@ export interface NoteCollectionReturnAllOf {
     'authors'?: string | null;
 }
 /**
- * 
+ * A stereotaxic 3 dimensional coordinate describing a reported coordinate from a statistical map. This coordinate could be from a center of mass cluster, a peak statistic, a sub-threshold statistic, or from some other mechanism of selection 
  * @export
  * @interface Point
  */
@@ -1435,11 +1435,17 @@ export interface PointReturnAllOf {
  */
 export interface PointValue {
     /**
-     * 
+     * The kind of statistic the value represents, whether it is variance, beta, t-statistic, or z-statistic.
      * @type {string}
      * @memberof PointValue
      */
-    'id'?: string;
+    'kind'?: string | null;
+    /**
+     * The value of the point for the \"kind\" of statistic.
+     * @type {number}
+     * @memberof PointValue
+     */
+    'value'?: number | null;
 }
 /**
  * common resource attributes
