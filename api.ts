@@ -1453,10 +1453,10 @@ export interface StudyList {
 export interface StudyRelationships {
     /**
      * 
-     * @type {Array<AnalysisReturn | StudyRequest | string>}
+     * @type {Array<AnalysisReturn | AnalysisRequest | string>}
      * @memberof StudyRelationships
      */
-    'analyses'?: Array<AnalysisReturn | StudyRequest | string>;
+    'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
 }
 /**
  * 
@@ -1514,10 +1514,10 @@ export interface StudyRequest {
     'year'?: number | null;
     /**
      * 
-     * @type {Array<AnalysisReturn | StudyRequest | string>}
+     * @type {Array<AnalysisReturn | AnalysisRequest | string>}
      * @memberof StudyRequest
      */
-    'analyses'?: Array<AnalysisReturn | StudyRequest | string>;
+    'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
 }
 /**
  * 
@@ -1623,10 +1623,10 @@ export interface StudyReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<AnalysisReturn | StudyRequest | string>}
+     * @type {Array<AnalysisReturn | AnalysisRequest | string>}
      * @memberof StudyReturn
      */
-    'analyses'?: Array<AnalysisReturn | StudyRequest | string>;
+    'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
 }
 /**
  * 
