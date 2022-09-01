@@ -144,6 +144,12 @@ export interface AnalysisRequest {
      * @memberof AnalysisRequest
      */
     'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisRequest
+     */
+    'id'?: string;
 }
 /**
  * 
@@ -310,7 +316,7 @@ export interface AnnotationRelationships {
  * @type AnnotationRequest
  * @export
  */
-export type AnnotationRequest = AnnotationBase & AnnotationRelationships & NestedPutResources | AnnotationExport;
+export type AnnotationRequest = AnnotationBase & AnnotationRelationships & NestedPutAttributes | AnnotationExport;
 
 /**
  * @type AnnotationReturn
@@ -399,6 +405,12 @@ export interface ConditionRequest {
      * @memberof ConditionRequest
      */
     'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionRequest
+     */
+    'id'?: string;
 }
 /**
  * 
@@ -698,6 +710,12 @@ export interface ImageRequest {
      * @memberof ImageRequest
      */
     'analysis_name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'id'?: string;
 }
 /**
  * 
@@ -954,6 +972,12 @@ export interface NoteCollectionRequest {
      * @memberof NoteCollectionRequest
      */
     'note'?: object | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionRequest
+     */
+    'id'?: string;
 }
 /**
  * 
@@ -1230,6 +1254,12 @@ export interface PointRequest {
      * @memberof PointRequest
      */
     'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointRequest
+     */
+    'id'?: string;
 }
 /**
  * 
@@ -1531,6 +1561,12 @@ export interface StudyRequest {
      * @memberof StudyRequest
      */
     'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'id'?: string;
 }
 /**
  * 
