@@ -225,37 +225,6 @@ export interface AnalysisReturn {
     'conditions'?: Array<ConditionReturn | string>;
 }
 /**
- * 
- * @export
- * @interface AnalysisReturnAllOf
- */
-export interface AnalysisReturnAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisReturnAllOf
-     */
-    'study'?: string;
-    /**
-     * 
-     * @type {Array<ImageReturn | string>}
-     * @memberof AnalysisReturnAllOf
-     */
-    'images'?: Array<ImageReturn | string>;
-    /**
-     * 
-     * @type {Array<PointReturn | string>}
-     * @memberof AnalysisReturnAllOf
-     */
-    'points'?: Array<PointReturn | string>;
-    /**
-     * 
-     * @type {Array<ConditionReturn | string>}
-     * @memberof AnalysisReturnAllOf
-     */
-    'conditions'?: Array<ConditionReturn | string>;
-}
-/**
  * an annotation describes each analysis within a studyset with typically subjective information pertinant to the analysis (like inclusion/exclusion criteria) as opposed to an immutable attribute about the analysis (like sample size).
  * @export
  * @interface Annotation
@@ -390,7 +359,7 @@ export interface AnnotationRelationships {
  * @type AnnotationReturn
  * @export
  */
-export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & object | AnnotationExport;
+export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & AnnotationRelationships | AnnotationExport;
 
 /**
  * 
@@ -837,31 +806,6 @@ export interface ImageReturn {
      * 
      * @type {string}
      * @memberof ImageReturn
-     */
-    'analysis_name'?: string | null;
-}
-/**
- * 
- * @export
- * @interface ImageReturnAllOf
- */
-export interface ImageReturnAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageReturnAllOf
-     */
-    'analysis'?: string;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof ImageReturnAllOf
-     */
-    'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageReturnAllOf
      */
     'analysis_name'?: string | null;
 }
@@ -1388,49 +1332,6 @@ export interface PointReturn {
 /**
  * 
  * @export
- * @interface PointReturnAllOf
- */
-export interface PointReturnAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturnAllOf
-     */
-    'image'?: string | null;
-    /**
-     * 
-     * @type {PointValue | string}
-     * @memberof PointReturnAllOf
-     */
-    'value'?: PointValue | string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointReturnAllOf
-     */
-    'x'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointReturnAllOf
-     */
-    'y'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointReturnAllOf
-     */
-    'z'?: number;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof PointReturnAllOf
-     */
-    'entities'?: Array<Entity>;
-}
-/**
- * 
- * @export
  * @interface PointValue
  */
 export interface PointValue {
@@ -1742,19 +1643,6 @@ export interface StudyReturn {
     'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
- * 
- * @export
- * @interface StudyReturnAllOf
- */
-export interface StudyReturnAllOf {
-    /**
-     * 
-     * @type {Array<AnalysisReturn | string>}
-     * @memberof StudyReturnAllOf
-     */
-    'analyses'?: Array<AnalysisReturn | string>;
-}
-/**
  * A collection of studies (e.g., publications).
  * @export
  * @interface Studyset
@@ -1954,19 +1842,6 @@ export interface StudysetReturn {
      * 
      * @type {Array<StudyReturn | string>}
      * @memberof StudysetReturn
-     */
-    'studies'?: Array<StudyReturn | string>;
-}
-/**
- * 
- * @export
- * @interface StudysetReturnAllOf
- */
-export interface StudysetReturnAllOf {
-    /**
-     * 
-     * @type {Array<StudyReturn | string>}
-     * @memberof StudysetReturnAllOf
      */
     'studies'?: Array<StudyReturn | string>;
 }
@@ -4877,11 +4752,11 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
          * Update a studyset.
          * @summary PUT/update a studyset
          * @param {string} id 
-         * @param {Studyset} [studyset] 
+         * @param {StudysetReturn} [studysetReturn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdPut: async (id: string, studyset?: Studyset, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsIdPut: async (id: string, studysetReturn?: StudysetReturn, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studysetsIdPut', 'id', id)
             const localVarPath = `/studysets/{id}`
@@ -4908,7 +4783,7 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(studyset, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(studysetReturn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4918,11 +4793,11 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Create a studyset.
          * @summary POST/create a studyset
-         * @param {Studyset} [studyset] 
+         * @param {StudysetReturn} [studysetReturn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost: async (studyset?: Studyset, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsPost: async (studysetReturn?: StudysetReturn, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4946,7 +4821,7 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(studyset, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(studysetReturn, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5013,23 +4888,23 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
          * Update a studyset.
          * @summary PUT/update a studyset
          * @param {string} id 
-         * @param {Studyset} [studyset] 
+         * @param {StudysetReturn} [studysetReturn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsIdPut(id: string, studyset?: Studyset, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdPut(id, studyset, options);
+        async studysetsIdPut(id: string, studysetReturn?: StudysetReturn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdPut(id, studysetReturn, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Create a studyset.
          * @summary POST/create a studyset
-         * @param {Studyset} [studyset] 
+         * @param {StudysetReturn} [studysetReturn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsPost(studyset?: Studyset, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(studyset, options);
+        async studysetsPost(studysetReturn?: StudysetReturn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(studysetReturn, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -5089,22 +4964,22 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
          * Update a studyset.
          * @summary PUT/update a studyset
          * @param {string} id 
-         * @param {Studyset} [studyset] 
+         * @param {StudysetReturn} [studysetReturn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdPut(id: string, studyset?: Studyset, options?: any): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsIdPut(id, studyset, options).then((request) => request(axios, basePath));
+        studysetsIdPut(id: string, studysetReturn?: StudysetReturn, options?: any): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsIdPut(id, studysetReturn, options).then((request) => request(axios, basePath));
         },
         /**
          * Create a studyset.
          * @summary POST/create a studyset
-         * @param {Studyset} [studyset] 
+         * @param {StudysetReturn} [studysetReturn] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost(studyset?: Studyset, options?: any): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsPost(studyset, options).then((request) => request(axios, basePath));
+        studysetsPost(studysetReturn?: StudysetReturn, options?: any): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsPost(studysetReturn, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5169,25 +5044,25 @@ export class StudysetsApi extends BaseAPI {
      * Update a studyset.
      * @summary PUT/update a studyset
      * @param {string} id 
-     * @param {Studyset} [studyset] 
+     * @param {StudysetReturn} [studysetReturn] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsIdPut(id: string, studyset?: Studyset, options?: AxiosRequestConfig) {
-        return StudysetsApiFp(this.configuration).studysetsIdPut(id, studyset, options).then((request) => request(this.axios, this.basePath));
+    public studysetsIdPut(id: string, studysetReturn?: StudysetReturn, options?: AxiosRequestConfig) {
+        return StudysetsApiFp(this.configuration).studysetsIdPut(id, studysetReturn, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a studyset.
      * @summary POST/create a studyset
-     * @param {Studyset} [studyset] 
+     * @param {StudysetReturn} [studysetReturn] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsPost(studyset?: Studyset, options?: AxiosRequestConfig) {
-        return StudysetsApiFp(this.configuration).studysetsPost(studyset, options).then((request) => request(this.axios, this.basePath));
+    public studysetsPost(studysetReturn?: StudysetReturn, options?: AxiosRequestConfig) {
+        return StudysetsApiFp(this.configuration).studysetsPost(studysetReturn, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
