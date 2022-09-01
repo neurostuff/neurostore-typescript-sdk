@@ -91,10 +91,10 @@ export interface AnalysisRelationships {
     'points'?: Array<PointReturn | PointRequest | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | string | ConditionRequest>}
+     * @type {Array<ConditionReturn | ConditionRequest | string>}
      * @memberof AnalysisRelationships
      */
-    'conditions'?: Array<ConditionReturn | string | ConditionRequest>;
+    'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
 }
 /**
  * 
@@ -140,10 +140,10 @@ export interface AnalysisRequest {
     'points'?: Array<PointReturn | PointRequest | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | string | ConditionRequest>}
+     * @type {Array<ConditionReturn | ConditionRequest | string>}
      * @memberof AnalysisRequest
      */
-    'conditions'?: Array<ConditionReturn | string | ConditionRequest>;
+    'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
 }
 /**
  * 
@@ -219,10 +219,10 @@ export interface AnalysisReturn {
     'points'?: Array<PointReturn | PointRequest | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | string | ConditionRequest>}
+     * @type {Array<ConditionReturn | ConditionRequest | string>}
      * @memberof AnalysisReturn
      */
-    'conditions'?: Array<ConditionReturn | string | ConditionRequest>;
+    'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
 }
 /**
  * 
@@ -301,10 +301,10 @@ export interface AnnotationList {
 export interface AnnotationRelationships {
     /**
      * 
-     * @type {Array<NoteCollectionReturn | string>}
+     * @type {Array<NoteCollectionReturn | NoteCollectionRequest | string>}
      * @memberof AnnotationRelationships
      */
-    'notes'?: Array<NoteCollectionReturn | string>;
+    'notes'?: Array<NoteCollectionReturn | NoteCollectionRequest | string>;
 }
 /**
  * @type AnnotationRequest
