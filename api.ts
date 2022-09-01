@@ -22,55 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
- * A contrast of weighted conditions with associated statistical results.
- * @export
- * @interface Analysis
- */
-export interface Analysis {
-    /**
-     * A name of the contrast being performed.
-     * @type {string}
-     * @memberof Analysis
-     */
-    'name'?: string | null;
-    /**
-     * A long form description of how the contrast was performed
-     * @type {string}
-     * @memberof Analysis
-     */
-    'description'?: string | null;
-    /**
-     * Weight applied to each condition, must be the same length as the conditions attribute.
-     * @type {Array<number>}
-     * @memberof Analysis
-     */
-    'weights'?: Array<number>;
-    /**
-     * Array of conditions (e.g., 2-back, memory, etc.) that must be the same length as the weights attribute. Either is an array of condition objects or strings that point to condition objects.
-     * @type {Array<Condition | string>}
-     * @memberof Analysis
-     */
-    'conditions'?: Array<Condition | string>;
-    /**
-     * Statistical images (e.g., beta, t-statistic, and/or z-statistic images) where each voxel gets a value. Either represented as an array of image objects or strings linking to image objects.
-     * @type {Array<Image | string>}
-     * @memberof Analysis
-     */
-    'images'?: Array<Image | string>;
-    /**
-     * Coordinates of significance associated with the contrast. Either an array of point objects or an array of strings linking to point objects.
-     * @type {Array<Point | string>}
-     * @memberof Analysis
-     */
-    'points'?: Array<Point | string>;
-    /**
-     * The study this analysis is associated with. Each analysis can only be associated to one and only one study, but a study can have multiple analyses.
-     * @type {Study | string}
-     * @memberof Analysis
-     */
-    'study'?: Study | string;
-}
-/**
  * 
  * @export
  * @interface AnalysisBase
@@ -121,29 +72,78 @@ export interface AnalysisList {
  */
 export interface AnalysisRelationships {
     /**
-     * Array of conditions (e.g., 2-back, memory, etc.) that must be the same length as the weights attribute. Either is an array of condition objects or strings that point to condition objects.
-     * @type {Array<Condition | string>}
+     * 
+     * @type {string}
      * @memberof AnalysisRelationships
      */
-    'conditions'?: Array<Condition | string>;
+    'study'?: string;
     /**
-     * Statistical images (e.g., beta, t-statistic, and/or z-statistic images) where each voxel gets a value. Either represented as an array of image objects or strings linking to image objects.
-     * @type {Array<Image | string>}
+     * 
+     * @type {Array<ImageReturn | string>}
      * @memberof AnalysisRelationships
      */
-    'images'?: Array<Image | string>;
+    'images'?: Array<ImageReturn | string>;
     /**
-     * Coordinates of significance associated with the contrast. Either an array of point objects or an array of strings linking to point objects.
-     * @type {Array<Point | string>}
+     * 
+     * @type {Array<PointReturn | string>}
      * @memberof AnalysisRelationships
      */
-    'points'?: Array<Point | string>;
+    'points'?: Array<PointReturn | string>;
     /**
-     * The study this analysis is associated with. Each analysis can only be associated to one and only one study, but a study can have multiple analyses.
-     * @type {Study | string}
+     * 
+     * @type {Array<ConditionReturn | string>}
      * @memberof AnalysisRelationships
      */
-    'study'?: Study | string;
+    'conditions'?: Array<ConditionReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface AnalysisRequest
+ */
+export interface AnalysisRequest {
+    /**
+     * A name of the contrast being performed.
+     * @type {string}
+     * @memberof AnalysisRequest
+     */
+    'name'?: string | null;
+    /**
+     * A long form description of how the contrast was performed
+     * @type {string}
+     * @memberof AnalysisRequest
+     */
+    'description'?: string | null;
+    /**
+     * Weight applied to each condition, must be the same length as the conditions attribute.
+     * @type {Array<number>}
+     * @memberof AnalysisRequest
+     */
+    'weights'?: Array<number>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisRequest
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {Array<ImageReturn | string>}
+     * @memberof AnalysisRequest
+     */
+    'images'?: Array<ImageReturn | string>;
+    /**
+     * 
+     * @type {Array<PointReturn | string>}
+     * @memberof AnalysisRequest
+     */
+    'points'?: Array<PointReturn | string>;
+    /**
+     * 
+     * @type {Array<ConditionReturn | string>}
+     * @memberof AnalysisRequest
+     */
+    'conditions'?: Array<ConditionReturn | string>;
 }
 /**
  * 
@@ -225,49 +225,6 @@ export interface AnalysisReturn {
     'conditions'?: Array<ConditionReturn | string>;
 }
 /**
- * an annotation describes each analysis within a studyset with typically subjective information pertinant to the analysis (like inclusion/exclusion criteria) as opposed to an immutable attribute about the analysis (like sample size).
- * @export
- * @interface Annotation
- */
-export interface Annotation {
-    /**
-     * Descriptive name for the annotation.
-     * @type {string}
-     * @memberof Annotation
-     */
-    'name'?: string | null;
-    /**
-     * Long form description of the annotation.
-     * @type {string}
-     * @memberof Annotation
-     */
-    'description'?: string | null;
-    /**
-     * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
-     * @type {object}
-     * @memberof Annotation
-     */
-    'metadata'?: object | null;
-    /**
-     * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
-     * @type {object}
-     * @memberof Annotation
-     */
-    'note_keys'?: object | null;
-    /**
-     * The studyset the annotation is associated with. Each annotation is associated with one and only one studyset, but a studyset can have multiple annotations. The representation can either be a studyset object or a string indicating the location to find the studyset object.
-     * @type {Studyset | string}
-     * @memberof Annotation
-     */
-    'studyset'?: Studyset | string;
-    /**
-     * The collection of notes for each analysis within the studyset. Each analysis will have all note_keys with the appropriately typed values.
-     * @type {Array<NoteCollection>}
-     * @memberof Annotation
-     */
-    'notes'?: Array<NoteCollection>;
-}
-/**
  * 
  * @export
  * @interface AnnotationBase
@@ -343,18 +300,18 @@ export interface AnnotationList {
  */
 export interface AnnotationRelationships {
     /**
-     * The studyset the annotation is associated with. Each annotation is associated with one and only one studyset, but a studyset can have multiple annotations. The representation can either be a studyset object or a string indicating the location to find the studyset object.
-     * @type {Studyset | string}
+     * 
+     * @type {Array<NoteCollectionReturn | string>}
      * @memberof AnnotationRelationships
      */
-    'studyset'?: Studyset | string;
-    /**
-     * The collection of notes for each analysis within the studyset. Each analysis will have all note_keys with the appropriately typed values.
-     * @type {Array<NoteCollection>}
-     * @memberof AnnotationRelationships
-     */
-    'notes'?: Array<NoteCollection>;
+    'notes'?: Array<NoteCollectionReturn | string>;
 }
+/**
+ * @type AnnotationRequest
+ * @export
+ */
+export type AnnotationRequest = AnnotationBase & AnnotationRelationships | AnnotationExport;
+
 /**
  * @type AnnotationReturn
  * @export
@@ -385,25 +342,6 @@ export interface Clone {
      * @memberof Clone
      */
     'source_updated_at'?: string | null;
-}
-/**
- * A representative term for a psychological, pharmacological, medical, or physical state.
- * @export
- * @interface Condition
- */
-export interface Condition {
-    /**
-     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
-     * @type {string}
-     * @memberof Condition
-     */
-    'name'?: string | null;
-    /**
-     * Long form description of how the condition is operationalized and/or specific meaning.
-     * @type {string}
-     * @memberof Condition
-     */
-    'description'?: string | null;
 }
 /**
  * 
@@ -442,6 +380,25 @@ export interface ConditionList {
      * @memberof ConditionList
      */
     'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface ConditionRequest
+ */
+export interface ConditionRequest {
+    /**
+     * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
+     * @type {string}
+     * @memberof ConditionRequest
+     */
+    'name'?: string | null;
+    /**
+     * Long form description of how the condition is operationalized and/or specific meaning.
+     * @type {string}
+     * @memberof ConditionRequest
+     */
+    'description'?: string | null;
 }
 /**
  * 
@@ -595,55 +552,6 @@ export const EntityAllOfLevelEnum = {
 export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
 
 /**
- * A description of a brain image linking to the actual nifti file (typically on neurovault).
- * @export
- * @interface Image
- */
-export interface Image {
-    /**
-     * Metadata about image such as software and version used and other relevant data about how the image was produced.
-     * @type {object}
-     * @memberof Image
-     */
-    'metadata'?: object | null;
-    /**
-     * URL to image file.
-     * @type {string}
-     * @memberof Image
-     */
-    'url'?: string | null;
-    /**
-     * Name of the image file.
-     * @type {string}
-     * @memberof Image
-     */
-    'filename'?: string | null;
-    /**
-     * The template space the image is in (e.g., MNI 
-     * @type {string}
-     * @memberof Image
-     */
-    'space'?: string | null;
-    /**
-     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
-     * @type {string}
-     * @memberof Image
-     */
-    'value_type'?: string | null;
-    /**
-     * Date the image was added.
-     * @type {string}
-     * @memberof Image
-     */
-    'add_date'?: string | null;
-    /**
-     * Analysis the image is associated with. Each image is associated with one and only one analysis, but an analysis can have multiple images. Either an analysis object or a string linking to an analysis object.
-     * @type {Analysis | string}
-     * @memberof Image
-     */
-    'analysis'?: Analysis | string;
-}
-/**
  * 
  * @export
  * @interface ImageBase
@@ -712,11 +620,84 @@ export interface ImageList {
  */
 export interface ImageRelationships {
     /**
-     * Analysis the image is associated with. Each image is associated with one and only one analysis, but an analysis can have multiple images. Either an analysis object or a string linking to an analysis object.
-     * @type {Analysis | string}
+     * 
+     * @type {string}
      * @memberof ImageRelationships
      */
-    'analysis'?: Analysis | string;
+    'analysis'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageRelationships
+     */
+    'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageRelationships
+     */
+    'analysis_name'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface ImageRequest
+ */
+export interface ImageRequest {
+    /**
+     * Metadata about image such as software and version used and other relevant data about how the image was produced.
+     * @type {object}
+     * @memberof ImageRequest
+     */
+    'metadata'?: object | null;
+    /**
+     * URL to image file.
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'url'?: string | null;
+    /**
+     * Name of the image file.
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'filename'?: string | null;
+    /**
+     * The template space the image is in (e.g., MNI 
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'space'?: string | null;
+    /**
+     * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'value_type'?: string | null;
+    /**
+     * Date the image was added.
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'add_date'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageRequest
+     */
+    'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageRequest
+     */
+    'analysis_name'?: string | null;
 }
 /**
  * 
@@ -936,31 +917,6 @@ export interface Metadata {
     'unique_count'?: number;
 }
 /**
- * The storage object for all notes within an annotation for a single analysis.
- * @export
- * @interface NoteCollection
- */
-export interface NoteCollection {
-    /**
-     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
-     * @type {object}
-     * @memberof NoteCollection
-     */
-    'note'?: object | null;
-    /**
-     * The analysis the note collection is associated with. Either represented as an analysis object or a string pointing to the location of the analysis object.
-     * @type {Analysis | string}
-     * @memberof NoteCollection
-     */
-    'analysis'?: Analysis | string;
-    /**
-     * The annotation this collection of notes is associated with. Either represented as an annotation object or a string pointing to the location of the annotation object.
-     * @type {Annotation | string}
-     * @memberof NoteCollection
-     */
-    'annotation'?: Annotation | string;
-}
-/**
  * 
  * @export
  * @interface NoteCollectionBase
@@ -976,21 +932,15 @@ export interface NoteCollectionBase {
 /**
  * 
  * @export
- * @interface NoteCollectionRelationships
+ * @interface NoteCollectionRequest
  */
-export interface NoteCollectionRelationships {
+export interface NoteCollectionRequest {
     /**
-     * The analysis the note collection is associated with. Either represented as an analysis object or a string pointing to the location of the analysis object.
-     * @type {Analysis | string}
-     * @memberof NoteCollectionRelationships
+     * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
+     * @type {object}
+     * @memberof NoteCollectionRequest
      */
-    'analysis'?: Analysis | string;
-    /**
-     * The annotation this collection of notes is associated with. Either represented as an annotation object or a string pointing to the location of the annotation object.
-     * @type {Annotation | string}
-     * @memberof NoteCollectionRelationships
-     */
-    'annotation'?: Annotation | string;
+    'note'?: object | null;
 }
 /**
  * 
@@ -1109,55 +1059,6 @@ export interface NoteCollectionReturnAllOf {
     'authors'?: string | null;
 }
 /**
- * A stereotaxic 3 dimensional coordinate describing a reported coordinate from a statistical map. This coordinate could be from a center of mass cluster, a peak statistic, a sub-threshold statistic, or from some other mechanism of selection 
- * @export
- * @interface Point
- */
-export interface Point {
-    /**
-     * Location of the significant coordinate in three dimensional space.
-     * @type {Array<number>}
-     * @memberof Point
-     */
-    'coordinates'?: Array<number>;
-    /**
-     * Template space used to determine coordinate Examples include TAL or MNI.
-     * @type {string}
-     * @memberof Point
-     */
-    'space'?: string | null;
-    /**
-     * Method of how point was derived (e.g., center of mass)
-     * @type {string}
-     * @memberof Point
-     */
-    'kind'?: string | null;
-    /**
-     * If the point is associated with an image, this is the value the point takes in that image.
-     * @type {string}
-     * @memberof Point
-     */
-    'label_id'?: string | null;
-    /**
-     * Statistical image the point was derived from. Either points to an image object or a string linking to an image object.
-     * @type {Image | string}
-     * @memberof Point
-     */
-    'image'?: Image | string | null;
-    /**
-     * An array of values at this point since each value could represent a beta, t-statistic and/or z-statistic, etc.
-     * @type {Array<PointValue>}
-     * @memberof Point
-     */
-    'values'?: Array<PointValue>;
-    /**
-     * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
-     * @type {Analysis | string}
-     * @memberof Point
-     */
-    'analysis'?: Analysis | string;
-}
-/**
  * 
  * @export
  * @interface PointBase
@@ -1214,23 +1115,108 @@ export interface PointList {
  */
 export interface PointRelationships {
     /**
-     * Statistical image the point was derived from. Either points to an image object or a string linking to an image object.
-     * @type {Image | string}
+     * 
+     * @type {string}
      * @memberof PointRelationships
      */
-    'image'?: Image | string | null;
+    'image'?: string | null;
     /**
-     * An array of values at this point since each value could represent a beta, t-statistic and/or z-statistic, etc.
-     * @type {Array<PointValue>}
+     * 
+     * @type {PointValue | string}
      * @memberof PointRelationships
      */
-    'values'?: Array<PointValue>;
+    'value'?: PointValue | string;
     /**
-     * Analysis the point is associated with. Each point is associated with one and only one analysis, but an analysis can have multiple points. Either an analysis object or a string linking to an analysis object.
-     * @type {Analysis | string}
+     * 
+     * @type {number}
      * @memberof PointRelationships
      */
-    'analysis'?: Analysis | string;
+    'x'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointRelationships
+     */
+    'y'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointRelationships
+     */
+    'z'?: number;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof PointRelationships
+     */
+    'entities'?: Array<Entity>;
+}
+/**
+ * 
+ * @export
+ * @interface PointRequest
+ */
+export interface PointRequest {
+    /**
+     * Location of the significant coordinate in three dimensional space.
+     * @type {Array<number>}
+     * @memberof PointRequest
+     */
+    'coordinates'?: Array<number>;
+    /**
+     * Template space used to determine coordinate Examples include TAL or MNI.
+     * @type {string}
+     * @memberof PointRequest
+     */
+    'space'?: string | null;
+    /**
+     * Method of how point was derived (e.g., center of mass)
+     * @type {string}
+     * @memberof PointRequest
+     */
+    'kind'?: string | null;
+    /**
+     * If the point is associated with an image, this is the value the point takes in that image.
+     * @type {string}
+     * @memberof PointRequest
+     */
+    'label_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointRequest
+     */
+    'image'?: string | null;
+    /**
+     * 
+     * @type {PointValue | string}
+     * @memberof PointRequest
+     */
+    'value'?: PointValue | string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointRequest
+     */
+    'x'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointRequest
+     */
+    'y'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointRequest
+     */
+    'z'?: number;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof PointRequest
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -1336,13 +1322,13 @@ export interface PointReturn {
  */
 export interface PointValue {
     /**
-     * The kind of statistic the value represents, whether it is variance, beta, t-statistic, or z-statistic.
+     * 
      * @type {string}
      * @memberof PointValue
      */
     'kind'?: string | null;
     /**
-     * The value of the point for the \"kind\" of statistic.
+     * 
      * @type {number}
      * @memberof PointValue
      */
@@ -1384,67 +1370,6 @@ export interface ResourceAttributes {
      * @memberof ResourceAttributes
      */
     'public'?: boolean;
-}
-/**
- * A publishable unit of research.
- * @export
- * @interface Study
- */
-export interface Study {
-    /**
-     * Digital object identifier of the study.
-     * @type {string}
-     * @memberof Study
-     */
-    'doi'?: string | null;
-    /**
-     * Title of the study.
-     * @type {string}
-     * @memberof Study
-     */
-    'name'?: string | null;
-    /**
-     * Metadata associated with the study not covered by the other study attributes.
-     * @type {object}
-     * @memberof Study
-     */
-    'metadata'?: object | null;
-    /**
-     * Long form description of the study, typically the abstract.
-     * @type {string}
-     * @memberof Study
-     */
-    'description'?: string | null;
-    /**
-     * The journal/place of publication for the study.
-     * @type {string}
-     * @memberof Study
-     */
-    'publication'?: string | null;
-    /**
-     * If the study was published on PubMed, place the PubMed ID here.
-     * @type {string}
-     * @memberof Study
-     */
-    'pmid'?: string | null;
-    /**
-     * The authors on the publication of this study.
-     * @type {string}
-     * @memberof Study
-     */
-    'authors'?: string | null;
-    /**
-     * The year this study was published.
-     * @type {number}
-     * @memberof Study
-     */
-    'year'?: number | null;
-    /**
-     * The analyses making up the study. A study can have one or more analyses, since each analysis represents a contrast of conditions, where psychological, behavioral, pharmacological, or group based. Either represented as an analysis object or a string pointing to the location of the analysis object.
-     * @type {Array<Analysis | string>}
-     * @memberof Study
-     */
-    'analyses'?: Array<Analysis | string>;
 }
 /**
  * 
@@ -1527,11 +1452,72 @@ export interface StudyList {
  */
 export interface StudyRelationships {
     /**
-     * The analyses making up the study. A study can have one or more analyses, since each analysis represents a contrast of conditions, where psychological, behavioral, pharmacological, or group based. Either represented as an analysis object or a string pointing to the location of the analysis object.
-     * @type {Array<Analysis | string>}
+     * 
+     * @type {Array<AnalysisReturn | string>}
      * @memberof StudyRelationships
      */
-    'analyses'?: Array<Analysis | string>;
+    'analyses'?: Array<AnalysisReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudyRequest
+ */
+export interface StudyRequest {
+    /**
+     * Digital object identifier of the study.
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'doi'?: string | null;
+    /**
+     * Title of the study.
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'name'?: string | null;
+    /**
+     * Metadata associated with the study not covered by the other study attributes.
+     * @type {object}
+     * @memberof StudyRequest
+     */
+    'metadata'?: object | null;
+    /**
+     * Long form description of the study, typically the abstract.
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'description'?: string | null;
+    /**
+     * The journal/place of publication for the study.
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'publication'?: string | null;
+    /**
+     * If the study was published on PubMed, place the PubMed ID here.
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'pmid'?: string | null;
+    /**
+     * The authors on the publication of this study.
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'authors'?: string | null;
+    /**
+     * The year this study was published.
+     * @type {number}
+     * @memberof StudyRequest
+     */
+    'year'?: number | null;
+    /**
+     * 
+     * @type {Array<AnalysisReturn | string>}
+     * @memberof StudyRequest
+     */
+    'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
  * 
@@ -1643,49 +1629,6 @@ export interface StudyReturn {
     'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
- * A collection of studies (e.g., publications).
- * @export
- * @interface Studyset
- */
-export interface Studyset {
-    /**
-     * Descriptive and human readable name of the studyset.
-     * @type {string}
-     * @memberof Studyset
-     */
-    'name'?: string | null;
-    /**
-     * A longform description of the studyset.
-     * @type {string}
-     * @memberof Studyset
-     */
-    'description'?: string | null;
-    /**
-     * The journal/source the studyset is connected to if the studyset was published.
-     * @type {string}
-     * @memberof Studyset
-     */
-    'publication'?: string | null;
-    /**
-     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
-     * @type {string}
-     * @memberof Studyset
-     */
-    'doi'?: string | null;
-    /**
-     * If the article connected to the studyset was published on PubMed, then link the ID here.
-     * @type {string}
-     * @memberof Studyset
-     */
-    'pmid'?: string | null;
-    /**
-     * The collection of studies.
-     * @type {Array<Study | string>}
-     * @memberof Studyset
-     */
-    'studies'?: Array<Study | string>;
-}
-/**
  * 
  * @export
  * @interface StudysetBase
@@ -1748,11 +1691,54 @@ export interface StudysetList {
  */
 export interface StudysetRelationships {
     /**
-     * The collection of studies.
-     * @type {Array<Study | string>}
+     * 
+     * @type {Array<StudyReturn | string>}
      * @memberof StudysetRelationships
      */
-    'studies'?: Array<Study | string>;
+    'studies'?: Array<StudyReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetRequest
+ */
+export interface StudysetRequest {
+    /**
+     * Descriptive and human readable name of the studyset.
+     * @type {string}
+     * @memberof StudysetRequest
+     */
+    'name'?: string | null;
+    /**
+     * A longform description of the studyset.
+     * @type {string}
+     * @memberof StudysetRequest
+     */
+    'description'?: string | null;
+    /**
+     * The journal/source the studyset is connected to if the studyset was published.
+     * @type {string}
+     * @memberof StudysetRequest
+     */
+    'publication'?: string | null;
+    /**
+     * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
+     * @type {string}
+     * @memberof StudysetRequest
+     */
+    'doi'?: string | null;
+    /**
+     * If the article connected to the studyset was published on PubMed, then link the ID here.
+     * @type {string}
+     * @memberof StudysetRequest
+     */
+    'pmid'?: string | null;
+    /**
+     * 
+     * @type {Array<StudyReturn | string>}
+     * @memberof StudysetRequest
+     */
+    'studies'?: Array<StudyReturn | string>;
 }
 /**
  * 
@@ -2041,11 +2027,11 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
          * Update an existing analysis.
          * @summary PUT/update an analysis
          * @param {string} id 
-         * @param {Analysis} [analysis] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesIdPut: async (id: string, analysis?: Analysis, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesIdPut: async (id: string, analysisRequest?: AnalysisRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('analysesIdPut', 'id', id)
             const localVarPath = `/analyses/{id}`
@@ -2072,7 +2058,7 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(analysis, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(analysisRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2082,11 +2068,11 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * create an analysis
          * @summary POST/create an analysis
-         * @param {Analysis} [analysis] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesPost: async (analysis?: Analysis, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesPost: async (analysisRequest?: AnalysisRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2110,7 +2096,7 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(analysis, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(analysisRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2172,23 +2158,23 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
          * Update an existing analysis.
          * @summary PUT/update an analysis
          * @param {string} id 
-         * @param {Analysis} [analysis] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesIdPut(id: string, analysis?: Analysis, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesIdPut(id, analysis, options);
+        async analysesIdPut(id: string, analysisRequest?: AnalysisRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesIdPut(id, analysisRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * create an analysis
          * @summary POST/create an analysis
-         * @param {Analysis} [analysis] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesPost(analysis?: Analysis, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesPost(analysis, options);
+        async analysesPost(analysisRequest?: AnalysisRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesPost(analysisRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2243,22 +2229,22 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
          * Update an existing analysis.
          * @summary PUT/update an analysis
          * @param {string} id 
-         * @param {Analysis} [analysis] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesIdPut(id: string, analysis?: Analysis, options?: any): AxiosPromise<AnalysisReturn> {
-            return localVarFp.analysesIdPut(id, analysis, options).then((request) => request(axios, basePath));
+        analysesIdPut(id: string, analysisRequest?: AnalysisRequest, options?: any): AxiosPromise<AnalysisReturn> {
+            return localVarFp.analysesIdPut(id, analysisRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * create an analysis
          * @summary POST/create an analysis
-         * @param {Analysis} [analysis] 
+         * @param {AnalysisRequest} [analysisRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesPost(analysis?: Analysis, options?: any): AxiosPromise<AnalysisReturn> {
-            return localVarFp.analysesPost(analysis, options).then((request) => request(axios, basePath));
+        analysesPost(analysisRequest?: AnalysisRequest, options?: any): AxiosPromise<AnalysisReturn> {
+            return localVarFp.analysesPost(analysisRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2318,25 +2304,25 @@ export class AnalysesApi extends BaseAPI {
      * Update an existing analysis.
      * @summary PUT/update an analysis
      * @param {string} id 
-     * @param {Analysis} [analysis] 
+     * @param {AnalysisRequest} [analysisRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalysesApi
      */
-    public analysesIdPut(id: string, analysis?: Analysis, options?: AxiosRequestConfig) {
-        return AnalysesApiFp(this.configuration).analysesIdPut(id, analysis, options).then((request) => request(this.axios, this.basePath));
+    public analysesIdPut(id: string, analysisRequest?: AnalysisRequest, options?: AxiosRequestConfig) {
+        return AnalysesApiFp(this.configuration).analysesIdPut(id, analysisRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * create an analysis
      * @summary POST/create an analysis
-     * @param {Analysis} [analysis] 
+     * @param {AnalysisRequest} [analysisRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalysesApi
      */
-    public analysesPost(analysis?: Analysis, options?: AxiosRequestConfig) {
-        return AnalysesApiFp(this.configuration).analysesPost(analysis, options).then((request) => request(this.axios, this.basePath));
+    public analysesPost(analysisRequest?: AnalysisRequest, options?: AxiosRequestConfig) {
+        return AnalysesApiFp(this.configuration).analysesPost(analysisRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2463,11 +2449,11 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
          * edit an existing annotation
          * @summary Update an annotation
          * @param {string} id 
-         * @param {Annotation} [annotation] 
+         * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsIdPut: async (id: string, annotation?: Annotation, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsIdPut: async (id: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('annotationsIdPut', 'id', id)
             const localVarPath = `/annotations/{id}`
@@ -2494,7 +2480,7 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(annotation, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(annotationRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2506,11 +2492,11 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Post Annotation
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {Annotation} [annotation] 
+         * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotation?: Annotation, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotations/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2542,7 +2528,7 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(annotation, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(annotationRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2597,12 +2583,12 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
          * edit an existing annotation
          * @summary Update an annotation
          * @param {string} id 
-         * @param {Annotation} [annotation] 
+         * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsIdPut(id: string, annotation?: Annotation, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsIdPut(id, annotation, options);
+        async annotationsIdPut(id: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsIdPut(id, annotationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2610,12 +2596,12 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
          * @summary Post Annotation
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {Annotation} [annotation] 
+         * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotation?: Annotation, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsPost(source, sourceId, annotation, options);
+        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsPost(source, sourceId, annotationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2663,24 +2649,24 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
          * edit an existing annotation
          * @summary Update an annotation
          * @param {string} id 
-         * @param {Annotation} [annotation] 
+         * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsIdPut(id: string, annotation?: Annotation, options?: any): AxiosPromise<AnnotationReturn> {
-            return localVarFp.annotationsIdPut(id, annotation, options).then((request) => request(axios, basePath));
+        annotationsIdPut(id: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
+            return localVarFp.annotationsIdPut(id, annotationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Create an annotation
          * @summary Post Annotation
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {Annotation} [annotation] 
+         * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotation?: Annotation, options?: any): AxiosPromise<AnnotationReturn> {
-            return localVarFp.annotationsPost(source, sourceId, annotation, options).then((request) => request(axios, basePath));
+        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
+            return localVarFp.annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2733,13 +2719,13 @@ export class AnnotationsApi extends BaseAPI {
      * edit an existing annotation
      * @summary Update an annotation
      * @param {string} id 
-     * @param {Annotation} [annotation] 
+     * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnotationsApi
      */
-    public annotationsIdPut(id: string, annotation?: Annotation, options?: AxiosRequestConfig) {
-        return AnnotationsApiFp(this.configuration).annotationsIdPut(id, annotation, options).then((request) => request(this.axios, this.basePath));
+    public annotationsIdPut(id: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
+        return AnnotationsApiFp(this.configuration).annotationsIdPut(id, annotationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2747,13 +2733,13 @@ export class AnnotationsApi extends BaseAPI {
      * @summary Post Annotation
      * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
-     * @param {Annotation} [annotation] 
+     * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnotationsApi
      */
-    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotation?: Annotation, options?: AxiosRequestConfig) {
-        return AnnotationsApiFp(this.configuration).annotationsPost(source, sourceId, annotation, options).then((request) => request(this.axios, this.basePath));
+    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
+        return AnnotationsApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2905,11 +2891,11 @@ export const ConditionsApiAxiosParamCreator = function (configuration?: Configur
          * update a condition
          * @summary PUT/update a condition
          * @param {string} id 
-         * @param {Condition} [condition] 
+         * @param {ConditionRequest} [conditionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsIdPut: async (id: string, condition?: Condition, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        conditionsIdPut: async (id: string, conditionRequest?: ConditionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('conditionsIdPut', 'id', id)
             const localVarPath = `/conditions/{id}`
@@ -2936,7 +2922,7 @@ export const ConditionsApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(condition, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(conditionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2946,11 +2932,11 @@ export const ConditionsApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Create a condition
          * @summary POST/Create a condition
-         * @param {Condition} [condition] 
+         * @param {ConditionRequest} [conditionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsPost: async (condition?: Condition, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        conditionsPost: async (conditionRequest?: ConditionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/conditions/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2974,7 +2960,7 @@ export const ConditionsApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(condition, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(conditionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3034,23 +3020,23 @@ export const ConditionsApiFp = function(configuration?: Configuration) {
          * update a condition
          * @summary PUT/update a condition
          * @param {string} id 
-         * @param {Condition} [condition] 
+         * @param {ConditionRequest} [conditionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async conditionsIdPut(id: string, condition?: Condition, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsIdPut(id, condition, options);
+        async conditionsIdPut(id: string, conditionRequest?: ConditionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsIdPut(id, conditionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Create a condition
          * @summary POST/Create a condition
-         * @param {Condition} [condition] 
+         * @param {ConditionRequest} [conditionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async conditionsPost(condition?: Condition, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsPost(condition, options);
+        async conditionsPost(conditionRequest?: ConditionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsPost(conditionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3103,22 +3089,22 @@ export const ConditionsApiFactory = function (configuration?: Configuration, bas
          * update a condition
          * @summary PUT/update a condition
          * @param {string} id 
-         * @param {Condition} [condition] 
+         * @param {ConditionRequest} [conditionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsIdPut(id: string, condition?: Condition, options?: any): AxiosPromise<ConditionReturn> {
-            return localVarFp.conditionsIdPut(id, condition, options).then((request) => request(axios, basePath));
+        conditionsIdPut(id: string, conditionRequest?: ConditionRequest, options?: any): AxiosPromise<ConditionReturn> {
+            return localVarFp.conditionsIdPut(id, conditionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Create a condition
          * @summary POST/Create a condition
-         * @param {Condition} [condition] 
+         * @param {ConditionRequest} [conditionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsPost(condition?: Condition, options?: any): AxiosPromise<ConditionReturn> {
-            return localVarFp.conditionsPost(condition, options).then((request) => request(axios, basePath));
+        conditionsPost(conditionRequest?: ConditionRequest, options?: any): AxiosPromise<ConditionReturn> {
+            return localVarFp.conditionsPost(conditionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3176,25 +3162,25 @@ export class ConditionsApi extends BaseAPI {
      * update a condition
      * @summary PUT/update a condition
      * @param {string} id 
-     * @param {Condition} [condition] 
+     * @param {ConditionRequest} [conditionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConditionsApi
      */
-    public conditionsIdPut(id: string, condition?: Condition, options?: AxiosRequestConfig) {
-        return ConditionsApiFp(this.configuration).conditionsIdPut(id, condition, options).then((request) => request(this.axios, this.basePath));
+    public conditionsIdPut(id: string, conditionRequest?: ConditionRequest, options?: AxiosRequestConfig) {
+        return ConditionsApiFp(this.configuration).conditionsIdPut(id, conditionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a condition
      * @summary POST/Create a condition
-     * @param {Condition} [condition] 
+     * @param {ConditionRequest} [conditionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConditionsApi
      */
-    public conditionsPost(condition?: Condition, options?: AxiosRequestConfig) {
-        return ConditionsApiFp(this.configuration).conditionsPost(condition, options).then((request) => request(this.axios, this.basePath));
+    public conditionsPost(conditionRequest?: ConditionRequest, options?: AxiosRequestConfig) {
+        return ConditionsApiFp(this.configuration).conditionsPost(conditionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3356,11 +3342,11 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
          * Update a specific image.
          * @summary PUT/update an image
          * @param {string} id 
-         * @param {Image} [image] 
+         * @param {ImageRequest} [imageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesIdPut: async (id: string, image?: Image, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesIdPut: async (id: string, imageRequest?: ImageRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('imagesIdPut', 'id', id)
             const localVarPath = `/images/{id}`
@@ -3387,7 +3373,7 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(image, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(imageRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3397,11 +3383,11 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Create an image
          * @summary POST/create an image
-         * @param {Image} [image] 
+         * @param {ImageRequest} [imageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesPost: async (image?: Image, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesPost: async (imageRequest?: ImageRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/images/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3425,7 +3411,7 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(image, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(imageRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3487,23 +3473,23 @@ export const ImagesApiFp = function(configuration?: Configuration) {
          * Update a specific image.
          * @summary PUT/update an image
          * @param {string} id 
-         * @param {Image} [image] 
+         * @param {ImageRequest} [imageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesIdPut(id: string, image?: Image, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesIdPut(id, image, options);
+        async imagesIdPut(id: string, imageRequest?: ImageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesIdPut(id, imageRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Create an image
          * @summary POST/create an image
-         * @param {Image} [image] 
+         * @param {ImageRequest} [imageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesPost(image?: Image, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesPost(image, options);
+        async imagesPost(imageRequest?: ImageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesPost(imageRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3558,22 +3544,22 @@ export const ImagesApiFactory = function (configuration?: Configuration, basePat
          * Update a specific image.
          * @summary PUT/update an image
          * @param {string} id 
-         * @param {Image} [image] 
+         * @param {ImageRequest} [imageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesIdPut(id: string, image?: Image, options?: any): AxiosPromise<ImageReturn> {
-            return localVarFp.imagesIdPut(id, image, options).then((request) => request(axios, basePath));
+        imagesIdPut(id: string, imageRequest?: ImageRequest, options?: any): AxiosPromise<ImageReturn> {
+            return localVarFp.imagesIdPut(id, imageRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Create an image
          * @summary POST/create an image
-         * @param {Image} [image] 
+         * @param {ImageRequest} [imageRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesPost(image?: Image, options?: any): AxiosPromise<ImageReturn> {
-            return localVarFp.imagesPost(image, options).then((request) => request(axios, basePath));
+        imagesPost(imageRequest?: ImageRequest, options?: any): AxiosPromise<ImageReturn> {
+            return localVarFp.imagesPost(imageRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3633,25 +3619,25 @@ export class ImagesApi extends BaseAPI {
      * Update a specific image.
      * @summary PUT/update an image
      * @param {string} id 
-     * @param {Image} [image] 
+     * @param {ImageRequest} [imageRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ImagesApi
      */
-    public imagesIdPut(id: string, image?: Image, options?: AxiosRequestConfig) {
-        return ImagesApiFp(this.configuration).imagesIdPut(id, image, options).then((request) => request(this.axios, this.basePath));
+    public imagesIdPut(id: string, imageRequest?: ImageRequest, options?: AxiosRequestConfig) {
+        return ImagesApiFp(this.configuration).imagesIdPut(id, imageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create an image
      * @summary POST/create an image
-     * @param {Image} [image] 
+     * @param {ImageRequest} [imageRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ImagesApi
      */
-    public imagesPost(image?: Image, options?: AxiosRequestConfig) {
-        return ImagesApiFp(this.configuration).imagesPost(image, options).then((request) => request(this.axios, this.basePath));
+    public imagesPost(imageRequest?: ImageRequest, options?: AxiosRequestConfig) {
+        return ImagesApiFp(this.configuration).imagesPost(imageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3768,11 +3754,11 @@ export const PointsApiAxiosParamCreator = function (configuration?: Configuratio
          * Update a particular MRI coordinate.
          * @summary PUT/update a point
          * @param {string} id 
-         * @param {Point} [point] 
+         * @param {PointRequest} [pointRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsIdPut: async (id: string, point?: Point, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pointsIdPut: async (id: string, pointRequest?: PointRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('pointsIdPut', 'id', id)
             const localVarPath = `/points/{id}`
@@ -3799,7 +3785,7 @@ export const PointsApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(point, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(pointRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3809,11 +3795,11 @@ export const PointsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * add a point to an analysis
          * @summary POST Points
-         * @param {Point} [point] 
+         * @param {PointRequest} [pointRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsPost: async (point?: Point, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pointsPost: async (pointRequest?: PointRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/points/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3837,7 +3823,7 @@ export const PointsApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(point, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(pointRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3890,23 +3876,23 @@ export const PointsApiFp = function(configuration?: Configuration) {
          * Update a particular MRI coordinate.
          * @summary PUT/update a point
          * @param {string} id 
-         * @param {Point} [point] 
+         * @param {PointRequest} [pointRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pointsIdPut(id: string, point?: Point, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsIdPut(id, point, options);
+        async pointsIdPut(id: string, pointRequest?: PointRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsIdPut(id, pointRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * add a point to an analysis
          * @summary POST Points
-         * @param {Point} [point] 
+         * @param {PointRequest} [pointRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pointsPost(point?: Point, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsPost(point, options);
+        async pointsPost(pointRequest?: PointRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsPost(pointRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3952,22 +3938,22 @@ export const PointsApiFactory = function (configuration?: Configuration, basePat
          * Update a particular MRI coordinate.
          * @summary PUT/update a point
          * @param {string} id 
-         * @param {Point} [point] 
+         * @param {PointRequest} [pointRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsIdPut(id: string, point?: Point, options?: any): AxiosPromise<PointReturn> {
-            return localVarFp.pointsIdPut(id, point, options).then((request) => request(axios, basePath));
+        pointsIdPut(id: string, pointRequest?: PointRequest, options?: any): AxiosPromise<PointReturn> {
+            return localVarFp.pointsIdPut(id, pointRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * add a point to an analysis
          * @summary POST Points
-         * @param {Point} [point] 
+         * @param {PointRequest} [pointRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsPost(point?: Point, options?: any): AxiosPromise<PointReturn> {
-            return localVarFp.pointsPost(point, options).then((request) => request(axios, basePath));
+        pointsPost(pointRequest?: PointRequest, options?: any): AxiosPromise<PointReturn> {
+            return localVarFp.pointsPost(pointRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4018,25 +4004,25 @@ export class PointsApi extends BaseAPI {
      * Update a particular MRI coordinate.
      * @summary PUT/update a point
      * @param {string} id 
-     * @param {Point} [point] 
+     * @param {PointRequest} [pointRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PointsApi
      */
-    public pointsIdPut(id: string, point?: Point, options?: AxiosRequestConfig) {
-        return PointsApiFp(this.configuration).pointsIdPut(id, point, options).then((request) => request(this.axios, this.basePath));
+    public pointsIdPut(id: string, pointRequest?: PointRequest, options?: AxiosRequestConfig) {
+        return PointsApiFp(this.configuration).pointsIdPut(id, pointRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * add a point to an analysis
      * @summary POST Points
-     * @param {Point} [point] 
+     * @param {PointRequest} [pointRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PointsApi
      */
-    public pointsPost(point?: Point, options?: AxiosRequestConfig) {
-        return PointsApiFp(this.configuration).pointsPost(point, options).then((request) => request(this.axios, this.basePath));
+    public pointsPost(pointRequest?: PointRequest, options?: AxiosRequestConfig) {
+        return PointsApiFp(this.configuration).pointsPost(pointRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4232,11 +4218,11 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * Update a study.
          * @summary PUT/update a study
          * @param {string} id 
-         * @param {Study} [study] 
+         * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesIdPut: async (id: string, study?: Study, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesIdPut: async (id: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studiesIdPut', 'id', id)
             const localVarPath = `/studies/{id}`
@@ -4263,7 +4249,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(study, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(studyRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4275,11 +4261,11 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @summary POST/create a study
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {Study} [study] 
+         * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, study?: Study, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4311,7 +4297,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(study, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(studyRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4379,12 +4365,12 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * Update a study.
          * @summary PUT/update a study
          * @param {string} id 
-         * @param {Study} [study] 
+         * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesIdPut(id: string, study?: Study, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesIdPut(id, study, options);
+        async studiesIdPut(id: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesIdPut(id, studyRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4392,12 +4378,12 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @summary POST/create a study
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {Study} [study] 
+         * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, study?: Study, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesPost(source, sourceId, study, options);
+        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesPost(source, sourceId, studyRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4458,24 +4444,24 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * Update a study.
          * @summary PUT/update a study
          * @param {string} id 
-         * @param {Study} [study] 
+         * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesIdPut(id: string, study?: Study, options?: any): AxiosPromise<StudyReturn> {
-            return localVarFp.studiesIdPut(id, study, options).then((request) => request(axios, basePath));
+        studiesIdPut(id: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
+            return localVarFp.studiesIdPut(id, studyRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Create a study
          * @summary POST/create a study
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {Study} [study] 
+         * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, study?: Study, options?: any): AxiosPromise<StudyReturn> {
-            return localVarFp.studiesPost(source, sourceId, study, options).then((request) => request(axios, basePath));
+        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
+            return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4541,13 +4527,13 @@ export class StudiesApi extends BaseAPI {
      * Update a study.
      * @summary PUT/update a study
      * @param {string} id 
-     * @param {Study} [study] 
+     * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesIdPut(id: string, study?: Study, options?: AxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).studiesIdPut(id, study, options).then((request) => request(this.axios, this.basePath));
+    public studiesIdPut(id: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).studiesIdPut(id, studyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4555,13 +4541,13 @@ export class StudiesApi extends BaseAPI {
      * @summary POST/create a study
      * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
-     * @param {Study} [study] 
+     * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, study?: Study, options?: AxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).studiesPost(source, sourceId, study, options).then((request) => request(this.axios, this.basePath));
+    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4752,11 +4738,11 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
          * Update a studyset.
          * @summary PUT/update a studyset
          * @param {string} id 
-         * @param {StudysetReturn} [studysetReturn] 
+         * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdPut: async (id: string, studysetReturn?: StudysetReturn, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsIdPut: async (id: string, studysetRequest?: StudysetRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studysetsIdPut', 'id', id)
             const localVarPath = `/studysets/{id}`
@@ -4783,7 +4769,7 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(studysetReturn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(studysetRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4793,11 +4779,11 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Create a studyset.
          * @summary POST/create a studyset
-         * @param {StudysetReturn} [studysetReturn] 
+         * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost: async (studysetReturn?: StudysetReturn, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsPost: async (studysetRequest?: StudysetRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4821,7 +4807,7 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(studysetReturn, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(studysetRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4888,23 +4874,23 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
          * Update a studyset.
          * @summary PUT/update a studyset
          * @param {string} id 
-         * @param {StudysetReturn} [studysetReturn] 
+         * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsIdPut(id: string, studysetReturn?: StudysetReturn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdPut(id, studysetReturn, options);
+        async studysetsIdPut(id: string, studysetRequest?: StudysetRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdPut(id, studysetRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Create a studyset.
          * @summary POST/create a studyset
-         * @param {StudysetReturn} [studysetReturn] 
+         * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsPost(studysetReturn?: StudysetReturn, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(studysetReturn, options);
+        async studysetsPost(studysetRequest?: StudysetRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(studysetRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4964,22 +4950,22 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
          * Update a studyset.
          * @summary PUT/update a studyset
          * @param {string} id 
-         * @param {StudysetReturn} [studysetReturn] 
+         * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdPut(id: string, studysetReturn?: StudysetReturn, options?: any): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsIdPut(id, studysetReturn, options).then((request) => request(axios, basePath));
+        studysetsIdPut(id: string, studysetRequest?: StudysetRequest, options?: any): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsIdPut(id, studysetRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Create a studyset.
          * @summary POST/create a studyset
-         * @param {StudysetReturn} [studysetReturn] 
+         * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost(studysetReturn?: StudysetReturn, options?: any): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsPost(studysetReturn, options).then((request) => request(axios, basePath));
+        studysetsPost(studysetRequest?: StudysetRequest, options?: any): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsPost(studysetRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5044,25 +5030,25 @@ export class StudysetsApi extends BaseAPI {
      * Update a studyset.
      * @summary PUT/update a studyset
      * @param {string} id 
-     * @param {StudysetReturn} [studysetReturn] 
+     * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsIdPut(id: string, studysetReturn?: StudysetReturn, options?: AxiosRequestConfig) {
-        return StudysetsApiFp(this.configuration).studysetsIdPut(id, studysetReturn, options).then((request) => request(this.axios, this.basePath));
+    public studysetsIdPut(id: string, studysetRequest?: StudysetRequest, options?: AxiosRequestConfig) {
+        return StudysetsApiFp(this.configuration).studysetsIdPut(id, studysetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a studyset.
      * @summary POST/create a studyset
-     * @param {StudysetReturn} [studysetReturn] 
+     * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsPost(studysetReturn?: StudysetReturn, options?: AxiosRequestConfig) {
-        return StudysetsApiFp(this.configuration).studysetsPost(studysetReturn, options).then((request) => request(this.axios, this.basePath));
+    public studysetsPost(studysetRequest?: StudysetRequest, options?: AxiosRequestConfig) {
+        return StudysetsApiFp(this.configuration).studysetsPost(studysetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
