@@ -310,7 +310,7 @@ export interface AnnotationRelationships {
  * @type AnnotationRequest
  * @export
  */
-export type AnnotationRequest = AnnotationBase & AnnotationRelationships | AnnotationExport;
+export type AnnotationRequest = AnnotationBase & AnnotationRelationships & NestedPutResources | AnnotationExport;
 
 /**
  * @type AnnotationReturn
@@ -915,6 +915,19 @@ export interface Metadata {
      * @memberof Metadata
      */
     'unique_count'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface NestedPutAttributes
+ */
+export interface NestedPutAttributes {
+    /**
+     * 
+     * @type {string}
+     * @memberof NestedPutAttributes
+     */
+    'id'?: string;
 }
 /**
  * 
