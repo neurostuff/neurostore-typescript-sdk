@@ -79,22 +79,22 @@ export interface AnalysisRelationships {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageReturn | string>}
+     * @type {Array<ImageReturn | ImageRequest | string>}
      * @memberof AnalysisRelationships
      */
-    'images'?: Array<ImageReturn | string>;
+    'images'?: Array<ImageReturn | ImageRequest | string>;
     /**
      * 
-     * @type {Array<PointReturn | string>}
+     * @type {Array<PointReturn | PointRequest | string>}
      * @memberof AnalysisRelationships
      */
-    'points'?: Array<PointReturn | string>;
+    'points'?: Array<PointReturn | PointRequest | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | string>}
+     * @type {Array<ConditionReturn | string | ConditionRequest>}
      * @memberof AnalysisRelationships
      */
-    'conditions'?: Array<ConditionReturn | string>;
+    'conditions'?: Array<ConditionReturn | string | ConditionRequest>;
 }
 /**
  * 
@@ -128,22 +128,22 @@ export interface AnalysisRequest {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageReturn | string>}
+     * @type {Array<ImageReturn | ImageRequest | string>}
      * @memberof AnalysisRequest
      */
-    'images'?: Array<ImageReturn | string>;
+    'images'?: Array<ImageReturn | ImageRequest | string>;
     /**
      * 
-     * @type {Array<PointReturn | string>}
+     * @type {Array<PointReturn | PointRequest | string>}
      * @memberof AnalysisRequest
      */
-    'points'?: Array<PointReturn | string>;
+    'points'?: Array<PointReturn | PointRequest | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | string>}
+     * @type {Array<ConditionReturn | string | ConditionRequest>}
      * @memberof AnalysisRequest
      */
-    'conditions'?: Array<ConditionReturn | string>;
+    'conditions'?: Array<ConditionReturn | string | ConditionRequest>;
 }
 /**
  * 
@@ -207,22 +207,22 @@ export interface AnalysisReturn {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageReturn | string>}
+     * @type {Array<ImageReturn | ImageRequest | string>}
      * @memberof AnalysisReturn
      */
-    'images'?: Array<ImageReturn | string>;
+    'images'?: Array<ImageReturn | ImageRequest | string>;
     /**
      * 
-     * @type {Array<PointReturn | string>}
+     * @type {Array<PointReturn | PointRequest | string>}
      * @memberof AnalysisReturn
      */
-    'points'?: Array<PointReturn | string>;
+    'points'?: Array<PointReturn | PointRequest | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | string>}
+     * @type {Array<ConditionReturn | string | ConditionRequest>}
      * @memberof AnalysisReturn
      */
-    'conditions'?: Array<ConditionReturn | string>;
+    'conditions'?: Array<ConditionReturn | string | ConditionRequest>;
 }
 /**
  * 
@@ -1453,10 +1453,10 @@ export interface StudyList {
 export interface StudyRelationships {
     /**
      * 
-     * @type {Array<AnalysisReturn | string>}
+     * @type {Array<AnalysisReturn | StudyRequest | string>}
      * @memberof StudyRelationships
      */
-    'analyses'?: Array<AnalysisReturn | string>;
+    'analyses'?: Array<AnalysisReturn | StudyRequest | string>;
 }
 /**
  * 
@@ -1514,10 +1514,10 @@ export interface StudyRequest {
     'year'?: number | null;
     /**
      * 
-     * @type {Array<AnalysisReturn | string>}
+     * @type {Array<AnalysisReturn | StudyRequest | string>}
      * @memberof StudyRequest
      */
-    'analyses'?: Array<AnalysisReturn | string>;
+    'analyses'?: Array<AnalysisReturn | StudyRequest | string>;
 }
 /**
  * 
@@ -1623,10 +1623,10 @@ export interface StudyReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<AnalysisReturn | string>}
+     * @type {Array<AnalysisReturn | StudyRequest | string>}
      * @memberof StudyReturn
      */
-    'analyses'?: Array<AnalysisReturn | string>;
+    'analyses'?: Array<AnalysisReturn | StudyRequest | string>;
 }
 /**
  * 
@@ -1692,10 +1692,10 @@ export interface StudysetList {
 export interface StudysetRelationships {
     /**
      * 
-     * @type {Array<StudyReturn | string>}
+     * @type {Array<StudyReturn | StudyRequest | string>}
      * @memberof StudysetRelationships
      */
-    'studies'?: Array<StudyReturn | string>;
+    'studies'?: Array<StudyReturn | StudyRequest | string>;
 }
 /**
  * 
@@ -1735,10 +1735,10 @@ export interface StudysetRequest {
     'pmid'?: string | null;
     /**
      * 
-     * @type {Array<StudyReturn | string>}
+     * @type {Array<StudyReturn | StudyRequest | string>}
      * @memberof StudysetRequest
      */
-    'studies'?: Array<StudyReturn | string>;
+    'studies'?: Array<StudyReturn | StudyRequest | string>;
 }
 /**
  * 
@@ -1826,10 +1826,10 @@ export interface StudysetReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<StudyReturn | string>}
+     * @type {Array<StudyReturn | StudyRequest | string>}
      * @memberof StudysetReturn
      */
-    'studies'?: Array<StudyReturn | string>;
+    'studies'?: Array<StudyReturn | StudyRequest | string>;
 }
 /**
  * 
