@@ -145,11 +145,17 @@ export interface AnalysisRequest {
      */
     'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
     /**
-     * 
+     * short UUID specifying the location of this resource
      * @type {string}
      * @memberof AnalysisRequest
      */
     'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof AnalysisRequest
+     */
+    'public'?: boolean;
 }
 /**
  * 
@@ -176,31 +182,31 @@ export interface AnalysisReturn {
      */
     'weights'?: Array<number>;
     /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'updated_at': string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'user': string | null;
+    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof AnalysisReturn
      */
     'id': string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof AnalysisReturn
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof AnalysisReturn
-     */
-    'user'?: string | null;
-    /**
-     * 
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof AnalysisReturn
      */
@@ -316,7 +322,7 @@ export interface AnnotationRelationships {
  * @type AnnotationRequest
  * @export
  */
-export type AnnotationRequest = AnnotationBase & AnnotationRelationships & NestedPutAttributes | AnnotationExport;
+export type AnnotationRequest = AnnotationBase & AnnotationRelationships & WriteableResourceAttributes | AnnotationExport;
 
 /**
  * @type AnnotationReturn
@@ -406,11 +412,17 @@ export interface ConditionRequest {
      */
     'description'?: string | null;
     /**
-     * 
+     * short UUID specifying the location of this resource
      * @type {string}
      * @memberof ConditionRequest
      */
     'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof ConditionRequest
+     */
+    'public'?: boolean;
 }
 /**
  * 
@@ -431,31 +443,31 @@ export interface ConditionReturn {
      */
     'description'?: string | null;
     /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof ConditionReturn
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConditionReturn
+     */
+    'updated_at': string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof ConditionReturn
+     */
+    'user': string | null;
+    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof ConditionReturn
      */
     'id': string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof ConditionReturn
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConditionReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof ConditionReturn
-     */
-    'user'?: string | null;
-    /**
-     * 
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof ConditionReturn
      */
@@ -486,31 +498,31 @@ export interface Entity {
      */
     'analysis'?: string;
     /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof Entity
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Entity
+     */
+    'updated_at': string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof Entity
+     */
+    'user': string | null;
+    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof Entity
      */
     'id': string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof Entity
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Entity
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof Entity
-     */
-    'user'?: string | null;
-    /**
-     * 
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof Entity
      */
@@ -711,11 +723,17 @@ export interface ImageRequest {
      */
     'analysis_name'?: string | null;
     /**
-     * 
+     * short UUID specifying the location of this resource
      * @type {string}
      * @memberof ImageRequest
      */
     'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof ImageRequest
+     */
+    'public'?: boolean;
 }
 /**
  * 
@@ -760,31 +778,31 @@ export interface ImageReturn {
      */
     'add_date'?: string | null;
     /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'updated_at': string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'user': string | null;
+    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof ImageReturn
      */
     'id': string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'user'?: string | null;
-    /**
-     * 
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof ImageReturn
      */
@@ -973,11 +991,17 @@ export interface NoteCollectionRequest {
      */
     'note'?: object | null;
     /**
-     * 
+     * short UUID specifying the location of this resource
      * @type {string}
      * @memberof NoteCollectionRequest
      */
     'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof NoteCollectionRequest
+     */
+    'public'?: boolean;
 }
 /**
  * 
@@ -1255,11 +1279,17 @@ export interface PointRequest {
      */
     'entities'?: Array<Entity>;
     /**
-     * 
+     * short UUID specifying the location of this resource
      * @type {string}
      * @memberof PointRequest
      */
     'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof PointRequest
+     */
+    'public'?: boolean;
 }
 /**
  * 
@@ -1292,31 +1322,31 @@ export interface PointReturn {
      */
     'label_id'?: string | null;
     /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'updated_at': string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'user': string | null;
+    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof PointReturn
      */
     'id': string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof PointReturn
-     */
-    'user'?: string | null;
-    /**
-     * 
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof PointReturn
      */
@@ -1380,15 +1410,34 @@ export interface PointValue {
 /**
  * common resource attributes
  * @export
+ * @interface ReadableResourceAttributes
+ */
+export interface ReadableResourceAttributes {
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof ReadableResourceAttributes
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReadableResourceAttributes
+     */
+    'updated_at'?: string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof ReadableResourceAttributes
+     */
+    'user'?: string | null;
+}
+/**
+ * 
+ * @export
  * @interface ResourceAttributes
  */
 export interface ResourceAttributes {
-    /**
-     * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof ResourceAttributes
-     */
-    'id': string;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -1408,7 +1457,13 @@ export interface ResourceAttributes {
      */
     'user'?: string | null;
     /**
-     * 
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof ResourceAttributes
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof ResourceAttributes
      */
@@ -1562,11 +1617,17 @@ export interface StudyRequest {
      */
     'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
     /**
-     * 
+     * short UUID specifying the location of this resource
      * @type {string}
      * @memberof StudyRequest
      */
     'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof StudyRequest
+     */
+    'public'?: boolean;
 }
 /**
  * 
@@ -1623,31 +1684,31 @@ export interface StudyReturn {
      */
     'year'?: number | null;
     /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'updated_at': string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'user': string | null;
+    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof StudyReturn
      */
     'id': string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof StudyReturn
-     */
-    'user'?: string | null;
-    /**
-     * 
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof StudyReturn
      */
@@ -1788,6 +1849,18 @@ export interface StudysetRequest {
      * @memberof StudysetRequest
      */
     'studies'?: Array<StudyReturn | StudyRequest | string>;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof StudysetRequest
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof StudysetRequest
+     */
+    'public'?: boolean;
 }
 /**
  * 
@@ -1826,31 +1899,31 @@ export interface StudysetReturn {
      */
     'pmid'?: string | null;
     /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'created_at': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'updated_at': string | null;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'user': string | null;
+    /**
      * short UUID specifying the location of this resource
      * @type {string}
      * @memberof StudysetReturn
      */
     'id': string;
     /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof StudysetReturn
-     */
-    'created_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof StudysetReturn
-     */
-    'user'?: string | null;
-    /**
-     * 
+     * whether the resource is listed in public searches or not
      * @type {boolean}
      * @memberof StudysetReturn
      */
@@ -1917,6 +1990,25 @@ export interface UserList {
      * @memberof UserList
      */
     'metadata'?: Metadata;
+}
+/**
+ * common resource attributes
+ * @export
+ * @interface WriteableResourceAttributes
+ */
+export interface WriteableResourceAttributes {
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof WriteableResourceAttributes
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof WriteableResourceAttributes
+     */
+    'public'?: boolean;
 }
 
 /**
