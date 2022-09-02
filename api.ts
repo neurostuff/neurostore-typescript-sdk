@@ -188,7 +188,7 @@ export interface AnalysisReturn {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof AnalysisReturn
      */
@@ -299,7 +299,7 @@ export interface AnnotationBase {
     'note_keys'?: object | null;
 }
 /**
- * 
+ * exporting an annotation as a CSV for easier editing
  * @export
  * @interface AnnotationExport
  */
@@ -311,7 +311,7 @@ export interface AnnotationExport {
      */
     'metadata'?: object | null;
     /**
-     * 
+     * annotation object expressed as a CSV
      * @type {string}
      * @memberof AnnotationExport
      */
@@ -493,7 +493,7 @@ export interface ConditionReturn {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof ConditionReturn
      */
@@ -548,7 +548,7 @@ export interface Entity {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof Entity
      */
@@ -822,7 +822,7 @@ export interface ImageReturn {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof ImageReturn
      */
@@ -1366,7 +1366,7 @@ export interface PointReturn {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof PointReturn
      */
@@ -1446,7 +1446,7 @@ export interface PointValue {
     'value'?: number | null;
 }
 /**
- * common resource attributes
+ * common readable resource attributes
  * @export
  * @interface ReadableResourceAttributes
  */
@@ -1458,14 +1458,14 @@ export interface ReadableResourceAttributes {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof ReadableResourceAttributes
      */
     'updated_at'?: string | null;
 }
 /**
- * 
+ * common attributes for user owned resources
  * @export
  * @interface ResourceAttributes
  */
@@ -1477,7 +1477,7 @@ export interface ResourceAttributes {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof ResourceAttributes
      */
@@ -1722,7 +1722,7 @@ export interface StudyReturn {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof StudyReturn
      */
@@ -1950,7 +1950,7 @@ export interface StudysetReturn {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof StudysetReturn
      */
@@ -2063,7 +2063,7 @@ export interface UserResourceAttributes {
     'user'?: string | null;
 }
 /**
- * 
+ * common resource attributes not tied to a specific user
  * @export
  * @interface UserlessResourceAttributes
  */
@@ -2075,7 +2075,7 @@ export interface UserlessResourceAttributes {
      */
     'created_at'?: string;
     /**
-     * 
+     * when was the resource last modified/updated.
      * @type {string}
      * @memberof UserlessResourceAttributes
      */
