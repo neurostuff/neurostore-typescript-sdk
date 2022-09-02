@@ -68,37 +68,6 @@ export interface AnalysisList {
 /**
  * 
  * @export
- * @interface AnalysisRelationships
- */
-export interface AnalysisRelationships {
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisRelationships
-     */
-    'study'?: string;
-    /**
-     * 
-     * @type {Array<ImageReturn | ImageRequest | string>}
-     * @memberof AnalysisRelationships
-     */
-    'images'?: Array<ImageReturn | ImageRequest | string>;
-    /**
-     * 
-     * @type {Array<PointReturn | PointRequest | string>}
-     * @memberof AnalysisRelationships
-     */
-    'points'?: Array<PointReturn | PointRequest | string>;
-    /**
-     * 
-     * @type {Array<ConditionReturn | ConditionRequest | string>}
-     * @memberof AnalysisRelationships
-     */
-    'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
-}
-/**
- * 
- * @export
  * @interface AnalysisRequest
  */
 export interface AnalysisRequest {
@@ -128,22 +97,22 @@ export interface AnalysisRequest {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageReturn | ImageRequest | string>}
+     * @type {Array<ImageRequest | string>}
      * @memberof AnalysisRequest
      */
-    'images'?: Array<ImageReturn | ImageRequest | string>;
+    'images'?: Array<ImageRequest | string>;
     /**
      * 
-     * @type {Array<PointReturn | PointRequest | string>}
+     * @type {Array<PointRequest | string>}
      * @memberof AnalysisRequest
      */
-    'points'?: Array<PointReturn | PointRequest | string>;
+    'points'?: Array<PointRequest | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | ConditionRequest | string>}
+     * @type {Array<ConditionRequest | string>}
      * @memberof AnalysisRequest
      */
-    'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
+    'conditions'?: Array<ConditionRequest | string>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -156,6 +125,37 @@ export interface AnalysisRequest {
      * @memberof AnalysisRequest
      */
     'public'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AnalysisRequestRelationships
+ */
+export interface AnalysisRequestRelationships {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisRequestRelationships
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {Array<ImageRequest | string>}
+     * @memberof AnalysisRequestRelationships
+     */
+    'images'?: Array<ImageRequest | string>;
+    /**
+     * 
+     * @type {Array<PointRequest | string>}
+     * @memberof AnalysisRequestRelationships
+     */
+    'points'?: Array<PointRequest | string>;
+    /**
+     * 
+     * @type {Array<ConditionRequest | string>}
+     * @memberof AnalysisRequestRelationships
+     */
+    'conditions'?: Array<ConditionRequest | string>;
 }
 /**
  * 
@@ -219,22 +219,53 @@ export interface AnalysisReturn {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageReturn | ImageRequest | string>}
+     * @type {Array<ImageReturn | string>}
      * @memberof AnalysisReturn
      */
-    'images'?: Array<ImageReturn | ImageRequest | string>;
+    'images'?: Array<ImageReturn | string>;
     /**
      * 
-     * @type {Array<PointReturn | PointRequest | string>}
+     * @type {Array<PointReturn | string>}
      * @memberof AnalysisReturn
      */
-    'points'?: Array<PointReturn | PointRequest | string>;
+    'points'?: Array<PointReturn | string>;
     /**
      * 
-     * @type {Array<ConditionReturn | ConditionRequest | string>}
+     * @type {Array<ConditionReturn | string>}
      * @memberof AnalysisReturn
      */
-    'conditions'?: Array<ConditionReturn | ConditionRequest | string>;
+    'conditions'?: Array<ConditionReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface AnalysisReturnRelationships
+ */
+export interface AnalysisReturnRelationships {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturnRelationships
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {Array<ImageReturn | string>}
+     * @memberof AnalysisReturnRelationships
+     */
+    'images'?: Array<ImageReturn | string>;
+    /**
+     * 
+     * @type {Array<PointReturn | string>}
+     * @memberof AnalysisReturnRelationships
+     */
+    'points'?: Array<PointReturn | string>;
+    /**
+     * 
+     * @type {Array<ConditionReturn | string>}
+     * @memberof AnalysisReturnRelationships
+     */
+    'conditions'?: Array<ConditionReturn | string>;
 }
 /**
  * 
@@ -306,30 +337,43 @@ export interface AnnotationList {
     'metadata'?: Metadata;
 }
 /**
- * 
- * @export
- * @interface AnnotationRelationships
- */
-export interface AnnotationRelationships {
-    /**
-     * 
-     * @type {Array<NoteCollectionReturn | NoteCollectionRequest | string>}
-     * @memberof AnnotationRelationships
-     */
-    'notes'?: Array<NoteCollectionReturn | NoteCollectionRequest | string>;
-}
-/**
  * @type AnnotationRequest
  * @export
  */
-export type AnnotationRequest = AnnotationBase & AnnotationRelationships & WriteableResourceAttributes | AnnotationExport;
+export type AnnotationRequest = AnnotationBase & AnnotationRequestRelationships & WriteableResourceAttributes | AnnotationExport;
 
+/**
+ * 
+ * @export
+ * @interface AnnotationRequestRelationships
+ */
+export interface AnnotationRequestRelationships {
+    /**
+     * 
+     * @type {Array<NoteCollectionRequest | string>}
+     * @memberof AnnotationRequestRelationships
+     */
+    'notes'?: Array<NoteCollectionRequest | string>;
+}
 /**
  * @type AnnotationReturn
  * @export
  */
-export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & AnnotationRelationships | AnnotationExport;
+export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & AnnotationReturnRelationships | AnnotationExport;
 
+/**
+ * 
+ * @export
+ * @interface AnnotationReturnRelationships
+ */
+export interface AnnotationReturnRelationships {
+    /**
+     * 
+     * @type {Array<NoteCollectionReturn | string>}
+     * @memberof AnnotationReturnRelationships
+     */
+    'notes'?: Array<NoteCollectionReturn | string>;
+}
 /**
  * 
  * @export
@@ -1546,19 +1590,6 @@ export interface StudyList {
 /**
  * 
  * @export
- * @interface StudyRelationships
- */
-export interface StudyRelationships {
-    /**
-     * 
-     * @type {Array<AnalysisReturn | AnalysisRequest | string>}
-     * @memberof StudyRelationships
-     */
-    'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
-}
-/**
- * 
- * @export
  * @interface StudyRequest
  */
 export interface StudyRequest {
@@ -1612,10 +1643,10 @@ export interface StudyRequest {
     'year'?: number | null;
     /**
      * 
-     * @type {Array<AnalysisReturn | AnalysisRequest | string>}
+     * @type {Array<AnalysisRequest | string>}
      * @memberof StudyRequest
      */
-    'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
+    'analyses'?: Array<AnalysisRequest | string>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -1628,6 +1659,19 @@ export interface StudyRequest {
      * @memberof StudyRequest
      */
     'public'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface StudyRequestRelationships
+ */
+export interface StudyRequestRelationships {
+    /**
+     * 
+     * @type {Array<AnalysisRequest | string>}
+     * @memberof StudyRequestRelationships
+     */
+    'analyses'?: Array<AnalysisRequest | string>;
 }
 /**
  * 
@@ -1733,10 +1777,23 @@ export interface StudyReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<AnalysisReturn | AnalysisRequest | string>}
+     * @type {Array<AnalysisReturn | string>}
      * @memberof StudyReturn
      */
-    'analyses'?: Array<AnalysisReturn | AnalysisRequest | string>;
+    'analyses'?: Array<AnalysisReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudyReturnRelationships
+ */
+export interface StudyReturnRelationships {
+    /**
+     * 
+     * @type {Array<AnalysisReturn | string>}
+     * @memberof StudyReturnRelationships
+     */
+    'analyses'?: Array<AnalysisReturn | string>;
 }
 /**
  * 
@@ -1797,19 +1854,6 @@ export interface StudysetList {
 /**
  * 
  * @export
- * @interface StudysetRelationships
- */
-export interface StudysetRelationships {
-    /**
-     * 
-     * @type {Array<StudyReturn | StudyRequest | string>}
-     * @memberof StudysetRelationships
-     */
-    'studies'?: Array<StudyReturn | StudyRequest | string>;
-}
-/**
- * 
- * @export
  * @interface StudysetRequest
  */
 export interface StudysetRequest {
@@ -1845,10 +1889,10 @@ export interface StudysetRequest {
     'pmid'?: string | null;
     /**
      * 
-     * @type {Array<StudyReturn | StudyRequest | string>}
+     * @type {Array<StudyRequest | string>}
      * @memberof StudysetRequest
      */
-    'studies'?: Array<StudyReturn | StudyRequest | string>;
+    'studies'?: Array<StudyRequest | string>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -1861,6 +1905,19 @@ export interface StudysetRequest {
      * @memberof StudysetRequest
      */
     'public'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetRequestRelationships
+ */
+export interface StudysetRequestRelationships {
+    /**
+     * 
+     * @type {Array<StudyRequest | string>}
+     * @memberof StudysetRequestRelationships
+     */
+    'studies'?: Array<StudyRequest | string>;
 }
 /**
  * 
@@ -1948,10 +2005,23 @@ export interface StudysetReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<StudyReturn | StudyRequest | string>}
+     * @type {Array<StudyReturn | string>}
      * @memberof StudysetReturn
      */
-    'studies'?: Array<StudyReturn | StudyRequest | string>;
+    'studies'?: Array<StudyReturn | string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudysetReturnRelationships
+ */
+export interface StudysetReturnRelationships {
+    /**
+     * 
+     * @type {Array<StudyReturn | string>}
+     * @memberof StudysetReturnRelationships
+     */
+    'studies'?: Array<StudyReturn | string>;
 }
 /**
  * 
