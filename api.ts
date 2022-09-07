@@ -1771,10 +1771,10 @@ export interface StudyReturn {
     'analyses'?: Array<AnalysisReturn | string>;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<StudyReturnAllOfStudysets>}
      * @memberof StudyReturn
      */
-    'studysets'?: Array<string>;
+    'studysets'?: Array<StudyReturnAllOfStudysets>;
 }
 /**
  * 
@@ -1784,10 +1784,29 @@ export interface StudyReturn {
 export interface StudyReturnAllOf {
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<StudyReturnAllOfStudysets>}
      * @memberof StudyReturnAllOf
      */
-    'studysets'?: Array<string>;
+    'studysets'?: Array<StudyReturnAllOfStudysets>;
+}
+/**
+ * 
+ * @export
+ * @interface StudyReturnAllOfStudysets
+ */
+export interface StudyReturnAllOfStudysets {
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturnAllOfStudysets
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturnAllOfStudysets
+     */
+    'id'?: string;
 }
 /**
  * 
