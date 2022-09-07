@@ -1769,6 +1769,25 @@ export interface StudyReturn {
      * @memberof StudyReturn
      */
     'analyses'?: Array<AnalysisReturn | string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StudyReturn
+     */
+    'studysets'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface StudyReturnAllOf
+ */
+export interface StudyReturnAllOf {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StudyReturnAllOf
+     */
+    'studysets'?: Array<string>;
 }
 /**
  * 
