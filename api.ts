@@ -1807,6 +1807,12 @@ export interface StudyReturnAllOfStudysets {
      * @memberof StudyReturnAllOfStudysets
      */
     'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturnAllOfStudysets
+     */
+    'description'?: string;
 }
 /**
  * 
