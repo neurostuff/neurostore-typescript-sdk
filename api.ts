@@ -47,6 +47,19 @@ export interface AnalysisBase {
     'weights'?: Array<number>;
 }
 /**
+ * attributes common between request and return objects
+ * @export
+ * @interface AnalysisCommon
+ */
+export interface AnalysisCommon {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisCommon
+     */
+    'study'?: string;
+}
+/**
  * 
  * @export
  * @interface AnalysisList
@@ -299,6 +312,19 @@ export interface AnnotationBase {
     'note_keys'?: object | null;
 }
 /**
+ * 
+ * @export
+ * @interface AnnotationCommon
+ */
+export interface AnnotationCommon {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationCommon
+     */
+    'studyset'?: string;
+}
+/**
  * exporting an annotation as a CSV for easier editing
  * @export
  * @interface AnnotationExport
@@ -340,7 +366,7 @@ export interface AnnotationList {
  * @type AnnotationRequest
  * @export
  */
-export type AnnotationRequest = AnnotationBase & AnnotationRequestRelationships & WriteableResourceAttributes | AnnotationExport;
+export type AnnotationRequest = AnnotationBase & AnnotationRequestRelationships & WriteableResourceAttributes & AnnotationCommon | AnnotationExport;
 
 /**
  * 
@@ -359,7 +385,7 @@ export interface AnnotationRequestRelationships {
  * @type AnnotationReturn
  * @export
  */
-export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & AnnotationReturnRelationships | AnnotationExport;
+export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & AnnotationReturnRelationships & AnnotationCommon | AnnotationExport;
 
 /**
  * 
@@ -659,6 +685,19 @@ export interface ImageBase {
 /**
  * 
  * @export
+ * @interface ImageCommon
+ */
+export interface ImageCommon {
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageCommon
+     */
+    'analysis'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ImageList
  */
 export interface ImageList {
@@ -816,6 +855,24 @@ export interface ImageReturn {
      */
     'add_date'?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'analysis'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof ImageReturn
+     */
+    'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'analysis_name'?: string | null;
+    /**
      * time the resource was created on the database
      * @type {string}
      * @memberof ImageReturn
@@ -845,24 +902,6 @@ export interface ImageReturn {
      * @memberof ImageReturn
      */
     'user'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'analysis'?: string;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof ImageReturn
-     */
-    'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageReturn
-     */
-    'analysis_name'?: string | null;
 }
 /**
  * 
@@ -1191,6 +1230,19 @@ export interface PointBase {
 /**
  * 
  * @export
+ * @interface PointCommon
+ */
+export interface PointCommon {
+    /**
+     * 
+     * @type {string}
+     * @memberof PointCommon
+     */
+    'analysis'?: string;
+}
+/**
+ * 
+ * @export
  * @interface PointList
  */
 export interface PointList {
@@ -1328,6 +1380,12 @@ export interface PointRequest {
      * @memberof PointRequest
      */
     'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointRequest
+     */
+    'analysis'?: string;
 }
 /**
  * 
@@ -1425,6 +1483,12 @@ export interface PointReturn {
      * @memberof PointReturn
      */
     'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'analysis'?: string;
 }
 /**
  * 
