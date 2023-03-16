@@ -13,13 +13,15 @@
  */
 
 
-import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import type { Configuration } from './configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import type { RequestArgs } from './base';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 
 /**
  * 
@@ -110,22 +112,22 @@ export interface AnalysisRequest {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageRequest | string>}
+     * @type {Array<AnalysisRequestRelationshipsImagesInner>}
      * @memberof AnalysisRequest
      */
-    'images'?: Array<ImageRequest | string>;
+    'images'?: Array<AnalysisRequestRelationshipsImagesInner>;
     /**
      * 
-     * @type {Array<PointRequest | string>}
+     * @type {Array<AnalysisRequestRelationshipsPointsInner>}
      * @memberof AnalysisRequest
      */
-    'points'?: Array<PointRequest | string>;
+    'points'?: Array<AnalysisRequestRelationshipsPointsInner>;
     /**
      * 
-     * @type {Array<ConditionRequest | string>}
+     * @type {Array<AnalysisRequestRelationshipsConditionsInner>}
      * @memberof AnalysisRequest
      */
-    'conditions'?: Array<ConditionRequest | string>;
+    'conditions'?: Array<AnalysisRequestRelationshipsConditionsInner>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -153,23 +155,41 @@ export interface AnalysisRequestRelationships {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageRequest | string>}
+     * @type {Array<AnalysisRequestRelationshipsImagesInner>}
      * @memberof AnalysisRequestRelationships
      */
-    'images'?: Array<ImageRequest | string>;
+    'images'?: Array<AnalysisRequestRelationshipsImagesInner>;
     /**
      * 
-     * @type {Array<PointRequest | string>}
+     * @type {Array<AnalysisRequestRelationshipsPointsInner>}
      * @memberof AnalysisRequestRelationships
      */
-    'points'?: Array<PointRequest | string>;
+    'points'?: Array<AnalysisRequestRelationshipsPointsInner>;
     /**
      * 
-     * @type {Array<ConditionRequest | string>}
+     * @type {Array<AnalysisRequestRelationshipsConditionsInner>}
      * @memberof AnalysisRequestRelationships
      */
-    'conditions'?: Array<ConditionRequest | string>;
+    'conditions'?: Array<AnalysisRequestRelationshipsConditionsInner>;
 }
+/**
+ * @type AnalysisRequestRelationshipsConditionsInner
+ * @export
+ */
+export type AnalysisRequestRelationshipsConditionsInner = ConditionRequest | string;
+
+/**
+ * @type AnalysisRequestRelationshipsImagesInner
+ * @export
+ */
+export type AnalysisRequestRelationshipsImagesInner = ImageRequest | string;
+
+/**
+ * @type AnalysisRequestRelationshipsPointsInner
+ * @export
+ */
+export type AnalysisRequestRelationshipsPointsInner = PointRequest | string;
+
 /**
  * 
  * @export
@@ -232,22 +252,22 @@ export interface AnalysisReturn {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageReturn | string>}
+     * @type {Array<AnalysisReturnRelationshipsImagesInner>}
      * @memberof AnalysisReturn
      */
-    'images'?: Array<ImageReturn | string>;
+    'images'?: Array<AnalysisReturnRelationshipsImagesInner>;
     /**
      * 
-     * @type {Array<PointReturn | string>}
+     * @type {Array<AnalysisReturnRelationshipsPointsInner>}
      * @memberof AnalysisReturn
      */
-    'points'?: Array<PointReturn | string>;
+    'points'?: Array<AnalysisReturnRelationshipsPointsInner>;
     /**
      * 
-     * @type {Array<ConditionReturn | string>}
+     * @type {Array<AnalysisReturnRelationshipsConditionsInner>}
      * @memberof AnalysisReturn
      */
-    'conditions'?: Array<ConditionReturn | string>;
+    'conditions'?: Array<AnalysisReturnRelationshipsConditionsInner>;
 }
 /**
  * 
@@ -263,23 +283,41 @@ export interface AnalysisReturnRelationships {
     'study'?: string;
     /**
      * 
-     * @type {Array<ImageReturn | string>}
+     * @type {Array<AnalysisReturnRelationshipsImagesInner>}
      * @memberof AnalysisReturnRelationships
      */
-    'images'?: Array<ImageReturn | string>;
+    'images'?: Array<AnalysisReturnRelationshipsImagesInner>;
     /**
      * 
-     * @type {Array<PointReturn | string>}
+     * @type {Array<AnalysisReturnRelationshipsPointsInner>}
      * @memberof AnalysisReturnRelationships
      */
-    'points'?: Array<PointReturn | string>;
+    'points'?: Array<AnalysisReturnRelationshipsPointsInner>;
     /**
      * 
-     * @type {Array<ConditionReturn | string>}
+     * @type {Array<AnalysisReturnRelationshipsConditionsInner>}
      * @memberof AnalysisReturnRelationships
      */
-    'conditions'?: Array<ConditionReturn | string>;
+    'conditions'?: Array<AnalysisReturnRelationshipsConditionsInner>;
 }
+/**
+ * @type AnalysisReturnRelationshipsConditionsInner
+ * @export
+ */
+export type AnalysisReturnRelationshipsConditionsInner = ConditionReturn | string;
+
+/**
+ * @type AnalysisReturnRelationshipsImagesInner
+ * @export
+ */
+export type AnalysisReturnRelationshipsImagesInner = ImageReturn | string;
+
+/**
+ * @type AnalysisReturnRelationshipsPointsInner
+ * @export
+ */
+export type AnalysisReturnRelationshipsPointsInner = PointReturn | string;
+
 /**
  * 
  * @export
@@ -376,11 +414,17 @@ export type AnnotationRequest = AnnotationBase & AnnotationRequestRelationships 
 export interface AnnotationRequestRelationships {
     /**
      * 
-     * @type {Array<NoteCollectionRequest | string>}
+     * @type {Array<AnnotationRequestRelationshipsNotesInner>}
      * @memberof AnnotationRequestRelationships
      */
-    'notes'?: Array<NoteCollectionRequest | string>;
+    'notes'?: Array<AnnotationRequestRelationshipsNotesInner>;
 }
+/**
+ * @type AnnotationRequestRelationshipsNotesInner
+ * @export
+ */
+export type AnnotationRequestRelationshipsNotesInner = NoteCollectionRequest | string;
+
 /**
  * @type AnnotationReturn
  * @export
@@ -395,11 +439,17 @@ export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & Ann
 export interface AnnotationReturnRelationships {
     /**
      * 
-     * @type {Array<NoteCollectionReturn | string>}
+     * @type {Array<AnnotationReturnRelationshipsNotesInner>}
      * @memberof AnnotationReturnRelationships
      */
-    'notes'?: Array<NoteCollectionReturn | string>;
+    'notes'?: Array<AnnotationReturnRelationshipsNotesInner>;
 }
+/**
+ * @type AnnotationReturnRelationshipsNotesInner
+ * @export
+ */
+export type AnnotationReturnRelationshipsNotesInner = NoteCollectionReturn | string;
+
 /**
  * 
  * @export
@@ -904,75 +954,6 @@ export interface ImageReturn {
     'user'?: string | null;
 }
 /**
- * 
- * @export
- * @interface InlineResponse404
- */
-export interface InlineResponse404 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse404
-     */
-    'detail'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse404
-     */
-    'status'?: InlineResponse404StatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse404
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse404
-     */
-    'type'?: string;
-}
-
-export const InlineResponse404StatusEnum = {
-    NUMBER_404: 404
-} as const;
-
-export type InlineResponse404StatusEnum = typeof InlineResponse404StatusEnum[keyof typeof InlineResponse404StatusEnum];
-
-/**
- * 
- * @export
- * @interface InlineResponse422
- */
-export interface InlineResponse422 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse422
-     */
-    'detail'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse422
-     */
-    'status'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse422
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse422
-     */
-    'type'?: string;
-}
-/**
  * JSON-LD elements for data tracking
  * @export
  * @interface JsonLd
@@ -1273,10 +1254,10 @@ export interface PointRelationships {
     'image'?: string | null;
     /**
      * 
-     * @type {PointValue | string}
+     * @type {PointRelationshipsValue}
      * @memberof PointRelationships
      */
-    'value'?: PointValue | string;
+    'value'?: PointRelationshipsValue;
     /**
      * 
      * @type {number}
@@ -1302,6 +1283,12 @@ export interface PointRelationships {
      */
     'entities'?: Array<Entity>;
 }
+/**
+ * @type PointRelationshipsValue
+ * @export
+ */
+export type PointRelationshipsValue = PointValue | string;
+
 /**
  * 
  * @export
@@ -1340,10 +1327,10 @@ export interface PointRequest {
     'image'?: string | null;
     /**
      * 
-     * @type {PointValue | string}
+     * @type {PointRelationshipsValue}
      * @memberof PointRequest
      */
-    'value'?: PointValue | string;
+    'value'?: PointRelationshipsValue;
     /**
      * 
      * @type {number}
@@ -1455,10 +1442,10 @@ export interface PointReturn {
     'image'?: string | null;
     /**
      * 
-     * @type {PointValue | string}
+     * @type {PointRelationshipsValue}
      * @memberof PointReturn
      */
-    'value'?: PointValue | string;
+    'value'?: PointRelationshipsValue;
     /**
      * 
      * @type {number}
@@ -1695,10 +1682,10 @@ export interface StudyRequest {
     'year'?: number | null;
     /**
      * 
-     * @type {Array<AnalysisRequest | string>}
+     * @type {Array<StudyRequestRelationshipsAnalysesInner>}
      * @memberof StudyRequest
      */
-    'analyses'?: Array<AnalysisRequest | string>;
+    'analyses'?: Array<StudyRequestRelationshipsAnalysesInner>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -1720,11 +1707,17 @@ export interface StudyRequest {
 export interface StudyRequestRelationships {
     /**
      * 
-     * @type {Array<AnalysisRequest | string>}
+     * @type {Array<StudyRequestRelationshipsAnalysesInner>}
      * @memberof StudyRequestRelationships
      */
-    'analyses'?: Array<AnalysisRequest | string>;
+    'analyses'?: Array<StudyRequestRelationshipsAnalysesInner>;
 }
+/**
+ * @type StudyRequestRelationshipsAnalysesInner
+ * @export
+ */
+export type StudyRequestRelationshipsAnalysesInner = AnalysisRequest | string;
+
 /**
  * 
  * @export
@@ -1829,10 +1822,10 @@ export interface StudyReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<AnalysisReturn | string>}
+     * @type {Array<StudyReturnRelationshipsAnalysesInner>}
      * @memberof StudyReturn
      */
-    'analyses'?: Array<AnalysisReturn | string>;
+    'analyses'?: Array<StudyReturnRelationshipsAnalysesInner>;
     /**
      * 
      * @type {Array<StudyReturnAllOfStudysets>}
@@ -1886,11 +1879,17 @@ export interface StudyReturnAllOfStudysets {
 export interface StudyReturnRelationships {
     /**
      * 
-     * @type {Array<AnalysisReturn | string>}
+     * @type {Array<StudyReturnRelationshipsAnalysesInner>}
      * @memberof StudyReturnRelationships
      */
-    'analyses'?: Array<AnalysisReturn | string>;
+    'analyses'?: Array<StudyReturnRelationshipsAnalysesInner>;
 }
+/**
+ * @type StudyReturnRelationshipsAnalysesInner
+ * @export
+ */
+export type StudyReturnRelationshipsAnalysesInner = AnalysisReturn | string;
+
 /**
  * 
  * @export
@@ -1985,10 +1984,10 @@ export interface StudysetRequest {
     'pmid'?: string | null;
     /**
      * 
-     * @type {Array<StudyRequest | string>}
+     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
      * @memberof StudysetRequest
      */
-    'studies'?: Array<StudyRequest | string>;
+    'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -2010,11 +2009,17 @@ export interface StudysetRequest {
 export interface StudysetRequestRelationships {
     /**
      * 
-     * @type {Array<StudyRequest | string>}
+     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
      * @memberof StudysetRequestRelationships
      */
-    'studies'?: Array<StudyRequest | string>;
+    'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
 }
+/**
+ * @type StudysetRequestRelationshipsStudiesInner
+ * @export
+ */
+export type StudysetRequestRelationshipsStudiesInner = StudyRequest | string;
+
 /**
  * 
  * @export
@@ -2101,10 +2106,10 @@ export interface StudysetReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<StudyReturn | string>}
+     * @type {Array<StudysetReturnRelationshipsStudiesInner>}
      * @memberof StudysetReturn
      */
-    'studies'?: Array<StudyReturn | string>;
+    'studies'?: Array<StudysetReturnRelationshipsStudiesInner>;
 }
 /**
  * 
@@ -2114,10 +2119,85 @@ export interface StudysetReturn {
 export interface StudysetReturnRelationships {
     /**
      * 
-     * @type {Array<StudyReturn | string>}
+     * @type {Array<StudysetReturnRelationshipsStudiesInner>}
      * @memberof StudysetReturnRelationships
      */
-    'studies'?: Array<StudyReturn | string>;
+    'studies'?: Array<StudysetReturnRelationshipsStudiesInner>;
+}
+/**
+ * @type StudysetReturnRelationshipsStudiesInner
+ * @export
+ */
+export type StudysetReturnRelationshipsStudiesInner = StudyReturn | string;
+
+/**
+ * 
+ * @export
+ * @interface StudysetsIdGet404Response
+ */
+export interface StudysetsIdGet404Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetsIdGet404Response
+     */
+    'detail'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StudysetsIdGet404Response
+     */
+    'status'?: StudysetsIdGet404ResponseStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetsIdGet404Response
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetsIdGet404Response
+     */
+    'type'?: string;
+}
+
+export const StudysetsIdGet404ResponseStatusEnum = {
+    NUMBER_404: 404
+} as const;
+
+export type StudysetsIdGet404ResponseStatusEnum = typeof StudysetsIdGet404ResponseStatusEnum[keyof typeof StudysetsIdGet404ResponseStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface StudysetsIdPut422Response
+ */
+export interface StudysetsIdPut422Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetsIdPut422Response
+     */
+    'detail'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StudysetsIdPut422Response
+     */
+    'status'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetsIdPut422Response
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetsIdPut422Response
+     */
+    'type'?: string;
 }
 /**
  * 
@@ -8341,6 +8421,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * create a user
+         * @summary 
          * @param {User} [user] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8421,6 +8502,7 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * create a user
+         * @summary 
          * @param {User} [user] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8471,6 +8553,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * create a user
+         * @summary 
          * @param {User} [user] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8526,6 +8609,7 @@ export class UserApi extends BaseAPI {
 
     /**
      * create a user
+     * @summary 
      * @param {User} [user] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
