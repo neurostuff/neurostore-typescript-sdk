@@ -112,22 +112,22 @@ export interface AnalysisRequest {
     'study'?: string;
     /**
      * 
-     * @type {Array<AnalysisRequestRelationshipsImagesInner>}
+     * @type {AnalysisRequestRelationshipsImages}
      * @memberof AnalysisRequest
      */
-    'images'?: Array<AnalysisRequestRelationshipsImagesInner>;
+    'images'?: AnalysisRequestRelationshipsImages;
     /**
      * 
-     * @type {Array<AnalysisRequestRelationshipsPointsInner>}
+     * @type {AnalysisRequestRelationshipsPoints}
      * @memberof AnalysisRequest
      */
-    'points'?: Array<AnalysisRequestRelationshipsPointsInner>;
+    'points'?: AnalysisRequestRelationshipsPoints;
     /**
      * 
-     * @type {Array<AnalysisRequestRelationshipsConditionsInner>}
+     * @type {AnalysisRequestRelationshipsConditions}
      * @memberof AnalysisRequest
      */
-    'conditions'?: Array<AnalysisRequestRelationshipsConditionsInner>;
+    'conditions'?: AnalysisRequestRelationshipsConditions;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -155,40 +155,40 @@ export interface AnalysisRequestRelationships {
     'study'?: string;
     /**
      * 
-     * @type {Array<AnalysisRequestRelationshipsImagesInner>}
+     * @type {AnalysisRequestRelationshipsImages}
      * @memberof AnalysisRequestRelationships
      */
-    'images'?: Array<AnalysisRequestRelationshipsImagesInner>;
+    'images'?: AnalysisRequestRelationshipsImages;
     /**
      * 
-     * @type {Array<AnalysisRequestRelationshipsPointsInner>}
+     * @type {AnalysisRequestRelationshipsPoints}
      * @memberof AnalysisRequestRelationships
      */
-    'points'?: Array<AnalysisRequestRelationshipsPointsInner>;
+    'points'?: AnalysisRequestRelationshipsPoints;
     /**
      * 
-     * @type {Array<AnalysisRequestRelationshipsConditionsInner>}
+     * @type {AnalysisRequestRelationshipsConditions}
      * @memberof AnalysisRequestRelationships
      */
-    'conditions'?: Array<AnalysisRequestRelationshipsConditionsInner>;
+    'conditions'?: AnalysisRequestRelationshipsConditions;
 }
 /**
- * @type AnalysisRequestRelationshipsConditionsInner
+ * @type AnalysisRequestRelationshipsConditions
  * @export
  */
-export type AnalysisRequestRelationshipsConditionsInner = ConditionRequest | string;
+export type AnalysisRequestRelationshipsConditions = Array<ConditionRequest> | Array<string>;
 
 /**
- * @type AnalysisRequestRelationshipsImagesInner
+ * @type AnalysisRequestRelationshipsImages
  * @export
  */
-export type AnalysisRequestRelationshipsImagesInner = ImageRequest | string;
+export type AnalysisRequestRelationshipsImages = Array<ImageRequest> | Array<string>;
 
 /**
- * @type AnalysisRequestRelationshipsPointsInner
+ * @type AnalysisRequestRelationshipsPoints
  * @export
  */
-export type AnalysisRequestRelationshipsPointsInner = PointRequest | string;
+export type AnalysisRequestRelationshipsPoints = Array<PointRequest> | Array<string>;
 
 /**
  * 
@@ -252,22 +252,22 @@ export interface AnalysisReturn {
     'study'?: string;
     /**
      * 
-     * @type {Array<AnalysisReturnRelationshipsImagesInner>}
+     * @type {AnalysisReturnRelationshipsImages}
      * @memberof AnalysisReturn
      */
-    'images'?: Array<AnalysisReturnRelationshipsImagesInner>;
+    'images'?: AnalysisReturnRelationshipsImages;
     /**
      * 
-     * @type {Array<AnalysisReturnRelationshipsPointsInner>}
+     * @type {AnalysisReturnRelationshipsPoints}
      * @memberof AnalysisReturn
      */
-    'points'?: Array<AnalysisReturnRelationshipsPointsInner>;
+    'points'?: AnalysisReturnRelationshipsPoints;
     /**
      * 
-     * @type {Array<AnalysisReturnRelationshipsConditionsInner>}
+     * @type {AnalysisReturnRelationshipsConditions}
      * @memberof AnalysisReturn
      */
-    'conditions'?: Array<AnalysisReturnRelationshipsConditionsInner>;
+    'conditions'?: AnalysisReturnRelationshipsConditions;
 }
 /**
  * 
@@ -283,40 +283,40 @@ export interface AnalysisReturnRelationships {
     'study'?: string;
     /**
      * 
-     * @type {Array<AnalysisReturnRelationshipsImagesInner>}
+     * @type {AnalysisReturnRelationshipsImages}
      * @memberof AnalysisReturnRelationships
      */
-    'images'?: Array<AnalysisReturnRelationshipsImagesInner>;
+    'images'?: AnalysisReturnRelationshipsImages;
     /**
      * 
-     * @type {Array<AnalysisReturnRelationshipsPointsInner>}
+     * @type {AnalysisReturnRelationshipsPoints}
      * @memberof AnalysisReturnRelationships
      */
-    'points'?: Array<AnalysisReturnRelationshipsPointsInner>;
+    'points'?: AnalysisReturnRelationshipsPoints;
     /**
      * 
-     * @type {Array<AnalysisReturnRelationshipsConditionsInner>}
+     * @type {AnalysisReturnRelationshipsConditions}
      * @memberof AnalysisReturnRelationships
      */
-    'conditions'?: Array<AnalysisReturnRelationshipsConditionsInner>;
+    'conditions'?: AnalysisReturnRelationshipsConditions;
 }
 /**
- * @type AnalysisReturnRelationshipsConditionsInner
+ * @type AnalysisReturnRelationshipsConditions
  * @export
  */
-export type AnalysisReturnRelationshipsConditionsInner = ConditionReturn | string;
+export type AnalysisReturnRelationshipsConditions = Array<ConditionReturn> | Array<string>;
 
 /**
- * @type AnalysisReturnRelationshipsImagesInner
+ * @type AnalysisReturnRelationshipsImages
  * @export
  */
-export type AnalysisReturnRelationshipsImagesInner = ImageReturn | string;
+export type AnalysisReturnRelationshipsImages = Array<ImageReturn> | Array<string>;
 
 /**
- * @type AnalysisReturnRelationshipsPointsInner
+ * @type AnalysisReturnRelationshipsPoints
  * @export
  */
-export type AnalysisReturnRelationshipsPointsInner = PointReturn | string;
+export type AnalysisReturnRelationshipsPoints = Array<PointReturn> | Array<string>;
 
 /**
  * 
@@ -414,16 +414,16 @@ export type AnnotationRequest = AnnotationBase & AnnotationRequestRelationships 
 export interface AnnotationRequestRelationships {
     /**
      * 
-     * @type {Array<AnnotationRequestRelationshipsNotesInner>}
+     * @type {AnnotationRequestRelationshipsNotes}
      * @memberof AnnotationRequestRelationships
      */
-    'notes'?: Array<AnnotationRequestRelationshipsNotesInner>;
+    'notes'?: AnnotationRequestRelationshipsNotes;
 }
 /**
- * @type AnnotationRequestRelationshipsNotesInner
+ * @type AnnotationRequestRelationshipsNotes
  * @export
  */
-export type AnnotationRequestRelationshipsNotesInner = NoteCollectionRequest | string;
+export type AnnotationRequestRelationshipsNotes = Array<NoteCollectionRequest> | Array<string>;
 
 /**
  * @type AnnotationReturn
@@ -439,16 +439,16 @@ export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & Ann
 export interface AnnotationReturnRelationships {
     /**
      * 
-     * @type {Array<AnnotationReturnRelationshipsNotesInner>}
+     * @type {AnnotationReturnRelationshipsNotes}
      * @memberof AnnotationReturnRelationships
      */
-    'notes'?: Array<AnnotationReturnRelationshipsNotesInner>;
+    'notes'?: AnnotationReturnRelationshipsNotes;
 }
 /**
- * @type AnnotationReturnRelationshipsNotesInner
+ * @type AnnotationReturnRelationshipsNotes
  * @export
  */
-export type AnnotationReturnRelationshipsNotesInner = NoteCollectionReturn | string;
+export type AnnotationReturnRelationshipsNotes = Array<NoteCollectionReturn> | Array<string>;
 
 /**
  * 
@@ -1682,10 +1682,10 @@ export interface StudyRequest {
     'year'?: number | null;
     /**
      * 
-     * @type {Array<StudyRequestRelationshipsAnalysesInner>}
+     * @type {StudyRequestRelationshipsAnalyses}
      * @memberof StudyRequest
      */
-    'analyses'?: Array<StudyRequestRelationshipsAnalysesInner>;
+    'analyses'?: StudyRequestRelationshipsAnalyses;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -1707,16 +1707,16 @@ export interface StudyRequest {
 export interface StudyRequestRelationships {
     /**
      * 
-     * @type {Array<StudyRequestRelationshipsAnalysesInner>}
+     * @type {StudyRequestRelationshipsAnalyses}
      * @memberof StudyRequestRelationships
      */
-    'analyses'?: Array<StudyRequestRelationshipsAnalysesInner>;
+    'analyses'?: StudyRequestRelationshipsAnalyses;
 }
 /**
- * @type StudyRequestRelationshipsAnalysesInner
+ * @type StudyRequestRelationshipsAnalyses
  * @export
  */
-export type StudyRequestRelationshipsAnalysesInner = AnalysisRequest | string;
+export type StudyRequestRelationshipsAnalyses = Array<AnalysisRequest> | Array<string>;
 
 /**
  * 
@@ -1822,10 +1822,10 @@ export interface StudyReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<StudyReturnRelationshipsAnalysesInner>}
+     * @type {StudyReturnRelationshipsAnalyses}
      * @memberof StudyReturn
      */
-    'analyses'?: Array<StudyReturnRelationshipsAnalysesInner>;
+    'analyses'?: StudyReturnRelationshipsAnalyses;
     /**
      * 
      * @type {Array<StudyReturnAllOfStudysets>}
@@ -1879,16 +1879,16 @@ export interface StudyReturnAllOfStudysets {
 export interface StudyReturnRelationships {
     /**
      * 
-     * @type {Array<StudyReturnRelationshipsAnalysesInner>}
+     * @type {StudyReturnRelationshipsAnalyses}
      * @memberof StudyReturnRelationships
      */
-    'analyses'?: Array<StudyReturnRelationshipsAnalysesInner>;
+    'analyses'?: StudyReturnRelationshipsAnalyses;
 }
 /**
- * @type StudyReturnRelationshipsAnalysesInner
+ * @type StudyReturnRelationshipsAnalyses
  * @export
  */
-export type StudyReturnRelationshipsAnalysesInner = AnalysisReturn | string;
+export type StudyReturnRelationshipsAnalyses = Array<AnalysisReturn> | Array<string>;
 
 /**
  * 
@@ -1984,10 +1984,10 @@ export interface StudysetRequest {
     'pmid'?: string | null;
     /**
      * 
-     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
+     * @type {StudysetRequestRelationshipsStudies}
      * @memberof StudysetRequest
      */
-    'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
+    'studies'?: StudysetRequestRelationshipsStudies;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -2009,16 +2009,16 @@ export interface StudysetRequest {
 export interface StudysetRequestRelationships {
     /**
      * 
-     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
+     * @type {StudysetRequestRelationshipsStudies}
      * @memberof StudysetRequestRelationships
      */
-    'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
+    'studies'?: StudysetRequestRelationshipsStudies;
 }
 /**
- * @type StudysetRequestRelationshipsStudiesInner
+ * @type StudysetRequestRelationshipsStudies
  * @export
  */
-export type StudysetRequestRelationshipsStudiesInner = StudyRequest | string;
+export type StudysetRequestRelationshipsStudies = Array<StudyRequest> | Array<string>;
 
 /**
  * 
@@ -2106,10 +2106,10 @@ export interface StudysetReturn {
     'source_updated_at'?: string | null;
     /**
      * 
-     * @type {Array<StudysetReturnRelationshipsStudiesInner>}
+     * @type {StudysetReturnRelationshipsStudies}
      * @memberof StudysetReturn
      */
-    'studies'?: Array<StudysetReturnRelationshipsStudiesInner>;
+    'studies'?: StudysetReturnRelationshipsStudies;
 }
 /**
  * 
@@ -2119,16 +2119,16 @@ export interface StudysetReturn {
 export interface StudysetReturnRelationships {
     /**
      * 
-     * @type {Array<StudysetReturnRelationshipsStudiesInner>}
+     * @type {StudysetReturnRelationshipsStudies}
      * @memberof StudysetReturnRelationships
      */
-    'studies'?: Array<StudysetReturnRelationshipsStudiesInner>;
+    'studies'?: StudysetReturnRelationshipsStudies;
 }
 /**
- * @type StudysetReturnRelationshipsStudiesInner
+ * @type StudysetReturnRelationshipsStudies
  * @export
  */
-export type StudysetReturnRelationshipsStudiesInner = StudyReturn | string;
+export type StudysetReturnRelationshipsStudies = Array<StudyReturn> | Array<string>;
 
 /**
  * 
