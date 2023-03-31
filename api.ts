@@ -628,85 +628,14 @@ export interface Entity {
      * @type {string}
      * @memberof Entity
      */
-    'level'?: EntityLevelEnum;
+    'level'?: string;
     /**
      * 
      * @type {string}
      * @memberof Entity
      */
     'analysis'?: string;
-    /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof Entity
-     */
-    'created_at'?: string;
-    /**
-     * when was the resource last modified/updated.
-     * @type {string}
-     * @memberof Entity
-     */
-    'updated_at'?: string | null;
-    /**
-     * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof Entity
-     */
-    'id'?: string;
-    /**
-     * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof Entity
-     */
-    'public'?: boolean;
 }
-
-export const EntityLevelEnum = {
-    Run: 'run',
-    Session: 'session',
-    Subject: 'subject',
-    Group: 'group',
-    Meta: 'meta'
-} as const;
-
-export type EntityLevelEnum = typeof EntityLevelEnum[keyof typeof EntityLevelEnum];
-
-/**
- * 
- * @export
- * @interface EntityAllOf
- */
-export interface EntityAllOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof EntityAllOf
-     */
-    'label'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof EntityAllOf
-     */
-    'level'?: EntityAllOfLevelEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof EntityAllOf
-     */
-    'analysis'?: string;
-}
-
-export const EntityAllOfLevelEnum = {
-    Run: 'run',
-    Session: 'session',
-    Subject: 'subject',
-    Group: 'group',
-    Meta: 'meta'
-} as const;
-
-export type EntityAllOfLevelEnum = typeof EntityAllOfLevelEnum[keyof typeof EntityAllOfLevelEnum];
-
 /**
  * 
  * @export
