@@ -60,6 +60,12 @@ export interface AnalysisCommon {
      * @memberof AnalysisCommon
      */
     'study'?: string;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof AnalysisCommon
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -140,6 +146,12 @@ export interface AnalysisRequest {
      * @memberof AnalysisRequest
      */
     'public'?: boolean;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof AnalysisRequest
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
@@ -268,6 +280,12 @@ export interface AnalysisReturn {
      * @memberof AnalysisReturn
      */
     'conditions'?: AnalysisReturnRelationshipsConditions;
+    /**
+     * 
+     * @type {Array<Entity>}
+     * @memberof AnalysisReturn
+     */
+    'entities'?: Array<Entity>;
 }
 /**
  * 
