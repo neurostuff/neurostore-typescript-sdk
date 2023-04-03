@@ -1167,6 +1167,18 @@ export interface PointCommon {
      * @memberof PointCommon
      */
     'analysis'?: string;
+    /**
+     * size of the cluster in cubic millimeters
+     * @type {number}
+     * @memberof PointCommon
+     */
+    'cluster_size'?: number | null;
+    /**
+     * whether the reported peak is the max-peak statistic or a sub-maxmimal peak.
+     * @type {boolean}
+     * @memberof PointCommon
+     */
+    'subpeak'?: boolean;
 }
 /**
  * 
@@ -1320,6 +1332,18 @@ export interface PointRequest {
      * @memberof PointRequest
      */
     'analysis'?: string;
+    /**
+     * size of the cluster in cubic millimeters
+     * @type {number}
+     * @memberof PointRequest
+     */
+    'cluster_size'?: number | null;
+    /**
+     * whether the reported peak is the max-peak statistic or a sub-maxmimal peak.
+     * @type {boolean}
+     * @memberof PointRequest
+     */
+    'subpeak'?: boolean;
 }
 /**
  * 
@@ -1423,6 +1447,18 @@ export interface PointReturn {
      * @memberof PointReturn
      */
     'analysis'?: string;
+    /**
+     * size of the cluster in cubic millimeters
+     * @type {number}
+     * @memberof PointReturn
+     */
+    'cluster_size'?: number | null;
+    /**
+     * whether the reported peak is the max-peak statistic or a sub-maxmimal peak.
+     * @type {boolean}
+     * @memberof PointReturn
+     */
+    'subpeak'?: boolean;
 }
 /**
  * 
