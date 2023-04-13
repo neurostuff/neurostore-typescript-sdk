@@ -622,19 +622,19 @@ export interface Entity {
      * @type {string}
      * @memberof Entity
      */
-    'label'?: string;
+    'label'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof Entity
      */
-    'level'?: string;
+    'level'?: string | null;
     /**
      * 
      * @type {string}
      * @memberof Entity
      */
-    'analysis'?: string;
+    'analysis'?: string | null;
 }
 /**
  * 
