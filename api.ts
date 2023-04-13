@@ -612,7 +612,7 @@ export interface ConditionReturn {
     'user'?: string | null;
 }
 /**
- * descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
+ * WARNING: not currently used. descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
  * @export
  * @interface Entity
  */
@@ -1593,6 +1593,27 @@ export interface StudyBase {
 /**
  * 
  * @export
+ * @interface StudyCommon
+ */
+export interface StudyCommon {
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyCommon
+     */
+    'level'?: StudyCommonLevelEnum;
+}
+
+export const StudyCommonLevelEnum = {
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+
+export type StudyCommonLevelEnum = typeof StudyCommonLevelEnum[keyof typeof StudyCommonLevelEnum];
+
+/**
+ * 
+ * @export
  * @interface StudyList
  */
 export interface StudyList {
@@ -1983,7 +2004,21 @@ export interface StudysetRequest {
      * @memberof StudysetRequest
      */
     'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetRequest
+     */
+    'level'?: StudysetRequestLevelEnum;
 }
+
+export const StudysetRequestLevelEnum = {
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+
+export type StudysetRequestLevelEnum = typeof StudysetRequestLevelEnum[keyof typeof StudysetRequestLevelEnum];
+
 /**
  * 
  * @export
@@ -2093,7 +2128,21 @@ export interface StudysetReturn {
      * @memberof StudysetReturn
      */
     'studies'?: StudysetReturnRelationshipsStudies;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'level'?: StudysetReturnLevelEnum;
 }
+
+export const StudysetReturnLevelEnum = {
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+
+export type StudysetReturnLevelEnum = typeof StudysetReturnLevelEnum[keyof typeof StudysetReturnLevelEnum];
+
 /**
  * 
  * @export
@@ -5520,10 +5569,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5598,6 +5648,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (studysetOwner !== undefined) {
                 localVarQueryParameter['studyset_owner'] = studysetOwner;
+            }
+
+            if (level !== undefined) {
+                localVarQueryParameter['level'] = level;
             }
 
 
@@ -6272,11 +6326,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6681,11 +6736,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options?: any): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options?: any): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -7131,12 +7187,13 @@ export class StoreApi extends BaseAPI {
      * @param {string} [userId] user id you want to filter by
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+     * @param {'group' | 'meta'} [level] select between studies with group results or meta results
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7268,10 +7325,11 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7346,6 +7404,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (studysetOwner !== undefined) {
                 localVarQueryParameter['studyset_owner'] = studysetOwner;
+            }
+
+            if (level !== undefined) {
+                localVarQueryParameter['level'] = level;
             }
 
 
@@ -7559,11 +7621,12 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7643,11 +7706,12 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options?: any): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options?: any): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -7722,12 +7786,13 @@ export class StudiesApi extends BaseAPI {
      * @param {string} [userId] user id you want to filter by
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
+     * @param {'group' | 'meta'} [level] select between studies with group results or meta results
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, options?: AxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', options?: AxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
