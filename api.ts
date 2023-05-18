@@ -422,8 +422,63 @@ export interface AnnotationList {
  * @type AnnotationRequest
  * @export
  */
-export type AnnotationRequest = AnnotationBase & AnnotationRequestRelationships & WriteableResourceAttributes & AnnotationCommon | AnnotationExport;
+export type AnnotationRequest = AnnotationRequestOneOf | AnnotationReturnOneOf;
 
+/**
+ * 
+ * @export
+ * @interface AnnotationRequestOneOf
+ */
+export interface AnnotationRequestOneOf {
+    /**
+     * Descriptive name for the annotation.
+     * @type {string}
+     * @memberof AnnotationRequestOneOf
+     */
+    'name'?: string | null;
+    /**
+     * Long form description of the annotation.
+     * @type {string}
+     * @memberof AnnotationRequestOneOf
+     */
+    'description'?: string | null;
+    /**
+     * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
+     * @type {object}
+     * @memberof AnnotationRequestOneOf
+     */
+    'metadata'?: object | null;
+    /**
+     * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
+     * @type {object}
+     * @memberof AnnotationRequestOneOf
+     */
+    'note_keys'?: object | null;
+    /**
+     * 
+     * @type {AnnotationRequestRelationshipsNotes}
+     * @memberof AnnotationRequestOneOf
+     */
+    'notes'?: AnnotationRequestRelationshipsNotes;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof AnnotationRequestOneOf
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof AnnotationRequestOneOf
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationRequestOneOf
+     */
+    'studyset'?: string;
+}
 /**
  * 
  * @export
@@ -447,8 +502,118 @@ export type AnnotationRequestRelationshipsNotes = Array<NoteCollectionRequest> |
  * @type AnnotationReturn
  * @export
  */
-export type AnnotationReturn = AnnotationBase & ResourceAttributes & Clone & AnnotationReturnRelationships & AnnotationCommon | AnnotationExport;
+export type AnnotationReturn = AnnotationReturnOneOf | AnnotationReturnOneOf1;
 
+/**
+ * 
+ * @export
+ * @interface AnnotationReturnOneOf
+ */
+export interface AnnotationReturnOneOf {
+    /**
+     * 
+     * @type {object}
+     * @memberof AnnotationReturnOneOf
+     */
+    'metadata'?: object | null;
+    /**
+     * annotation object expressed as a CSV
+     * @type {string}
+     * @memberof AnnotationReturnOneOf
+     */
+    'annotation_csv': string;
+}
+/**
+ * 
+ * @export
+ * @interface AnnotationReturnOneOf1
+ */
+export interface AnnotationReturnOneOf1 {
+    /**
+     * Descriptive name for the annotation.
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'name'?: string | null;
+    /**
+     * Long form description of the annotation.
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'description'?: string | null;
+    /**
+     * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
+     * @type {object}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'metadata'?: object | null;
+    /**
+     * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
+     * @type {object}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'note_keys'?: object | null;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'created_at'?: string;
+    /**
+     * when was the resource last modified/updated.
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'updated_at'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'public'?: boolean;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'user'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'source'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'source_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'source_updated_at'?: string | null;
+    /**
+     * 
+     * @type {AnnotationReturnRelationshipsNotes}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'notes'?: AnnotationReturnRelationshipsNotes;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'studyset'?: string;
+}
 /**
  * 
  * @export
