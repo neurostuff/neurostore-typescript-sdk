@@ -1378,10 +1378,10 @@ export interface PointRelationships {
     'image'?: string | null;
     /**
      * 
-     * @type {PointRelationshipsValue}
+     * @type {PointRelationshipsValues}
      * @memberof PointRelationships
      */
-    'value'?: PointRelationshipsValue;
+    'values'?: PointRelationshipsValues;
     /**
      * 
      * @type {number}
@@ -1408,10 +1408,10 @@ export interface PointRelationships {
     'entities'?: Array<Entity>;
 }
 /**
- * @type PointRelationshipsValue
+ * @type PointRelationshipsValues
  * @export
  */
-export type PointRelationshipsValue = PointValue | string;
+export type PointRelationshipsValues = Array<PointValue> | Array<string>;
 
 /**
  * 
@@ -1451,10 +1451,10 @@ export interface PointRequest {
     'image'?: string | null;
     /**
      * 
-     * @type {PointRelationshipsValue}
+     * @type {PointRelationshipsValues}
      * @memberof PointRequest
      */
-    'value'?: PointRelationshipsValue;
+    'values'?: PointRelationshipsValues;
     /**
      * 
      * @type {number}
@@ -1578,10 +1578,10 @@ export interface PointReturn {
     'image'?: string | null;
     /**
      * 
-     * @type {PointRelationshipsValue}
+     * @type {PointRelationshipsValues}
      * @memberof PointReturn
      */
-    'value'?: PointRelationshipsValue;
+    'values'?: PointRelationshipsValues;
     /**
      * 
      * @type {number}
