@@ -1343,7 +1343,7 @@ export interface PointCommon {
      * @type {boolean}
      * @memberof PointCommon
      */
-    'subpeak'?: boolean;
+    'subpeak'?: boolean | null;
 }
 /**
  * 
@@ -1508,7 +1508,7 @@ export interface PointRequest {
      * @type {boolean}
      * @memberof PointRequest
      */
-    'subpeak'?: boolean;
+    'subpeak'?: boolean | null;
 }
 /**
  * 
@@ -1623,7 +1623,7 @@ export interface PointReturn {
      * @type {boolean}
      * @memberof PointReturn
      */
-    'subpeak'?: boolean;
+    'subpeak'?: boolean | null;
 }
 /**
  * 
