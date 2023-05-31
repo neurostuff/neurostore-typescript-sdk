@@ -1344,6 +1344,12 @@ export interface PointCommon {
      * @memberof PointCommon
      */
     'subpeak'?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointCommon
+     */
+    'order'?: number;
 }
 /**
  * 
@@ -1509,6 +1515,12 @@ export interface PointRequest {
      * @memberof PointRequest
      */
     'subpeak'?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointRequest
+     */
+    'order'?: number;
 }
 /**
  * 
@@ -1624,6 +1636,12 @@ export interface PointReturn {
      * @memberof PointReturn
      */
     'subpeak'?: boolean | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof PointReturn
+     */
+    'order'?: number;
 }
 /**
  * 
