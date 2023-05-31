@@ -1349,7 +1349,7 @@ export interface PointCommon {
      * @type {number}
      * @memberof PointCommon
      */
-    'order'?: number;
+    'order'?: number | null;
 }
 /**
  * 
@@ -1520,7 +1520,7 @@ export interface PointRequest {
      * @type {number}
      * @memberof PointRequest
      */
-    'order'?: number;
+    'order'?: number | null;
 }
 /**
  * 
@@ -1641,7 +1641,7 @@ export interface PointReturn {
      * @type {number}
      * @memberof PointReturn
      */
-    'order'?: number;
+    'order'?: number | null;
 }
 /**
  * 
