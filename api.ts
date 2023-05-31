@@ -1345,7 +1345,7 @@ export interface PointCommon {
      */
     'subpeak'?: boolean | null;
     /**
-     * 
+     * determines the row to display the coordinate
      * @type {number}
      * @memberof PointCommon
      */
@@ -1516,7 +1516,7 @@ export interface PointRequest {
      */
     'subpeak'?: boolean | null;
     /**
-     * 
+     * determines the row to display the coordinate
      * @type {number}
      * @memberof PointRequest
      */
@@ -1637,7 +1637,7 @@ export interface PointReturn {
      */
     'subpeak'?: boolean | null;
     /**
-     * 
+     * determines the row to display the coordinate
      * @type {number}
      * @memberof PointReturn
      */
