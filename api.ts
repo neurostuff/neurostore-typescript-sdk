@@ -26,6 +26,79 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface AbstractStudy
+ */
+export interface AbstractStudy {
+    /**
+     * 
+     * @type {object}
+     * @memberof AbstractStudy
+     */
+    'metadata'?: object;
+    /**
+     * 
+     * @type {AbstractStudyVersions}
+     * @memberof AbstractStudy
+     */
+    'versions'?: AbstractStudyVersions;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'doi'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'pmid'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'authors'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'year'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudy
+     */
+    'level'?: string | null;
+}
+/**
+ * @type AbstractStudyVersions
+ * @export
+ */
+export type AbstractStudyVersions = Array<StudyReturn> | Array<string>;
+
+/**
+ * 
+ * @export
  * @interface AnalysisBase
  */
 export interface AnalysisBase {
