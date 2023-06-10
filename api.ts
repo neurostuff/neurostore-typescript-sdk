@@ -4034,10 +4034,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {string} [publication] search for papers from a particular journal
+         * @param {string} [pmid] search for particular pmid
+         * @param {string} [doi] search for study with specific doi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        abstractStudiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/abstract-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4092,6 +4095,18 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
             if (source !== undefined) {
                 localVarQueryParameter['source'] = source;
+            }
+
+            if (publication !== undefined) {
+                localVarQueryParameter['publication'] = publication;
+            }
+
+            if (pmid !== undefined) {
+                localVarQueryParameter['pmid'] = pmid;
+            }
+
+            if (doi !== undefined) {
+                localVarQueryParameter['doi'] = doi;
             }
 
 
@@ -4243,11 +4258,14 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {string} [publication] search for papers from a particular journal
+         * @param {string} [pmid] search for particular pmid
+         * @param {string} [doi] search for study with specific doi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, options);
+        async abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4308,11 +4326,14 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
          * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {string} [publication] search for papers from a particular journal
+         * @param {string} [pmid] search for particular pmid
+         * @param {string} [doi] search for study with specific doi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options?: any): AxiosPromise<AbstractStudyReturn> {
-            return localVarFp.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, options).then((request) => request(axios, basePath));
+        abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: any): AxiosPromise<AbstractStudyReturn> {
+            return localVarFp.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4369,12 +4390,15 @@ export class DefaultApi extends BaseAPI {
      * @param {'group' | 'meta'} [level] select between studies with group results or meta results
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
      * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {string} [publication] search for papers from a particular journal
+     * @param {string} [pmid] search for particular pmid
+     * @param {string} [doi] search for study with specific doi
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, options).then((request) => request(this.axios, this.basePath));
+    public abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
