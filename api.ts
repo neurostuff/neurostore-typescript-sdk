@@ -91,6 +91,116 @@ export interface AbstractStudy {
     'level'?: string | null;
 }
 /**
+ * 
+ * @export
+ * @interface AbstractStudyList
+ */
+export interface AbstractStudyList {
+    /**
+     * 
+     * @type {Array<AbstractStudyReturn>}
+     * @memberof AbstractStudyList
+     */
+    'results'?: Array<AbstractStudyReturn>;
+}
+/**
+ * 
+ * @export
+ * @interface AbstractStudyReturn
+ */
+export interface AbstractStudyReturn {
+    /**
+     * 
+     * @type {object}
+     * @memberof AbstractStudyReturn
+     */
+    'metadata'?: object;
+    /**
+     * 
+     * @type {AbstractStudyVersions}
+     * @memberof AbstractStudyReturn
+     */
+    'versions'?: AbstractStudyVersions;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'doi'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'pmid'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'authors'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'year'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'level'?: string | null;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'created_at'?: string;
+    /**
+     * when was the resource last modified/updated.
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'updated_at'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof AbstractStudyReturn
+     */
+    'public'?: boolean;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof AbstractStudyReturn
+     */
+    'user'?: string | null;
+}
+/**
  * @type AbstractStudyVersions
  * @export
  */
@@ -3900,6 +4010,408 @@ export class ConditionsApi extends BaseAPI {
      */
     public conditionsPost(conditionRequest?: ConditionRequest, options?: AxiosRequestConfig) {
         return ConditionsApiFp(this.configuration).conditionsPost(conditionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * DefaultApi - axios parameter creator
+ * @export
+ */
+export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {string} [authors] search authors
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
+         * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/abstract-studies/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (desc !== undefined) {
+                localVarQueryParameter['desc'] = desc;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (description !== undefined) {
+                localVarQueryParameter['description'] = description;
+            }
+
+            if (authors !== undefined) {
+                localVarQueryParameter['authors'] = authors;
+            }
+
+            if (level !== undefined) {
+                localVarQueryParameter['level'] = level;
+            }
+
+            if (dataType !== undefined) {
+                localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('abstractStudiesIdGet', 'id', id)
+            const localVarPath = `/abstract-studies/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {AbstractStudy} [abstractStudy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesIdPut: async (id: string, abstractStudy?: AbstractStudy, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('abstractStudiesIdPut', 'id', id)
+            const localVarPath = `/abstract-studies/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(abstractStudy, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
+         * @param {AbstractStudy} [abstractStudy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesPost: async (abstractStudy?: AbstractStudy, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/abstract-studies/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(abstractStudy, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DefaultApi - functional programming interface
+ * @export
+ */
+export const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {string} [authors] search authors
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
+         * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async abstractStudiesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {AbstractStudy} [abstractStudy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async abstractStudiesIdPut(id: string, abstractStudy?: AbstractStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesIdPut(id, abstractStudy, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary 
+         * @param {AbstractStudy} [abstractStudy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async abstractStudiesPost(abstractStudy?: AbstractStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesPost(abstractStudy, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DefaultApi - factory interface
+ * @export
+ */
+export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary 
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {string} [authors] search authors
+         * @param {'group' | 'meta'} [level] select between studies with group results or meta results
+         * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options?: any): AxiosPromise<AbstractStudyReturn> {
+            return localVarFp.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesIdGet(id: string, options?: any): AxiosPromise<AbstractStudyReturn> {
+            return localVarFp.abstractStudiesIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
+         * @param {string} id 
+         * @param {AbstractStudy} [abstractStudy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesIdPut(id: string, abstractStudy?: AbstractStudy, options?: any): AxiosPromise<AbstractStudyReturn> {
+            return localVarFp.abstractStudiesIdPut(id, abstractStudy, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
+         * @param {AbstractStudy} [abstractStudy] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        abstractStudiesPost(abstractStudy?: AbstractStudy, options?: any): AxiosPromise<AbstractStudyList> {
+            return localVarFp.abstractStudiesPost(abstractStudy, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DefaultApi - object-oriented interface
+ * @export
+ * @class DefaultApi
+ * @extends {BaseAPI}
+ */
+export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary 
+     * @param {string} [search] search for entries that contain the substring
+     * @param {string} [sort] Parameter to sort results on
+     * @param {number} [page] page of results
+     * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+     * @param {number} [pageSize] number of results to show on a page
+     * @param {string} [name] search the name field for a term
+     * @param {string} [description] search description field for a term
+     * @param {string} [authors] search authors
+     * @param {'group' | 'meta'} [level] select between studies with group results or meta results
+     * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Your GET endpoint
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public abstractStudiesIdGet(id: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).abstractStudiesIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
+     * @param {string} id 
+     * @param {AbstractStudy} [abstractStudy] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public abstractStudiesIdPut(id: string, abstractStudy?: AbstractStudy, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).abstractStudiesIdPut(id, abstractStudy, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 
+     * @param {AbstractStudy} [abstractStudy] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public abstractStudiesPost(abstractStudy?: AbstractStudy, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).abstractStudiesPost(abstractStudy, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
