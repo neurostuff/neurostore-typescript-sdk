@@ -26,189 +26,6 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
- * @interface AbstractStudy
- */
-export interface AbstractStudy {
-    /**
-     * 
-     * @type {object}
-     * @memberof AbstractStudy
-     */
-    'metadata'?: object;
-    /**
-     * 
-     * @type {AbstractStudyVersions}
-     * @memberof AbstractStudy
-     */
-    'versions'?: AbstractStudyVersions;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'publication'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'doi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'pmid'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'authors'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'year'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudy
-     */
-    'level'?: string | null;
-}
-/**
- * 
- * @export
- * @interface AbstractStudyList
- */
-export interface AbstractStudyList {
-    /**
-     * 
-     * @type {Array<AbstractStudyReturn>}
-     * @memberof AbstractStudyList
-     */
-    'results'?: Array<AbstractStudyReturn>;
-}
-/**
- * 
- * @export
- * @interface AbstractStudyReturn
- */
-export interface AbstractStudyReturn {
-    /**
-     * 
-     * @type {object}
-     * @memberof AbstractStudyReturn
-     */
-    'metadata'?: object;
-    /**
-     * 
-     * @type {AbstractStudyVersions}
-     * @memberof AbstractStudyReturn
-     */
-    'versions'?: AbstractStudyVersions;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'publication'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'doi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'pmid'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'authors'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'year'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'level'?: string | null;
-    /**
-     * time the resource was created on the database
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'created_at'?: string;
-    /**
-     * when was the resource last modified/updated.
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'updated_at'?: string | null;
-    /**
-     * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'id'?: string;
-    /**
-     * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof AbstractStudyReturn
-     */
-    'public'?: boolean;
-    /**
-     * who owns the resource
-     * @type {string}
-     * @memberof AbstractStudyReturn
-     */
-    'user'?: string | null;
-}
-/**
- * @type AbstractStudyVersions
- * @export
- */
-export type AbstractStudyVersions = Array<StudyReturn> | Array<string>;
-
-/**
- * 
- * @export
  * @interface AnalysisBase
  */
 export interface AnalysisBase {
@@ -815,6 +632,189 @@ export interface AnnotationReturnRelationships {
  * @export
  */
 export type AnnotationReturnRelationshipsNotes = Array<NoteCollectionReturn> | Array<string>;
+
+/**
+ * 
+ * @export
+ * @interface BaseStudy
+ */
+export interface BaseStudy {
+    /**
+     * 
+     * @type {object}
+     * @memberof BaseStudy
+     */
+    'metadata'?: object;
+    /**
+     * 
+     * @type {BaseStudyVersions}
+     * @memberof BaseStudy
+     */
+    'versions'?: BaseStudyVersions;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'doi'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'pmid'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'authors'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'year'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'level'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface BaseStudyList
+ */
+export interface BaseStudyList {
+    /**
+     * 
+     * @type {Array<BaseStudyReturn>}
+     * @memberof BaseStudyList
+     */
+    'results'?: Array<BaseStudyReturn>;
+}
+/**
+ * 
+ * @export
+ * @interface BaseStudyReturn
+ */
+export interface BaseStudyReturn {
+    /**
+     * 
+     * @type {object}
+     * @memberof BaseStudyReturn
+     */
+    'metadata'?: object;
+    /**
+     * 
+     * @type {BaseStudyVersions}
+     * @memberof BaseStudyReturn
+     */
+    'versions'?: BaseStudyVersions;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'publication'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'doi'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'pmid'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'authors'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'year'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'level'?: string | null;
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'created_at'?: string;
+    /**
+     * when was the resource last modified/updated.
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'updated_at'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof BaseStudyReturn
+     */
+    'public'?: boolean;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'user'?: string | null;
+}
+/**
+ * @type BaseStudyVersions
+ * @export
+ */
+export type BaseStudyVersions = Array<StudyReturn> | Array<string>;
 
 /**
  * 
@@ -4040,8 +4040,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/abstract-studies/`;
+        baseStudiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4131,10 +4131,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('abstractStudiesIdGet', 'id', id)
-            const localVarPath = `/abstract-studies/{id}`
+            assertParamExists('baseStudiesIdGet', 'id', id)
+            const localVarPath = `/base-studies/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4162,14 +4162,14 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary 
          * @param {string} id 
-         * @param {AbstractStudy} [abstractStudy] 
+         * @param {BaseStudy} [baseStudy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesIdPut: async (id: string, abstractStudy?: AbstractStudy, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesIdPut: async (id: string, baseStudy?: BaseStudy, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('abstractStudiesIdPut', 'id', id)
-            const localVarPath = `/abstract-studies/{id}`
+            assertParamExists('baseStudiesIdPut', 'id', id)
+            const localVarPath = `/base-studies/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4193,7 +4193,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(abstractStudy, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(baseStudy, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4203,12 +4203,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 
-         * @param {AbstractStudy} [abstractStudy] 
+         * @param {BaseStudy} [baseStudy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesPost: async (abstractStudy?: AbstractStudy, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/abstract-studies/`;
+        baseStudiesPost: async (baseStudy?: BaseStudy, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4231,7 +4231,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(abstractStudy, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(baseStudy, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4268,8 +4268,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options);
+        async baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4279,31 +4279,31 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abstractStudiesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesIdGet(id, options);
+        async baseStudiesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 
          * @param {string} id 
-         * @param {AbstractStudy} [abstractStudy] 
+         * @param {BaseStudy} [baseStudy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abstractStudiesIdPut(id: string, abstractStudy?: AbstractStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesIdPut(id, abstractStudy, options);
+        async baseStudiesIdPut(id: string, baseStudy?: BaseStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdPut(id, baseStudy, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 
-         * @param {AbstractStudy} [abstractStudy] 
+         * @param {BaseStudy} [baseStudy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abstractStudiesPost(abstractStudy?: AbstractStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbstractStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.abstractStudiesPost(abstractStudy, options);
+        async baseStudiesPost(baseStudy?: BaseStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesPost(baseStudy, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4336,8 +4336,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: any): AxiosPromise<AbstractStudyReturn> {
-            return localVarFp.abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options).then((request) => request(axios, basePath));
+        baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: any): AxiosPromise<BaseStudyReturn> {
+            return localVarFp.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4346,29 +4346,29 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesIdGet(id: string, options?: any): AxiosPromise<AbstractStudyReturn> {
-            return localVarFp.abstractStudiesIdGet(id, options).then((request) => request(axios, basePath));
+        baseStudiesIdGet(id: string, options?: any): AxiosPromise<BaseStudyReturn> {
+            return localVarFp.baseStudiesIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 
          * @param {string} id 
-         * @param {AbstractStudy} [abstractStudy] 
+         * @param {BaseStudy} [baseStudy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesIdPut(id: string, abstractStudy?: AbstractStudy, options?: any): AxiosPromise<AbstractStudyReturn> {
-            return localVarFp.abstractStudiesIdPut(id, abstractStudy, options).then((request) => request(axios, basePath));
+        baseStudiesIdPut(id: string, baseStudy?: BaseStudy, options?: any): AxiosPromise<BaseStudyReturn> {
+            return localVarFp.baseStudiesIdPut(id, baseStudy, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 
-         * @param {AbstractStudy} [abstractStudy] 
+         * @param {BaseStudy} [baseStudy] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abstractStudiesPost(abstractStudy?: AbstractStudy, options?: any): AxiosPromise<AbstractStudyList> {
-            return localVarFp.abstractStudiesPost(abstractStudy, options).then((request) => request(axios, basePath));
+        baseStudiesPost(baseStudy?: BaseStudy, options?: any): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesPost(baseStudy, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4401,8 +4401,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public abstractStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).abstractStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4413,33 +4413,33 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public abstractStudiesIdGet(id: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).abstractStudiesIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesIdGet(id: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).baseStudiesIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 
      * @param {string} id 
-     * @param {AbstractStudy} [abstractStudy] 
+     * @param {BaseStudy} [baseStudy] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public abstractStudiesIdPut(id: string, abstractStudy?: AbstractStudy, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).abstractStudiesIdPut(id, abstractStudy, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesIdPut(id: string, baseStudy?: BaseStudy, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).baseStudiesIdPut(id, baseStudy, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 
-     * @param {AbstractStudy} [abstractStudy] 
+     * @param {BaseStudy} [baseStudy] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public abstractStudiesPost(abstractStudy?: AbstractStudy, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).abstractStudiesPost(abstractStudy, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesPost(baseStudy?: BaseStudy, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).baseStudiesPost(baseStudy, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
