@@ -644,7 +644,7 @@ export interface BaseStudy {
      * @type {object}
      * @memberof BaseStudy
      */
-    'metadata'?: object;
+    'metadata'?: object | null;
     /**
      * 
      * @type {BaseStudyVersions}
@@ -724,7 +724,7 @@ export interface BaseStudyReturn {
      * @type {object}
      * @memberof BaseStudyReturn
      */
-    'metadata'?: object;
+    'metadata'?: object | null;
     /**
      * 
      * @type {BaseStudyVersions}
