@@ -712,6 +712,12 @@ export interface BaseStudyList {
      * @memberof BaseStudyList
      */
     'results'?: Array<BaseStudyReturn>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof BaseStudyList
+     */
+    'metadata'?: Metadata;
 }
 /**
  * 
@@ -4290,7 +4296,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+        async baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, flat, info, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4362,7 +4368,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options?: any): AxiosPromise<BaseStudyReturn> {
+        baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options?: any): AxiosPromise<BaseStudyList> {
             return localVarFp.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, flat, info, options).then((request) => request(axios, basePath));
         },
         /**
