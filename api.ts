@@ -4039,16 +4039,15 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [authors] search authors
          * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-         * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4105,10 +4104,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 localVarQueryParameter['data_type'] = dataType;
             }
 
-            if (source !== undefined) {
-                localVarQueryParameter['source'] = source;
-            }
-
             if (publication !== undefined) {
                 localVarQueryParameter['publication'] = publication;
             }
@@ -4145,11 +4140,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @summary Your GET endpoint
          * @param {string} id 
          * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-         * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet: async (id: string, flat?: 'true' | 'false', info?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesIdGet: async (id: string, flat?: 'true' | 'false', info?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('baseStudiesIdGet', 'id', id)
             const localVarPath = `/base-studies/{id}`
@@ -4287,17 +4282,16 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-         * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, flat, info, options);
+        async baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4305,11 +4299,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @summary Your GET endpoint
          * @param {string} id 
          * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-         * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesIdGet(id: string, flat?: 'true' | 'false', info?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+        async baseStudiesIdGet(id: string, flat?: 'true' | 'false', info?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, flat, info, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4359,28 +4353,27 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [authors] search authors
          * @param {'group' | 'meta'} [level] select between studies with group results or meta results
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-         * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options?: any): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, flat, info, options).then((request) => request(axios, basePath));
+        baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: boolean, options?: any): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Your GET endpoint
          * @param {string} id 
          * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-         * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet(id: string, flat?: 'true' | 'false', info?: string, options?: any): AxiosPromise<BaseStudyReturn> {
+        baseStudiesIdGet(id: string, flat?: 'true' | 'false', info?: boolean, options?: any): AxiosPromise<BaseStudyReturn> {
             return localVarFp.baseStudiesIdGet(id, flat, info, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4427,18 +4420,17 @@ export class DefaultApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {'group' | 'meta'} [level] select between studies with group results or meta results
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [publication] search for papers from a particular journal
      * @param {string} [pmid] search for particular pmid
      * @param {string} [doi] search for study with specific doi
      * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-     * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+     * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: string, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, source, publication, pmid, doi, flat, info, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: 'group' | 'meta', dataType?: 'coordinate' | 'image' | 'both', publication?: string, pmid?: string, doi?: string, flat?: 'true' | 'false', info?: boolean, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).baseStudiesGet(search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4446,12 +4438,12 @@ export class DefaultApi extends BaseAPI {
      * @summary Your GET endpoint
      * @param {string} id 
      * @param {'true' | 'false'} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
-     * @param {string} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+     * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public baseStudiesIdGet(id: string, flat?: 'true' | 'false', info?: string, options?: AxiosRequestConfig) {
+    public baseStudiesIdGet(id: string, flat?: 'true' | 'false', info?: boolean, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).baseStudiesIdGet(id, flat, info, options).then((request) => request(this.axios, this.basePath));
     }
 
