@@ -689,10 +689,10 @@ export interface BaseStudy {
     'authors'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof BaseStudy
      */
-    'year'?: string | null;
+    'year'?: number | null;
     /**
      * 
      * @type {string}
@@ -775,10 +775,10 @@ export interface BaseStudyReturn {
     'authors'?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof BaseStudyReturn
      */
-    'year'?: string | null;
+    'year'?: number | null;
     /**
      * 
      * @type {string}
@@ -4326,7 +4326,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesPost(baseStudy?: BaseStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+        async baseStudiesPost(baseStudy?: BaseStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesPost(baseStudy, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4394,7 +4394,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesPost(baseStudy?: BaseStudy, options?: any): AxiosPromise<BaseStudyList> {
+        baseStudiesPost(baseStudy?: BaseStudy, options?: any): AxiosPromise<BaseStudyReturn> {
             return localVarFp.baseStudiesPost(baseStudy, options).then((request) => request(axios, basePath));
         },
     };
