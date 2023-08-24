@@ -634,6 +634,12 @@ export interface AnnotationReturnRelationships {
 export type AnnotationReturnRelationshipsNotes = Array<NoteCollectionReturn> | Array<string>;
 
 /**
+ * @type BaseStudiesPostRequest
+ * @export
+ */
+export type BaseStudiesPostRequest = Array<BaseStudy> | BaseStudy;
+
+/**
  * 
  * @export
  * @interface BaseStudy
@@ -4224,11 +4230,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 
-         * @param {BaseStudy} [baseStudy] 
+         * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesPost: async (baseStudy?: BaseStudy, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesPost: async (baseStudiesPostRequest?: BaseStudiesPostRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4252,7 +4258,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(baseStudy, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(baseStudiesPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4322,12 +4328,12 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
-         * @param {BaseStudy} [baseStudy] 
+         * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesPost(baseStudy?: BaseStudy, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesPost(baseStudy, options);
+        async baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesPost(baseStudiesPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4390,12 +4396,12 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 
-         * @param {BaseStudy} [baseStudy] 
+         * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesPost(baseStudy?: BaseStudy, options?: any): AxiosPromise<BaseStudyReturn> {
-            return localVarFp.baseStudiesPost(baseStudy, options).then((request) => request(axios, basePath));
+        baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: any): AxiosPromise<BaseStudyReturn> {
+            return localVarFp.baseStudiesPost(baseStudiesPostRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4463,13 +4469,13 @@ export class DefaultApi extends BaseAPI {
     /**
      * 
      * @summary 
-     * @param {BaseStudy} [baseStudy] 
+     * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public baseStudiesPost(baseStudy?: BaseStudy, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).baseStudiesPost(baseStudy, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).baseStudiesPost(baseStudiesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
