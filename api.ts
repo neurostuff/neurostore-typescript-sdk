@@ -257,6 +257,12 @@ export interface AnalysisReturn {
      */
     'user'?: string | null;
     /**
+     * human readable username
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'username'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof AnalysisReturn
@@ -584,6 +590,12 @@ export interface AnnotationReturnOneOf1 {
      */
     'user'?: string | null;
     /**
+     * human readable username
+     * @type {string}
+     * @memberof AnnotationReturnOneOf1
+     */
+    'username'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof AnnotationReturnOneOf1
@@ -815,6 +827,12 @@ export interface BaseStudyReturn {
      * @memberof BaseStudyReturn
      */
     'user'?: string | null;
+    /**
+     * human readable username
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'username'?: string | null;
 }
 /**
  * @type BaseStudyVersions
@@ -964,6 +982,12 @@ export interface ConditionReturn {
      * @memberof ConditionReturn
      */
     'user'?: string | null;
+    /**
+     * human readable username
+     * @type {string}
+     * @memberof ConditionReturn
+     */
+    'username'?: string | null;
 }
 /**
  * WARNING: not currently used. descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
@@ -1253,6 +1277,12 @@ export interface ImageReturn {
      * @memberof ImageReturn
      */
     'user'?: string | null;
+    /**
+     * human readable username
+     * @type {string}
+     * @memberof ImageReturn
+     */
+    'username'?: string | null;
 }
 /**
  * JSON-LD elements for data tracking
@@ -1772,6 +1802,12 @@ export interface PointReturn {
      */
     'user'?: string | null;
     /**
+     * human readable username
+     * @type {string}
+     * @memberof PointReturn
+     */
+    'username'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof PointReturn
@@ -1906,6 +1942,12 @@ export interface ResourceAttributes {
      * @memberof ResourceAttributes
      */
     'user'?: string | null;
+    /**
+     * human readable username
+     * @type {string}
+     * @memberof ResourceAttributes
+     */
+    'username'?: string | null;
 }
 /**
  * 
@@ -2178,6 +2220,12 @@ export interface StudyReturn {
      * @memberof StudyReturn
      */
     'user'?: string | null;
+    /**
+     * human readable username
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'username'?: string | null;
     /**
      * 
      * @type {string}
@@ -2477,6 +2525,12 @@ export interface StudysetReturn {
      */
     'user'?: string | null;
     /**
+     * human readable username
+     * @type {string}
+     * @memberof StudysetReturn
+     */
+    'username'?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof StudysetReturn
@@ -2653,6 +2707,12 @@ export interface UserResourceAttributes {
      * @memberof UserResourceAttributes
      */
     'user'?: string | null;
+    /**
+     * human readable username
+     * @type {string}
+     * @memberof UserResourceAttributes
+     */
+    'username'?: string | null;
 }
 /**
  * common resource attributes not tied to a specific user
