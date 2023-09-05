@@ -634,6 +634,12 @@ export interface AnnotationReturnRelationships {
 export type AnnotationReturnRelationshipsNotes = Array<NoteCollectionReturn> | Array<string>;
 
 /**
+ * @type BaseStudiesPost200Response
+ * @export
+ */
+export type BaseStudiesPost200Response = Array<BaseStudyReturn> | BaseStudyReturn;
+
+/**
  * @type BaseStudiesPostRequest
  * @export
  */
@@ -4332,7 +4338,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+        async baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudiesPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesPost(baseStudiesPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4400,7 +4406,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: any): AxiosPromise<BaseStudyReturn> {
+        baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: any): AxiosPromise<BaseStudiesPost200Response> {
             return localVarFp.baseStudiesPost(baseStudiesPostRequest, options).then((request) => request(axios, basePath));
         },
     };
