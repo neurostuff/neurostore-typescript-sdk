@@ -2216,10 +2216,10 @@ export interface StudyReturn {
     'analyses'?: StudyReturnRelationshipsAnalyses;
     /**
      * 
-     * @type {Array<StudyReturnAllOfStudysets>}
+     * @type {Array<StudyReturnAllOfStudysetsInner>}
      * @memberof StudyReturn
      */
-    'studysets'?: Array<StudyReturnAllOfStudysets>;
+    'studysets'?: Array<StudyReturnAllOfStudysetsInner>;
     /**
      * 
      * @type {boolean}
@@ -2241,10 +2241,10 @@ export interface StudyReturn {
 export interface StudyReturnAllOf {
     /**
      * 
-     * @type {Array<StudyReturnAllOfStudysets>}
+     * @type {Array<StudyReturnAllOfStudysetsInner>}
      * @memberof StudyReturnAllOf
      */
-    'studysets'?: Array<StudyReturnAllOfStudysets>;
+    'studysets'?: Array<StudyReturnAllOfStudysetsInner>;
     /**
      * 
      * @type {boolean}
@@ -2259,27 +2259,33 @@ export interface StudyReturnAllOf {
     'has_images'?: boolean;
 }
 /**
+ * @type StudyReturnAllOfStudysetsInner
+ * @export
+ */
+export type StudyReturnAllOfStudysetsInner = StudyReturnAllOfStudysetsInnerOneOf | string;
+
+/**
  * 
  * @export
- * @interface StudyReturnAllOfStudysets
+ * @interface StudyReturnAllOfStudysetsInnerOneOf
  */
-export interface StudyReturnAllOfStudysets {
+export interface StudyReturnAllOfStudysetsInnerOneOf {
     /**
      * 
      * @type {string}
-     * @memberof StudyReturnAllOfStudysets
+     * @memberof StudyReturnAllOfStudysetsInnerOneOf
      */
     'name'?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof StudyReturnAllOfStudysets
+     * @memberof StudyReturnAllOfStudysetsInnerOneOf
      */
     'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof StudyReturnAllOfStudysets
+     * @memberof StudyReturnAllOfStudysetsInnerOneOf
      */
     'description'?: string | null;
 }
