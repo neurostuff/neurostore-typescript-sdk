@@ -2220,6 +2220,18 @@ export interface StudyReturn {
      * @memberof StudyReturn
      */
     'studysets'?: Array<StudyReturnAllOfStudysets>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StudyReturn
+     */
+    'has_coordinates'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StudyReturn
+     */
+    'has_images'?: boolean;
 }
 /**
  * 
@@ -2233,6 +2245,18 @@ export interface StudyReturnAllOf {
      * @memberof StudyReturnAllOf
      */
     'studysets'?: Array<StudyReturnAllOfStudysets>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StudyReturnAllOf
+     */
+    'has_coordinates'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StudyReturnAllOf
+     */
+    'has_images'?: boolean;
 }
 /**
  * 
@@ -2245,7 +2269,7 @@ export interface StudyReturnAllOfStudysets {
      * @type {string}
      * @memberof StudyReturnAllOfStudysets
      */
-    'name'?: string;
+    'name'?: string | null;
     /**
      * 
      * @type {string}
@@ -2257,7 +2281,7 @@ export interface StudyReturnAllOfStudysets {
      * @type {string}
      * @memberof StudyReturnAllOfStudysets
      */
-    'description'?: string;
+    'description'?: string | null;
 }
 /**
  * 
