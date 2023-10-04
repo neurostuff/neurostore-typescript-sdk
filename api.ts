@@ -2280,6 +2280,12 @@ export interface StudyReturn {
      * @memberof StudyReturn
      */
     'has_images'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'base_study'?: string | null;
 }
 /**
  * 
@@ -2305,6 +2311,12 @@ export interface StudyReturnAllOf {
      * @memberof StudyReturnAllOf
      */
     'has_images'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturnAllOf
+     */
+    'base_study'?: string | null;
 }
 /**
  * @type StudyReturnAllOfStudysetsInner
