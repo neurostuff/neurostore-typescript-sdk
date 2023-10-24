@@ -233,7 +233,7 @@ export interface AnalysisReturn {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof AnalysisReturn
      */
@@ -566,7 +566,7 @@ export interface AnnotationReturnOneOf1 {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof AnnotationReturnOneOf1
      */
@@ -816,7 +816,7 @@ export interface BaseStudyReturn {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof BaseStudyReturn
      */
@@ -971,7 +971,7 @@ export interface ConditionReturn {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof ConditionReturn
      */
@@ -1266,7 +1266,7 @@ export interface ImageReturn {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof ImageReturn
      */
@@ -1790,7 +1790,7 @@ export interface PointReturn {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof PointReturn
      */
@@ -1912,7 +1912,7 @@ export interface ReadableResourceAttributes {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof ReadableResourceAttributes
      */
@@ -1931,7 +1931,7 @@ export interface ResourceAttributes {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof ResourceAttributes
      */
@@ -2209,7 +2209,7 @@ export interface StudyReturn {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof StudyReturn
      */
@@ -2543,7 +2543,7 @@ export interface StudysetReturn {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof StudysetReturn
      */
@@ -2769,7 +2769,7 @@ export interface UserlessResourceAttributes {
      */
     'created_at'?: string;
     /**
-     * when was the resource last modified/updated.
+     * when the resource was last modified/updated.
      * @type {string}
      * @memberof UserlessResourceAttributes
      */
@@ -6828,10 +6828,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdGet: async (id: string, nested?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsIdGet: async (id: string, nested?: boolean, gzip?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studysetsIdGet', 'id', id)
             const localVarPath = `/studysets/{id}`
@@ -6849,6 +6850,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
+            }
+
+            if (gzip !== undefined) {
+                localVarQueryParameter['gzip'] = gzip;
             }
 
 
@@ -7351,11 +7356,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsIdGet(id: string, nested?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdGet(id, nested, options);
+        async studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdGet(id, nested, gzip, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7759,11 +7765,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdGet(id: string, nested?: boolean, options?: any): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsIdGet(id, nested, options).then((request) => request(axios, basePath));
+        studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: any): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsIdGet(id, nested, gzip, options).then((request) => request(axios, basePath));
         },
         /**
          * Update a studyset.
@@ -8226,12 +8233,13 @@ export class StoreApi extends BaseAPI {
      * @summary GET a studyset
      * @param {string} id 
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {boolean} [gzip] return the content as gzipped content
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studysetsIdGet(id: string, nested?: boolean, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studysetsIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
+    public studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studysetsIdGet(id, nested, gzip, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8990,10 +8998,11 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdGet: async (id: string, nested?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsIdGet: async (id: string, nested?: boolean, gzip?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studysetsIdGet', 'id', id)
             const localVarPath = `/studysets/{id}`
@@ -9011,6 +9020,10 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
+            }
+
+            if (gzip !== undefined) {
+                localVarQueryParameter['gzip'] = gzip;
             }
 
 
@@ -9153,11 +9166,12 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsIdGet(id: string, nested?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdGet(id, nested, options);
+        async studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdGet(id, nested, gzip, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -9230,11 +9244,12 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdGet(id: string, nested?: boolean, options?: any): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsIdGet(id, nested, options).then((request) => request(axios, basePath));
+        studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: any): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsIdGet(id, nested, gzip, options).then((request) => request(axios, basePath));
         },
         /**
          * Update a studyset.
@@ -9308,12 +9323,13 @@ export class StudysetsApi extends BaseAPI {
      * @summary GET a studyset
      * @param {string} id 
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {boolean} [gzip] return the content as gzipped content
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsIdGet(id: string, nested?: boolean, options?: AxiosRequestConfig) {
-        return StudysetsApiFp(this.configuration).studysetsIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
+    public studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: AxiosRequestConfig) {
+        return StudysetsApiFp(this.configuration).studysetsIdGet(id, nested, gzip, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
