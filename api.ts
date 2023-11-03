@@ -4143,6 +4143,36 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        annotationsOptions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/annotations/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'OPTIONS', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -4386,6 +4416,16 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async annotationsOptions(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsOptions(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -4457,6 +4497,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        annotationsOptions(options?: any): AxiosPromise<void> {
+            return localVarFp.annotationsOptions(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -4521,6 +4570,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public annotationsOptions(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).annotationsOptions(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary 
