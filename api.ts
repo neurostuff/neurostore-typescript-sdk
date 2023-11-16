@@ -2462,10 +2462,10 @@ export interface StudysetRequest {
     'pmid'?: string | null;
     /**
      * 
-     * @type {StudysetRequestRelationshipsStudies}
+     * @type {Array<any>}
      * @memberof StudysetRequest
      */
-    'studies'?: StudysetRequestRelationshipsStudies;
+    'studies'?: Array<any>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -2501,17 +2501,11 @@ export type StudysetRequestLevelEnum = typeof StudysetRequestLevelEnum[keyof typ
 export interface StudysetRequestRelationships {
     /**
      * 
-     * @type {StudysetRequestRelationshipsStudies}
+     * @type {Array<any>}
      * @memberof StudysetRequestRelationships
      */
-    'studies'?: StudysetRequestRelationshipsStudies;
+    'studies'?: Array<any>;
 }
-/**
- * @type StudysetRequestRelationshipsStudies
- * @export
- */
-export type StudysetRequestRelationshipsStudies = Array<StudyRequest> | Array<string>;
-
 /**
  * 
  * @export
