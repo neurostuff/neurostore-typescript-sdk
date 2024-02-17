@@ -66,6 +66,12 @@ export interface AnalysisCommon {
      * @memberof AnalysisCommon
      */
     'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnalysisCommon
+     */
+    'analysis'?: number | null;
 }
 /**
  * 
@@ -152,6 +158,12 @@ export interface AnalysisRequest {
      * @memberof AnalysisRequest
      */
     'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnalysisRequest
+     */
+    'analysis'?: number | null;
 }
 /**
  * 
@@ -292,6 +304,12 @@ export interface AnalysisReturn {
      * @memberof AnalysisReturn
      */
     'entities'?: Array<Entity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnalysisReturn
+     */
+    'analysis'?: number | null;
 }
 /**
  * 
