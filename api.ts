@@ -71,7 +71,7 @@ export interface AnalysisCommon {
      * @type {number}
      * @memberof AnalysisCommon
      */
-    'analysis'?: number | null;
+    'order'?: number | null;
 }
 /**
  * 
@@ -163,7 +163,7 @@ export interface AnalysisRequest {
      * @type {number}
      * @memberof AnalysisRequest
      */
-    'analysis'?: number | null;
+    'order'?: number | null;
 }
 /**
  * 
@@ -309,7 +309,7 @@ export interface AnalysisReturn {
      * @type {number}
      * @memberof AnalysisReturn
      */
-    'analysis'?: number | null;
+    'order'?: number | null;
 }
 /**
  * 
