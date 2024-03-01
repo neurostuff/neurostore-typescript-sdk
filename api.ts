@@ -2158,6 +2158,25 @@ export interface StudyRequest {
      * @memberof StudyRequest
      */
     'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyRequest
+     */
+    'pmcid'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface StudyRequestAllOf
+ */
+export interface StudyRequestAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyRequestAllOf
+     */
+    'pmcid'?: string | null;
 }
 /**
  * 
