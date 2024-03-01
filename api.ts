@@ -741,6 +741,12 @@ export interface BaseStudy {
      * @memberof BaseStudy
      */
     'level'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudy
+     */
+    'pmcid'?: string | null;
 }
 /**
  * 
@@ -827,6 +833,12 @@ export interface BaseStudyReturn {
      * @memberof BaseStudyReturn
      */
     'level'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseStudyReturn
+     */
+    'pmcid'?: string | null;
     /**
      * time the resource was created on the database
      * @type {string}
@@ -2304,6 +2316,12 @@ export interface StudyReturn {
      * @memberof StudyReturn
      */
     'base_study'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturn
+     */
+    'pmcid'?: string | null;
 }
 /**
  * 
@@ -2335,6 +2353,12 @@ export interface StudyReturnAllOf {
      * @memberof StudyReturnAllOf
      */
     'base_study'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudyReturnAllOf
+     */
+    'pmcid'?: string | null;
 }
 /**
  * @type StudyReturnAllOfStudysetsInner
