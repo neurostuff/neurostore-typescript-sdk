@@ -1412,6 +1412,25 @@ export interface NoteCollectionBase {
 /**
  * 
  * @export
+ * @interface NoteCollectionList
+ */
+export interface NoteCollectionList {
+    /**
+     * 
+     * @type {Array<NoteCollectionReturn>}
+     * @memberof NoteCollectionList
+     */
+    'results'?: Array<NoteCollectionReturn>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof NoteCollectionList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
  * @interface NoteCollectionRequest
  */
 export interface NoteCollectionRequest {
@@ -1494,6 +1513,12 @@ export interface NoteCollectionReturn {
      * @memberof NoteCollectionReturn
      */
     'authors'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturn
+     */
+    'id'?: string;
 }
 /**
  * 
@@ -1549,6 +1574,12 @@ export interface NoteCollectionReturnAllOf {
      * @memberof NoteCollectionReturnAllOf
      */
     'authors'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoteCollectionReturnAllOf
+     */
+    'id'?: string;
 }
 /**
  * 
@@ -4197,6 +4228,36 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Your GET endpoint
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        annotationAnalysesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/annotation-analyses/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
@@ -4428,6 +4489,40 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnnotationAnalysesId: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getAnnotationAnalysesId', 'id', id)
+            const localVarPath = `/annotation-analyses/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4438,6 +4533,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 export const DefaultApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async annotationAnalysesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * 
          * @summary 
@@ -4499,6 +4604,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesPost(baseStudiesPostRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAnnotationAnalysesId(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnnotationAnalysesId(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4509,6 +4625,15 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DefaultApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        annotationAnalysesGet(options?: any): AxiosPromise<NoteCollectionList> {
+            return localVarFp.annotationAnalysesGet(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary 
@@ -4566,6 +4691,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: any): AxiosPromise<BaseStudiesPost200Response> {
             return localVarFp.baseStudiesPost(baseStudiesPostRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnnotationAnalysesId(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.getAnnotationAnalysesId(id, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -4576,6 +4711,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary Your GET endpoint
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public annotationAnalysesGet(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).annotationAnalysesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary 
@@ -4639,6 +4785,18 @@ export class DefaultApi extends BaseAPI {
      */
     public baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).baseStudiesPost(baseStudiesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Your GET endpoint
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getAnnotationAnalysesId(id: string, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getAnnotationAnalysesId(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
