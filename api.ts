@@ -3339,7 +3339,7 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async annotationAnalysesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3440,7 +3440,7 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesIdGet(id: string, options?: any): AxiosPromise<void> {
+        annotationAnalysesIdGet(id: string, options?: any): AxiosPromise<NoteCollectionReturn> {
             return localVarFp.annotationAnalysesIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3916,7 +3916,7 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async annotationAnalysesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4017,7 +4017,7 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesIdGet(id: string, options?: any): AxiosPromise<void> {
+        annotationAnalysesIdGet(id: string, options?: any): AxiosPromise<NoteCollectionReturn> {
             return localVarFp.annotationAnalysesIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7443,7 +7443,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async annotationAnalysesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -7971,7 +7971,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesIdGet(id: string, options?: any): AxiosPromise<void> {
+        annotationAnalysesIdGet(id: string, options?: any): AxiosPromise<NoteCollectionReturn> {
             return localVarFp.annotationAnalysesIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
