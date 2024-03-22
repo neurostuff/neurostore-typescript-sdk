@@ -3400,7 +3400,7 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
+        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NoteCollectionReturn>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPost(noteCollectionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3510,7 +3510,7 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
+        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<Array<NoteCollectionReturn>> {
             return localVarFp.annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -4048,7 +4048,7 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
+        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NoteCollectionReturn>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPost(noteCollectionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4158,7 +4158,7 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
+        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<Array<NoteCollectionReturn>> {
             return localVarFp.annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7646,7 +7646,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
+        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NoteCollectionReturn>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPost(noteCollectionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8183,7 +8183,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
+        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<Array<NoteCollectionReturn>> {
             return localVarFp.annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
