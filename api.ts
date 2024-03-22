@@ -3250,12 +3250,12 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPut: async (noteCollectionRequest?: Array<NoteCollectionRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationAnalysesPost: async (noteCollectionRequest?: Array<NoteCollectionRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotation-analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3264,7 +3264,7 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3391,13 +3391,13 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPut(noteCollectionRequest, options);
+        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPost(noteCollectionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3501,13 +3501,13 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
-            return localVarFp.annotationAnalysesPut(noteCollectionRequest, options).then((request) => request(axios, basePath));
+        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
+            return localVarFp.annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3626,14 +3626,14 @@ export class AnalysesApi extends BaseAPI {
 
     /**
      * 
-     * @summary Your PUT endpoint
+     * @summary Your POST endpoint
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalysesApi
      */
-    public annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig) {
-        return AnalysesApiFp(this.configuration).annotationAnalysesPut(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig) {
+        return AnalysesApiFp(this.configuration).annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3756,12 +3756,12 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPut: async (noteCollectionRequest?: Array<NoteCollectionRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationAnalysesPost: async (noteCollectionRequest?: Array<NoteCollectionRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotation-analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3770,7 +3770,7 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4035,13 +4035,13 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPut(noteCollectionRequest, options);
+        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPost(noteCollectionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4145,13 +4145,13 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
-            return localVarFp.annotationAnalysesPut(noteCollectionRequest, options).then((request) => request(axios, basePath));
+        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
+            return localVarFp.annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * get annotations for an available studyset
@@ -4255,14 +4255,14 @@ export class AnnotationsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Your PUT endpoint
+     * @summary Your POST endpoint
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnotationsApi
      */
-    public annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig) {
-        return AnnotationsApiFp(this.configuration).annotationAnalysesPut(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig) {
+        return AnnotationsApiFp(this.configuration).annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5959,12 +5959,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPut: async (noteCollectionRequest?: Array<NoteCollectionRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationAnalysesPost: async (noteCollectionRequest?: Array<NoteCollectionRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotation-analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5973,7 +5973,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -7629,13 +7629,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPut(noteCollectionRequest, options);
+        async annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesPost(noteCollectionRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8166,13 +8166,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Your PUT endpoint
+         * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
-            return localVarFp.annotationAnalysesPut(noteCollectionRequest, options).then((request) => request(axios, basePath));
+        annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: any): AxiosPromise<NoteCollectionReturn> {
+            return localVarFp.annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * get annotations for an available studyset
@@ -8685,14 +8685,14 @@ export class StoreApi extends BaseAPI {
 
     /**
      * 
-     * @summary Your PUT endpoint
+     * @summary Your POST endpoint
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public annotationAnalysesPut(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).annotationAnalysesPut(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
