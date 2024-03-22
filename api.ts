@@ -3249,7 +3249,7 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -3394,7 +3394,7 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -3504,7 +3504,7 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
             return localVarFp.annotationAnalysesIdPut(id, noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -3629,7 +3629,7 @@ export class AnalysesApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
      * @summary Your POST endpoint
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
@@ -3759,7 +3759,7 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -4042,7 +4042,7 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -4152,7 +4152,7 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.annotationAnalysesIdPut(id, noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -4262,7 +4262,7 @@ export class AnnotationsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
      * @summary Your POST endpoint
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
@@ -5966,7 +5966,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -7640,7 +7640,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -8177,7 +8177,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.annotationAnalysesIdPut(id, noteCollectionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
          * @summary Your POST endpoint
          * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
          * @param {*} [options] Override http request option.
@@ -8696,7 +8696,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * 
+     * This endpoint does not allow for creation, only modification of existing annotation-analyses. If you wish to create an annotation-analysis, post to the annotations endpoint and/or add the analysis to the appropriate study in the studyset, and the annotation-analysis will be created automatically. 
      * @summary Your POST endpoint
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
