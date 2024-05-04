@@ -72,6 +72,12 @@ export interface AnalysisCommon {
      * @memberof AnalysisCommon
      */
     'order'?: number | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof AnalysisCommon
+     */
+    'metadata'?: object;
 }
 /**
  * 
@@ -164,6 +170,12 @@ export interface AnalysisRequest {
      * @memberof AnalysisRequest
      */
     'order'?: number | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof AnalysisRequest
+     */
+    'metadata'?: object;
 }
 /**
  * 
@@ -310,6 +322,12 @@ export interface AnalysisReturn {
      * @memberof AnalysisReturn
      */
     'order'?: number | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof AnalysisReturn
+     */
+    'metadata'?: object;
 }
 /**
  * 
