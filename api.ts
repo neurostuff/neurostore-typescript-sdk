@@ -77,7 +77,7 @@ export interface AnalysisCommon {
      * @type {object}
      * @memberof AnalysisCommon
      */
-    'metadata'?: object;
+    'metadata'?: object | null;
 }
 /**
  * 
@@ -175,7 +175,7 @@ export interface AnalysisRequest {
      * @type {object}
      * @memberof AnalysisRequest
      */
-    'metadata'?: object;
+    'metadata'?: object | null;
 }
 /**
  * 
@@ -327,7 +327,7 @@ export interface AnalysisReturn {
      * @type {object}
      * @memberof AnalysisReturn
      */
-    'metadata'?: object;
+    'metadata'?: object | null;
 }
 /**
  * 
