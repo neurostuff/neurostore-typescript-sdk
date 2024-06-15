@@ -3971,13 +3971,13 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotations/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4119,13 +4119,13 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
+        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsPost(source, sourceId, annotationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4224,13 +4224,13 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
+        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
             return localVarFp.annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -4344,14 +4344,14 @@ export class AnnotationsApi extends BaseAPI {
     /**
      * Create an annotation
      * @summary Post Annotation
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnotationsApi
      */
-    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
+    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -6178,13 +6178,13 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotations/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7095,7 +7095,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -7107,7 +7107,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7343,13 +7343,13 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7717,13 +7717,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
+        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsPost(source, sourceId, annotationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -7982,7 +7982,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -7994,7 +7994,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8038,13 +8038,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesPost(source, sourceId, studyRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8249,13 +8249,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
+        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
             return localVarFp.annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8494,7 +8494,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -8506,7 +8506,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
             return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8546,13 +8546,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
+        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8778,14 +8778,14 @@ export class StoreApi extends BaseAPI {
     /**
      * Create an annotation
      * @summary Post Annotation
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
+    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9063,7 +9063,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {any} [unique] whether to list clones with originals
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9076,7 +9076,7 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9123,14 +9123,14 @@ export class StoreApi extends BaseAPI {
     /**
      * Create a study
      * @summary POST/create a study
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
+    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9439,7 +9439,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9451,7 +9451,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9687,13 +9687,13 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9816,7 +9816,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9828,7 +9828,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9872,13 +9872,13 @@ export const StudiesApiFp = function(configuration?: Configuration) {
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesPost(source, sourceId, studyRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9962,7 +9962,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9974,7 +9974,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
             return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10014,13 +10014,13 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
+        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -10111,7 +10111,7 @@ export class StudiesApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {any} [unique] whether to list clones with originals
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -10124,7 +10124,7 @@ export class StudiesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10171,14 +10171,14 @@ export class StudiesApi extends BaseAPI {
     /**
      * Create a study
      * @summary POST/create a study
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
+    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -10203,13 +10203,13 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10474,13 +10474,13 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
+        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10554,13 +10554,13 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options?: any): AxiosPromise<StudysetList> {
+        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options?: any): AxiosPromise<StudysetList> {
             return localVarFp.studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10629,14 +10629,14 @@ export class StudysetsApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {any} [unique] whether to list clones with originals
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options?: AxiosRequestConfig) {
+    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options?: AxiosRequestConfig) {
         return StudysetsApiFp(this.configuration).studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
