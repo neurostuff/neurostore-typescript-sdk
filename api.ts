@@ -1602,6 +1602,262 @@ export interface NoteCollectionReturnAllOf {
 /**
  * 
  * @export
+ * @interface Pipeline
+ */
+export interface Pipeline {
+    /**
+     * 
+     * @type {string}
+     * @memberof Pipeline
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Pipeline
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Pipeline
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Pipeline
+     */
+    'version'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Pipeline
+     */
+    'study_dependent'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Pipeline
+     */
+    'ace_compatible'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Pipeline
+     */
+    'pubget_compatible'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Pipeline
+     */
+    'derived_from'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineConfig
+ */
+export interface PipelineConfig {
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineConfig
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof PipelineConfig
+     */
+    'config'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineConfigList
+ */
+export interface PipelineConfigList {
+    /**
+     * 
+     * @type {Array<PipelineConfig>}
+     * @memberof PipelineConfigList
+     */
+    'results'?: Array<PipelineConfig>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof PipelineConfigList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineList
+ */
+export interface PipelineList {
+    /**
+     * 
+     * @type {Array<Pipeline>}
+     * @memberof PipelineList
+     */
+    'results'?: Array<Pipeline>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof PipelineList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineRun
+ */
+export interface PipelineRun {
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRun
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRun
+     */
+    'status'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRun
+     */
+    'started_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRun
+     */
+    'finished_at'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineRunList
+ */
+export interface PipelineRunList {
+    /**
+     * 
+     * @type {Array<PipelineRun>}
+     * @memberof PipelineRunList
+     */
+    'results'?: Array<PipelineRun>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof PipelineRunList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineRunResult
+ */
+export interface PipelineRunResult {
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRunResult
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRunResult
+     */
+    'pipeline_run_id'?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof PipelineRunResult
+     */
+    'data'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineRunResultList
+ */
+export interface PipelineRunResultList {
+    /**
+     * 
+     * @type {Array<PipelineRunResult>}
+     * @memberof PipelineRunResultList
+     */
+    'results'?: Array<PipelineRunResult>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof PipelineRunResultList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineRunResultVote
+ */
+export interface PipelineRunResultVote {
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRunResultVote
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRunResultVote
+     */
+    'pipeline_run_result_id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineRunResultVote
+     */
+    'user_id'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PipelineRunResultVote
+     */
+    'vote'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineRunResultVoteList
+ */
+export interface PipelineRunResultVoteList {
+    /**
+     * 
+     * @type {Array<PipelineRunResultVote>}
+     * @memberof PipelineRunResultVoteList
+     */
+    'results'?: Array<PipelineRunResultVote>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof PipelineRunResultVoteList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
  * @interface PointBase
  */
 export interface PointBase {
@@ -3971,13 +4227,13 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotations/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4119,13 +4375,13 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
+        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsPost(source, sourceId, annotationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -4224,13 +4480,13 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
+        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
             return localVarFp.annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -4344,14 +4600,14 @@ export class AnnotationsApi extends BaseAPI {
     /**
      * Create an annotation
      * @summary Post Annotation
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnotationsApi
      */
-    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
+    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -5251,6 +5507,1871 @@ export class ImagesApi extends BaseAPI {
      */
     public imagesPost(imageRequest?: ImageRequest, options?: AxiosRequestConfig) {
         return ImagesApiFp(this.configuration).imagesPost(imageRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PipelineConfigsApi - axios parameter creator
+ * @export
+ */
+export const PipelineConfigsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline configs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-configs/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline config by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsIdDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('pipelineConfigsIdDelete', 'id', id)
+            const localVarPath = `/pipeline-configs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary GET a pipeline config by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('pipelineConfigsIdGet', 'id', id)
+            const localVarPath = `/pipeline-configs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline config by ID
+         * @param {string} id 
+         * @param {PipelineConfig} [pipelineConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsIdPut: async (id: string, pipelineConfig?: PipelineConfig, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('pipelineConfigsIdPut', 'id', id)
+            const localVarPath = `/pipeline-configs/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineConfig, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline config
+         * @param {PipelineConfig} [pipelineConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsPost: async (pipelineConfig?: PipelineConfig, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-configs/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineConfig, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PipelineConfigsApi - functional programming interface
+ * @export
+ */
+export const PipelineConfigsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PipelineConfigsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline configs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineConfigsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineConfigList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline config by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineConfigsIdDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsIdDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary GET a pipeline config by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineConfigsIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineConfig>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline config by ID
+         * @param {string} id 
+         * @param {PipelineConfig} [pipelineConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineConfigsIdPut(id: string, pipelineConfig?: PipelineConfig, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsIdPut(id, pipelineConfig, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline config
+         * @param {PipelineConfig} [pipelineConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineConfigsPost(pipelineConfig?: PipelineConfig, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsPost(pipelineConfig, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PipelineConfigsApi - factory interface
+ * @export
+ */
+export const PipelineConfigsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PipelineConfigsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline configs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsGet(options?: any): AxiosPromise<PipelineConfigList> {
+            return localVarFp.pipelineConfigsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline config by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsIdDelete(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineConfigsIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary GET a pipeline config by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsIdGet(id: string, options?: any): AxiosPromise<PipelineConfig> {
+            return localVarFp.pipelineConfigsIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline config by ID
+         * @param {string} id 
+         * @param {PipelineConfig} [pipelineConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsIdPut(id: string, pipelineConfig?: PipelineConfig, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineConfigsIdPut(id, pipelineConfig, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline config
+         * @param {PipelineConfig} [pipelineConfig] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineConfigsPost(pipelineConfig?: PipelineConfig, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineConfigsPost(pipelineConfig, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PipelineConfigsApi - object-oriented interface
+ * @export
+ * @class PipelineConfigsApi
+ * @extends {BaseAPI}
+ */
+export class PipelineConfigsApi extends BaseAPI {
+    /**
+     * 
+     * @summary GET a list of pipeline configs
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineConfigsApi
+     */
+    public pipelineConfigsGet(options?: AxiosRequestConfig) {
+        return PipelineConfigsApiFp(this.configuration).pipelineConfigsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary DELETE a pipeline config by ID
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineConfigsApi
+     */
+    public pipelineConfigsIdDelete(id: string, options?: AxiosRequestConfig) {
+        return PipelineConfigsApiFp(this.configuration).pipelineConfigsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary GET a pipeline config by ID
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineConfigsApi
+     */
+    public pipelineConfigsIdGet(id: string, options?: AxiosRequestConfig) {
+        return PipelineConfigsApiFp(this.configuration).pipelineConfigsIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary PUT/update a pipeline config by ID
+     * @param {string} id 
+     * @param {PipelineConfig} [pipelineConfig] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineConfigsApi
+     */
+    public pipelineConfigsIdPut(id: string, pipelineConfig?: PipelineConfig, options?: AxiosRequestConfig) {
+        return PipelineConfigsApiFp(this.configuration).pipelineConfigsIdPut(id, pipelineConfig, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary POST/create a pipeline config
+     * @param {PipelineConfig} [pipelineConfig] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineConfigsApi
+     */
+    public pipelineConfigsPost(pipelineConfig?: PipelineConfig, options?: AxiosRequestConfig) {
+        return PipelineConfigsApiFp(this.configuration).pipelineConfigsPost(pipelineConfig, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PipelineRunResultVotesApi - axios parameter creator
+ * @export
+ */
+export const PipelineRunResultVotesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline run result votes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-run-result-votes/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPipelineRunResultVoteIdDelete: async (pipelineRunResultVoteId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunResultVoteId' is not null or undefined
+            assertParamExists('pipelineRunResultVotesPipelineRunResultVoteIdDelete', 'pipelineRunResultVoteId', pipelineRunResultVoteId)
+            const localVarPath = `/pipeline-run-result-votes/{pipeline_run_result_vote_id}`
+                .replace(`{${"pipeline_run_result_vote_id"}}`, encodeURIComponent(String(pipelineRunResultVoteId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary GET a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPipelineRunResultVoteIdGet: async (pipelineRunResultVoteId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunResultVoteId' is not null or undefined
+            assertParamExists('pipelineRunResultVotesPipelineRunResultVoteIdGet', 'pipelineRunResultVoteId', pipelineRunResultVoteId)
+            const localVarPath = `/pipeline-run-result-votes/{pipeline_run_result_vote_id}`
+                .replace(`{${"pipeline_run_result_vote_id"}}`, encodeURIComponent(String(pipelineRunResultVoteId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPipelineRunResultVoteIdPut: async (pipelineRunResultVoteId: string, pipelineRunResultVote?: PipelineRunResultVote, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunResultVoteId' is not null or undefined
+            assertParamExists('pipelineRunResultVotesPipelineRunResultVoteIdPut', 'pipelineRunResultVoteId', pipelineRunResultVoteId)
+            const localVarPath = `/pipeline-run-result-votes/{pipeline_run_result_vote_id}`
+                .replace(`{${"pipeline_run_result_vote_id"}}`, encodeURIComponent(String(pipelineRunResultVoteId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineRunResultVote, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run result vote
+         * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPost: async (pipelineRunResultVote?: PipelineRunResultVote, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-run-result-votes/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineRunResultVote, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PipelineRunResultVotesApi - functional programming interface
+ * @export
+ */
+export const PipelineRunResultVotesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PipelineRunResultVotesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline run result votes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultVotesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineRunResultVoteList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultVotesGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultVotesPipelineRunResultVoteIdDelete(pipelineRunResultVoteId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultVotesPipelineRunResultVoteIdDelete(pipelineRunResultVoteId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary GET a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultVotesPipelineRunResultVoteIdGet(pipelineRunResultVoteId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineRunResultVote>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultVotesPipelineRunResultVoteIdGet(pipelineRunResultVoteId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultVotesPipelineRunResultVoteIdPut(pipelineRunResultVoteId: string, pipelineRunResultVote?: PipelineRunResultVote, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultVotesPipelineRunResultVoteIdPut(pipelineRunResultVoteId, pipelineRunResultVote, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run result vote
+         * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultVotesPost(pipelineRunResultVote?: PipelineRunResultVote, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultVotesPost(pipelineRunResultVote, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PipelineRunResultVotesApi - factory interface
+ * @export
+ */
+export const PipelineRunResultVotesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PipelineRunResultVotesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline run result votes
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesGet(options?: any): AxiosPromise<PipelineRunResultVoteList> {
+            return localVarFp.pipelineRunResultVotesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPipelineRunResultVoteIdDelete(pipelineRunResultVoteId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunResultVotesPipelineRunResultVoteIdDelete(pipelineRunResultVoteId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary GET a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPipelineRunResultVoteIdGet(pipelineRunResultVoteId: string, options?: any): AxiosPromise<PipelineRunResultVote> {
+            return localVarFp.pipelineRunResultVotesPipelineRunResultVoteIdGet(pipelineRunResultVoteId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run result vote by ID
+         * @param {string} pipelineRunResultVoteId 
+         * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPipelineRunResultVoteIdPut(pipelineRunResultVoteId: string, pipelineRunResultVote?: PipelineRunResultVote, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunResultVotesPipelineRunResultVoteIdPut(pipelineRunResultVoteId, pipelineRunResultVote, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run result vote
+         * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultVotesPost(pipelineRunResultVote?: PipelineRunResultVote, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunResultVotesPost(pipelineRunResultVote, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PipelineRunResultVotesApi - object-oriented interface
+ * @export
+ * @class PipelineRunResultVotesApi
+ * @extends {BaseAPI}
+ */
+export class PipelineRunResultVotesApi extends BaseAPI {
+    /**
+     * 
+     * @summary GET a list of pipeline run result votes
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultVotesApi
+     */
+    public pipelineRunResultVotesGet(options?: AxiosRequestConfig) {
+        return PipelineRunResultVotesApiFp(this.configuration).pipelineRunResultVotesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary DELETE a pipeline run result vote by ID
+     * @param {string} pipelineRunResultVoteId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultVotesApi
+     */
+    public pipelineRunResultVotesPipelineRunResultVoteIdDelete(pipelineRunResultVoteId: string, options?: AxiosRequestConfig) {
+        return PipelineRunResultVotesApiFp(this.configuration).pipelineRunResultVotesPipelineRunResultVoteIdDelete(pipelineRunResultVoteId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary GET a pipeline run result vote by ID
+     * @param {string} pipelineRunResultVoteId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultVotesApi
+     */
+    public pipelineRunResultVotesPipelineRunResultVoteIdGet(pipelineRunResultVoteId: string, options?: AxiosRequestConfig) {
+        return PipelineRunResultVotesApiFp(this.configuration).pipelineRunResultVotesPipelineRunResultVoteIdGet(pipelineRunResultVoteId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary PUT/update a pipeline run result vote by ID
+     * @param {string} pipelineRunResultVoteId 
+     * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultVotesApi
+     */
+    public pipelineRunResultVotesPipelineRunResultVoteIdPut(pipelineRunResultVoteId: string, pipelineRunResultVote?: PipelineRunResultVote, options?: AxiosRequestConfig) {
+        return PipelineRunResultVotesApiFp(this.configuration).pipelineRunResultVotesPipelineRunResultVoteIdPut(pipelineRunResultVoteId, pipelineRunResultVote, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary POST/create a pipeline run result vote
+     * @param {PipelineRunResultVote} [pipelineRunResultVote] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultVotesApi
+     */
+    public pipelineRunResultVotesPost(pipelineRunResultVote?: PipelineRunResultVote, options?: AxiosRequestConfig) {
+        return PipelineRunResultVotesApiFp(this.configuration).pipelineRunResultVotesPost(pipelineRunResultVote, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PipelineRunResultsApi - axios parameter creator
+ * @export
+ */
+export const PipelineRunResultsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline run results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-run-results/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPipelineRunResultIdDelete: async (pipelineRunResultId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunResultId' is not null or undefined
+            assertParamExists('pipelineRunResultsPipelineRunResultIdDelete', 'pipelineRunResultId', pipelineRunResultId)
+            const localVarPath = `/pipeline-run-results/{pipeline_run_result_id}`
+                .replace(`{${"pipeline_run_result_id"}}`, encodeURIComponent(String(pipelineRunResultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary GET a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPipelineRunResultIdGet: async (pipelineRunResultId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunResultId' is not null or undefined
+            assertParamExists('pipelineRunResultsPipelineRunResultIdGet', 'pipelineRunResultId', pipelineRunResultId)
+            const localVarPath = `/pipeline-run-results/{pipeline_run_result_id}`
+                .replace(`{${"pipeline_run_result_id"}}`, encodeURIComponent(String(pipelineRunResultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {PipelineRunResult} [pipelineRunResult] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPipelineRunResultIdPut: async (pipelineRunResultId: string, pipelineRunResult?: PipelineRunResult, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunResultId' is not null or undefined
+            assertParamExists('pipelineRunResultsPipelineRunResultIdPut', 'pipelineRunResultId', pipelineRunResultId)
+            const localVarPath = `/pipeline-run-results/{pipeline_run_result_id}`
+                .replace(`{${"pipeline_run_result_id"}}`, encodeURIComponent(String(pipelineRunResultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineRunResult, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run result
+         * @param {PipelineRunResult} [pipelineRunResult] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPost: async (pipelineRunResult?: PipelineRunResult, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-run-results/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineRunResult, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PipelineRunResultsApi - functional programming interface
+ * @export
+ */
+export const PipelineRunResultsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PipelineRunResultsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline run results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineRunResultList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultsGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultsPipelineRunResultIdDelete(pipelineRunResultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultsPipelineRunResultIdDelete(pipelineRunResultId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary GET a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultsPipelineRunResultIdGet(pipelineRunResultId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineRunResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultsPipelineRunResultIdGet(pipelineRunResultId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {PipelineRunResult} [pipelineRunResult] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultsPipelineRunResultIdPut(pipelineRunResultId: string, pipelineRunResult?: PipelineRunResult, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultsPipelineRunResultIdPut(pipelineRunResultId, pipelineRunResult, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run result
+         * @param {PipelineRunResult} [pipelineRunResult] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunResultsPost(pipelineRunResult?: PipelineRunResult, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunResultsPost(pipelineRunResult, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PipelineRunResultsApi - factory interface
+ * @export
+ */
+export const PipelineRunResultsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PipelineRunResultsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline run results
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsGet(options?: any): AxiosPromise<PipelineRunResultList> {
+            return localVarFp.pipelineRunResultsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPipelineRunResultIdDelete(pipelineRunResultId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunResultsPipelineRunResultIdDelete(pipelineRunResultId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary GET a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPipelineRunResultIdGet(pipelineRunResultId: string, options?: any): AxiosPromise<PipelineRunResult> {
+            return localVarFp.pipelineRunResultsPipelineRunResultIdGet(pipelineRunResultId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run result by ID
+         * @param {string} pipelineRunResultId 
+         * @param {PipelineRunResult} [pipelineRunResult] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPipelineRunResultIdPut(pipelineRunResultId: string, pipelineRunResult?: PipelineRunResult, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunResultsPipelineRunResultIdPut(pipelineRunResultId, pipelineRunResult, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run result
+         * @param {PipelineRunResult} [pipelineRunResult] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunResultsPost(pipelineRunResult?: PipelineRunResult, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunResultsPost(pipelineRunResult, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PipelineRunResultsApi - object-oriented interface
+ * @export
+ * @class PipelineRunResultsApi
+ * @extends {BaseAPI}
+ */
+export class PipelineRunResultsApi extends BaseAPI {
+    /**
+     * 
+     * @summary GET a list of pipeline run results
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultsApi
+     */
+    public pipelineRunResultsGet(options?: AxiosRequestConfig) {
+        return PipelineRunResultsApiFp(this.configuration).pipelineRunResultsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary DELETE a pipeline run result by ID
+     * @param {string} pipelineRunResultId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultsApi
+     */
+    public pipelineRunResultsPipelineRunResultIdDelete(pipelineRunResultId: string, options?: AxiosRequestConfig) {
+        return PipelineRunResultsApiFp(this.configuration).pipelineRunResultsPipelineRunResultIdDelete(pipelineRunResultId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary GET a pipeline run result by ID
+     * @param {string} pipelineRunResultId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultsApi
+     */
+    public pipelineRunResultsPipelineRunResultIdGet(pipelineRunResultId: string, options?: AxiosRequestConfig) {
+        return PipelineRunResultsApiFp(this.configuration).pipelineRunResultsPipelineRunResultIdGet(pipelineRunResultId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary PUT/update a pipeline run result by ID
+     * @param {string} pipelineRunResultId 
+     * @param {PipelineRunResult} [pipelineRunResult] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultsApi
+     */
+    public pipelineRunResultsPipelineRunResultIdPut(pipelineRunResultId: string, pipelineRunResult?: PipelineRunResult, options?: AxiosRequestConfig) {
+        return PipelineRunResultsApiFp(this.configuration).pipelineRunResultsPipelineRunResultIdPut(pipelineRunResultId, pipelineRunResult, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary POST/create a pipeline run result
+     * @param {PipelineRunResult} [pipelineRunResult] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunResultsApi
+     */
+    public pipelineRunResultsPost(pipelineRunResult?: PipelineRunResult, options?: AxiosRequestConfig) {
+        return PipelineRunResultsApiFp(this.configuration).pipelineRunResultsPost(pipelineRunResult, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PipelineRunsApi - axios parameter creator
+ * @export
+ */
+export const PipelineRunsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-runs/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPipelineRunIdDelete: async (pipelineRunId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunId' is not null or undefined
+            assertParamExists('pipelineRunsPipelineRunIdDelete', 'pipelineRunId', pipelineRunId)
+            const localVarPath = `/pipeline-runs/{pipeline_run_id}`
+                .replace(`{${"pipeline_run_id"}}`, encodeURIComponent(String(pipelineRunId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary GET a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPipelineRunIdGet: async (pipelineRunId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunId' is not null or undefined
+            assertParamExists('pipelineRunsPipelineRunIdGet', 'pipelineRunId', pipelineRunId)
+            const localVarPath = `/pipeline-runs/{pipeline_run_id}`
+                .replace(`{${"pipeline_run_id"}}`, encodeURIComponent(String(pipelineRunId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {PipelineRun} [pipelineRun] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPipelineRunIdPut: async (pipelineRunId: string, pipelineRun?: PipelineRun, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pipelineRunId' is not null or undefined
+            assertParamExists('pipelineRunsPipelineRunIdPut', 'pipelineRunId', pipelineRunId)
+            const localVarPath = `/pipeline-runs/{pipeline_run_id}`
+                .replace(`{${"pipeline_run_id"}}`, encodeURIComponent(String(pipelineRunId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineRun, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run
+         * @param {PipelineRun} [pipelineRun] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPost: async (pipelineRun?: PipelineRun, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-runs/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipelineRun, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PipelineRunsApi - functional programming interface
+ * @export
+ */
+export const PipelineRunsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PipelineRunsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineRunList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunsGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunsPipelineRunIdDelete(pipelineRunId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunsPipelineRunIdDelete(pipelineRunId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary GET a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunsPipelineRunIdGet(pipelineRunId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineRun>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunsPipelineRunIdGet(pipelineRunId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {PipelineRun} [pipelineRun] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunsPipelineRunIdPut(pipelineRunId: string, pipelineRun?: PipelineRun, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunsPipelineRunIdPut(pipelineRunId, pipelineRun, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run
+         * @param {PipelineRun} [pipelineRun] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineRunsPost(pipelineRun?: PipelineRun, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineRunsPost(pipelineRun, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PipelineRunsApi - factory interface
+ * @export
+ */
+export const PipelineRunsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PipelineRunsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipeline runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsGet(options?: any): AxiosPromise<PipelineRunList> {
+            return localVarFp.pipelineRunsGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPipelineRunIdDelete(pipelineRunId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunsPipelineRunIdDelete(pipelineRunId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary GET a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPipelineRunIdGet(pipelineRunId: string, options?: any): AxiosPromise<PipelineRun> {
+            return localVarFp.pipelineRunsPipelineRunIdGet(pipelineRunId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline run by ID
+         * @param {string} pipelineRunId 
+         * @param {PipelineRun} [pipelineRun] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPipelineRunIdPut(pipelineRunId: string, pipelineRun?: PipelineRun, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunsPipelineRunIdPut(pipelineRunId, pipelineRun, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline run
+         * @param {PipelineRun} [pipelineRun] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineRunsPost(pipelineRun?: PipelineRun, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelineRunsPost(pipelineRun, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PipelineRunsApi - object-oriented interface
+ * @export
+ * @class PipelineRunsApi
+ * @extends {BaseAPI}
+ */
+export class PipelineRunsApi extends BaseAPI {
+    /**
+     * 
+     * @summary GET a list of pipeline runs
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunsApi
+     */
+    public pipelineRunsGet(options?: AxiosRequestConfig) {
+        return PipelineRunsApiFp(this.configuration).pipelineRunsGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary DELETE a pipeline run by ID
+     * @param {string} pipelineRunId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunsApi
+     */
+    public pipelineRunsPipelineRunIdDelete(pipelineRunId: string, options?: AxiosRequestConfig) {
+        return PipelineRunsApiFp(this.configuration).pipelineRunsPipelineRunIdDelete(pipelineRunId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary GET a pipeline run by ID
+     * @param {string} pipelineRunId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunsApi
+     */
+    public pipelineRunsPipelineRunIdGet(pipelineRunId: string, options?: AxiosRequestConfig) {
+        return PipelineRunsApiFp(this.configuration).pipelineRunsPipelineRunIdGet(pipelineRunId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary PUT/update a pipeline run by ID
+     * @param {string} pipelineRunId 
+     * @param {PipelineRun} [pipelineRun] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunsApi
+     */
+    public pipelineRunsPipelineRunIdPut(pipelineRunId: string, pipelineRun?: PipelineRun, options?: AxiosRequestConfig) {
+        return PipelineRunsApiFp(this.configuration).pipelineRunsPipelineRunIdPut(pipelineRunId, pipelineRun, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary POST/create a pipeline run
+     * @param {PipelineRun} [pipelineRun] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineRunsApi
+     */
+    public pipelineRunsPost(pipelineRun?: PipelineRun, options?: AxiosRequestConfig) {
+        return PipelineRunsApiFp(this.configuration).pipelineRunsPost(pipelineRun, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PipelinesApi - axios parameter creator
+ * @export
+ */
+export const PipelinesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary GET a list of pipelines
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipelines/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesIdDelete: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('pipelinesIdDelete', 'id', id)
+            const localVarPath = `/pipelines/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary GET a pipeline by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('pipelinesIdGet', 'id', id)
+            const localVarPath = `/pipelines/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline by ID
+         * @param {string} id 
+         * @param {Pipeline} [pipeline] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesIdPut: async (id: string, pipeline?: Pipeline, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('pipelinesIdPut', 'id', id)
+            const localVarPath = `/pipelines/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipeline, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline
+         * @param {Pipeline} [pipeline] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesPost: async (pipeline?: Pipeline, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipelines/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pipeline, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PipelinesApi - functional programming interface
+ * @export
+ */
+export const PipelinesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PipelinesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipelines
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelinesGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelinesGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelinesIdDelete(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelinesIdDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary GET a pipeline by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelinesIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Pipeline>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelinesIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline by ID
+         * @param {string} id 
+         * @param {Pipeline} [pipeline] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelinesIdPut(id: string, pipeline?: Pipeline, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelinesIdPut(id, pipeline, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline
+         * @param {Pipeline} [pipeline] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelinesPost(pipeline?: Pipeline, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelinesPost(pipeline, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PipelinesApi - factory interface
+ * @export
+ */
+export const PipelinesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PipelinesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary GET a list of pipelines
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesGet(options?: any): AxiosPromise<PipelineList> {
+            return localVarFp.pipelinesGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary DELETE a pipeline by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesIdDelete(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelinesIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary GET a pipeline by ID
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesIdGet(id: string, options?: any): AxiosPromise<Pipeline> {
+            return localVarFp.pipelinesIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary PUT/update a pipeline by ID
+         * @param {string} id 
+         * @param {Pipeline} [pipeline] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesIdPut(id: string, pipeline?: Pipeline, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelinesIdPut(id, pipeline, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary POST/create a pipeline
+         * @param {Pipeline} [pipeline] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelinesPost(pipeline?: Pipeline, options?: any): AxiosPromise<void> {
+            return localVarFp.pipelinesPost(pipeline, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PipelinesApi - object-oriented interface
+ * @export
+ * @class PipelinesApi
+ * @extends {BaseAPI}
+ */
+export class PipelinesApi extends BaseAPI {
+    /**
+     * 
+     * @summary GET a list of pipelines
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelinesApi
+     */
+    public pipelinesGet(options?: AxiosRequestConfig) {
+        return PipelinesApiFp(this.configuration).pipelinesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary DELETE a pipeline by ID
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelinesApi
+     */
+    public pipelinesIdDelete(id: string, options?: AxiosRequestConfig) {
+        return PipelinesApiFp(this.configuration).pipelinesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary GET a pipeline by ID
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelinesApi
+     */
+    public pipelinesIdGet(id: string, options?: AxiosRequestConfig) {
+        return PipelinesApiFp(this.configuration).pipelinesIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary PUT/update a pipeline by ID
+     * @param {string} id 
+     * @param {Pipeline} [pipeline] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelinesApi
+     */
+    public pipelinesIdPut(id: string, pipeline?: Pipeline, options?: AxiosRequestConfig) {
+        return PipelinesApiFp(this.configuration).pipelinesIdPut(id, pipeline, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary POST/create a pipeline
+     * @param {Pipeline} [pipeline] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelinesApi
+     */
+    public pipelinesPost(pipeline?: Pipeline, options?: AxiosRequestConfig) {
+        return PipelinesApiFp(this.configuration).pipelinesPost(pipeline, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -6178,13 +8299,13 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotations/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7095,7 +9216,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -7107,7 +9228,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7343,13 +9464,13 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7717,13 +9838,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
+        async annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsPost(source, sourceId, annotationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -7982,7 +10103,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -7994,7 +10115,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8038,13 +10159,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesPost(source, sourceId, studyRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8249,13 +10370,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Create an annotation
          * @summary Post Annotation
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {AnnotationRequest} [annotationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
+        annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: any): AxiosPromise<AnnotationReturn> {
             return localVarFp.annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8494,7 +10615,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -8506,7 +10627,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
             return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8546,13 +10667,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
+        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8778,14 +10899,14 @@ export class StoreApi extends BaseAPI {
     /**
      * Create an annotation
      * @summary Post Annotation
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
+    public annotationsPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, annotationRequest?: AnnotationRequest, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9063,7 +11184,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {any} [unique] whether to list clones with originals
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9076,7 +11197,7 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9123,14 +11244,14 @@ export class StoreApi extends BaseAPI {
     /**
      * Create a study
      * @summary POST/create a study
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
+    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -9439,7 +11560,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9451,7 +11572,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9687,13 +11808,13 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesPost: async (source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9816,7 +11937,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9828,7 +11949,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9872,13 +11993,13 @@ export const StudiesApiFp = function(configuration?: Configuration) {
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+        async studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesPost(source, sourceId, studyRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -9962,7 +12083,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -9974,7 +12095,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: any): AxiosPromise<StudyList> {
             return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10014,13 +12135,13 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
         /**
          * Create a study
          * @summary POST/create a study
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {StudyRequest} [studyRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
+        studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: any): AxiosPromise<StudyReturn> {
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -10111,7 +12232,7 @@ export class StudiesApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {any} [unique] whether to list clones with originals
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {'coordinate' | 'image' | 'both'} [dataType] whether searching for studies that contain coordinates, images, or both
@@ -10124,7 +12245,7 @@ export class StudiesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, dataType?: 'coordinate' | 'image' | 'both', studysetOwner?: string, level?: 'group' | 'meta', pmid?: string, doi?: string, flat?: boolean, options?: AxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -10171,14 +12292,14 @@ export class StudiesApi extends BaseAPI {
     /**
      * Create a study
      * @summary POST/create a study
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
+    public studiesPost(source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', sourceId?: string, studyRequest?: StudyRequest, options?: AxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -10203,13 +12324,13 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10474,13 +12595,13 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
+        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10554,13 +12675,13 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
          * @param {string} [description] search description field for a term
          * @param {string} [sourceId] id of the resource you are either filtering/copying on
          * @param {any} [unique] whether to list clones with originals
-         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+         * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options?: any): AxiosPromise<StudysetList> {
+        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options?: any): AxiosPromise<StudysetList> {
             return localVarFp.studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10629,14 +12750,14 @@ export class StudysetsApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {string} [sourceId] id of the resource you are either filtering/copying on
      * @param {any} [unique] whether to list clones with originals
-     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget'} [source] the source of the resource you would like to filter/copy from
+     * @param {'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'} [source] the source of the resource you would like to filter/copy from
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery' | 'pubget', authors?: string, userId?: string, options?: AxiosRequestConfig) {
+    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery', authors?: string, userId?: string, options?: AxiosRequestConfig) {
         return StudysetsApiFp(this.configuration).studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
