@@ -5799,10 +5799,11 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
         /**
          * 
          * @summary GET a list of pipeline run results
+         * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pipelineStudyResultsGet: async (featureFilter?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pipeline-study-results/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5814,6 +5815,10 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (featureFilter) {
+                localVarQueryParameter['feature_filter'] = featureFilter;
+            }
 
 
     
@@ -5979,11 +5984,12 @@ export const PipelineStudyResultsApiFp = function(configuration?: Configuration)
         /**
          * 
          * @summary GET a list of pipeline run results
+         * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pipelineStudyResultsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(options);
+        async pipelineStudyResultsGet(featureFilter?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(featureFilter, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -6044,11 +6050,12 @@ export const PipelineStudyResultsApiFactory = function (configuration?: Configur
         /**
          * 
          * @summary GET a list of pipeline run results
+         * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet(options?: any): AxiosPromise<PipelineStudyResultList> {
-            return localVarFp.pipelineStudyResultsGet(options).then((request) => request(axios, basePath));
+        pipelineStudyResultsGet(featureFilter?: Array<string>, options?: any): AxiosPromise<PipelineStudyResultList> {
+            return localVarFp.pipelineStudyResultsGet(featureFilter, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6104,12 +6111,13 @@ export class PipelineStudyResultsApi extends BaseAPI {
     /**
      * 
      * @summary GET a list of pipeline run results
+     * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineStudyResultsApi
      */
-    public pipelineStudyResultsGet(options?: AxiosRequestConfig) {
-        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(options).then((request) => request(this.axios, this.basePath));
+    public pipelineStudyResultsGet(featureFilter?: Array<string>, options?: AxiosRequestConfig) {
+        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(featureFilter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6324,6 +6332,10 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
