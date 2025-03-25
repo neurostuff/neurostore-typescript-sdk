@@ -5671,10 +5671,11 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
          * 
          * @summary GET a list of pipeline run results
          * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
+         * @param {Array<string>} [studyId] Filter results by base study ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet: async (featureFilter?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pipelineStudyResultsGet: async (featureFilter?: Array<string>, studyId?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pipeline-study-results/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5689,6 +5690,10 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
 
             if (featureFilter) {
                 localVarQueryParameter['feature_filter'] = featureFilter;
+            }
+
+            if (studyId) {
+                localVarQueryParameter['study_id'] = studyId;
             }
 
 
@@ -5856,11 +5861,12 @@ export const PipelineStudyResultsApiFp = function(configuration?: Configuration)
          * 
          * @summary GET a list of pipeline run results
          * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
+         * @param {Array<string>} [studyId] Filter results by base study ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pipelineStudyResultsGet(featureFilter?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(featureFilter, options);
+        async pipelineStudyResultsGet(featureFilter?: Array<string>, studyId?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(featureFilter, studyId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PipelineStudyResultsApi.pipelineStudyResultsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5932,11 +5938,12 @@ export const PipelineStudyResultsApiFactory = function (configuration?: Configur
          * 
          * @summary GET a list of pipeline run results
          * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
+         * @param {Array<string>} [studyId] Filter results by base study ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet(featureFilter?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<PipelineStudyResultList> {
-            return localVarFp.pipelineStudyResultsGet(featureFilter, options).then((request) => request(axios, basePath));
+        pipelineStudyResultsGet(featureFilter?: Array<string>, studyId?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<PipelineStudyResultList> {
+            return localVarFp.pipelineStudyResultsGet(featureFilter, studyId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5993,12 +6000,13 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * 
      * @summary GET a list of pipeline run results
      * @param {Array<string>} [featureFilter] Filter results by feature content using jsonpath syntax
+     * @param {Array<string>} [studyId] Filter results by base study ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineStudyResultsApi
      */
-    public pipelineStudyResultsGet(featureFilter?: Array<string>, options?: RawAxiosRequestConfig) {
-        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(featureFilter, options).then((request) => request(this.axios, this.basePath));
+    public pipelineStudyResultsGet(featureFilter?: Array<string>, studyId?: Array<string>, options?: RawAxiosRequestConfig) {
+        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(featureFilter, studyId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
