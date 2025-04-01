@@ -5671,13 +5671,14 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
          * 
          * @summary GET a list of pipeline run results
          * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
+         * @param {boolean} [featureFlatten] 
          * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [studyId] Filter results by base study ID
          * @param {string} [version] Filter results by pipeline config version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet: async (featureFilter?: Array<string>, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pipelineStudyResultsGet: async (featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pipeline-study-results/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5692,6 +5693,10 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
 
             if (featureFilter) {
                 localVarQueryParameter['feature_filter'] = featureFilter;
+            }
+
+            if (featureFlatten !== undefined) {
+                localVarQueryParameter['feature_flatten'] = featureFlatten;
             }
 
             if (pipelineConfig) {
@@ -5871,14 +5876,15 @@ export const PipelineStudyResultsApiFp = function(configuration?: Configuration)
          * 
          * @summary GET a list of pipeline run results
          * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
+         * @param {boolean} [featureFlatten] 
          * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [studyId] Filter results by base study ID
          * @param {string} [version] Filter results by pipeline config version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pipelineStudyResultsGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(featureFilter, pipelineConfig, studyId, version, options);
+        async pipelineStudyResultsGet(featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(featureFilter, featureFlatten, pipelineConfig, studyId, version, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PipelineStudyResultsApi.pipelineStudyResultsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5950,14 +5956,15 @@ export const PipelineStudyResultsApiFactory = function (configuration?: Configur
          * 
          * @summary GET a list of pipeline run results
          * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
+         * @param {boolean} [featureFlatten] 
          * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [studyId] Filter results by base study ID
          * @param {string} [version] Filter results by pipeline config version
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): AxiosPromise<PipelineStudyResultList> {
-            return localVarFp.pipelineStudyResultsGet(featureFilter, pipelineConfig, studyId, version, options).then((request) => request(axios, basePath));
+        pipelineStudyResultsGet(featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): AxiosPromise<PipelineStudyResultList> {
+            return localVarFp.pipelineStudyResultsGet(featureFilter, featureFlatten, pipelineConfig, studyId, version, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6014,6 +6021,7 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * 
      * @summary GET a list of pipeline run results
      * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
+     * @param {boolean} [featureFlatten] 
      * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
      * @param {Array<string>} [studyId] Filter results by base study ID
      * @param {string} [version] Filter results by pipeline config version
@@ -6021,8 +6029,8 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PipelineStudyResultsApi
      */
-    public pipelineStudyResultsGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig) {
-        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(featureFilter, pipelineConfig, studyId, version, options).then((request) => request(this.axios, this.basePath));
+    public pipelineStudyResultsGet(featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig) {
+        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(featureFilter, featureFlatten, pipelineConfig, studyId, version, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
