@@ -2887,13 +2887,14 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2924,6 +2925,10 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (name !== undefined) {
@@ -3109,10 +3114,11 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationAnalysesGet: async (paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotation-analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3124,6 +3130,10 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
 
 
     
@@ -3272,14 +3282,15 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, name, description, nested, options);
+        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AnalysesApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3341,11 +3352,12 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesGet(options);
+        async annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesGet(paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AnalysesApi.annotationAnalysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3408,14 +3420,15 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(search, sort, page, desc, pageSize, name, description, nested, options).then((request) => request(axios, basePath));
+        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -3462,11 +3475,12 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesGet(options?: RawAxiosRequestConfig): AxiosPromise<NoteCollectionList> {
-            return localVarFp.annotationAnalysesGet(options).then((request) => request(axios, basePath));
+        annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<NoteCollectionList> {
+            return localVarFp.annotationAnalysesGet(paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3517,6 +3531,7 @@ export class AnalysesApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
@@ -3524,8 +3539,8 @@ export class AnalysesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AnalysesApi
      */
-    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return AnalysesApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, name, description, nested, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return AnalysesApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3581,12 +3596,13 @@ export class AnalysesApi extends BaseAPI {
     /**
      * 
      * @summary Get annotation analyses
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalysesApi
      */
-    public annotationAnalysesGet(options?: RawAxiosRequestConfig) {
-        return AnalysesApiFp(this.configuration).annotationAnalysesGet(options).then((request) => request(this.axios, this.basePath));
+    public annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return AnalysesApiFp(this.configuration).annotationAnalysesGet(paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3638,10 +3654,11 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationAnalysesGet: async (paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotation-analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3653,6 +3670,10 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
 
 
     
@@ -3787,10 +3808,11 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
          * get annotations for an available studyset
          * @summary Your GET endpoint
          * @param {string} [studysetId] see all annotations connected to this studyset
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsGet: async (studysetId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsGet: async (studysetId?: string, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotations/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3805,6 +3827,10 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
 
             if (studysetId !== undefined) {
                 localVarQueryParameter['studyset_id'] = studysetId;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
 
@@ -3998,11 +4024,12 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesGet(options);
+        async annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesGet(paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AnnotationsApi.annotationAnalysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4051,11 +4078,12 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
          * get annotations for an available studyset
          * @summary Your GET endpoint
          * @param {string} [studysetId] see all annotations connected to this studyset
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsGet(studysetId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsGet(studysetId, options);
+        async annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsGet(studysetId, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AnnotationsApi.annotationsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4129,11 +4157,12 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesGet(options?: RawAxiosRequestConfig): AxiosPromise<NoteCollectionList> {
-            return localVarFp.annotationAnalysesGet(options).then((request) => request(axios, basePath));
+        annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<NoteCollectionList> {
+            return localVarFp.annotationAnalysesGet(paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4170,11 +4199,12 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
          * get annotations for an available studyset
          * @summary Your GET endpoint
          * @param {string} [studysetId] see all annotations connected to this studyset
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsGet(studysetId?: string, options?: RawAxiosRequestConfig): AxiosPromise<AnnotationList> {
-            return localVarFp.annotationsGet(studysetId, options).then((request) => request(axios, basePath));
+        annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnnotationList> {
+            return localVarFp.annotationsGet(studysetId, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * delete annotation
@@ -4233,12 +4263,13 @@ export class AnnotationsApi extends BaseAPI {
     /**
      * 
      * @summary Get annotation analyses
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnotationsApi
      */
-    public annotationAnalysesGet(options?: RawAxiosRequestConfig) {
-        return AnnotationsApiFp(this.configuration).annotationAnalysesGet(options).then((request) => request(this.axios, this.basePath));
+    public annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return AnnotationsApiFp(this.configuration).annotationAnalysesGet(paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4282,12 +4313,13 @@ export class AnnotationsApi extends BaseAPI {
      * get annotations for an available studyset
      * @summary Your GET endpoint
      * @param {string} [studysetId] see all annotations connected to this studyset
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnnotationsApi
      */
-    public annotationsGet(studysetId?: string, options?: RawAxiosRequestConfig) {
-        return AnnotationsApiFp(this.configuration).annotationsGet(studysetId, options).then((request) => request(this.axios, this.basePath));
+    public annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return AnnotationsApiFp(this.configuration).annotationsGet(studysetId, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4371,12 +4403,13 @@ export const ConditionsApiAxiosParamCreator = function (configuration?: Configur
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        conditionsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/conditions/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4407,6 +4440,10 @@ export const ConditionsApiAxiosParamCreator = function (configuration?: Configur
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (name !== undefined) {
@@ -4598,13 +4635,14 @@ export const ConditionsApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsGet(search, sort, page, desc, pageSize, name, description, options);
+        async conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ConditionsApi.conditionsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4680,13 +4718,14 @@ export const ConditionsApiFactory = function (configuration?: Configuration, bas
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options?: RawAxiosRequestConfig): AxiosPromise<ConditionList> {
-            return localVarFp.conditionsGet(search, sort, page, desc, pageSize, name, description, options).then((request) => request(axios, basePath));
+        conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): AxiosPromise<ConditionList> {
+            return localVarFp.conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a condition
@@ -4747,14 +4786,15 @@ export class ConditionsApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ConditionsApi
      */
-    public conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options?: RawAxiosRequestConfig) {
-        return ConditionsApiFp(this.configuration).conditionsGet(search, sort, page, desc, pageSize, name, description, options).then((request) => request(this.axios, this.basePath));
+    public conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig) {
+        return ConditionsApiFp(this.configuration).conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4823,6 +4863,7 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
@@ -4830,7 +4871,7 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/images/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4861,6 +4902,10 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (filename !== undefined) {
@@ -5060,6 +5105,7 @@ export const ImagesApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
@@ -5067,8 +5113,8 @@ export const ImagesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, filename, analysisName, valueType, space, options);
+        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImagesApi.imagesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5144,6 +5190,7 @@ export const ImagesApiFactory = function (configuration?: Configuration, basePat
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
@@ -5151,8 +5198,8 @@ export const ImagesApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
-            return localVarFp.imagesGet(search, sort, page, desc, pageSize, filename, analysisName, valueType, space, options).then((request) => request(axios, basePath));
+        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
+            return localVarFp.imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an image
@@ -5213,6 +5260,7 @@ export class ImagesApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [filename] search filename field
      * @param {string} [analysisName] search analysis_name field
      * @param {string} [valueType] search value_type field
@@ -5221,8 +5269,8 @@ export class ImagesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ImagesApi
      */
-    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
-        return ImagesApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, filename, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
+    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
+        return ImagesApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5287,10 +5335,11 @@ export const PipelineConfigsApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary GET a list of pipeline configs
          * @param {Array<string>} [pipeline] Filter configs by pipeline name
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineConfigsGet: async (pipeline?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pipelineConfigsGet: async (pipeline?: Array<string>, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pipeline-configs/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5305,6 +5354,10 @@ export const PipelineConfigsApiAxiosParamCreator = function (configuration?: Con
 
             if (pipeline) {
                 localVarQueryParameter['pipeline'] = pipeline;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
 
@@ -5472,11 +5525,12 @@ export const PipelineConfigsApiFp = function(configuration?: Configuration) {
          * 
          * @summary GET a list of pipeline configs
          * @param {Array<string>} [pipeline] Filter configs by pipeline name
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pipelineConfigsGet(pipeline?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineConfigList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsGet(pipeline, options);
+        async pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineConfigList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsGet(pipeline, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PipelineConfigsApi.pipelineConfigsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5548,11 +5602,12 @@ export const PipelineConfigsApiFactory = function (configuration?: Configuration
          * 
          * @summary GET a list of pipeline configs
          * @param {Array<string>} [pipeline] Filter configs by pipeline name
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineConfigsGet(pipeline?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<PipelineConfigList> {
-            return localVarFp.pipelineConfigsGet(pipeline, options).then((request) => request(axios, basePath));
+        pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<PipelineConfigList> {
+            return localVarFp.pipelineConfigsGet(pipeline, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5609,12 +5664,13 @@ export class PipelineConfigsApi extends BaseAPI {
      * 
      * @summary GET a list of pipeline configs
      * @param {Array<string>} [pipeline] Filter configs by pipeline name
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineConfigsApi
      */
-    public pipelineConfigsGet(pipeline?: Array<string>, options?: RawAxiosRequestConfig) {
-        return PipelineConfigsApiFp(this.configuration).pipelineConfigsGet(pipeline, options).then((request) => request(this.axios, this.basePath));
+    public pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return PipelineConfigsApiFp(this.configuration).pipelineConfigsGet(pipeline, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5678,6 +5734,7 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
         /**
          * 
          * @summary GET a list of pipeline run results
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {boolean} [featureFlatten] 
          * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
@@ -5687,7 +5744,7 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet: async (featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pipelineStudyResultsGet: async (paginate?: boolean, featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pipeline-study-results/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5699,6 +5756,10 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
 
             if (featureFilter) {
                 localVarQueryParameter['feature_filter'] = featureFilter;
@@ -5888,6 +5949,7 @@ export const PipelineStudyResultsApiFp = function(configuration?: Configuration)
         /**
          * 
          * @summary GET a list of pipeline run results
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {boolean} [featureFlatten] 
          * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
@@ -5897,8 +5959,8 @@ export const PipelineStudyResultsApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pipelineStudyResultsGet(featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, options);
+        async pipelineStudyResultsGet(paginate?: boolean, featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineStudyResultList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineStudyResultsGet(paginate, featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PipelineStudyResultsApi.pipelineStudyResultsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5969,6 +6031,7 @@ export const PipelineStudyResultsApiFactory = function (configuration?: Configur
         /**
          * 
          * @summary GET a list of pipeline run results
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {boolean} [featureFlatten] 
          * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
@@ -5978,8 +6041,8 @@ export const PipelineStudyResultsApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineStudyResultsGet(featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): AxiosPromise<PipelineStudyResultList> {
-            return localVarFp.pipelineStudyResultsGet(featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, options).then((request) => request(axios, basePath));
+        pipelineStudyResultsGet(paginate?: boolean, featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig): AxiosPromise<PipelineStudyResultList> {
+            return localVarFp.pipelineStudyResultsGet(paginate, featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6035,6 +6098,7 @@ export class PipelineStudyResultsApi extends BaseAPI {
     /**
      * 
      * @summary GET a list of pipeline run results
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {Array<string>} [featureFilter] Filter results by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:groups.diagnosis&#x3D;ADHD\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
      * @param {boolean} [featureFlatten] 
      * @param {Array<string>} [pipelineConfig] Filter results by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:preprocessing.smoothing&#x3D;8\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
@@ -6045,8 +6109,8 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PipelineStudyResultsApi
      */
-    public pipelineStudyResultsGet(featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig) {
-        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, options).then((request) => request(this.axios, this.basePath));
+    public pipelineStudyResultsGet(paginate?: boolean, featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig) {
+        return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(paginate, featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6110,10 +6174,11 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary GET a list of pipelines
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelinesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pipelinesGet: async (paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pipelines/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6125,6 +6190,10 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
 
 
     
@@ -6294,11 +6363,12 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary GET a list of pipelines
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pipelinesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelinesGet(options);
+        async pipelinesGet(paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelinesGet(paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PipelinesApi.pipelinesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6369,11 +6439,12 @@ export const PipelinesApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary GET a list of pipelines
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelinesGet(options?: RawAxiosRequestConfig): AxiosPromise<PipelineList> {
-            return localVarFp.pipelinesGet(options).then((request) => request(axios, basePath));
+        pipelinesGet(paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<PipelineList> {
+            return localVarFp.pipelinesGet(paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6429,12 +6500,13 @@ export class PipelinesApi extends BaseAPI {
     /**
      * 
      * @summary GET a list of pipelines
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelinesApi
      */
-    public pipelinesGet(options?: RawAxiosRequestConfig) {
-        return PipelinesApiFp(this.configuration).pipelinesGet(options).then((request) => request(this.axios, this.basePath));
+    public pipelinesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return PipelinesApiFp(this.configuration).pipelinesGet(paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6498,10 +6570,11 @@ export const PointsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * list points in database
          * @summary Get Points
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pointsGet: async (paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/points/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6513,6 +6586,10 @@ export const PointsApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
 
 
     
@@ -6690,11 +6767,12 @@ export const PointsApiFp = function(configuration?: Configuration) {
         /**
          * list points in database
          * @summary Get Points
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pointsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsGet(options);
+        async pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsGet(paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PointsApi.pointsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6765,11 +6843,12 @@ export const PointsApiFactory = function (configuration?: Configuration, basePat
         /**
          * list points in database
          * @summary Get Points
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsGet(options?: RawAxiosRequestConfig): AxiosPromise<PointList> {
-            return localVarFp.pointsGet(options).then((request) => request(axios, basePath));
+        pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<PointList> {
+            return localVarFp.pointsGet(paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a point
@@ -6825,12 +6904,13 @@ export class PointsApi extends BaseAPI {
     /**
      * list points in database
      * @summary Get Points
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PointsApi
      */
-    public pointsGet(options?: RawAxiosRequestConfig) {
-        return PointsApiFp(this.configuration).pointsGet(options).then((request) => request(this.axios, this.basePath));
+    public pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return PointsApiFp(this.configuration).pointsGet(paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6899,13 +6979,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6936,6 +7017,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (name !== undefined) {
@@ -7121,10 +7206,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationAnalysesGet: async (paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotation-analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7136,6 +7222,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
 
 
     
@@ -7270,10 +7360,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * get annotations for an available studyset
          * @summary Your GET endpoint
          * @param {string} [studysetId] see all annotations connected to this studyset
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsGet: async (studysetId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        annotationsGet: async (studysetId?: string, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/annotations/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7288,6 +7379,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (studysetId !== undefined) {
                 localVarQueryParameter['studyset_id'] = studysetId;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
 
@@ -7490,10 +7585,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7584,6 +7680,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (info !== undefined) {
                 localVarQueryParameter['info'] = info;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
 
@@ -7729,12 +7829,13 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        conditionsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/conditions/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7765,6 +7866,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (name !== undefined) {
@@ -7946,6 +8051,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
@@ -7953,7 +8059,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/images/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7984,6 +8090,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (filename !== undefined) {
@@ -8168,10 +8278,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * list points in database
          * @summary Get Points
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pointsGet: async (paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/points/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8183,6 +8294,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
 
 
     
@@ -8355,6 +8470,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -8372,7 +8488,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8407,6 +8523,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (nested !== undefined) {
@@ -8835,14 +8955,15 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, name, description, nested, options);
+        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8904,11 +9025,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationAnalysesGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesGet(options);
+        async annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NoteCollectionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationAnalysesGet(paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.annotationAnalysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8957,11 +9079,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * get annotations for an available studyset
          * @summary Your GET endpoint
          * @param {string} [studysetId] see all annotations connected to this studyset
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async annotationsGet(studysetId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsGet(studysetId, options);
+        async annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnnotationList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.annotationsGet(studysetId, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.annotationsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9044,11 +9167,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options);
+        async baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9103,13 +9227,14 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsGet(search, sort, page, desc, pageSize, name, description, options);
+        async conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.conditionsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9175,6 +9300,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
@@ -9182,8 +9308,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, filename, analysisName, valueType, space, options);
+        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.imagesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9244,11 +9370,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * list points in database
          * @summary Get Points
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pointsGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsGet(options);
+        async pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PointList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pointsGet(paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.pointsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9314,6 +9441,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -9331,8 +9459,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9468,14 +9596,15 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(search, sort, page, desc, pageSize, name, description, nested, options).then((request) => request(axios, basePath));
+        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -9522,11 +9651,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Get annotation analyses
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationAnalysesGet(options?: RawAxiosRequestConfig): AxiosPromise<NoteCollectionList> {
-            return localVarFp.annotationAnalysesGet(options).then((request) => request(axios, basePath));
+        annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<NoteCollectionList> {
+            return localVarFp.annotationAnalysesGet(paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9563,11 +9693,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * get annotations for an available studyset
          * @summary Your GET endpoint
          * @param {string} [studysetId] see all annotations connected to this studyset
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        annotationsGet(studysetId?: string, options?: RawAxiosRequestConfig): AxiosPromise<AnnotationList> {
-            return localVarFp.annotationsGet(studysetId, options).then((request) => request(axios, basePath));
+        annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnnotationList> {
+            return localVarFp.annotationsGet(studysetId, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * delete annotation
@@ -9635,11 +9766,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options).then((request) => request(axios, basePath));
+        baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9682,13 +9814,14 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options?: RawAxiosRequestConfig): AxiosPromise<ConditionList> {
-            return localVarFp.conditionsGet(search, sort, page, desc, pageSize, name, description, options).then((request) => request(axios, basePath));
+        conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): AxiosPromise<ConditionList> {
+            return localVarFp.conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a condition
@@ -9739,6 +9872,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
@@ -9746,8 +9880,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
-            return localVarFp.imagesGet(search, sort, page, desc, pageSize, filename, analysisName, valueType, space, options).then((request) => request(axios, basePath));
+        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
+            return localVarFp.imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an image
@@ -9793,11 +9927,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * list points in database
          * @summary Get Points
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pointsGet(options?: RawAxiosRequestConfig): AxiosPromise<PointList> {
-            return localVarFp.pointsGet(options).then((request) => request(axios, basePath));
+        pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<PointList> {
+            return localVarFp.pointsGet(paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a point
@@ -9848,6 +9983,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -9865,8 +10001,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -9975,6 +10111,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
@@ -9982,8 +10119,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, name, description, nested, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10039,12 +10176,13 @@ export class StoreApi extends BaseAPI {
     /**
      * 
      * @summary Get annotation analyses
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public annotationAnalysesGet(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).annotationAnalysesGet(options).then((request) => request(this.axios, this.basePath));
+    public annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).annotationAnalysesGet(paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10088,12 +10226,13 @@ export class StoreApi extends BaseAPI {
      * get annotations for an available studyset
      * @summary Your GET endpoint
      * @param {string} [studysetId] see all annotations connected to this studyset
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public annotationsGet(studysetId?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).annotationsGet(studysetId, options).then((request) => request(this.axios, this.basePath));
+    public annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).annotationsGet(studysetId, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10170,12 +10309,13 @@ export class StoreApi extends BaseAPI {
      * @param {string} [doi] search for study with specific doi
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10225,14 +10365,15 @@ export class StoreApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).conditionsGet(search, sort, page, desc, pageSize, name, description, options).then((request) => request(this.axios, this.basePath));
+    public conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10292,6 +10433,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [filename] search filename field
      * @param {string} [analysisName] search analysis_name field
      * @param {string} [valueType] search value_type field
@@ -10300,8 +10442,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, filename, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
+    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10356,12 +10498,13 @@ export class StoreApi extends BaseAPI {
     /**
      * list points in database
      * @summary Get Points
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public pointsGet(options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).pointsGet(options).then((request) => request(this.axios, this.basePath));
+    public pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).pointsGet(paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10421,6 +10564,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
@@ -10439,8 +10583,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10649,10 +10793,11 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10743,6 +10888,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (info !== undefined) {
                 localVarQueryParameter['info'] = info;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
 
@@ -10888,6 +11037,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -10905,7 +11055,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10940,6 +11090,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (nested !== undefined) {
@@ -11220,11 +11374,12 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options);
+        async baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -11279,6 +11434,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -11296,8 +11452,8 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -11392,11 +11548,12 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options).then((request) => request(axios, basePath));
+        baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11439,6 +11596,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -11456,8 +11614,8 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -11537,12 +11695,13 @@ export class StudiesApi extends BaseAPI {
      * @param {string} [doi] search for study with specific doi
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).baseStudiesGet(featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11592,6 +11751,7 @@ export class StudiesApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
@@ -11610,8 +11770,8 @@ export class StudiesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11743,6 +11903,7 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -11754,7 +11915,7 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11789,6 +11950,10 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
             }
 
             if (nested !== undefined) {
@@ -12016,6 +12181,7 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -12027,8 +12193,8 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options);
+        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudysetsApi.studysetsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12106,6 +12272,7 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
@@ -12117,8 +12284,8 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<StudysetList> {
-            return localVarFp.studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(axios, basePath));
+        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<StudysetList> {
+            return localVarFp.studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a studyset
@@ -12181,6 +12348,7 @@ export class StudysetsApi extends BaseAPI {
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
@@ -12193,8 +12361,8 @@ export class StudysetsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig) {
-        return StudysetsApiFp(this.configuration).studysetsGet(search, sort, page, desc, pageSize, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(this.axios, this.basePath));
+    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig) {
+        return StudysetsApiFp(this.configuration).studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
