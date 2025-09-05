@@ -1596,6 +1596,80 @@ export interface PipelineConfigList {
 /**
  * 
  * @export
+ * @interface PipelineEmbedding
+ */
+export interface PipelineEmbedding {
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof PipelineEmbedding
+     */
+    'created_at'?: string;
+    /**
+     * when the resource was last modified/updated.
+     * @type {string}
+     * @memberof PipelineEmbedding
+     */
+    'updated_at'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineEmbedding
+     */
+    'config_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineEmbedding
+     */
+    'base_study_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PipelineEmbedding
+     */
+    'date_executed'?: string | null;
+    /**
+     * 
+     * @type {object}
+     * @memberof PipelineEmbedding
+     */
+    'file_inputs'?: object | null;
+    /**
+     * Current status of the pipeline execution (e.g. SUCCESS, FAILURE, ERROR, UNKNOWN)
+     * @type {string}
+     * @memberof PipelineEmbedding
+     */
+    'status': string;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof PipelineEmbedding
+     */
+    'embedding': Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface PipelineEmbeddingList
+ */
+export interface PipelineEmbeddingList {
+    /**
+     * 
+     * @type {Array<PipelineEmbedding>}
+     * @memberof PipelineEmbeddingList
+     */
+    'results'?: Array<PipelineEmbedding>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof PipelineEmbeddingList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
  * @interface PipelineList
  */
 export interface PipelineList {
@@ -5793,6 +5867,184 @@ export class PipelineConfigsApi extends BaseAPI {
 
 
 /**
+ * PipelineEmbeddingsApi - axios parameter creator
+ * @export
+ */
+export const PipelineEmbeddingsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List pipeline embeddings
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineEmbeddingsGet: async (paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pipeline-embeddings/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a pipeline embedding by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineEmbeddingsIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('pipelineEmbeddingsIdGet', 'id', id)
+            const localVarPath = `/pipeline-embeddings/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PipelineEmbeddingsApi - functional programming interface
+ * @export
+ */
+export const PipelineEmbeddingsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PipelineEmbeddingsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary List pipeline embeddings
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineEmbeddingsGet(paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineEmbeddingList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineEmbeddingsGet(paginate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PipelineEmbeddingsApi.pipelineEmbeddingsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get a pipeline embedding by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async pipelineEmbeddingsIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineEmbedding>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineEmbeddingsIdGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PipelineEmbeddingsApi.pipelineEmbeddingsIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PipelineEmbeddingsApi - factory interface
+ * @export
+ */
+export const PipelineEmbeddingsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PipelineEmbeddingsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary List pipeline embeddings
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineEmbeddingsGet(paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<PipelineEmbeddingList> {
+            return localVarFp.pipelineEmbeddingsGet(paginate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a pipeline embedding by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        pipelineEmbeddingsIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<PipelineEmbedding> {
+            return localVarFp.pipelineEmbeddingsIdGet(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PipelineEmbeddingsApi - object-oriented interface
+ * @export
+ * @class PipelineEmbeddingsApi
+ * @extends {BaseAPI}
+ */
+export class PipelineEmbeddingsApi extends BaseAPI {
+    /**
+     * 
+     * @summary List pipeline embeddings
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineEmbeddingsApi
+     */
+    public pipelineEmbeddingsGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return PipelineEmbeddingsApiFp(this.configuration).pipelineEmbeddingsGet(paginate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a pipeline embedding by id
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PipelineEmbeddingsApi
+     */
+    public pipelineEmbeddingsIdGet(id: string, options?: RawAxiosRequestConfig) {
+        return PipelineEmbeddingsApiFp(this.configuration).pipelineEmbeddingsIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * PipelineStudyResultsApi - axios parameter creator
  * @export
  */
@@ -7698,6 +7950,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {string} [featureDisplay] display features from pipelines
+         * @param {string} [semanticSearch] Semantic search query string
+         * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+         * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+         * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
@@ -7718,7 +7974,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7769,6 +8025,22 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (featureDisplay !== undefined) {
                 localVarQueryParameter['feature_display'] = featureDisplay;
+            }
+
+            if (semanticSearch !== undefined) {
+                localVarQueryParameter['semantic_search'] = semanticSearch;
+            }
+
+            if (pipelineConfigId !== undefined) {
+                localVarQueryParameter['pipeline_config_id'] = pipelineConfigId;
+            }
+
+            if (distanceThreshold !== undefined) {
+                localVarQueryParameter['distance_threshold'] = distanceThreshold;
+            }
+
+            if (overallCap !== undefined) {
+                localVarQueryParameter['overall_cap'] = overallCap;
             }
 
             if (featureFlatten !== undefined) {
@@ -9310,6 +9582,10 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {string} [featureDisplay] display features from pipelines
+         * @param {string} [semanticSearch] Semantic search query string
+         * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+         * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+         * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
@@ -9330,8 +9606,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
+        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9915,6 +10191,10 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {string} [featureDisplay] display features from pipelines
+         * @param {string} [semanticSearch] Semantic search query string
+         * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+         * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+         * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
@@ -9935,8 +10215,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10464,6 +10744,10 @@ export class StoreApi extends BaseAPI {
      * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
      * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
      * @param {string} [featureDisplay] display features from pipelines
+     * @param {string} [semanticSearch] Semantic search query string
+     * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+     * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+     * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
      * @param {boolean} [featureFlatten] 
      * @param {string} [search] search for entries that contain the substring
      * @param {string} [sort] Parameter to sort results on
@@ -10485,8 +10769,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10954,6 +11238,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {string} [featureDisplay] display features from pipelines
+         * @param {string} [semanticSearch] Semantic search query string
+         * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+         * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+         * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
@@ -10974,7 +11262,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11025,6 +11313,22 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (featureDisplay !== undefined) {
                 localVarQueryParameter['feature_display'] = featureDisplay;
+            }
+
+            if (semanticSearch !== undefined) {
+                localVarQueryParameter['semantic_search'] = semanticSearch;
+            }
+
+            if (pipelineConfigId !== undefined) {
+                localVarQueryParameter['pipeline_config_id'] = pipelineConfigId;
+            }
+
+            if (distanceThreshold !== undefined) {
+                localVarQueryParameter['distance_threshold'] = distanceThreshold;
+            }
+
+            if (overallCap !== undefined) {
+                localVarQueryParameter['overall_cap'] = overallCap;
             }
 
             if (featureFlatten !== undefined) {
@@ -11565,6 +11869,10 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {string} [featureDisplay] display features from pipelines
+         * @param {string} [semanticSearch] Semantic search query string
+         * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+         * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+         * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
@@ -11585,8 +11893,8 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
+        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -11745,6 +12053,10 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
          * @param {string} [featureDisplay] display features from pipelines
+         * @param {string} [semanticSearch] Semantic search query string
+         * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+         * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+         * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
@@ -11765,8 +12077,8 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11898,6 +12210,10 @@ export class StudiesApi extends BaseAPI {
      * @param {Array<string>} [featureFilter] Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
      * @param {Array<string>} [pipelineConfig] Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;. 
      * @param {string} [featureDisplay] display features from pipelines
+     * @param {string} [semanticSearch] Semantic search query string
+     * @param {string} [pipelineConfigId] Pipeline configuration identifier to filter studies
+     * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
+     * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
      * @param {boolean} [featureFlatten] 
      * @param {string} [search] search for entries that contain the substring
      * @param {string} [sort] Parameter to sort results on
@@ -11919,8 +12235,8 @@ export class StudiesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
