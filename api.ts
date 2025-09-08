@@ -5477,10 +5477,12 @@ export const PipelineConfigsApiAxiosParamCreator = function (configuration?: Con
          * @summary GET a list of pipeline configs
          * @param {Array<string>} [pipeline] Filter configs by pipeline name
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {boolean} [hasEmbeddings] Filter configs as whether they have embeddings saved.
+         * @param {number} [embeddingDimensions] Filter configs by number of dimensions in the embeddings.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineConfigsGet: async (pipeline?: Array<string>, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pipelineConfigsGet: async (pipeline?: Array<string>, paginate?: boolean, hasEmbeddings?: boolean, embeddingDimensions?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pipeline-configs/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5499,6 +5501,14 @@ export const PipelineConfigsApiAxiosParamCreator = function (configuration?: Con
 
             if (paginate !== undefined) {
                 localVarQueryParameter['paginate'] = paginate;
+            }
+
+            if (hasEmbeddings !== undefined) {
+                localVarQueryParameter['has_embeddings'] = hasEmbeddings;
+            }
+
+            if (embeddingDimensions !== undefined) {
+                localVarQueryParameter['embedding_dimensions'] = embeddingDimensions;
             }
 
 
@@ -5667,11 +5677,13 @@ export const PipelineConfigsApiFp = function(configuration?: Configuration) {
          * @summary GET a list of pipeline configs
          * @param {Array<string>} [pipeline] Filter configs by pipeline name
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {boolean} [hasEmbeddings] Filter configs as whether they have embeddings saved.
+         * @param {number} [embeddingDimensions] Filter configs by number of dimensions in the embeddings.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineConfigList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsGet(pipeline, paginate, options);
+        async pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, hasEmbeddings?: boolean, embeddingDimensions?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PipelineConfigList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pipelineConfigsGet(pipeline, paginate, hasEmbeddings, embeddingDimensions, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PipelineConfigsApi.pipelineConfigsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5744,11 +5756,13 @@ export const PipelineConfigsApiFactory = function (configuration?: Configuration
          * @summary GET a list of pipeline configs
          * @param {Array<string>} [pipeline] Filter configs by pipeline name
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {boolean} [hasEmbeddings] Filter configs as whether they have embeddings saved.
+         * @param {number} [embeddingDimensions] Filter configs by number of dimensions in the embeddings.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<PipelineConfigList> {
-            return localVarFp.pipelineConfigsGet(pipeline, paginate, options).then((request) => request(axios, basePath));
+        pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, hasEmbeddings?: boolean, embeddingDimensions?: number, options?: RawAxiosRequestConfig): AxiosPromise<PipelineConfigList> {
+            return localVarFp.pipelineConfigsGet(pipeline, paginate, hasEmbeddings, embeddingDimensions, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5806,12 +5820,14 @@ export class PipelineConfigsApi extends BaseAPI {
      * @summary GET a list of pipeline configs
      * @param {Array<string>} [pipeline] Filter configs by pipeline name
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {boolean} [hasEmbeddings] Filter configs as whether they have embeddings saved.
+     * @param {number} [embeddingDimensions] Filter configs by number of dimensions in the embeddings.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PipelineConfigsApi
      */
-    public pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return PipelineConfigsApiFp(this.configuration).pipelineConfigsGet(pipeline, paginate, options).then((request) => request(this.axios, this.basePath));
+    public pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, hasEmbeddings?: boolean, embeddingDimensions?: number, options?: RawAxiosRequestConfig) {
+        return PipelineConfigsApiFp(this.configuration).pipelineConfigsGet(pipeline, paginate, hasEmbeddings, embeddingDimensions, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
