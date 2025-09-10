@@ -1083,6 +1083,92 @@ export interface Entity {
 /**
  * 
  * @export
+ * @interface ErrorDetail
+ */
+export interface ErrorDetail {
+    /**
+     * Field name that caused the error
+     * @type {string}
+     * @memberof ErrorDetail
+     */
+    'field'?: string;
+    /**
+     * Machine-readable error code
+     * @type {string}
+     * @memberof ErrorDetail
+     */
+    'code': string;
+    /**
+     * Human-readable error message
+     * @type {string}
+     * @memberof ErrorDetail
+     */
+    'message': string;
+    /**
+     * Additional error context
+     * @type {{ [key: string]: any; }}
+     * @memberof ErrorDetail
+     */
+    'context'?: { [key: string]: any; };
+}
+/**
+ * 
+ * @export
+ * @interface ErrorResponse
+ */
+export interface ErrorResponse {
+    /**
+     * HTTP status code
+     * @type {number}
+     * @memberof ErrorResponse
+     */
+    'status': number;
+    /**
+     * Short, human-readable summary
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'title': string;
+    /**
+     * Human-readable explanation
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'detail': string;
+    /**
+     * URI reference for error type
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'type'?: string;
+    /**
+     * URI reference for specific occurrence
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'instance'?: string;
+    /**
+     * Field-specific validation errors
+     * @type {Array<ErrorDetail>}
+     * @memberof ErrorResponse
+     */
+    'errors'?: Array<ErrorDetail>;
+    /**
+     * ISO 8601 timestamp
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'timestamp': string;
+    /**
+     * Unique request identifier
+     * @type {string}
+     * @memberof ErrorResponse
+     */
+    'request_id': string;
+}
+/**
+ * 
+ * @export
  * @interface ImageBase
  */
 export interface ImageBase {
@@ -2875,75 +2961,6 @@ export interface StudysetReturnRelationships {
  */
 export type StudysetReturnRelationshipsStudies = Array<StudyReturn> | Array<string>;
 
-/**
- * 
- * @export
- * @interface StudysetsIdGet404Response
- */
-export interface StudysetsIdGet404Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetsIdGet404Response
-     */
-    'detail'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StudysetsIdGet404Response
-     */
-    'status'?: StudysetsIdGet404ResponseStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetsIdGet404Response
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetsIdGet404Response
-     */
-    'type'?: string;
-}
-
-export const StudysetsIdGet404ResponseStatusEnum = {
-    NUMBER_404: 404
-} as const;
-
-export type StudysetsIdGet404ResponseStatusEnum = typeof StudysetsIdGet404ResponseStatusEnum[keyof typeof StudysetsIdGet404ResponseStatusEnum];
-
-/**
- * 
- * @export
- * @interface StudysetsIdPut422Response
- */
-export interface StudysetsIdPut422Response {
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetsIdPut422Response
-     */
-    'detail'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StudysetsIdPut422Response
-     */
-    'status'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetsIdPut422Response
-     */
-    'title'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetsIdPut422Response
-     */
-    'type'?: string;
-}
 /**
  * 
  * @export
