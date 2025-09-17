@@ -9358,13 +9358,16 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Create a studyset.
+         * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
          * @summary POST/create a studyset
+         * @param {string} [sourceId] id of the resource you are either filtering/copying on
+         * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+         * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
          * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost: async (studysetRequest?: StudysetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsPost: async (sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9380,6 +9383,18 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             // authentication JSON-Web-Token required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (sourceId !== undefined) {
+                localVarQueryParameter['source_id'] = sourceId;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+            if (copyAnnotations !== undefined) {
+                localVarQueryParameter['copy_annotations'] = copyAnnotations;
+            }
 
 
     
@@ -10034,14 +10049,17 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Create a studyset.
+         * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
          * @summary POST/create a studyset
+         * @param {string} [sourceId] id of the resource you are either filtering/copying on
+         * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+         * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
          * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsPost(studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(studysetRequest, options);
+        async studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studysetsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10562,14 +10580,17 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.studysetsIdPut(id, studysetRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create a studyset.
+         * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
          * @summary POST/create a studyset
+         * @param {string} [sourceId] id of the resource you are either filtering/copying on
+         * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+         * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
          * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost(studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsPost(studysetRequest, options).then((request) => request(axios, basePath));
+        studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -11169,15 +11190,18 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Create a studyset.
+     * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
      * @summary POST/create a studyset
+     * @param {string} [sourceId] id of the resource you are either filtering/copying on
+     * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+     * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
      * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public studysetsPost(studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studysetsPost(studysetRequest, options).then((request) => request(this.axios, this.basePath));
+    public studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -11251,6 +11275,18 @@ export const StudiesPostSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudiesPostSourceEnum = typeof StudiesPostSourceEnum[keyof typeof StudiesPostSourceEnum];
+/**
+ * @export
+ */
+export const StudysetsPostSourceEnum = {
+    Neurostore: 'neurostore',
+    Neurovault: 'neurovault',
+    Pubmed: 'pubmed',
+    Neurosynth: 'neurosynth',
+    Neuroquery: 'neuroquery',
+    Pubget: 'pubget'
+} as const;
+export type StudysetsPostSourceEnum = typeof StudysetsPostSourceEnum[keyof typeof StudysetsPostSourceEnum];
 
 
 /**
@@ -12694,13 +12730,16 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Create a studyset.
+         * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
          * @summary POST/create a studyset
+         * @param {string} [sourceId] id of the resource you are either filtering/copying on
+         * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+         * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
          * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost: async (studysetRequest?: StudysetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsPost: async (sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -12716,6 +12755,18 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
             // authentication JSON-Web-Token required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (sourceId !== undefined) {
+                localVarQueryParameter['source_id'] = sourceId;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+            if (copyAnnotations !== undefined) {
+                localVarQueryParameter['copy_annotations'] = copyAnnotations;
+            }
 
 
     
@@ -12810,14 +12861,17 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Create a studyset.
+         * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
          * @summary POST/create a studyset
+         * @param {string} [sourceId] id of the resource you are either filtering/copying on
+         * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+         * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
          * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsPost(studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(studysetRequest, options);
+        async studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudysetsApi.studysetsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12889,14 +12943,17 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
             return localVarFp.studysetsIdPut(id, studysetRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create a studyset.
+         * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
          * @summary POST/create a studyset
+         * @param {string} [sourceId] id of the resource you are either filtering/copying on
+         * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+         * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
          * @param {StudysetRequest} [studysetRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsPost(studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsPost(studysetRequest, options).then((request) => request(axios, basePath));
+        studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -12973,15 +13030,18 @@ export class StudysetsApi extends BaseAPI {
     }
 
     /**
-     * Create a studyset.
+     * Create a studyset. When `source_id` is provided, Neurostore clones an existing studyset owned by any user into a new studyset owned by the caller, copying studies and (by default) annotations.
      * @summary POST/create a studyset
+     * @param {string} [sourceId] id of the resource you are either filtering/copying on
+     * @param {StudysetsPostSourceEnum} [source] the source of the resource you would like to filter/copy from
+     * @param {boolean} [copyAnnotations] When cloning a studyset, copy annotations and their notes when true (default).
      * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudysetsApi
      */
-    public studysetsPost(studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
-        return StudysetsApiFp(this.configuration).studysetsPost(studysetRequest, options).then((request) => request(this.axios, this.basePath));
+    public studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
+        return StudysetsApiFp(this.configuration).studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -12997,6 +13057,18 @@ export const StudysetsGetSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudysetsGetSourceEnum = typeof StudysetsGetSourceEnum[keyof typeof StudysetsGetSourceEnum];
+/**
+ * @export
+ */
+export const StudysetsPostSourceEnum = {
+    Neurostore: 'neurostore',
+    Neurovault: 'neurovault',
+    Pubmed: 'pubmed',
+    Neurosynth: 'neurosynth',
+    Neuroquery: 'neuroquery',
+    Pubget: 'pubget'
+} as const;
+export type StudysetsPostSourceEnum = typeof StudysetsPostSourceEnum[keyof typeof StudysetsPostSourceEnum];
 
 
 /**
