@@ -461,6 +461,50 @@ export interface AnnotationList {
     'metadata'?: Metadata;
 }
 /**
+ * 
+ * @export
+ * @interface AnnotationPipelineExtension
+ */
+export interface AnnotationPipelineExtension {
+    /**
+     * Optional pipeline descriptors used to populate annotation notes with feature columns. Each entry should include the pipeline name and the list of columns to import, along with optional version and config id. 
+     * @type {Array<AnnotationPipelineExtensionPipelinesInner>}
+     * @memberof AnnotationPipelineExtension
+     */
+    'pipelines'?: Array<AnnotationPipelineExtensionPipelinesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface AnnotationPipelineExtensionPipelinesInner
+ */
+export interface AnnotationPipelineExtensionPipelinesInner {
+    /**
+     * Pipeline extractor name.
+     * @type {string}
+     * @memberof AnnotationPipelineExtensionPipelinesInner
+     */
+    'name': string;
+    /**
+     * Optional pipeline version to use; latest is selected when omitted.
+     * @type {string}
+     * @memberof AnnotationPipelineExtensionPipelinesInner
+     */
+    'version'?: string | null;
+    /**
+     * Optional specific pipeline config identifier to use.
+     * @type {string}
+     * @memberof AnnotationPipelineExtensionPipelinesInner
+     */
+    'config_id'?: string | null;
+    /**
+     * Feature columns to add to each annotation note.
+     * @type {Array<string>}
+     * @memberof AnnotationPipelineExtensionPipelinesInner
+     */
+    'columns': Array<string>;
+}
+/**
  * @type AnnotationRequest
  * @export
  */
@@ -496,6 +540,12 @@ export interface AnnotationRequestOneOf {
      * @memberof AnnotationRequestOneOf
      */
     'note_keys'?: object | null;
+    /**
+     * Optional pipeline descriptors used to populate annotation notes with feature columns. Each entry should include the pipeline name and the list of columns to import, along with optional version and config id. 
+     * @type {Array<AnnotationPipelineExtensionPipelinesInner>}
+     * @memberof AnnotationRequestOneOf
+     */
+    'pipelines'?: Array<AnnotationPipelineExtensionPipelinesInner>;
     /**
      * 
      * @type {AnnotationRequestRelationshipsNotes}
