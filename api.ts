@@ -757,10 +757,10 @@ export interface BaseStudy {
     'metadata'?: object | null;
     /**
      * 
-     * @type {BaseStudyVersions}
+     * @type {Array<BaseStudyVersionsInner>}
      * @memberof BaseStudy
      */
-    'versions'?: BaseStudyVersions;
+    'versions'?: Array<BaseStudyVersionsInner>;
     /**
      * 
      * @type {string}
@@ -809,6 +809,12 @@ export interface BaseStudy {
      * @memberof BaseStudy
      */
     'level'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BaseStudy
+     */
+    'is_oa'?: boolean | null;
     /**
      * 
      * @type {string}
@@ -855,10 +861,10 @@ export interface BaseStudyReturn {
     'metadata'?: object | null;
     /**
      * 
-     * @type {BaseStudyVersions}
+     * @type {Array<BaseStudyVersionsInner>}
      * @memberof BaseStudyReturn
      */
-    'versions'?: BaseStudyVersions;
+    'versions'?: Array<BaseStudyVersionsInner>;
     /**
      * 
      * @type {string}
@@ -909,6 +915,12 @@ export interface BaseStudyReturn {
     'level'?: string | null;
     /**
      * 
+     * @type {boolean}
+     * @memberof BaseStudyReturn
+     */
+    'is_oa'?: boolean | null;
+    /**
+     * 
      * @type {string}
      * @memberof BaseStudyReturn
      */
@@ -951,10 +963,10 @@ export interface BaseStudyReturn {
     'username'?: string | null;
 }
 /**
- * @type BaseStudyVersions
+ * @type BaseStudyVersionsInner
  * @export
  */
-export type BaseStudyVersions = Array<StudyReturn> | Array<string>;
+export type BaseStudyVersionsInner = StudyReturn | string;
 
 /**
  * 
@@ -8048,6 +8060,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
@@ -8057,7 +8070,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8168,6 +8181,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (dataType !== undefined) {
                 localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (isOa !== undefined) {
+                localVarQueryParameter['is_oa'] = isOa;
             }
 
             if (publication !== undefined) {
@@ -9695,6 +9712,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
@@ -9704,8 +9722,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
+        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10307,6 +10325,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
@@ -10316,8 +10335,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10863,6 +10882,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
      * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {boolean} [isOa] 
      * @param {string} [publication] search for papers from a particular journal
      * @param {string} [pmid] search for particular pmid
      * @param {string} [doi] search for study with specific doi
@@ -10873,8 +10893,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11372,6 +11392,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
@@ -11381,7 +11402,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11492,6 +11513,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (dataType !== undefined) {
                 localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (isOa !== undefined) {
+                localVarQueryParameter['is_oa'] = isOa;
             }
 
             if (publication !== undefined) {
@@ -12003,6 +12028,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
@@ -12012,8 +12038,8 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options);
+        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12187,6 +12213,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
@@ -12196,8 +12223,8 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -12344,6 +12371,7 @@ export class StudiesApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
      * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {boolean} [isOa] 
      * @param {string} [publication] search for papers from a particular journal
      * @param {string} [pmid] search for particular pmid
      * @param {string} [doi] search for study with specific doi
@@ -12354,8 +12382,8 @@ export class StudiesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
