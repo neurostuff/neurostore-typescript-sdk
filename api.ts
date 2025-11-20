@@ -62,6 +62,12 @@ export interface AnalysisCommon {
     'study'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof AnalysisCommon
+     */
+    'table_id'?: string | null;
+    /**
+     * 
      * @type {Array<Entity>}
      * @memberof AnalysisCommon
      */
@@ -158,6 +164,12 @@ export interface AnalysisRequest {
      * @memberof AnalysisRequest
      */
     'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisRequest
+     */
+    'table_id'?: string | null;
     /**
      * 
      * @type {Array<Entity>}
@@ -310,6 +322,12 @@ export interface AnalysisReturn {
      * @memberof AnalysisReturn
      */
     'conditions'?: AnalysisReturnRelationshipsConditions;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnalysisReturn
+     */
+    'table_id'?: string | null;
     /**
      * 
      * @type {Array<Entity>}
@@ -2676,6 +2694,12 @@ export interface StudyReturn {
     'analyses'?: StudyReturnRelationshipsAnalyses;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof StudyReturn
+     */
+    'tables'?: Array<string>;
+    /**
+     * 
      * @type {Array<StudyReturnAllOfStudysets>}
      * @memberof StudyReturn
      */
@@ -2748,6 +2772,12 @@ export interface StudyReturnRelationships {
      * @memberof StudyReturnRelationships
      */
     'analyses'?: StudyReturnRelationshipsAnalyses;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StudyReturnRelationships
+     */
+    'tables'?: Array<string>;
 }
 /**
  * @type StudyReturnRelationshipsAnalyses
@@ -3026,6 +3056,216 @@ export type StudysetReturnRelationshipsStudies = Array<StudyReturn> | Array<stri
 /**
  * 
  * @export
+ * @interface TableCommon
+ */
+export interface TableCommon {
+    /**
+     * 
+     * @type {string}
+     * @memberof TableCommon
+     */
+    't_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableCommon
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableCommon
+     */
+    'footer'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableCommon
+     */
+    'caption'?: string | null;
+}
+/**
+ * 
+ * @export
+ * @interface TableList
+ */
+export interface TableList {
+    /**
+     * 
+     * @type {Array<TableReturn>}
+     * @memberof TableList
+     */
+    'results'?: Array<TableReturn>;
+    /**
+     * 
+     * @type {Metadata}
+     * @memberof TableList
+     */
+    'metadata'?: Metadata;
+}
+/**
+ * 
+ * @export
+ * @interface TableRequest
+ */
+export interface TableRequest {
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof TableRequest
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof TableRequest
+     */
+    'public'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableRequest
+     */
+    't_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableRequest
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableRequest
+     */
+    'footer'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableRequest
+     */
+    'caption'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableRequest
+     */
+    'study'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TableRequestRelationships
+ */
+export interface TableRequestRelationships {
+    /**
+     * 
+     * @type {string}
+     * @memberof TableRequestRelationships
+     */
+    'study'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TableReturn
+ */
+export interface TableReturn {
+    /**
+     * time the resource was created on the database
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'created_at'?: string;
+    /**
+     * when the resource was last modified/updated.
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'updated_at'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     * @type {boolean}
+     * @memberof TableReturn
+     */
+    'public'?: boolean;
+    /**
+     * who owns the resource
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'user'?: string | null;
+    /**
+     * human readable username
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'username'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableReturn
+     */
+    't_id'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'footer'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'caption'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TableReturn
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {StudyReturnRelationshipsAnalyses}
+     * @memberof TableReturn
+     */
+    'analyses'?: StudyReturnRelationshipsAnalyses;
+}
+/**
+ * 
+ * @export
+ * @interface TableReturnRelationships
+ */
+export interface TableReturnRelationships {
+    /**
+     * 
+     * @type {string}
+     * @memberof TableReturnRelationships
+     */
+    'study'?: string;
+    /**
+     * 
+     * @type {StudyReturnRelationshipsAnalyses}
+     * @memberof TableReturnRelationships
+     */
+    'analyses'?: StudyReturnRelationshipsAnalyses;
+}
+/**
+ * 
+ * @export
  * @interface User
  */
 export interface User {
@@ -3108,13 +3348,13 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
-         * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3151,12 +3391,12 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['paginate'] = paginate;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
+            if (study !== undefined) {
+                localVarQueryParameter['study'] = study;
             }
 
-            if (description !== undefined) {
-                localVarQueryParameter['description'] = description;
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
             }
 
             if (nested !== undefined) {
@@ -3503,14 +3743,14 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
-         * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options);
+        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AnalysesApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3641,14 +3881,14 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
-         * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
+        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -3752,15 +3992,15 @@ export class AnalysesApi extends BaseAPI {
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {string} [study] Filter tables by study id
      * @param {string} [name] search the name field for a term
-     * @param {string} [description] search description field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalysesApi
      */
-    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return AnalysesApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return AnalysesApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7450,13 +7690,13 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
-         * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7493,12 +7733,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['paginate'] = paginate;
             }
 
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
+            if (study !== undefined) {
+                localVarQueryParameter['study'] = study;
             }
 
-            if (description !== undefined) {
-                localVarQueryParameter['description'] = description;
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
             }
 
             if (nested !== undefined) {
@@ -9477,6 +9717,238 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List all tables across studies.
+         * @summary GET list of tables
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tables/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (desc !== undefined) {
+                localVarQueryParameter['desc'] = desc;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (description !== undefined) {
+                localVarQueryParameter['description'] = description;
+            }
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * delete a table
+         * @summary DELETE a table
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('tablesIdDelete', 'id', id)
+            const localVarPath = `/tables/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Information about a specific table.
+         * @summary GET a table
+         * @param {string} id 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdGet: async (id: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('tablesIdGet', 'id', id)
+            const localVarPath = `/tables/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update a table
+         * @summary PUT/update a table
+         * @param {string} id 
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdPut: async (id: string, tableRequest?: TableRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('tablesIdPut', 'id', id)
+            const localVarPath = `/tables/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tableRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * create a table
+         * @summary POST/create a table
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesPost: async (tableRequest?: TableRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tables/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tableRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -9496,14 +9968,14 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
-         * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options);
+        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10132,6 +10604,81 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studysetsPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * List all tables across studies.
+         * @summary GET list of tables
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.tablesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * delete a table
+         * @summary DELETE a table
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.tablesIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Information about a specific table.
+         * @summary GET a table
+         * @param {string} id 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesIdGet(id, nested, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.tablesIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * update a table
+         * @summary PUT/update a table
+         * @param {string} id 
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesIdPut(id, tableRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.tablesIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * create a table
+         * @summary POST/create a table
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesPost(tableRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.tablesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -10151,14 +10698,14 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
-         * @param {string} [description] search description field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
+        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -10661,6 +11208,66 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig): AxiosPromise<StudysetReturn> {
             return localVarFp.studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * List all tables across studies.
+         * @summary GET list of tables
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<TableList> {
+            return localVarFp.tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * delete a table
+         * @summary DELETE a table
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.tablesIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Information about a specific table.
+         * @summary GET a table
+         * @param {string} id 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<TableReturn> {
+            return localVarFp.tablesIdGet(id, nested, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update a table
+         * @summary PUT/update a table
+         * @param {string} id 
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig): AxiosPromise<TableReturn> {
+            return localVarFp.tablesIdPut(id, tableRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * create a table
+         * @summary POST/create a table
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig): AxiosPromise<TableReturn> {
+            return localVarFp.tablesPost(tableRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -10680,15 +11287,15 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {string} [study] Filter tables by study id
      * @param {string} [name] search the name field for a term
-     * @param {string} [description] search description field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11272,6 +11879,76 @@ export class StoreApi extends BaseAPI {
      */
     public studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List all tables across studies.
+     * @summary GET list of tables
+     * @param {string} [search] search for entries that contain the substring
+     * @param {string} [sort] Parameter to sort results on
+     * @param {number} [page] page of results
+     * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+     * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {string} [name] search the name field for a term
+     * @param {string} [description] search description field for a term
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * delete a table
+     * @summary DELETE a table
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public tablesIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).tablesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Information about a specific table.
+     * @summary GET a table
+     * @param {string} id 
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).tablesIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update a table
+     * @summary PUT/update a table
+     * @param {string} id 
+     * @param {TableRequest} [tableRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).tablesIdPut(id, tableRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * create a table
+     * @summary POST/create a table
+     * @param {TableRequest} [tableRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).tablesPost(tableRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -13147,6 +13824,482 @@ export const StudysetsPostSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudysetsPostSourceEnum = typeof StudysetsPostSourceEnum[keyof typeof StudysetsPostSourceEnum];
+
+
+/**
+ * TablesApi - axios parameter creator
+ * @export
+ */
+export const TablesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * List all tables across studies.
+         * @summary GET list of tables
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tables/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (desc !== undefined) {
+                localVarQueryParameter['desc'] = desc;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (description !== undefined) {
+                localVarQueryParameter['description'] = description;
+            }
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * delete a table
+         * @summary DELETE a table
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('tablesIdDelete', 'id', id)
+            const localVarPath = `/tables/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Information about a specific table.
+         * @summary GET a table
+         * @param {string} id 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdGet: async (id: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('tablesIdGet', 'id', id)
+            const localVarPath = `/tables/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * update a table
+         * @summary PUT/update a table
+         * @param {string} id 
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdPut: async (id: string, tableRequest?: TableRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('tablesIdPut', 'id', id)
+            const localVarPath = `/tables/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tableRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * create a table
+         * @summary POST/create a table
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesPost: async (tableRequest?: TableRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tables/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tableRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TablesApi - functional programming interface
+ * @export
+ */
+export const TablesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TablesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * List all tables across studies.
+         * @summary GET list of tables
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TablesApi.tablesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * delete a table
+         * @summary DELETE a table
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TablesApi.tablesIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Information about a specific table.
+         * @summary GET a table
+         * @param {string} id 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesIdGet(id, nested, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TablesApi.tablesIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * update a table
+         * @summary PUT/update a table
+         * @param {string} id 
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesIdPut(id, tableRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TablesApi.tablesIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * create a table
+         * @summary POST/create a table
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesPost(tableRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TablesApi.tablesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TablesApi - factory interface
+ * @export
+ */
+export const TablesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TablesApiFp(configuration)
+    return {
+        /**
+         * List all tables across studies.
+         * @summary GET list of tables
+         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<TableList> {
+            return localVarFp.tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * delete a table
+         * @summary DELETE a table
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.tablesIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Information about a specific table.
+         * @summary GET a table
+         * @param {string} id 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<TableReturn> {
+            return localVarFp.tablesIdGet(id, nested, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * update a table
+         * @summary PUT/update a table
+         * @param {string} id 
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig): AxiosPromise<TableReturn> {
+            return localVarFp.tablesIdPut(id, tableRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * create a table
+         * @summary POST/create a table
+         * @param {TableRequest} [tableRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig): AxiosPromise<TableReturn> {
+            return localVarFp.tablesPost(tableRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TablesApi - object-oriented interface
+ * @export
+ * @class TablesApi
+ * @extends {BaseAPI}
+ */
+export class TablesApi extends BaseAPI {
+    /**
+     * List all tables across studies.
+     * @summary GET list of tables
+     * @param {string} [search] search for entries that contain the substring
+     * @param {string} [sort] Parameter to sort results on
+     * @param {number} [page] page of results
+     * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+     * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {string} [name] search the name field for a term
+     * @param {string} [description] search description field for a term
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TablesApi
+     */
+    public tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return TablesApiFp(this.configuration).tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * delete a table
+     * @summary DELETE a table
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TablesApi
+     */
+    public tablesIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return TablesApiFp(this.configuration).tablesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Information about a specific table.
+     * @summary GET a table
+     * @param {string} id 
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TablesApi
+     */
+    public tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return TablesApiFp(this.configuration).tablesIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * update a table
+     * @summary PUT/update a table
+     * @param {string} id 
+     * @param {TableRequest} [tableRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TablesApi
+     */
+    public tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
+        return TablesApiFp(this.configuration).tablesIdPut(id, tableRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * create a table
+     * @summary POST/create a table
+     * @param {TableRequest} [tableRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TablesApi
+     */
+    public tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
+        return TablesApiFp(this.configuration).tablesPost(tableRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
