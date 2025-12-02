@@ -8276,6 +8276,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
          * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -8310,7 +8311,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8326,6 +8327,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             // authentication JSON-Web-Token required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
+            }
 
             if (yearMin !== undefined) {
                 localVarQueryParameter['year_min'] = yearMin;
@@ -8468,10 +8473,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} id 
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet: async (id: string, flat?: boolean, info?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesIdGet: async (id: string, flat?: boolean, info?: boolean, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('baseStudiesIdGet', 'id', id)
             const localVarPath = `/base-studies/{id}`
@@ -8493,6 +8499,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (info !== undefined) {
                 localVarQueryParameter['info'] = info;
+            }
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
             }
 
 
@@ -10160,6 +10170,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
          * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -10194,8 +10205,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options);
+        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10206,11 +10217,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} id 
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, flat, info, options);
+        async baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, flat, info, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10848,6 +10860,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
          * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -10882,8 +10895,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10891,11 +10904,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} id 
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyReturn> {
-            return localVarFp.baseStudiesIdGet(id, flat, info, options).then((request) => request(axios, basePath));
+        baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyReturn> {
+            return localVarFp.baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -11465,6 +11479,7 @@ export class StoreApi extends BaseAPI {
     /**
      * 
      * @summary 
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {number} [yearMin] Minimum publication year (inclusive) for study search
      * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
      * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -11500,8 +11515,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11510,12 +11525,13 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesIdGet(id, flat, info, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12045,6 +12061,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
          * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -12079,7 +12096,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -12095,6 +12112,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
             // authentication JSON-Web-Token required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
+            }
 
             if (yearMin !== undefined) {
                 localVarQueryParameter['year_min'] = yearMin;
@@ -12237,10 +12258,11 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} id 
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet: async (id: string, flat?: boolean, info?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesIdGet: async (id: string, flat?: boolean, info?: boolean, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('baseStudiesIdGet', 'id', id)
             const localVarPath = `/base-studies/{id}`
@@ -12262,6 +12284,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (info !== undefined) {
                 localVarQueryParameter['info'] = info;
+            }
+
+            if (nested !== undefined) {
+                localVarQueryParameter['nested'] = nested;
             }
 
 
@@ -12681,6 +12707,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
          * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -12715,8 +12742,8 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options);
+        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12727,11 +12754,12 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} id 
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, flat, info, options);
+        async baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, flat, info, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.baseStudiesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -12866,6 +12894,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
          * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -12900,8 +12929,8 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -12909,11 +12938,12 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} id 
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+         * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyReturn> {
-            return localVarFp.baseStudiesIdGet(id, flat, info, options).then((request) => request(axios, basePath));
+        baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyReturn> {
+            return localVarFp.baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -13024,6 +13054,7 @@ export class StudiesApi extends BaseAPI {
     /**
      * 
      * @summary 
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {number} [yearMin] Minimum publication year (inclusive) for study search
      * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
      * @param {number} [y] Y coordinate for spatial query (requires x, z, and radius)
@@ -13059,8 +13090,8 @@ export class StudiesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public baseStudiesGet(yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).baseStudiesGet(yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13069,12 +13100,13 @@ export class StudiesApi extends BaseAPI {
      * @param {string} id 
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
+     * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StudiesApi
      */
-    public baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).baseStudiesIdGet(id, flat, info, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
