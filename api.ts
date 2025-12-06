@@ -23,2434 +23,1004 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
-/**
- * 
- * @export
- * @interface AnalysisBase
- */
 export interface AnalysisBase {
     /**
      * A name of the contrast being performed.
-     * @type {string}
-     * @memberof AnalysisBase
      */
     'name'?: string | null;
     /**
      * A long form description of how the contrast was performed
-     * @type {string}
-     * @memberof AnalysisBase
      */
     'description'?: string | null;
     /**
      * Weight applied to each condition, must be the same length as the conditions attribute.
-     * @type {Array<number>}
-     * @memberof AnalysisBase
      */
     'weights'?: Array<number>;
 }
 /**
  * attributes common between request and return objects
- * @export
- * @interface AnalysisCommon
  */
 export interface AnalysisCommon {
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisCommon
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisCommon
-     */
     'table_id'?: string | null;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof AnalysisCommon
-     */
     'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {number}
-     * @memberof AnalysisCommon
-     */
     'order'?: number | null;
-    /**
-     * 
-     * @type {object}
-     * @memberof AnalysisCommon
-     */
     'metadata'?: object | null;
 }
-/**
- * 
- * @export
- * @interface AnalysisList
- */
 export interface AnalysisList {
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof AnalysisList
-     */
     'metadata'?: Metadata;
-    /**
-     * 
-     * @type {Array<AnalysisReturn>}
-     * @memberof AnalysisList
-     */
     'results'?: Array<AnalysisReturn>;
 }
-/**
- * 
- * @export
- * @interface AnalysisRequest
- */
 export interface AnalysisRequest {
     /**
      * A name of the contrast being performed.
-     * @type {string}
-     * @memberof AnalysisRequest
      */
     'name'?: string | null;
     /**
      * A long form description of how the contrast was performed
-     * @type {string}
-     * @memberof AnalysisRequest
      */
     'description'?: string | null;
     /**
      * Weight applied to each condition, must be the same length as the conditions attribute.
-     * @type {Array<number>}
-     * @memberof AnalysisRequest
      */
     'weights'?: Array<number>;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisRequest
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {AnalysisRequestRelationshipsImages}
-     * @memberof AnalysisRequest
-     */
     'images'?: AnalysisRequestRelationshipsImages;
-    /**
-     * 
-     * @type {AnalysisRequestRelationshipsPoints}
-     * @memberof AnalysisRequest
-     */
     'points'?: AnalysisRequestRelationshipsPoints;
-    /**
-     * 
-     * @type {AnalysisRequestRelationshipsConditions}
-     * @memberof AnalysisRequest
-     */
     'conditions'?: AnalysisRequestRelationshipsConditions;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof AnalysisRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof AnalysisRequest
      */
     'public'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisRequest
-     */
     'table_id'?: string | null;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof AnalysisRequest
-     */
     'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {number}
-     * @memberof AnalysisRequest
-     */
     'order'?: number | null;
-    /**
-     * 
-     * @type {object}
-     * @memberof AnalysisRequest
-     */
     'metadata'?: object | null;
 }
-/**
- * 
- * @export
- * @interface AnalysisRequestRelationships
- */
 export interface AnalysisRequestRelationships {
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisRequestRelationships
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {AnalysisRequestRelationshipsImages}
-     * @memberof AnalysisRequestRelationships
-     */
     'images'?: AnalysisRequestRelationshipsImages;
-    /**
-     * 
-     * @type {AnalysisRequestRelationshipsPoints}
-     * @memberof AnalysisRequestRelationships
-     */
     'points'?: AnalysisRequestRelationshipsPoints;
-    /**
-     * 
-     * @type {AnalysisRequestRelationshipsConditions}
-     * @memberof AnalysisRequestRelationships
-     */
     'conditions'?: AnalysisRequestRelationshipsConditions;
 }
 /**
  * @type AnalysisRequestRelationshipsConditions
- * @export
  */
 export type AnalysisRequestRelationshipsConditions = Array<ConditionRequest> | Array<string>;
 
 /**
  * @type AnalysisRequestRelationshipsImages
- * @export
  */
 export type AnalysisRequestRelationshipsImages = Array<ImageRequest> | Array<string>;
 
 /**
  * @type AnalysisRequestRelationshipsPoints
- * @export
  */
 export type AnalysisRequestRelationshipsPoints = Array<PointRequest> | Array<string>;
 
-/**
- * 
- * @export
- * @interface AnalysisReturn
- */
 export interface AnalysisReturn {
     /**
      * A name of the contrast being performed.
-     * @type {string}
-     * @memberof AnalysisReturn
      */
     'name'?: string | null;
     /**
      * A long form description of how the contrast was performed
-     * @type {string}
-     * @memberof AnalysisReturn
      */
     'description'?: string | null;
     /**
      * Weight applied to each condition, must be the same length as the conditions attribute.
-     * @type {Array<number>}
-     * @memberof AnalysisReturn
      */
     'weights'?: Array<number>;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof AnalysisReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof AnalysisReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof AnalysisReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof AnalysisReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof AnalysisReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof AnalysisReturn
      */
     'username'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisReturn
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {AnalysisReturnRelationshipsImages}
-     * @memberof AnalysisReturn
-     */
     'images'?: AnalysisReturnRelationshipsImages;
-    /**
-     * 
-     * @type {AnalysisReturnRelationshipsPoints}
-     * @memberof AnalysisReturn
-     */
     'points'?: AnalysisReturnRelationshipsPoints;
-    /**
-     * 
-     * @type {AnalysisReturnRelationshipsConditions}
-     * @memberof AnalysisReturn
-     */
     'conditions'?: AnalysisReturnRelationshipsConditions;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisReturn
-     */
     'table_id'?: string | null;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof AnalysisReturn
-     */
     'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {number}
-     * @memberof AnalysisReturn
-     */
     'order'?: number | null;
-    /**
-     * 
-     * @type {object}
-     * @memberof AnalysisReturn
-     */
     'metadata'?: object | null;
 }
-/**
- * 
- * @export
- * @interface AnalysisReturnRelationships
- */
 export interface AnalysisReturnRelationships {
-    /**
-     * 
-     * @type {string}
-     * @memberof AnalysisReturnRelationships
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {AnalysisReturnRelationshipsImages}
-     * @memberof AnalysisReturnRelationships
-     */
     'images'?: AnalysisReturnRelationshipsImages;
-    /**
-     * 
-     * @type {AnalysisReturnRelationshipsPoints}
-     * @memberof AnalysisReturnRelationships
-     */
     'points'?: AnalysisReturnRelationshipsPoints;
-    /**
-     * 
-     * @type {AnalysisReturnRelationshipsConditions}
-     * @memberof AnalysisReturnRelationships
-     */
     'conditions'?: AnalysisReturnRelationshipsConditions;
 }
 /**
  * @type AnalysisReturnRelationshipsConditions
- * @export
  */
 export type AnalysisReturnRelationshipsConditions = Array<ConditionReturn> | Array<string>;
 
 /**
  * @type AnalysisReturnRelationshipsImages
- * @export
  */
 export type AnalysisReturnRelationshipsImages = Array<ImageReturn> | Array<string>;
 
 /**
  * @type AnalysisReturnRelationshipsPoints
- * @export
  */
 export type AnalysisReturnRelationshipsPoints = Array<PointReturn> | Array<string>;
 
-/**
- * 
- * @export
- * @interface AnnotationBase
- */
 export interface AnnotationBase {
     /**
      * Descriptive name for the annotation.
-     * @type {string}
-     * @memberof AnnotationBase
      */
     'name'?: string | null;
     /**
      * Long form description of the annotation.
-     * @type {string}
-     * @memberof AnnotationBase
      */
     'description'?: string | null;
     /**
      * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
-     * @type {object}
-     * @memberof AnnotationBase
      */
     'metadata'?: object | null;
     /**
      * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
-     * @type {object}
-     * @memberof AnnotationBase
      */
     'note_keys'?: object | null;
 }
-/**
- * 
- * @export
- * @interface AnnotationCommon
- */
 export interface AnnotationCommon {
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationCommon
-     */
     'studyset'?: string;
 }
 /**
  * exporting an annotation as a CSV for easier editing
- * @export
- * @interface AnnotationExport
  */
 export interface AnnotationExport {
-    /**
-     * 
-     * @type {object}
-     * @memberof AnnotationExport
-     */
     'metadata'?: object | null;
     /**
      * annotation object expressed as a CSV
-     * @type {string}
-     * @memberof AnnotationExport
      */
     'annotation_csv': string;
 }
-/**
- * 
- * @export
- * @interface AnnotationList
- */
 export interface AnnotationList {
-    /**
-     * 
-     * @type {Array<AnnotationReturn>}
-     * @memberof AnnotationList
-     */
     'results'?: Array<AnnotationReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof AnnotationList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface AnnotationPipelineExtension
- */
 export interface AnnotationPipelineExtension {
     /**
      * Optional pipeline descriptors used to populate annotation notes with feature columns. Each entry should include the pipeline name and the list of columns to import, along with optional version and config id. 
-     * @type {Array<AnnotationPipelineExtensionPipelinesInner>}
-     * @memberof AnnotationPipelineExtension
      */
     'pipelines'?: Array<AnnotationPipelineExtensionPipelinesInner>;
 }
-/**
- * 
- * @export
- * @interface AnnotationPipelineExtensionPipelinesInner
- */
 export interface AnnotationPipelineExtensionPipelinesInner {
     /**
      * Pipeline extractor name.
-     * @type {string}
-     * @memberof AnnotationPipelineExtensionPipelinesInner
      */
     'name': string;
     /**
      * Optional pipeline version to use; latest is selected when omitted.
-     * @type {string}
-     * @memberof AnnotationPipelineExtensionPipelinesInner
      */
     'version'?: string | null;
     /**
      * Optional specific pipeline config identifier to use.
-     * @type {string}
-     * @memberof AnnotationPipelineExtensionPipelinesInner
      */
     'config_id'?: string | null;
     /**
      * Feature columns to add to each annotation note.
-     * @type {Array<string>}
-     * @memberof AnnotationPipelineExtensionPipelinesInner
      */
     'columns': Array<string>;
 }
 /**
  * @type AnnotationRequest
- * @export
  */
-export type AnnotationRequest = AnnotationRequestOneOf | AnnotationReturnOneOf;
+export type AnnotationRequest = AnnotationExport | AnnotationRequestOneOf;
 
-/**
- * 
- * @export
- * @interface AnnotationRequestOneOf
- */
 export interface AnnotationRequestOneOf {
     /**
      * Descriptive name for the annotation.
-     * @type {string}
-     * @memberof AnnotationRequestOneOf
      */
     'name'?: string | null;
     /**
      * Long form description of the annotation.
-     * @type {string}
-     * @memberof AnnotationRequestOneOf
      */
     'description'?: string | null;
     /**
      * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
-     * @type {object}
-     * @memberof AnnotationRequestOneOf
      */
     'metadata'?: object | null;
     /**
      * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
-     * @type {object}
-     * @memberof AnnotationRequestOneOf
      */
     'note_keys'?: object | null;
     /**
      * Optional pipeline descriptors used to populate annotation notes with feature columns. Each entry should include the pipeline name and the list of columns to import, along with optional version and config id. 
-     * @type {Array<AnnotationPipelineExtensionPipelinesInner>}
-     * @memberof AnnotationRequestOneOf
      */
     'pipelines'?: Array<AnnotationPipelineExtensionPipelinesInner>;
-    /**
-     * 
-     * @type {AnnotationRequestRelationshipsNotes}
-     * @memberof AnnotationRequestOneOf
-     */
     'notes'?: AnnotationRequestRelationshipsNotes;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof AnnotationRequestOneOf
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof AnnotationRequestOneOf
      */
     'public'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationRequestOneOf
-     */
     'studyset'?: string;
 }
-/**
- * 
- * @export
- * @interface AnnotationRequestRelationships
- */
 export interface AnnotationRequestRelationships {
-    /**
-     * 
-     * @type {AnnotationRequestRelationshipsNotes}
-     * @memberof AnnotationRequestRelationships
-     */
     'notes'?: AnnotationRequestRelationshipsNotes;
 }
 /**
  * @type AnnotationRequestRelationshipsNotes
- * @export
  */
 export type AnnotationRequestRelationshipsNotes = Array<NoteCollectionRequest> | Array<string>;
 
 /**
  * @type AnnotationReturn
- * @export
  */
-export type AnnotationReturn = AnnotationReturnOneOf | AnnotationReturnOneOf1;
+export type AnnotationReturn = AnnotationExport | AnnotationReturnOneOf;
 
-/**
- * 
- * @export
- * @interface AnnotationReturnOneOf
- */
 export interface AnnotationReturnOneOf {
     /**
-     * 
-     * @type {object}
-     * @memberof AnnotationReturnOneOf
-     */
-    'metadata'?: object | null;
-    /**
-     * annotation object expressed as a CSV
-     * @type {string}
-     * @memberof AnnotationReturnOneOf
-     */
-    'annotation_csv': string;
-}
-/**
- * 
- * @export
- * @interface AnnotationReturnOneOf1
- */
-export interface AnnotationReturnOneOf1 {
-    /**
      * Descriptive name for the annotation.
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
      */
     'name'?: string | null;
     /**
      * Long form description of the annotation.
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
      */
     'description'?: string | null;
     /**
      * object describing metadata about the annotation, such as software used or descriptions of the keys used in the annotation.
-     * @type {object}
-     * @memberof AnnotationReturnOneOf1
      */
     'metadata'?: object | null;
     /**
      * The keys (columns) in the annotation and the key\'s respective data type (such as an integer or string).
-     * @type {object}
-     * @memberof AnnotationReturnOneOf1
      */
     'note_keys'?: object | null;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof AnnotationReturnOneOf1
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
      */
     'username'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
-     */
     'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
-     */
     'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
-     */
     'source_updated_at'?: string | null;
-    /**
-     * 
-     * @type {AnnotationReturnRelationshipsNotes}
-     * @memberof AnnotationReturnOneOf1
-     */
     'notes'?: AnnotationReturnRelationshipsNotes;
-    /**
-     * 
-     * @type {string}
-     * @memberof AnnotationReturnOneOf1
-     */
     'studyset'?: string;
 }
-/**
- * 
- * @export
- * @interface AnnotationReturnRelationships
- */
 export interface AnnotationReturnRelationships {
-    /**
-     * 
-     * @type {AnnotationReturnRelationshipsNotes}
-     * @memberof AnnotationReturnRelationships
-     */
     'notes'?: AnnotationReturnRelationshipsNotes;
 }
 /**
  * @type AnnotationReturnRelationshipsNotes
- * @export
  */
 export type AnnotationReturnRelationshipsNotes = Array<NoteCollectionReturn> | Array<string>;
 
 /**
  * @type BaseStudiesPost200Response
- * @export
  */
 export type BaseStudiesPost200Response = Array<BaseStudyReturn> | BaseStudyReturn;
 
 /**
  * @type BaseStudiesPostRequest
- * @export
  */
 export type BaseStudiesPostRequest = Array<BaseStudy> | BaseStudy;
 
-/**
- * 
- * @export
- * @interface BaseStudy
- */
 export interface BaseStudy {
-    /**
-     * 
-     * @type {object}
-     * @memberof BaseStudy
-     */
     'metadata'?: object | null;
-    /**
-     * 
-     * @type {Array<BaseStudyVersionsInner>}
-     * @memberof BaseStudy
-     */
     'versions'?: Array<BaseStudyVersionsInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'publication'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'doi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'pmid'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'authors'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BaseStudy
-     */
     'year'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'level'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BaseStudy
-     */
     'is_oa'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudy
-     */
     'pmcid'?: string | null;
 }
-/**
- * 
- * @export
- * @interface BaseStudyList
- */
 export interface BaseStudyList {
-    /**
-     * 
-     * @type {Array<BaseStudyReturn>}
-     * @memberof BaseStudyList
-     */
     'results'?: Array<BaseStudyReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof BaseStudyList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface BaseStudyReturn
- */
 export interface BaseStudyReturn {
-    /**
-     * 
-     * @type {object}
-     * @memberof BaseStudyReturn
-     */
-    'features'?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof BaseStudyReturn
-     */
     'metadata'?: object | null;
-    /**
-     * 
-     * @type {Array<BaseStudyVersionsInner>}
-     * @memberof BaseStudyReturn
-     */
     'versions'?: Array<BaseStudyVersionsInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'publication'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'doi'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'pmid'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'authors'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof BaseStudyReturn
-     */
     'year'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'level'?: string | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof BaseStudyReturn
-     */
     'is_oa'?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof BaseStudyReturn
-     */
     'pmcid'?: string | null;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof BaseStudyReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof BaseStudyReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof BaseStudyReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof BaseStudyReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof BaseStudyReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof BaseStudyReturn
      */
     'username'?: string | null;
+    'features'?: object;
 }
 /**
  * @type BaseStudyVersionsInner
- * @export
  */
 export type BaseStudyVersionsInner = StudyReturn | string;
 
-/**
- * 
- * @export
- * @interface Clone
- */
 export interface Clone {
-    /**
-     * 
-     * @type {string}
-     * @memberof Clone
-     */
     'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Clone
-     */
     'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Clone
-     */
     'source_updated_at'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ConditionBase
- */
 export interface ConditionBase {
     /**
      * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
-     * @type {string}
-     * @memberof ConditionBase
      */
     'name'?: string | null;
     /**
      * Long form description of how the condition is operationalized and/or specific meaning.
-     * @type {string}
-     * @memberof ConditionBase
      */
     'description'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ConditionList
- */
 export interface ConditionList {
-    /**
-     * 
-     * @type {Array<ConditionReturn>}
-     * @memberof ConditionList
-     */
     'results'?: Array<ConditionReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof ConditionList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface ConditionRequest
- */
 export interface ConditionRequest {
     /**
      * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
-     * @type {string}
-     * @memberof ConditionRequest
      */
     'name'?: string | null;
     /**
      * Long form description of how the condition is operationalized and/or specific meaning.
-     * @type {string}
-     * @memberof ConditionRequest
      */
     'description'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof ConditionRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof ConditionRequest
      */
     'public'?: boolean;
 }
-/**
- * 
- * @export
- * @interface ConditionReturn
- */
 export interface ConditionReturn {
     /**
      * Name of the condition being applied in the contrast, either psychological, pharmacological, or group based.
-     * @type {string}
-     * @memberof ConditionReturn
      */
     'name'?: string | null;
     /**
      * Long form description of how the condition is operationalized and/or specific meaning.
-     * @type {string}
-     * @memberof ConditionReturn
      */
     'description'?: string | null;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof ConditionReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof ConditionReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof ConditionReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof ConditionReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof ConditionReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof ConditionReturn
      */
     'username'?: string | null;
 }
 /**
  * WARNING: not currently used. descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
- * @export
- * @interface Entity
  */
 export interface Entity {
-    /**
-     * 
-     * @type {string}
-     * @memberof Entity
-     */
     'label'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Entity
-     */
     'level'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Entity
-     */
     'analysis'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ErrorDetail
- */
 export interface ErrorDetail {
     /**
      * Field name that caused the error
-     * @type {string}
-     * @memberof ErrorDetail
      */
     'field'?: string;
     /**
      * Machine-readable error code
-     * @type {string}
-     * @memberof ErrorDetail
      */
     'code': string;
     /**
      * Human-readable error message
-     * @type {string}
-     * @memberof ErrorDetail
      */
     'message': string;
     /**
      * Additional error context
-     * @type {{ [key: string]: any; }}
-     * @memberof ErrorDetail
      */
     'context'?: { [key: string]: any; };
 }
-/**
- * 
- * @export
- * @interface ErrorResponse
- */
 export interface ErrorResponse {
     /**
      * HTTP status code
-     * @type {number}
-     * @memberof ErrorResponse
      */
     'status': number;
     /**
      * Short, human-readable summary
-     * @type {string}
-     * @memberof ErrorResponse
      */
     'title': string;
     /**
      * Human-readable explanation
-     * @type {string}
-     * @memberof ErrorResponse
      */
     'detail': string;
     /**
      * URI reference for error type
-     * @type {string}
-     * @memberof ErrorResponse
      */
     'type'?: string;
     /**
      * URI reference for specific occurrence
-     * @type {string}
-     * @memberof ErrorResponse
      */
     'instance'?: string;
     /**
      * Field-specific validation errors
-     * @type {Array<ErrorDetail>}
-     * @memberof ErrorResponse
      */
     'errors'?: Array<ErrorDetail>;
     /**
      * ISO 8601 timestamp
-     * @type {string}
-     * @memberof ErrorResponse
      */
     'timestamp': string;
     /**
      * Unique request identifier
-     * @type {string}
-     * @memberof ErrorResponse
      */
     'request_id': string;
 }
-/**
- * 
- * @export
- * @interface ImageBase
- */
 export interface ImageBase {
     /**
      * Metadata about image such as software and version used and other relevant data about how the image was produced.
-     * @type {object}
-     * @memberof ImageBase
      */
     'metadata'?: object | null;
     /**
      * URL to image file.
-     * @type {string}
-     * @memberof ImageBase
      */
     'url'?: string | null;
     /**
      * Name of the image file.
-     * @type {string}
-     * @memberof ImageBase
      */
     'filename'?: string | null;
     /**
      * The template space the image is in (e.g., MNI 
-     * @type {string}
-     * @memberof ImageBase
      */
     'space'?: string | null;
     /**
      * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
-     * @type {string}
-     * @memberof ImageBase
      */
     'value_type'?: string | null;
     /**
      * Date the image was added.
-     * @type {string}
-     * @memberof ImageBase
      */
     'add_date'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ImageCommon
- */
 export interface ImageCommon {
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageCommon
-     */
     'analysis'?: string;
 }
-/**
- * 
- * @export
- * @interface ImageList
- */
 export interface ImageList {
-    /**
-     * 
-     * @type {Array<ImageReturn>}
-     * @memberof ImageList
-     */
     'results'?: Array<ImageReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof ImageList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface ImageRelationships
- */
 export interface ImageRelationships {
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageRelationships
-     */
     'analysis'?: string;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof ImageRelationships
-     */
     'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageRelationships
-     */
     'analysis_name'?: string | null;
 }
-/**
- * 
- * @export
- * @interface ImageRequest
- */
 export interface ImageRequest {
     /**
      * Metadata about image such as software and version used and other relevant data about how the image was produced.
-     * @type {object}
-     * @memberof ImageRequest
      */
     'metadata'?: object | null;
     /**
      * URL to image file.
-     * @type {string}
-     * @memberof ImageRequest
      */
     'url'?: string | null;
     /**
      * Name of the image file.
-     * @type {string}
-     * @memberof ImageRequest
      */
     'filename'?: string | null;
     /**
      * The template space the image is in (e.g., MNI 
-     * @type {string}
-     * @memberof ImageRequest
      */
     'space'?: string | null;
     /**
      * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
-     * @type {string}
-     * @memberof ImageRequest
      */
     'value_type'?: string | null;
     /**
      * Date the image was added.
-     * @type {string}
-     * @memberof ImageRequest
      */
     'add_date'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageRequest
-     */
     'analysis'?: string;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof ImageRequest
-     */
     'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageRequest
-     */
     'analysis_name'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof ImageRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof ImageRequest
      */
     'public'?: boolean;
 }
-/**
- * 
- * @export
- * @interface ImageReturn
- */
 export interface ImageReturn {
     /**
      * Metadata about image such as software and version used and other relevant data about how the image was produced.
-     * @type {object}
-     * @memberof ImageReturn
      */
     'metadata'?: object | null;
     /**
      * URL to image file.
-     * @type {string}
-     * @memberof ImageReturn
      */
     'url'?: string | null;
     /**
      * Name of the image file.
-     * @type {string}
-     * @memberof ImageReturn
      */
     'filename'?: string | null;
     /**
      * The template space the image is in (e.g., MNI 
-     * @type {string}
-     * @memberof ImageReturn
      */
     'space'?: string | null;
     /**
      * The values the image represents. For example, T-statistic or Z-statistic, or Betas.
-     * @type {string}
-     * @memberof ImageReturn
      */
     'value_type'?: string | null;
     /**
      * Date the image was added.
-     * @type {string}
-     * @memberof ImageReturn
      */
     'add_date'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageReturn
-     */
     'analysis'?: string;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof ImageReturn
-     */
     'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ImageReturn
-     */
     'analysis_name'?: string | null;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof ImageReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof ImageReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof ImageReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof ImageReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof ImageReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof ImageReturn
      */
     'username'?: string | null;
 }
 /**
  * Context for the shorthand names
- * @export
- * @interface JsonLdContext
  */
 export interface JsonLdContext {
     /**
      * common URI prefix for @type
-     * @type {string}
-     * @memberof JsonLdContext
      */
     '@vocab'?: string;
 }
-/**
- * 
- * @export
- * @interface NestedPutAttributes
- */
 export interface NestedPutAttributes {
-    /**
-     * 
-     * @type {string}
-     * @memberof NestedPutAttributes
-     */
     'id'?: string;
 }
-/**
- * 
- * @export
- * @interface NoteCollectionBase
- */
 export interface NoteCollectionBase {
     /**
      * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
-     * @type {object}
-     * @memberof NoteCollectionBase
      */
     'note'?: object | null;
 }
-/**
- * 
- * @export
- * @interface NoteCollectionList
- */
 export interface NoteCollectionList {
-    /**
-     * 
-     * @type {Array<NoteCollectionReturn>}
-     * @memberof NoteCollectionList
-     */
     'results'?: Array<NoteCollectionReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof NoteCollectionList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface NoteCollectionRequest
- */
 export interface NoteCollectionRequest {
     /**
      * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
-     * @type {object}
-     * @memberof NoteCollectionRequest
      */
     'note'?: object | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof NoteCollectionRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof NoteCollectionRequest
      */
     'public'?: boolean;
 }
-/**
- * 
- * @export
- * @interface NoteCollectionReturn
- */
 export interface NoteCollectionReturn {
     /**
      * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
-     * @type {object}
-     * @memberof NoteCollectionReturn
      */
     'note'?: object | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'analysis'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'analysis_name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'study_name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'annotation'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof NoteCollectionReturn
-     */
     'study_year'?: number | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'publication'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'authors'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof NoteCollectionReturn
-     */
     'id'?: string;
 }
-/**
- * 
- * @export
- * @interface Pipeline
- */
 export interface Pipeline {
-    /**
-     * 
-     * @type {string}
-     * @memberof Pipeline
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Pipeline
-     */
     'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Pipeline
-     */
     'description'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof Pipeline
-     */
     'version'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Pipeline
-     */
     'study_dependent'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Pipeline
-     */
     'ace_compatible'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Pipeline
-     */
     'pubget_compatible'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Pipeline
-     */
     'derived_from'?: string | null;
 }
-/**
- * 
- * @export
- * @interface PipelineConfig
- */
 export interface PipelineConfig {
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineConfig
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof PipelineConfig
-     */
     'config'?: object;
 }
-/**
- * 
- * @export
- * @interface PipelineConfigList
- */
 export interface PipelineConfigList {
-    /**
-     * 
-     * @type {Array<PipelineConfig>}
-     * @memberof PipelineConfigList
-     */
     'results'?: Array<PipelineConfig>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof PipelineConfigList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface PipelineEmbedding
- */
 export interface PipelineEmbedding {
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof PipelineEmbedding
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof PipelineEmbedding
      */
     'updated_at'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineEmbedding
-     */
     'config_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineEmbedding
-     */
     'base_study_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineEmbedding
-     */
     'date_executed'?: string | null;
-    /**
-     * 
-     * @type {object}
-     * @memberof PipelineEmbedding
-     */
     'file_inputs'?: object | null;
     /**
      * Current status of the pipeline execution (e.g. SUCCESS, FAILURE, ERROR, UNKNOWN)
-     * @type {string}
-     * @memberof PipelineEmbedding
      */
     'status': string;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof PipelineEmbedding
-     */
     'embedding': Array<number>;
 }
-/**
- * 
- * @export
- * @interface PipelineEmbeddingList
- */
 export interface PipelineEmbeddingList {
-    /**
-     * 
-     * @type {Array<PipelineEmbedding>}
-     * @memberof PipelineEmbeddingList
-     */
     'results'?: Array<PipelineEmbedding>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof PipelineEmbeddingList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface PipelineList
- */
 export interface PipelineList {
-    /**
-     * 
-     * @type {Array<Pipeline>}
-     * @memberof PipelineList
-     */
     'results'?: Array<Pipeline>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof PipelineList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface PipelineStudyResult
- */
 export interface PipelineStudyResult {
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineStudyResult
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineStudyResult
-     */
     'pipeline_config_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineStudyResult
-     */
     'base_study_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineStudyResult
-     */
     'config_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineStudyResult
-     */
     'date_executed'?: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof PipelineStudyResult
-     */
     'file_inputs'?: object;
-    /**
-     * 
-     * @type {object}
-     * @memberof PipelineStudyResult
-     */
     'result_data'?: object;
-    /**
-     * 
-     * @type {string}
-     * @memberof PipelineStudyResult
-     */
     'status'?: string;
 }
-/**
- * 
- * @export
- * @interface PipelineStudyResultList
- */
 export interface PipelineStudyResultList {
-    /**
-     * 
-     * @type {Array<PipelineStudyResult>}
-     * @memberof PipelineStudyResultList
-     */
     'results'?: Array<PipelineStudyResult>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof PipelineStudyResultList
-     */
     'metadata'?: Metadata;
 }
 /**
  * @type PipelineStudyResultPost
- * @export
  */
 export type PipelineStudyResultPost = PipelineStudyResult | PipelineStudyResultSearch;
 
-/**
- * 
- * @export
- * @interface PipelineStudyResultSearch
- */
 export interface PipelineStudyResultSearch {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof PipelineStudyResultSearch
-     */
     'study_ids': Array<string>;
 }
-/**
- * 
- * @export
- * @interface PointBase
- */
 export interface PointBase {
     /**
      * Location of the significant coordinate in three dimensional space.
-     * @type {Array<number>}
-     * @memberof PointBase
      */
     'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
-     * @type {string}
-     * @memberof PointBase
      */
     'space'?: string | null;
     /**
      * Method of how point was derived (e.g., center of mass)
-     * @type {string}
-     * @memberof PointBase
      */
     'kind'?: string | null;
     /**
      * If the point is associated with an image, this is the value the point takes in that image.
-     * @type {string}
-     * @memberof PointBase
      */
     'label_id'?: string | null;
 }
-/**
- * 
- * @export
- * @interface PointCommon
- */
 export interface PointCommon {
-    /**
-     * 
-     * @type {string}
-     * @memberof PointCommon
-     */
     'analysis'?: string;
     /**
      * size of the cluster in cubic millimeters
-     * @type {number}
-     * @memberof PointCommon
      */
     'cluster_size'?: number | null;
     /**
      * whether the reported peak is the max-peak statistic or a sub-maxmimal peak.
-     * @type {boolean}
-     * @memberof PointCommon
      */
     'subpeak'?: boolean | null;
     /**
      * wheather the coordinate represents an decrease in activation relative to a baseline
-     * @type {boolean}
-     * @memberof PointCommon
      */
     'deactivation'?: boolean | null;
     /**
      * determines the row to display the coordinate
-     * @type {number}
-     * @memberof PointCommon
      */
     'order'?: number | null;
 }
-/**
- * 
- * @export
- * @interface PointList
- */
 export interface PointList {
-    /**
-     * 
-     * @type {Array<PointReturn>}
-     * @memberof PointList
-     */
     'results'?: Array<PointReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof PointList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface PointRelationships
- */
 export interface PointRelationships {
-    /**
-     * 
-     * @type {string}
-     * @memberof PointRelationships
-     */
     'image'?: string | null;
-    /**
-     * 
-     * @type {PointRelationshipsValues}
-     * @memberof PointRelationships
-     */
     'values'?: PointRelationshipsValues;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointRelationships
-     */
     'x'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointRelationships
-     */
     'y'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointRelationships
-     */
     'z'?: number;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof PointRelationships
-     */
     'entities'?: Array<Entity>;
 }
 /**
  * @type PointRelationshipsValues
- * @export
  */
 export type PointRelationshipsValues = Array<PointValue> | Array<string | null>;
 
-/**
- * 
- * @export
- * @interface PointRequest
- */
 export interface PointRequest {
     /**
      * Location of the significant coordinate in three dimensional space.
-     * @type {Array<number>}
-     * @memberof PointRequest
      */
     'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
-     * @type {string}
-     * @memberof PointRequest
      */
     'space'?: string | null;
     /**
      * Method of how point was derived (e.g., center of mass)
-     * @type {string}
-     * @memberof PointRequest
      */
     'kind'?: string | null;
     /**
      * If the point is associated with an image, this is the value the point takes in that image.
-     * @type {string}
-     * @memberof PointRequest
      */
     'label_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointRequest
-     */
     'image'?: string | null;
-    /**
-     * 
-     * @type {PointRelationshipsValues}
-     * @memberof PointRequest
-     */
     'values'?: PointRelationshipsValues;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointRequest
-     */
     'x'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointRequest
-     */
     'y'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointRequest
-     */
     'z'?: number;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof PointRequest
-     */
     'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof PointRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof PointRequest
      */
     'public'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointRequest
-     */
     'analysis'?: string;
     /**
      * size of the cluster in cubic millimeters
-     * @type {number}
-     * @memberof PointRequest
      */
     'cluster_size'?: number | null;
     /**
      * whether the reported peak is the max-peak statistic or a sub-maxmimal peak.
-     * @type {boolean}
-     * @memberof PointRequest
      */
     'subpeak'?: boolean | null;
     /**
      * wheather the coordinate represents an decrease in activation relative to a baseline
-     * @type {boolean}
-     * @memberof PointRequest
      */
     'deactivation'?: boolean | null;
     /**
      * determines the row to display the coordinate
-     * @type {number}
-     * @memberof PointRequest
      */
     'order'?: number | null;
 }
-/**
- * 
- * @export
- * @interface PointReturn
- */
 export interface PointReturn {
     /**
      * Location of the significant coordinate in three dimensional space.
-     * @type {Array<number>}
-     * @memberof PointReturn
      */
     'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
-     * @type {string}
-     * @memberof PointReturn
      */
     'space'?: string | null;
     /**
      * Method of how point was derived (e.g., center of mass)
-     * @type {string}
-     * @memberof PointReturn
      */
     'kind'?: string | null;
     /**
      * If the point is associated with an image, this is the value the point takes in that image.
-     * @type {string}
-     * @memberof PointReturn
      */
     'label_id'?: string | null;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof PointReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof PointReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof PointReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof PointReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof PointReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof PointReturn
      */
     'username'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturn
-     */
     'image'?: string | null;
-    /**
-     * 
-     * @type {PointRelationshipsValues}
-     * @memberof PointReturn
-     */
     'values'?: PointRelationshipsValues;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointReturn
-     */
     'x'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointReturn
-     */
     'y'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointReturn
-     */
     'z'?: number;
-    /**
-     * 
-     * @type {Array<Entity>}
-     * @memberof PointReturn
-     */
     'entities'?: Array<Entity>;
-    /**
-     * 
-     * @type {string}
-     * @memberof PointReturn
-     */
     'analysis'?: string;
     /**
      * size of the cluster in cubic millimeters
-     * @type {number}
-     * @memberof PointReturn
      */
     'cluster_size'?: number | null;
     /**
      * whether the reported peak is the max-peak statistic or a sub-maxmimal peak.
-     * @type {boolean}
-     * @memberof PointReturn
      */
     'subpeak'?: boolean | null;
     /**
      * wheather the coordinate represents an decrease in activation relative to a baseline
-     * @type {boolean}
-     * @memberof PointReturn
      */
     'deactivation'?: boolean | null;
     /**
      * determines the row to display the coordinate
-     * @type {number}
-     * @memberof PointReturn
      */
     'order'?: number | null;
 }
 /**
  * 
- * @export
- * @interface PointValue
  */
 export interface PointValue {
-    /**
-     * 
-     * @type {string}
-     * @memberof PointValue
-     */
     'kind'?: string | null;
-    /**
-     * 
-     * @type {number}
-     * @memberof PointValue
-     */
     'value'?: number | null;
 }
 /**
  * common attributes for user owned resources
- * @export
- * @interface ResourceAttributes
  */
 export interface ResourceAttributes {
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof ResourceAttributes
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof ResourceAttributes
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof ResourceAttributes
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof ResourceAttributes
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof ResourceAttributes
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof ResourceAttributes
      */
     'username'?: string | null;
 }
-/**
- * 
- * @export
- * @interface StudyBase
- */
 export interface StudyBase {
     /**
      * Digital object identifier of the study.
-     * @type {string}
-     * @memberof StudyBase
      */
     'doi'?: string | null;
     /**
      * Title of the study.
-     * @type {string}
-     * @memberof StudyBase
      */
     'name'?: string | null;
     /**
      * Metadata associated with the study not covered by the other study attributes.
-     * @type {object}
-     * @memberof StudyBase
      */
     'metadata'?: object | null;
     /**
      * Long form description of the study, typically the abstract.
-     * @type {string}
-     * @memberof StudyBase
      */
     'description'?: string | null;
     /**
      * The journal/place of publication for the study.
-     * @type {string}
-     * @memberof StudyBase
      */
     'publication'?: string | null;
     /**
      * If the study was published on PubMed, place the PubMed ID here.
-     * @type {string}
-     * @memberof StudyBase
      */
     'pmid'?: string | null;
     /**
      * The authors on the publication of this study.
-     * @type {string}
-     * @memberof StudyBase
      */
     'authors'?: string | null;
     /**
      * The year this study was published.
-     * @type {number}
-     * @memberof StudyBase
      */
     'year'?: number | null;
 }
-/**
- * 
- * @export
- * @interface StudyCommon
- */
 export interface StudyCommon {
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyCommon
-     */
     'level'?: StudyCommonLevelEnum;
 }
 
@@ -2461,445 +1031,208 @@ export const StudyCommonLevelEnum = {
 
 export type StudyCommonLevelEnum = typeof StudyCommonLevelEnum[keyof typeof StudyCommonLevelEnum];
 
-/**
- * 
- * @export
- * @interface StudyList
- */
 export interface StudyList {
-    /**
-     * 
-     * @type {Array<StudyReturn>}
-     * @memberof StudyList
-     */
     'results'?: Array<StudyReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof StudyList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface StudyRequest
- */
 export interface StudyRequest {
     /**
      * Digital object identifier of the study.
-     * @type {string}
-     * @memberof StudyRequest
      */
     'doi'?: string | null;
     /**
      * Title of the study.
-     * @type {string}
-     * @memberof StudyRequest
      */
     'name'?: string | null;
     /**
      * Metadata associated with the study not covered by the other study attributes.
-     * @type {object}
-     * @memberof StudyRequest
      */
     'metadata'?: object | null;
     /**
      * Long form description of the study, typically the abstract.
-     * @type {string}
-     * @memberof StudyRequest
      */
     'description'?: string | null;
     /**
      * The journal/place of publication for the study.
-     * @type {string}
-     * @memberof StudyRequest
      */
     'publication'?: string | null;
     /**
      * If the study was published on PubMed, place the PubMed ID here.
-     * @type {string}
-     * @memberof StudyRequest
      */
     'pmid'?: string | null;
     /**
      * The authors on the publication of this study.
-     * @type {string}
-     * @memberof StudyRequest
      */
     'authors'?: string | null;
     /**
      * The year this study was published.
-     * @type {number}
-     * @memberof StudyRequest
      */
     'year'?: number | null;
-    /**
-     * 
-     * @type {StudyRequestRelationshipsAnalyses}
-     * @memberof StudyRequest
-     */
     'analyses'?: StudyRequestRelationshipsAnalyses;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof StudyRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof StudyRequest
      */
     'public'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyRequest
-     */
     'pmcid'?: string | null;
 }
-/**
- * 
- * @export
- * @interface StudyRequestRelationships
- */
 export interface StudyRequestRelationships {
-    /**
-     * 
-     * @type {StudyRequestRelationshipsAnalyses}
-     * @memberof StudyRequestRelationships
-     */
     'analyses'?: StudyRequestRelationshipsAnalyses;
 }
 /**
  * @type StudyRequestRelationshipsAnalyses
- * @export
  */
 export type StudyRequestRelationshipsAnalyses = Array<AnalysisRequest> | Array<string>;
 
-/**
- * 
- * @export
- * @interface StudyReturn
- */
 export interface StudyReturn {
     /**
      * Digital object identifier of the study.
-     * @type {string}
-     * @memberof StudyReturn
      */
     'doi'?: string | null;
     /**
      * Title of the study.
-     * @type {string}
-     * @memberof StudyReturn
      */
     'name'?: string | null;
     /**
      * Metadata associated with the study not covered by the other study attributes.
-     * @type {object}
-     * @memberof StudyReturn
      */
     'metadata'?: object | null;
     /**
      * Long form description of the study, typically the abstract.
-     * @type {string}
-     * @memberof StudyReturn
      */
     'description'?: string | null;
     /**
      * The journal/place of publication for the study.
-     * @type {string}
-     * @memberof StudyReturn
      */
     'publication'?: string | null;
     /**
      * If the study was published on PubMed, place the PubMed ID here.
-     * @type {string}
-     * @memberof StudyReturn
      */
     'pmid'?: string | null;
     /**
      * The authors on the publication of this study.
-     * @type {string}
-     * @memberof StudyReturn
      */
     'authors'?: string | null;
     /**
      * The year this study was published.
-     * @type {number}
-     * @memberof StudyReturn
      */
     'year'?: number | null;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof StudyReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof StudyReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof StudyReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof StudyReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof StudyReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof StudyReturn
      */
     'username'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
     'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
     'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
     'source_updated_at'?: string | null;
-    /**
-     * 
-     * @type {StudyReturnRelationshipsAnalyses}
-     * @memberof StudyReturn
-     */
     'analyses'?: StudyReturnRelationshipsAnalyses;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StudyReturn
-     */
     'tables'?: Array<string>;
-    /**
-     * 
-     * @type {Array<StudyReturnAllOfStudysets>}
-     * @memberof StudyReturn
-     */
     'studysets'?: Array<StudyReturnAllOfStudysets>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StudyReturn
-     */
     'has_coordinates'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StudyReturn
-     */
     'has_images'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
     'base_study'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturn
-     */
     'pmcid'?: string | null;
 }
 /**
  * @type StudyReturnAllOfStudysets
- * @export
  */
 export type StudyReturnAllOfStudysets = StudyReturnAllOfStudysetsOneOf | string;
 
-/**
- * 
- * @export
- * @interface StudyReturnAllOfStudysetsOneOf
- */
 export interface StudyReturnAllOfStudysetsOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturnAllOfStudysetsOneOf
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturnAllOfStudysetsOneOf
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudyReturnAllOfStudysetsOneOf
-     */
     'description'?: string | null;
 }
-/**
- * 
- * @export
- * @interface StudyReturnRelationships
- */
 export interface StudyReturnRelationships {
-    /**
-     * 
-     * @type {StudyReturnRelationshipsAnalyses}
-     * @memberof StudyReturnRelationships
-     */
     'analyses'?: StudyReturnRelationshipsAnalyses;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof StudyReturnRelationships
-     */
     'tables'?: Array<string>;
 }
 /**
  * @type StudyReturnRelationshipsAnalyses
- * @export
  */
 export type StudyReturnRelationshipsAnalyses = Array<AnalysisReturn> | Array<string>;
 
-/**
- * 
- * @export
- * @interface StudysetBase
- */
 export interface StudysetBase {
     /**
      * Descriptive and human readable name of the studyset.
-     * @type {string}
-     * @memberof StudysetBase
      */
     'name'?: string | null;
     /**
      * A longform description of the studyset.
-     * @type {string}
-     * @memberof StudysetBase
      */
     'description'?: string | null;
     /**
      * The journal/source the studyset is connected to if the studyset was published.
-     * @type {string}
-     * @memberof StudysetBase
      */
     'publication'?: string | null;
     /**
      * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
-     * @type {string}
-     * @memberof StudysetBase
      */
     'doi'?: string | null;
     /**
      * If the article connected to the studyset was published on PubMed, then link the ID here.
-     * @type {string}
-     * @memberof StudysetBase
      */
     'pmid'?: string | null;
 }
-/**
- * 
- * @export
- * @interface StudysetList
- */
 export interface StudysetList {
-    /**
-     * 
-     * @type {Array<StudysetReturn>}
-     * @memberof StudysetList
-     */
     'results'?: Array<StudysetReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof StudysetList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface StudysetRequest
- */
 export interface StudysetRequest {
     /**
      * Descriptive and human readable name of the studyset.
-     * @type {string}
-     * @memberof StudysetRequest
      */
     'name'?: string | null;
     /**
      * A longform description of the studyset.
-     * @type {string}
-     * @memberof StudysetRequest
      */
     'description'?: string | null;
     /**
      * The journal/source the studyset is connected to if the studyset was published.
-     * @type {string}
-     * @memberof StudysetRequest
      */
     'publication'?: string | null;
     /**
      * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
-     * @type {string}
-     * @memberof StudysetRequest
      */
     'doi'?: string | null;
     /**
      * If the article connected to the studyset was published on PubMed, then link the ID here.
-     * @type {string}
-     * @memberof StudysetRequest
      */
     'pmid'?: string | null;
     /**
      * Accepts study IDs or objects containing an ID and an optional curation stub UUID used to keep curation/extraction alignment. 
-     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
-     * @memberof StudysetRequest
      */
     'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof StudysetRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof StudysetRequest
      */
     'public'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetRequest
-     */
     'level'?: StudysetRequestLevelEnum;
 }
 
@@ -2910,145 +1243,70 @@ export const StudysetRequestLevelEnum = {
 
 export type StudysetRequestLevelEnum = typeof StudysetRequestLevelEnum[keyof typeof StudysetRequestLevelEnum];
 
-/**
- * 
- * @export
- * @interface StudysetRequestRelationships
- */
 export interface StudysetRequestRelationships {
     /**
      * Accepts study IDs or objects containing an ID and an optional curation stub UUID used to keep curation/extraction alignment. 
-     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
-     * @memberof StudysetRequestRelationships
      */
     'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
 }
 /**
  * @type StudysetRequestRelationshipsStudiesInner
- * @export
  */
 export type StudysetRequestRelationshipsStudiesInner = StudysetRequestRelationshipsStudiesInnerOneOf | string;
 
-/**
- * 
- * @export
- * @interface StudysetRequestRelationshipsStudiesInnerOneOf
- */
 export interface StudysetRequestRelationshipsStudiesInnerOneOf {
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetRequestRelationshipsStudiesInnerOneOf
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetRequestRelationshipsStudiesInnerOneOf
-     */
     'curation_stub_uuid'?: string;
 }
-/**
- * 
- * @export
- * @interface StudysetReturn
- */
 export interface StudysetReturn {
     /**
      * Descriptive and human readable name of the studyset.
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'name'?: string | null;
     /**
      * A longform description of the studyset.
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'description'?: string | null;
     /**
      * The journal/source the studyset is connected to if the studyset was published.
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'publication'?: string | null;
     /**
      * A DOI connected to the published studyset (may change to being automatically created so each studyset connected to a successful meta-analysis gets a DOI).
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'doi'?: string | null;
     /**
      * If the article connected to the studyset was published on PubMed, then link the ID here.
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'pmid'?: string | null;
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof StudysetReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof StudysetReturn
      */
     'username'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetReturn
-     */
     'source'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetReturn
-     */
     'source_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetReturn
-     */
     'source_updated_at'?: string | null;
-    /**
-     * 
-     * @type {StudysetReturnRelationshipsStudies}
-     * @memberof StudysetReturn
-     */
     'studies'?: StudysetReturnRelationshipsStudies;
-    /**
-     * 
-     * @type {string}
-     * @memberof StudysetReturn
-     */
     'level'?: StudysetReturnLevelEnum;
 }
 
@@ -3059,308 +1317,116 @@ export const StudysetReturnLevelEnum = {
 
 export type StudysetReturnLevelEnum = typeof StudysetReturnLevelEnum[keyof typeof StudysetReturnLevelEnum];
 
-/**
- * 
- * @export
- * @interface StudysetReturnRelationships
- */
 export interface StudysetReturnRelationships {
-    /**
-     * 
-     * @type {StudysetReturnRelationshipsStudies}
-     * @memberof StudysetReturnRelationships
-     */
     'studies'?: StudysetReturnRelationshipsStudies;
 }
 /**
  * @type StudysetReturnRelationshipsStudies
- * @export
  */
 export type StudysetReturnRelationshipsStudies = Array<StudyReturn> | Array<string>;
 
-/**
- * 
- * @export
- * @interface TableCommon
- */
 export interface TableCommon {
-    /**
-     * 
-     * @type {string}
-     * @memberof TableCommon
-     */
     't_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableCommon
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableCommon
-     */
     'footer'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableCommon
-     */
     'caption'?: string | null;
 }
-/**
- * 
- * @export
- * @interface TableList
- */
 export interface TableList {
-    /**
-     * 
-     * @type {Array<TableReturn>}
-     * @memberof TableList
-     */
     'results'?: Array<TableReturn>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof TableList
-     */
     'metadata'?: Metadata;
 }
-/**
- * 
- * @export
- * @interface TableRequest
- */
 export interface TableRequest {
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof TableRequest
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof TableRequest
      */
     'public'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableRequest
-     */
     't_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableRequest
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableRequest
-     */
     'footer'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableRequest
-     */
     'caption'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableRequest
-     */
     'study'?: string;
 }
-/**
- * 
- * @export
- * @interface TableRequestRelationships
- */
 export interface TableRequestRelationships {
-    /**
-     * 
-     * @type {string}
-     * @memberof TableRequestRelationships
-     */
     'study'?: string;
 }
-/**
- * 
- * @export
- * @interface TableReturn
- */
 export interface TableReturn {
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof TableReturn
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof TableReturn
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof TableReturn
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof TableReturn
      */
     'public'?: boolean;
     /**
      * who owns the resource
-     * @type {string}
-     * @memberof TableReturn
      */
     'user'?: string | null;
     /**
      * human readable username
-     * @type {string}
-     * @memberof TableReturn
      */
     'username'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableReturn
-     */
     't_id'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableReturn
-     */
     'name'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableReturn
-     */
     'footer'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableReturn
-     */
     'caption'?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof TableReturn
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {StudyReturnRelationshipsAnalyses}
-     * @memberof TableReturn
-     */
     'analyses'?: StudyReturnRelationshipsAnalyses;
 }
-/**
- * 
- * @export
- * @interface TableReturnRelationships
- */
 export interface TableReturnRelationships {
-    /**
-     * 
-     * @type {string}
-     * @memberof TableReturnRelationships
-     */
     'study'?: string;
-    /**
-     * 
-     * @type {StudyReturnRelationshipsAnalyses}
-     * @memberof TableReturnRelationships
-     */
     'analyses'?: StudyReturnRelationshipsAnalyses;
 }
 /**
  * 
- * @export
- * @interface User
  */
 export interface User {
     /**
      * full name of user
-     * @type {string}
-     * @memberof User
      */
     'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof User
-     */
     'neuroid'?: string;
 }
-/**
- * 
- * @export
- * @interface UserList
- */
 export interface UserList {
-    /**
-     * 
-     * @type {Array<User>}
-     * @memberof UserList
-     */
     'results'?: Array<User>;
-    /**
-     * 
-     * @type {Metadata}
-     * @memberof UserList
-     */
     'metadata'?: Metadata;
 }
 /**
  * common resource attributes not tied to a specific user
- * @export
- * @interface UserlessResourceAttributes
  */
 export interface UserlessResourceAttributes {
     /**
      * time the resource was created on the database
-     * @type {string}
-     * @memberof UserlessResourceAttributes
      */
     'created_at'?: string;
     /**
      * when the resource was last modified/updated.
-     * @type {string}
-     * @memberof UserlessResourceAttributes
      */
     'updated_at'?: string | null;
     /**
      * short UUID specifying the location of this resource
-     * @type {string}
-     * @memberof UserlessResourceAttributes
      */
     'id'?: string;
     /**
      * whether the resource is listed in public searches or not
-     * @type {boolean}
-     * @memberof UserlessResourceAttributes
      */
     'public'?: boolean;
 }
 
 /**
  * AnalysesApi - axios parameter creator
- * @export
  */
 export const AnalysesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -3754,7 +1820,6 @@ export const AnalysesApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * AnalysesApi - functional programming interface
- * @export
  */
 export const AnalysesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AnalysesApiAxiosParamCreator(configuration)
@@ -3892,7 +1957,6 @@ export const AnalysesApiFp = function(configuration?: Configuration) {
 
 /**
  * AnalysesApi - factory interface
- * @export
  */
 export const AnalysesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AnalysesApiFp(configuration)
@@ -4003,9 +2067,6 @@ export const AnalysesApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * AnalysesApi - object-oriented interface
- * @export
- * @class AnalysesApi
- * @extends {BaseAPI}
  */
 export class AnalysesApi extends BaseAPI {
     /**
@@ -4022,7 +2083,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(this.axios, this.basePath));
@@ -4034,7 +2094,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public analysesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).analysesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -4047,7 +2106,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public analysesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).analysesIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
@@ -4060,7 +2118,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {AnalysisRequest} [analysisRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public analysesIdPut(id: string, analysisRequest?: AnalysisRequest, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).analysesIdPut(id, analysisRequest, options).then((request) => request(this.axios, this.basePath));
@@ -4072,7 +2129,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {AnalysisRequest} [analysisRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public analysesPost(analysisRequest?: AnalysisRequest, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).analysesPost(analysisRequest, options).then((request) => request(this.axios, this.basePath));
@@ -4084,7 +2140,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).annotationAnalysesGet(paginate, options).then((request) => request(this.axios, this.basePath));
@@ -4096,7 +2151,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public annotationAnalysesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).annotationAnalysesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -4109,7 +2163,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {NoteCollectionRequest} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public annotationAnalysesIdPut(id: string, noteCollectionRequest?: NoteCollectionRequest, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).annotationAnalysesIdPut(id, noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -4121,7 +2174,6 @@ export class AnalysesApi extends BaseAPI {
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnalysesApi
      */
     public annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: RawAxiosRequestConfig) {
         return AnalysesApiFp(this.configuration).annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -4132,7 +2184,6 @@ export class AnalysesApi extends BaseAPI {
 
 /**
  * AnnotationsApi - axios parameter creator
- * @export
  */
 export const AnnotationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -4501,7 +2552,6 @@ export const AnnotationsApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * AnnotationsApi - functional programming interface
- * @export
  */
 export const AnnotationsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AnnotationsApiAxiosParamCreator(configuration)
@@ -4634,7 +2684,6 @@ export const AnnotationsApiFp = function(configuration?: Configuration) {
 
 /**
  * AnnotationsApi - factory interface
- * @export
  */
 export const AnnotationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AnnotationsApiFp(configuration)
@@ -4740,9 +2789,6 @@ export const AnnotationsApiFactory = function (configuration?: Configuration, ba
 
 /**
  * AnnotationsApi - object-oriented interface
- * @export
- * @class AnnotationsApi
- * @extends {BaseAPI}
  */
 export class AnnotationsApi extends BaseAPI {
     /**
@@ -4751,7 +2797,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationAnalysesGet(paginate, options).then((request) => request(this.axios, this.basePath));
@@ -4763,7 +2808,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationAnalysesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationAnalysesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -4776,7 +2820,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {NoteCollectionRequest} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationAnalysesIdPut(id: string, noteCollectionRequest?: NoteCollectionRequest, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationAnalysesIdPut(id, noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -4788,7 +2831,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -4801,7 +2843,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationsGet(studysetId, paginate, options).then((request) => request(this.axios, this.basePath));
@@ -4813,7 +2854,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -4826,7 +2866,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {boolean} [_export] return endpoint data in consumable/readable format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationsIdGet(id: string, _export?: boolean, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationsIdGet(id, _export, options).then((request) => request(this.axios, this.basePath));
@@ -4839,7 +2878,6 @@ export class AnnotationsApi extends BaseAPI {
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationsIdPut(id: string, annotationRequest?: AnnotationRequest, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationsIdPut(id, annotationRequest, options).then((request) => request(this.axios, this.basePath));
@@ -4853,16 +2891,12 @@ export class AnnotationsApi extends BaseAPI {
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AnnotationsApi
      */
     public annotationsPost(source?: AnnotationsPostSourceEnum, sourceId?: string, annotationRequest?: AnnotationRequest, options?: RawAxiosRequestConfig) {
         return AnnotationsApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
-/**
- * @export
- */
 export const AnnotationsPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -4876,7 +2910,6 @@ export type AnnotationsPostSourceEnum = typeof AnnotationsPostSourceEnum[keyof t
 
 /**
  * ConditionsApi - axios parameter creator
- * @export
  */
 export const ConditionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -5107,7 +3140,6 @@ export const ConditionsApiAxiosParamCreator = function (configuration?: Configur
 
 /**
  * ConditionsApi - functional programming interface
- * @export
  */
 export const ConditionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ConditionsApiAxiosParamCreator(configuration)
@@ -5190,7 +3222,6 @@ export const ConditionsApiFp = function(configuration?: Configuration) {
 
 /**
  * ConditionsApi - factory interface
- * @export
  */
 export const ConditionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ConditionsApiFp(configuration)
@@ -5258,9 +3289,6 @@ export const ConditionsApiFactory = function (configuration?: Configuration, bas
 
 /**
  * ConditionsApi - object-oriented interface
- * @export
- * @class ConditionsApi
- * @extends {BaseAPI}
  */
 export class ConditionsApi extends BaseAPI {
     /**
@@ -5276,7 +3304,6 @@ export class ConditionsApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ConditionsApi
      */
     public conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig) {
         return ConditionsApiFp(this.configuration).conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(this.axios, this.basePath));
@@ -5288,7 +3315,6 @@ export class ConditionsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ConditionsApi
      */
     public conditionsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return ConditionsApiFp(this.configuration).conditionsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -5300,7 +3326,6 @@ export class ConditionsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ConditionsApi
      */
     public conditionsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return ConditionsApiFp(this.configuration).conditionsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -5313,7 +3338,6 @@ export class ConditionsApi extends BaseAPI {
      * @param {ConditionRequest} [conditionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ConditionsApi
      */
     public conditionsIdPut(id: string, conditionRequest?: ConditionRequest, options?: RawAxiosRequestConfig) {
         return ConditionsApiFp(this.configuration).conditionsIdPut(id, conditionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -5325,7 +3349,6 @@ export class ConditionsApi extends BaseAPI {
      * @param {ConditionRequest} [conditionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ConditionsApi
      */
     public conditionsPost(conditionRequest?: ConditionRequest, options?: RawAxiosRequestConfig) {
         return ConditionsApiFp(this.configuration).conditionsPost(conditionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -5336,7 +3359,6 @@ export class ConditionsApi extends BaseAPI {
 
 /**
  * ImagesApi - axios parameter creator
- * @export
  */
 export const ImagesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -5577,7 +3599,6 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * ImagesApi - functional programming interface
- * @export
  */
 export const ImagesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ImagesApiAxiosParamCreator(configuration)
@@ -5662,7 +3683,6 @@ export const ImagesApiFp = function(configuration?: Configuration) {
 
 /**
  * ImagesApi - factory interface
- * @export
  */
 export const ImagesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ImagesApiFp(configuration)
@@ -5732,9 +3752,6 @@ export const ImagesApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * ImagesApi - object-oriented interface
- * @export
- * @class ImagesApi
- * @extends {BaseAPI}
  */
 export class ImagesApi extends BaseAPI {
     /**
@@ -5752,7 +3769,6 @@ export class ImagesApi extends BaseAPI {
      * @param {string} [space] search space field
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ImagesApi
      */
     public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
         return ImagesApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
@@ -5764,7 +3780,6 @@ export class ImagesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ImagesApi
      */
     public imagesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return ImagesApiFp(this.configuration).imagesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -5776,7 +3791,6 @@ export class ImagesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ImagesApi
      */
     public imagesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return ImagesApiFp(this.configuration).imagesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -5789,7 +3803,6 @@ export class ImagesApi extends BaseAPI {
      * @param {ImageRequest} [imageRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ImagesApi
      */
     public imagesIdPut(id: string, imageRequest?: ImageRequest, options?: RawAxiosRequestConfig) {
         return ImagesApiFp(this.configuration).imagesIdPut(id, imageRequest, options).then((request) => request(this.axios, this.basePath));
@@ -5801,7 +3814,6 @@ export class ImagesApi extends BaseAPI {
      * @param {ImageRequest} [imageRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ImagesApi
      */
     public imagesPost(imageRequest?: ImageRequest, options?: RawAxiosRequestConfig) {
         return ImagesApiFp(this.configuration).imagesPost(imageRequest, options).then((request) => request(this.axios, this.basePath));
@@ -5812,7 +3824,6 @@ export class ImagesApi extends BaseAPI {
 
 /**
  * PipelineConfigsApi - axios parameter creator
- * @export
  */
 export const PipelineConfigsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -6011,7 +4022,6 @@ export const PipelineConfigsApiAxiosParamCreator = function (configuration?: Con
 
 /**
  * PipelineConfigsApi - functional programming interface
- * @export
  */
 export const PipelineConfigsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PipelineConfigsApiAxiosParamCreator(configuration)
@@ -6090,7 +4100,6 @@ export const PipelineConfigsApiFp = function(configuration?: Configuration) {
 
 /**
  * PipelineConfigsApi - factory interface
- * @export
  */
 export const PipelineConfigsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PipelineConfigsApiFp(configuration)
@@ -6154,9 +4163,6 @@ export const PipelineConfigsApiFactory = function (configuration?: Configuration
 
 /**
  * PipelineConfigsApi - object-oriented interface
- * @export
- * @class PipelineConfigsApi
- * @extends {BaseAPI}
  */
 export class PipelineConfigsApi extends BaseAPI {
     /**
@@ -6168,7 +4174,6 @@ export class PipelineConfigsApi extends BaseAPI {
      * @param {number} [embeddingDimensions] Filter configs by number of dimensions in the embeddings.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineConfigsApi
      */
     public pipelineConfigsGet(pipeline?: Array<string>, paginate?: boolean, hasEmbeddings?: boolean, embeddingDimensions?: number, options?: RawAxiosRequestConfig) {
         return PipelineConfigsApiFp(this.configuration).pipelineConfigsGet(pipeline, paginate, hasEmbeddings, embeddingDimensions, options).then((request) => request(this.axios, this.basePath));
@@ -6180,7 +4185,6 @@ export class PipelineConfigsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineConfigsApi
      */
     public pipelineConfigsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return PipelineConfigsApiFp(this.configuration).pipelineConfigsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -6192,7 +4196,6 @@ export class PipelineConfigsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineConfigsApi
      */
     public pipelineConfigsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return PipelineConfigsApiFp(this.configuration).pipelineConfigsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -6205,7 +4208,6 @@ export class PipelineConfigsApi extends BaseAPI {
      * @param {PipelineConfig} [pipelineConfig] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineConfigsApi
      */
     public pipelineConfigsIdPut(id: string, pipelineConfig?: PipelineConfig, options?: RawAxiosRequestConfig) {
         return PipelineConfigsApiFp(this.configuration).pipelineConfigsIdPut(id, pipelineConfig, options).then((request) => request(this.axios, this.basePath));
@@ -6217,7 +4219,6 @@ export class PipelineConfigsApi extends BaseAPI {
      * @param {PipelineConfig} [pipelineConfig] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineConfigsApi
      */
     public pipelineConfigsPost(pipelineConfig?: PipelineConfig, options?: RawAxiosRequestConfig) {
         return PipelineConfigsApiFp(this.configuration).pipelineConfigsPost(pipelineConfig, options).then((request) => request(this.axios, this.basePath));
@@ -6228,7 +4229,6 @@ export class PipelineConfigsApi extends BaseAPI {
 
 /**
  * PipelineEmbeddingsApi - axios parameter creator
- * @export
  */
 export const PipelineEmbeddingsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -6306,7 +4306,6 @@ export const PipelineEmbeddingsApiAxiosParamCreator = function (configuration?: 
 
 /**
  * PipelineEmbeddingsApi - functional programming interface
- * @export
  */
 export const PipelineEmbeddingsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PipelineEmbeddingsApiAxiosParamCreator(configuration)
@@ -6342,7 +4341,6 @@ export const PipelineEmbeddingsApiFp = function(configuration?: Configuration) {
 
 /**
  * PipelineEmbeddingsApi - factory interface
- * @export
  */
 export const PipelineEmbeddingsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PipelineEmbeddingsApiFp(configuration)
@@ -6372,9 +4370,6 @@ export const PipelineEmbeddingsApiFactory = function (configuration?: Configurat
 
 /**
  * PipelineEmbeddingsApi - object-oriented interface
- * @export
- * @class PipelineEmbeddingsApi
- * @extends {BaseAPI}
  */
 export class PipelineEmbeddingsApi extends BaseAPI {
     /**
@@ -6383,7 +4378,6 @@ export class PipelineEmbeddingsApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineEmbeddingsApi
      */
     public pipelineEmbeddingsGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
         return PipelineEmbeddingsApiFp(this.configuration).pipelineEmbeddingsGet(paginate, options).then((request) => request(this.axios, this.basePath));
@@ -6395,7 +4389,6 @@ export class PipelineEmbeddingsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineEmbeddingsApi
      */
     public pipelineEmbeddingsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return PipelineEmbeddingsApiFp(this.configuration).pipelineEmbeddingsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -6406,7 +4399,6 @@ export class PipelineEmbeddingsApi extends BaseAPI {
 
 /**
  * PipelineStudyResultsApi - axios parameter creator
- * @export
  */
 export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -6655,7 +4647,6 @@ export const PipelineStudyResultsApiAxiosParamCreator = function (configuration?
 
 /**
  * PipelineStudyResultsApi - functional programming interface
- * @export
  */
 export const PipelineStudyResultsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PipelineStudyResultsApiAxiosParamCreator(configuration)
@@ -6744,7 +4735,6 @@ export const PipelineStudyResultsApiFp = function(configuration?: Configuration)
 
 /**
  * PipelineStudyResultsApi - factory interface
- * @export
  */
 export const PipelineStudyResultsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PipelineStudyResultsApiFp(configuration)
@@ -6818,9 +4808,6 @@ export const PipelineStudyResultsApiFactory = function (configuration?: Configur
 
 /**
  * PipelineStudyResultsApi - object-oriented interface
- * @export
- * @class PipelineStudyResultsApi
- * @extends {BaseAPI}
  */
 export class PipelineStudyResultsApi extends BaseAPI {
     /**
@@ -6835,7 +4822,6 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * @param {string} [version] Filter results by pipeline config version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineStudyResultsApi
      */
     public pipelineStudyResultsGet(paginate?: boolean, featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, options?: RawAxiosRequestConfig) {
         return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsGet(paginate, featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, options).then((request) => request(this.axios, this.basePath));
@@ -6847,7 +4833,6 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * @param {string} pipelineStudyResultId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineStudyResultsApi
      */
     public pipelineStudyResultsPipelineStudyResultIdDelete(pipelineStudyResultId: string, options?: RawAxiosRequestConfig) {
         return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsPipelineStudyResultIdDelete(pipelineStudyResultId, options).then((request) => request(this.axios, this.basePath));
@@ -6859,7 +4844,6 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * @param {string} pipelineStudyResultId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineStudyResultsApi
      */
     public pipelineStudyResultsPipelineStudyResultIdGet(pipelineStudyResultId: string, options?: RawAxiosRequestConfig) {
         return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsPipelineStudyResultIdGet(pipelineStudyResultId, options).then((request) => request(this.axios, this.basePath));
@@ -6872,7 +4856,6 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * @param {PipelineStudyResult} [pipelineStudyResult] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineStudyResultsApi
      */
     public pipelineStudyResultsPipelineStudyResultIdPut(pipelineStudyResultId: string, pipelineStudyResult?: PipelineStudyResult, options?: RawAxiosRequestConfig) {
         return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsPipelineStudyResultIdPut(pipelineStudyResultId, pipelineStudyResult, options).then((request) => request(this.axios, this.basePath));
@@ -6891,7 +4874,6 @@ export class PipelineStudyResultsApi extends BaseAPI {
      * @param {PipelineStudyResultPost} [pipelineStudyResultPost] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelineStudyResultsApi
      */
     public pipelineStudyResultsPost(paginate?: boolean, featureFilter?: Array<string>, featureFlatten?: boolean, pipelineConfig?: Array<string>, featureDisplay?: Array<string>, studyId?: Array<string>, version?: string, pipelineStudyResultPost?: PipelineStudyResultPost, options?: RawAxiosRequestConfig) {
         return PipelineStudyResultsApiFp(this.configuration).pipelineStudyResultsPost(paginate, featureFilter, featureFlatten, pipelineConfig, featureDisplay, studyId, version, pipelineStudyResultPost, options).then((request) => request(this.axios, this.basePath));
@@ -6902,7 +4884,6 @@ export class PipelineStudyResultsApi extends BaseAPI {
 
 /**
  * PipelinesApi - axios parameter creator
- * @export
  */
 export const PipelinesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -7090,7 +5071,6 @@ export const PipelinesApiAxiosParamCreator = function (configuration?: Configura
 
 /**
  * PipelinesApi - functional programming interface
- * @export
  */
 export const PipelinesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PipelinesApiAxiosParamCreator(configuration)
@@ -7166,7 +5146,6 @@ export const PipelinesApiFp = function(configuration?: Configuration) {
 
 /**
  * PipelinesApi - factory interface
- * @export
  */
 export const PipelinesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PipelinesApiFp(configuration)
@@ -7227,9 +5206,6 @@ export const PipelinesApiFactory = function (configuration?: Configuration, base
 
 /**
  * PipelinesApi - object-oriented interface
- * @export
- * @class PipelinesApi
- * @extends {BaseAPI}
  */
 export class PipelinesApi extends BaseAPI {
     /**
@@ -7238,7 +5214,6 @@ export class PipelinesApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelinesApi
      */
     public pipelinesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
         return PipelinesApiFp(this.configuration).pipelinesGet(paginate, options).then((request) => request(this.axios, this.basePath));
@@ -7250,7 +5225,6 @@ export class PipelinesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelinesApi
      */
     public pipelinesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return PipelinesApiFp(this.configuration).pipelinesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -7262,7 +5236,6 @@ export class PipelinesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelinesApi
      */
     public pipelinesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return PipelinesApiFp(this.configuration).pipelinesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -7275,7 +5248,6 @@ export class PipelinesApi extends BaseAPI {
      * @param {Pipeline} [pipeline] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelinesApi
      */
     public pipelinesIdPut(id: string, pipeline?: Pipeline, options?: RawAxiosRequestConfig) {
         return PipelinesApiFp(this.configuration).pipelinesIdPut(id, pipeline, options).then((request) => request(this.axios, this.basePath));
@@ -7287,7 +5259,6 @@ export class PipelinesApi extends BaseAPI {
      * @param {Pipeline} [pipeline] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PipelinesApi
      */
     public pipelinesPost(pipeline?: Pipeline, options?: RawAxiosRequestConfig) {
         return PipelinesApiFp(this.configuration).pipelinesPost(pipeline, options).then((request) => request(this.axios, this.basePath));
@@ -7298,7 +5269,6 @@ export class PipelinesApi extends BaseAPI {
 
 /**
  * PointsApi - axios parameter creator
- * @export
  */
 export const PointsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -7494,7 +5464,6 @@ export const PointsApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * PointsApi - functional programming interface
- * @export
  */
 export const PointsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PointsApiAxiosParamCreator(configuration)
@@ -7570,7 +5539,6 @@ export const PointsApiFp = function(configuration?: Configuration) {
 
 /**
  * PointsApi - factory interface
- * @export
  */
 export const PointsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PointsApiFp(configuration)
@@ -7631,9 +5599,6 @@ export const PointsApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * PointsApi - object-oriented interface
- * @export
- * @class PointsApi
- * @extends {BaseAPI}
  */
 export class PointsApi extends BaseAPI {
     /**
@@ -7642,7 +5607,6 @@ export class PointsApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PointsApi
      */
     public pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
         return PointsApiFp(this.configuration).pointsGet(paginate, options).then((request) => request(this.axios, this.basePath));
@@ -7654,7 +5618,6 @@ export class PointsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PointsApi
      */
     public pointsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return PointsApiFp(this.configuration).pointsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -7666,7 +5629,6 @@ export class PointsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PointsApi
      */
     public pointsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return PointsApiFp(this.configuration).pointsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -7679,7 +5641,6 @@ export class PointsApi extends BaseAPI {
      * @param {PointRequest} [pointRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PointsApi
      */
     public pointsIdPut(id: string, pointRequest?: PointRequest, options?: RawAxiosRequestConfig) {
         return PointsApiFp(this.configuration).pointsIdPut(id, pointRequest, options).then((request) => request(this.axios, this.basePath));
@@ -7691,7 +5652,6 @@ export class PointsApi extends BaseAPI {
      * @param {PointRequest} [pointRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PointsApi
      */
     public pointsPost(pointRequest?: PointRequest, options?: RawAxiosRequestConfig) {
         return PointsApiFp(this.configuration).pointsPost(pointRequest, options).then((request) => request(this.axios, this.basePath));
@@ -7702,7 +5662,6 @@ export class PointsApi extends BaseAPI {
 
 /**
  * StoreApi - axios parameter creator
- * @export
  */
 export const StoreApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -9989,7 +7948,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
 /**
  * StoreApi - functional programming interface
- * @export
  */
 export const StoreApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = StoreApiAxiosParamCreator(configuration)
@@ -10721,7 +8679,6 @@ export const StoreApiFp = function(configuration?: Configuration) {
 
 /**
  * StoreApi - factory interface
- * @export
  */
 export const StoreApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = StoreApiFp(configuration)
@@ -11312,9 +9269,6 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
 
 /**
  * StoreApi - object-oriented interface
- * @export
- * @class StoreApi
- * @extends {BaseAPI}
  */
 export class StoreApi extends BaseAPI {
     /**
@@ -11331,7 +9285,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(this.axios, this.basePath));
@@ -11343,7 +9296,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public analysesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).analysesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11356,7 +9308,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public analysesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).analysesIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
@@ -11369,7 +9320,6 @@ export class StoreApi extends BaseAPI {
      * @param {AnalysisRequest} [analysisRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public analysesIdPut(id: string, analysisRequest?: AnalysisRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).analysesIdPut(id, analysisRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11381,7 +9331,6 @@ export class StoreApi extends BaseAPI {
      * @param {AnalysisRequest} [analysisRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public analysesPost(analysisRequest?: AnalysisRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).analysesPost(analysisRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11393,7 +9342,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationAnalysesGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationAnalysesGet(paginate, options).then((request) => request(this.axios, this.basePath));
@@ -11405,7 +9353,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationAnalysesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationAnalysesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -11418,7 +9365,6 @@ export class StoreApi extends BaseAPI {
      * @param {NoteCollectionRequest} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationAnalysesIdPut(id: string, noteCollectionRequest?: NoteCollectionRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationAnalysesIdPut(id, noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11430,7 +9376,6 @@ export class StoreApi extends BaseAPI {
      * @param {Array<NoteCollectionRequest>} [noteCollectionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationAnalysesPost(noteCollectionRequest?: Array<NoteCollectionRequest>, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationAnalysesPost(noteCollectionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11443,7 +9388,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationsGet(studysetId?: string, paginate?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsGet(studysetId, paginate, options).then((request) => request(this.axios, this.basePath));
@@ -11455,7 +9399,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11468,7 +9411,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [_export] return endpoint data in consumable/readable format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationsIdGet(id: string, _export?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsIdGet(id, _export, options).then((request) => request(this.axios, this.basePath));
@@ -11481,7 +9423,6 @@ export class StoreApi extends BaseAPI {
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationsIdPut(id: string, annotationRequest?: AnnotationRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsIdPut(id, annotationRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11495,7 +9436,6 @@ export class StoreApi extends BaseAPI {
      * @param {AnnotationRequest} [annotationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public annotationsPost(source?: AnnotationsPostSourceEnum, sourceId?: string, annotationRequest?: AnnotationRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11538,7 +9478,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
@@ -11553,7 +9492,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(this.axios, this.basePath));
@@ -11566,7 +9504,6 @@ export class StoreApi extends BaseAPI {
      * @param {BaseStudy} [baseStudy] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public baseStudiesIdPut(id: string, baseStudy?: BaseStudy, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).baseStudiesIdPut(id, baseStudy, options).then((request) => request(this.axios, this.basePath));
@@ -11578,7 +9515,6 @@ export class StoreApi extends BaseAPI {
      * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).baseStudiesPost(baseStudiesPostRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11597,7 +9533,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} [description] search description field for a term
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(this.axios, this.basePath));
@@ -11609,7 +9544,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public conditionsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).conditionsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11621,7 +9555,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public conditionsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).conditionsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -11634,7 +9567,6 @@ export class StoreApi extends BaseAPI {
      * @param {ConditionRequest} [conditionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public conditionsIdPut(id: string, conditionRequest?: ConditionRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).conditionsIdPut(id, conditionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11646,7 +9578,6 @@ export class StoreApi extends BaseAPI {
      * @param {ConditionRequest} [conditionRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public conditionsPost(conditionRequest?: ConditionRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).conditionsPost(conditionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11667,7 +9598,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} [space] search space field
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
@@ -11679,7 +9609,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public imagesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).imagesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11691,7 +9620,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public imagesIdGet(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).imagesIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -11704,7 +9632,6 @@ export class StoreApi extends BaseAPI {
      * @param {ImageRequest} [imageRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public imagesIdPut(id: string, imageRequest?: ImageRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).imagesIdPut(id, imageRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11716,7 +9643,6 @@ export class StoreApi extends BaseAPI {
      * @param {ImageRequest} [imageRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public imagesPost(imageRequest?: ImageRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).imagesPost(imageRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11728,7 +9654,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public pointsGet(paginate?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).pointsGet(paginate, options).then((request) => request(this.axios, this.basePath));
@@ -11740,7 +9665,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public pointsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).pointsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11752,7 +9676,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public pointsIdGet(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).pointsIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -11765,7 +9688,6 @@ export class StoreApi extends BaseAPI {
      * @param {PointRequest} [pointRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public pointsIdPut(id: string, pointRequest?: PointRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).pointsIdPut(id, pointRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11777,7 +9699,6 @@ export class StoreApi extends BaseAPI {
      * @param {PointRequest} [pointRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public pointsPost(pointRequest?: PointRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).pointsPost(pointRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11808,7 +9729,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
@@ -11820,7 +9740,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studiesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11835,7 +9754,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesIdGet(id, nested, studysetOwner, flat, options).then((request) => request(this.axios, this.basePath));
@@ -11848,7 +9766,6 @@ export class StoreApi extends BaseAPI {
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studiesIdPut(id: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesIdPut(id, studyRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11862,7 +9779,6 @@ export class StoreApi extends BaseAPI {
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studiesPost(source?: StudiesPostSourceEnum, sourceId?: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11874,7 +9790,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studysetsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studysetsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11888,7 +9803,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [gzip] return the content as gzipped content
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studysetsIdGet(id, nested, gzip, options).then((request) => request(this.axios, this.basePath));
@@ -11901,7 +9815,6 @@ export class StoreApi extends BaseAPI {
      * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studysetsIdPut(id: string, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studysetsIdPut(id, studysetRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11916,7 +9829,6 @@ export class StoreApi extends BaseAPI {
      * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11936,7 +9848,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
@@ -11948,7 +9859,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public tablesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).tablesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -11961,7 +9871,6 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).tablesIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
@@ -11974,7 +9883,6 @@ export class StoreApi extends BaseAPI {
      * @param {TableRequest} [tableRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).tablesIdPut(id, tableRequest, options).then((request) => request(this.axios, this.basePath));
@@ -11986,16 +9894,12 @@ export class StoreApi extends BaseAPI {
      * @param {TableRequest} [tableRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).tablesPost(tableRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
-/**
- * @export
- */
 export const AnnotationsPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -12005,26 +9909,17 @@ export const AnnotationsPostSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type AnnotationsPostSourceEnum = typeof AnnotationsPostSourceEnum[keyof typeof AnnotationsPostSourceEnum];
-/**
- * @export
- */
 export const BaseStudiesGetLevelEnum = {
     Group: 'group',
     Meta: 'meta'
 } as const;
 export type BaseStudiesGetLevelEnum = typeof BaseStudiesGetLevelEnum[keyof typeof BaseStudiesGetLevelEnum];
-/**
- * @export
- */
 export const BaseStudiesGetDataTypeEnum = {
     Coordinate: 'coordinate',
     Image: 'image',
     Both: 'both'
 } as const;
 export type BaseStudiesGetDataTypeEnum = typeof BaseStudiesGetDataTypeEnum[keyof typeof BaseStudiesGetDataTypeEnum];
-/**
- * @export
- */
 export const StudiesGetSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -12034,26 +9929,17 @@ export const StudiesGetSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudiesGetSourceEnum = typeof StudiesGetSourceEnum[keyof typeof StudiesGetSourceEnum];
-/**
- * @export
- */
 export const StudiesGetDataTypeEnum = {
     Coordinate: 'coordinate',
     Image: 'image',
     Both: 'both'
 } as const;
 export type StudiesGetDataTypeEnum = typeof StudiesGetDataTypeEnum[keyof typeof StudiesGetDataTypeEnum];
-/**
- * @export
- */
 export const StudiesGetLevelEnum = {
     Group: 'group',
     Meta: 'meta'
 } as const;
 export type StudiesGetLevelEnum = typeof StudiesGetLevelEnum[keyof typeof StudiesGetLevelEnum];
-/**
- * @export
- */
 export const StudiesPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -12063,9 +9949,6 @@ export const StudiesPostSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudiesPostSourceEnum = typeof StudiesPostSourceEnum[keyof typeof StudiesPostSourceEnum];
-/**
- * @export
- */
 export const StudysetsPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -12079,7 +9962,6 @@ export type StudysetsPostSourceEnum = typeof StudysetsPostSourceEnum[keyof typeo
 
 /**
  * StudiesApi - axios parameter creator
- * @export
  */
 export const StudiesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -12724,7 +10606,6 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * StudiesApi - functional programming interface
- * @export
  */
 export const StudiesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = StudiesApiAxiosParamCreator(configuration)
@@ -12911,7 +10792,6 @@ export const StudiesApiFp = function(configuration?: Configuration) {
 
 /**
  * StudiesApi - factory interface
- * @export
  */
 export const StudiesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = StudiesApiFp(configuration)
@@ -13071,9 +10951,6 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * StudiesApi - object-oriented interface
- * @export
- * @class StudiesApi
- * @extends {BaseAPI}
  */
 export class StudiesApi extends BaseAPI {
     /**
@@ -13113,7 +10990,6 @@ export class StudiesApi extends BaseAPI {
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
@@ -13128,7 +11004,6 @@ export class StudiesApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(this.axios, this.basePath));
@@ -13141,7 +11016,6 @@ export class StudiesApi extends BaseAPI {
      * @param {BaseStudy} [baseStudy] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public baseStudiesIdPut(id: string, baseStudy?: BaseStudy, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).baseStudiesIdPut(id, baseStudy, options).then((request) => request(this.axios, this.basePath));
@@ -13153,7 +11027,6 @@ export class StudiesApi extends BaseAPI {
      * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public baseStudiesPost(baseStudiesPostRequest?: BaseStudiesPostRequest, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).baseStudiesPost(baseStudiesPostRequest, options).then((request) => request(this.axios, this.basePath));
@@ -13184,7 +11057,6 @@ export class StudiesApi extends BaseAPI {
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
@@ -13196,7 +11068,6 @@ export class StudiesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public studiesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -13211,7 +11082,6 @@ export class StudiesApi extends BaseAPI {
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesIdGet(id, nested, studysetOwner, flat, options).then((request) => request(this.axios, this.basePath));
@@ -13224,7 +11094,6 @@ export class StudiesApi extends BaseAPI {
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public studiesIdPut(id: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesIdPut(id, studyRequest, options).then((request) => request(this.axios, this.basePath));
@@ -13238,33 +11107,23 @@ export class StudiesApi extends BaseAPI {
      * @param {StudyRequest} [studyRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudiesApi
      */
     public studiesPost(source?: StudiesPostSourceEnum, sourceId?: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig) {
         return StudiesApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
-/**
- * @export
- */
 export const BaseStudiesGetLevelEnum = {
     Group: 'group',
     Meta: 'meta'
 } as const;
 export type BaseStudiesGetLevelEnum = typeof BaseStudiesGetLevelEnum[keyof typeof BaseStudiesGetLevelEnum];
-/**
- * @export
- */
 export const BaseStudiesGetDataTypeEnum = {
     Coordinate: 'coordinate',
     Image: 'image',
     Both: 'both'
 } as const;
 export type BaseStudiesGetDataTypeEnum = typeof BaseStudiesGetDataTypeEnum[keyof typeof BaseStudiesGetDataTypeEnum];
-/**
- * @export
- */
 export const StudiesGetSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -13274,26 +11133,17 @@ export const StudiesGetSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudiesGetSourceEnum = typeof StudiesGetSourceEnum[keyof typeof StudiesGetSourceEnum];
-/**
- * @export
- */
 export const StudiesGetDataTypeEnum = {
     Coordinate: 'coordinate',
     Image: 'image',
     Both: 'both'
 } as const;
 export type StudiesGetDataTypeEnum = typeof StudiesGetDataTypeEnum[keyof typeof StudiesGetDataTypeEnum];
-/**
- * @export
- */
 export const StudiesGetLevelEnum = {
     Group: 'group',
     Meta: 'meta'
 } as const;
 export type StudiesGetLevelEnum = typeof StudiesGetLevelEnum[keyof typeof StudiesGetLevelEnum];
-/**
- * @export
- */
 export const StudiesPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -13307,7 +11157,6 @@ export type StudiesPostSourceEnum = typeof StudiesPostSourceEnum[keyof typeof St
 
 /**
  * StudysetsApi - axios parameter creator
- * @export
  */
 export const StudysetsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -13599,7 +11448,6 @@ export const StudysetsApiAxiosParamCreator = function (configuration?: Configura
 
 /**
  * StudysetsApi - functional programming interface
- * @export
  */
 export const StudysetsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = StudysetsApiAxiosParamCreator(configuration)
@@ -13693,7 +11541,6 @@ export const StudysetsApiFp = function(configuration?: Configuration) {
 
 /**
  * StudysetsApi - factory interface
- * @export
  */
 export const StudysetsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = StudysetsApiFp(configuration)
@@ -13772,9 +11619,6 @@ export const StudysetsApiFactory = function (configuration?: Configuration, base
 
 /**
  * StudysetsApi - object-oriented interface
- * @export
- * @class StudysetsApi
- * @extends {BaseAPI}
  */
 export class StudysetsApi extends BaseAPI {
     /**
@@ -13796,7 +11640,6 @@ export class StudysetsApi extends BaseAPI {
      * @param {string} [userId] user id you want to filter by
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudysetsApi
      */
     public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig) {
         return StudysetsApiFp(this.configuration).studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(this.axios, this.basePath));
@@ -13808,7 +11651,6 @@ export class StudysetsApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudysetsApi
      */
     public studysetsIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return StudysetsApiFp(this.configuration).studysetsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -13822,7 +11664,6 @@ export class StudysetsApi extends BaseAPI {
      * @param {boolean} [gzip] return the content as gzipped content
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudysetsApi
      */
     public studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig) {
         return StudysetsApiFp(this.configuration).studysetsIdGet(id, nested, gzip, options).then((request) => request(this.axios, this.basePath));
@@ -13835,7 +11676,6 @@ export class StudysetsApi extends BaseAPI {
      * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudysetsApi
      */
     public studysetsIdPut(id: string, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
         return StudysetsApiFp(this.configuration).studysetsIdPut(id, studysetRequest, options).then((request) => request(this.axios, this.basePath));
@@ -13850,16 +11690,12 @@ export class StudysetsApi extends BaseAPI {
      * @param {StudysetRequest} [studysetRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StudysetsApi
      */
     public studysetsPost(sourceId?: string, source?: StudysetsPostSourceEnum, copyAnnotations?: boolean, studysetRequest?: StudysetRequest, options?: RawAxiosRequestConfig) {
         return StudysetsApiFp(this.configuration).studysetsPost(sourceId, source, copyAnnotations, studysetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
-/**
- * @export
- */
 export const StudysetsGetSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -13869,9 +11705,6 @@ export const StudysetsGetSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudysetsGetSourceEnum = typeof StudysetsGetSourceEnum[keyof typeof StudysetsGetSourceEnum];
-/**
- * @export
- */
 export const StudysetsPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -13885,7 +11718,6 @@ export type StudysetsPostSourceEnum = typeof StudysetsPostSourceEnum[keyof typeo
 
 /**
  * TablesApi - axios parameter creator
- * @export
  */
 export const TablesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -14126,7 +11958,6 @@ export const TablesApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * TablesApi - functional programming interface
- * @export
  */
 export const TablesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TablesApiAxiosParamCreator(configuration)
@@ -14211,7 +12042,6 @@ export const TablesApiFp = function(configuration?: Configuration) {
 
 /**
  * TablesApi - factory interface
- * @export
  */
 export const TablesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TablesApiFp(configuration)
@@ -14281,9 +12111,6 @@ export const TablesApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * TablesApi - object-oriented interface
- * @export
- * @class TablesApi
- * @extends {BaseAPI}
  */
 export class TablesApi extends BaseAPI {
     /**
@@ -14300,7 +12127,6 @@ export class TablesApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TablesApi
      */
     public tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return TablesApiFp(this.configuration).tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
@@ -14312,7 +12138,6 @@ export class TablesApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TablesApi
      */
     public tablesIdDelete(id: string, options?: RawAxiosRequestConfig) {
         return TablesApiFp(this.configuration).tablesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
@@ -14325,7 +12150,6 @@ export class TablesApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TablesApi
      */
     public tablesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig) {
         return TablesApiFp(this.configuration).tablesIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
@@ -14338,7 +12162,6 @@ export class TablesApi extends BaseAPI {
      * @param {TableRequest} [tableRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TablesApi
      */
     public tablesIdPut(id: string, tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
         return TablesApiFp(this.configuration).tablesIdPut(id, tableRequest, options).then((request) => request(this.axios, this.basePath));
@@ -14350,7 +12173,6 @@ export class TablesApi extends BaseAPI {
      * @param {TableRequest} [tableRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TablesApi
      */
     public tablesPost(tableRequest?: TableRequest, options?: RawAxiosRequestConfig) {
         return TablesApiFp(this.configuration).tablesPost(tableRequest, options).then((request) => request(this.axios, this.basePath));
@@ -14361,7 +12183,6 @@ export class TablesApi extends BaseAPI {
 
 /**
  * UserApi - axios parameter creator
- * @export
  */
 export const UserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -14518,7 +12339,6 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * UserApi - functional programming interface
- * @export
  */
 export const UserApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserApiAxiosParamCreator(configuration)
@@ -14580,7 +12400,6 @@ export const UserApiFp = function(configuration?: Configuration) {
 
 /**
  * UserApi - factory interface
- * @export
  */
 export const UserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserApiFp(configuration)
@@ -14630,9 +12449,6 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * UserApi - object-oriented interface
- * @export
- * @class UserApi
- * @extends {BaseAPI}
  */
 export class UserApi extends BaseAPI {
     /**
@@ -14640,7 +12456,6 @@ export class UserApi extends BaseAPI {
      * @summary Your GET endpoint
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public usersGet(options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).usersGet(options).then((request) => request(this.axios, this.basePath));
@@ -14652,7 +12467,6 @@ export class UserApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public usersIdGet(id: string, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).usersIdGet(id, options).then((request) => request(this.axios, this.basePath));
@@ -14665,7 +12479,6 @@ export class UserApi extends BaseAPI {
      * @param {User} [user] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public usersIdPut(id: string, user?: User, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).usersIdPut(id, user, options).then((request) => request(this.axios, this.basePath));
@@ -14677,7 +12490,6 @@ export class UserApi extends BaseAPI {
      * @param {User} [user] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
      */
     public usersPost(user?: User, options?: RawAxiosRequestConfig) {
         return UserApiFp(this.configuration).usersPost(user, options).then((request) => request(this.axios, this.basePath));
