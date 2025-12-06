@@ -103,7 +103,7 @@ docs/StudysetList.md
 docs/StudysetRequest.md
 docs/StudysetRequestRelationships.md
 docs/StudysetRequestRelationshipsStudiesInner.md
-docs/StudysetRequestRelationshipsStudiesInnerOneOf.md
+docs/StudysetRequestRelationshipsStudiesInnerAnyOf.md
 docs/StudysetReturn.md
 docs/StudysetReturnRelationships.md
 docs/StudysetReturnRelationshipsStudies.md

@@ -1249,12 +1249,52 @@ export interface StudysetRequestRelationships {
      */
     'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
 }
-/**
- * @type StudysetRequestRelationshipsStudiesInner
- */
-export type StudysetRequestRelationshipsStudiesInner = StudysetRequestRelationshipsStudiesInnerOneOf | string;
-
-export interface StudysetRequestRelationshipsStudiesInnerOneOf {
+export interface StudysetRequestRelationshipsStudiesInner {
+    /**
+     * short UUID specifying the location of this resource
+     */
+    'id': string;
+    'curation_stub_uuid'?: string;
+    /**
+     * Digital object identifier of the study.
+     */
+    'doi'?: string | null;
+    /**
+     * Title of the study.
+     */
+    'name'?: string | null;
+    /**
+     * Metadata associated with the study not covered by the other study attributes.
+     */
+    'metadata'?: object | null;
+    /**
+     * Long form description of the study, typically the abstract.
+     */
+    'description'?: string | null;
+    /**
+     * The journal/place of publication for the study.
+     */
+    'publication'?: string | null;
+    /**
+     * If the study was published on PubMed, place the PubMed ID here.
+     */
+    'pmid'?: string | null;
+    /**
+     * The authors on the publication of this study.
+     */
+    'authors'?: string | null;
+    /**
+     * The year this study was published.
+     */
+    'year'?: number | null;
+    'analyses'?: StudyRequestRelationshipsAnalyses;
+    /**
+     * whether the resource is listed in public searches or not
+     */
+    'public'?: boolean;
+    'pmcid'?: string | null;
+}
+export interface StudysetRequestRelationshipsStudiesInnerAnyOf {
     'id': string;
     'curation_stub_uuid'?: string;
 }
