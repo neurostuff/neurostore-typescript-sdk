@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**studyset_studies** | [**Array&lt;StudysetReturnRelationshipsStudysetStudiesInner&gt;**](StudysetReturnRelationshipsStudysetStudiesInner.md) | Association records for studies in this studyset (includes stub UUIDs for mapping). | [optional] [default to undefined]
 **studies** | [**StudysetReturnRelationshipsStudies**](StudysetReturnRelationshipsStudies.md) |  | [optional] [default to undefined]
 
 ## Example
@@ -13,6 +14,7 @@ Name | Type | Description | Notes
 import { StudysetReturnRelationships } from './api';
 
 const instance: StudysetReturnRelationships = {
+    studyset_studies,
     studies,
 };
 ```

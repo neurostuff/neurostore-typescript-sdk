@@ -1346,6 +1346,10 @@ export interface StudysetReturn {
     'source'?: string | null;
     'source_id'?: string | null;
     'source_updated_at'?: string | null;
+    /**
+     * Association records for studies in this studyset (includes stub UUIDs for mapping).
+     */
+    'studyset_studies'?: Array<StudysetReturnRelationshipsStudysetStudiesInner>;
     'studies'?: StudysetReturnRelationshipsStudies;
     'level'?: StudysetReturnLevelEnum;
 }
@@ -1358,6 +1362,10 @@ export const StudysetReturnLevelEnum = {
 export type StudysetReturnLevelEnum = typeof StudysetReturnLevelEnum[keyof typeof StudysetReturnLevelEnum];
 
 export interface StudysetReturnRelationships {
+    /**
+     * Association records for studies in this studyset (includes stub UUIDs for mapping).
+     */
+    'studyset_studies'?: Array<StudysetReturnRelationshipsStudysetStudiesInner>;
     'studies'?: StudysetReturnRelationshipsStudies;
 }
 /**
@@ -1365,6 +1373,10 @@ export interface StudysetReturnRelationships {
  */
 export type StudysetReturnRelationshipsStudies = Array<StudyReturn> | Array<string>;
 
+export interface StudysetReturnRelationshipsStudysetStudiesInner {
+    'id'?: string;
+    'curation_stub_uuid'?: string | null;
+}
 export interface TableCommon {
     't_id'?: string | null;
     'name'?: string | null;
@@ -9940,6 +9952,66 @@ export class StoreApi extends BaseAPI {
     }
 }
 
+export const AnnotationsPostSourceEnum = {
+    Neurostore: 'neurostore',
+    Neurovault: 'neurovault',
+    Pubmed: 'pubmed',
+    Neurosynth: 'neurosynth',
+    Neuroquery: 'neuroquery',
+    Pubget: 'pubget'
+} as const;
+export type AnnotationsPostSourceEnum = typeof AnnotationsPostSourceEnum[keyof typeof AnnotationsPostSourceEnum];
+export const BaseStudiesGetLevelEnum = {
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+export type BaseStudiesGetLevelEnum = typeof BaseStudiesGetLevelEnum[keyof typeof BaseStudiesGetLevelEnum];
+export const BaseStudiesGetDataTypeEnum = {
+    Coordinate: 'coordinate',
+    Image: 'image',
+    Both: 'both'
+} as const;
+export type BaseStudiesGetDataTypeEnum = typeof BaseStudiesGetDataTypeEnum[keyof typeof BaseStudiesGetDataTypeEnum];
+export const StudiesGetSourceEnum = {
+    Neurostore: 'neurostore',
+    Neurovault: 'neurovault',
+    Pubmed: 'pubmed',
+    Neurosynth: 'neurosynth',
+    Neuroquery: 'neuroquery',
+    Pubget: 'pubget'
+} as const;
+export type StudiesGetSourceEnum = typeof StudiesGetSourceEnum[keyof typeof StudiesGetSourceEnum];
+export const StudiesGetDataTypeEnum = {
+    Coordinate: 'coordinate',
+    Image: 'image',
+    Both: 'both'
+} as const;
+export type StudiesGetDataTypeEnum = typeof StudiesGetDataTypeEnum[keyof typeof StudiesGetDataTypeEnum];
+export const StudiesGetLevelEnum = {
+    Group: 'group',
+    Meta: 'meta'
+} as const;
+export type StudiesGetLevelEnum = typeof StudiesGetLevelEnum[keyof typeof StudiesGetLevelEnum];
+export const StudiesPostSourceEnum = {
+    Neurostore: 'neurostore',
+    Neurovault: 'neurovault',
+    Pubmed: 'pubmed',
+    Neurosynth: 'neurosynth',
+    Neuroquery: 'neuroquery',
+    Pubget: 'pubget'
+} as const;
+export type StudiesPostSourceEnum = typeof StudiesPostSourceEnum[keyof typeof StudiesPostSourceEnum];
+export const StudysetsPostSourceEnum = {
+    Neurostore: 'neurostore',
+    Neurovault: 'neurovault',
+    Pubmed: 'pubmed',
+    Neurosynth: 'neurosynth',
+    Neuroquery: 'neuroquery',
+    Pubget: 'pubget'
+} as const;
+export type StudysetsPostSourceEnum = typeof StudysetsPostSourceEnum[keyof typeof StudysetsPostSourceEnum];
+
+
 /**
  * StudiesApi - axios parameter creator
  */
@@ -11685,6 +11757,17 @@ export const StudysetsGetSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudysetsGetSourceEnum = typeof StudysetsGetSourceEnum[keyof typeof StudysetsGetSourceEnum];
+export const StudysetsPostSourceEnum = {
+    Neurostore: 'neurostore',
+    Neurovault: 'neurovault',
+    Pubmed: 'pubmed',
+    Neurosynth: 'neurosynth',
+    Neuroquery: 'neuroquery',
+    Pubget: 'pubget'
+} as const;
+export type StudysetsPostSourceEnum = typeof StudysetsPostSourceEnum[keyof typeof StudysetsPostSourceEnum];
+
+
 /**
  * TablesApi - axios parameter creator
  */
@@ -12464,4 +12547,6 @@ export class UserApi extends BaseAPI {
         return UserApiFp(this.configuration).usersPost(user, options).then((request) => request(this.axios, this.basePath));
     }
 }
+
+
 

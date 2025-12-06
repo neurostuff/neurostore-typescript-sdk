@@ -107,6 +107,7 @@ docs/StudysetRequestRelationshipsStudiesInnerAnyOf.md
 docs/StudysetReturn.md
 docs/StudysetReturnRelationships.md
 docs/StudysetReturnRelationshipsStudies.md
+docs/StudysetReturnRelationshipsStudysetStudiesInner.md
 docs/StudysetsApi.md
 docs/TableCommon.md
 docs/TableList.md

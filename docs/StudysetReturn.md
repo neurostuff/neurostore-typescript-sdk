@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **source** | **string** |  | [optional] [default to undefined]
 **source_id** | **string** |  | [optional] [default to undefined]
 **source_updated_at** | **string** |  | [optional] [readonly] [default to undefined]
+**studyset_studies** | [**Array&lt;StudysetReturnRelationshipsStudysetStudiesInner&gt;**](StudysetReturnRelationshipsStudysetStudiesInner.md) | Association records for studies in this studyset (includes stub UUIDs for mapping). | [optional] [default to undefined]
 **studies** | [**StudysetReturnRelationshipsStudies**](StudysetReturnRelationshipsStudies.md) |  | [optional] [default to undefined]
 **level** | **string** |  | [optional] [default to undefined]
 
@@ -42,6 +43,7 @@ const instance: StudysetReturn = {
     source,
     source_id,
     source_updated_at,
+    studyset_studies,
     studies,
     level,
 };
