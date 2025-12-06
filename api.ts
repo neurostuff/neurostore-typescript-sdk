@@ -2878,11 +2878,11 @@ export interface StudysetRequest {
      */
     'pmid'?: string | null;
     /**
-     * 
-     * @type {Array<object>}
+     * Accepts study IDs or objects containing an ID and an optional curation stub UUID used to keep curation/extraction alignment. 
+     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
      * @memberof StudysetRequest
      */
-    'studies'?: Array<object>;
+    'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
     /**
      * short UUID specifying the location of this resource
      * @type {string}
@@ -2917,11 +2917,36 @@ export type StudysetRequestLevelEnum = typeof StudysetRequestLevelEnum[keyof typ
  */
 export interface StudysetRequestRelationships {
     /**
-     * 
-     * @type {Array<any>}
+     * Accepts study IDs or objects containing an ID and an optional curation stub UUID used to keep curation/extraction alignment. 
+     * @type {Array<StudysetRequestRelationshipsStudiesInner>}
      * @memberof StudysetRequestRelationships
      */
-    'studies'?: Array<any>;
+    'studies'?: Array<StudysetRequestRelationshipsStudiesInner>;
+}
+/**
+ * @type StudysetRequestRelationshipsStudiesInner
+ * @export
+ */
+export type StudysetRequestRelationshipsStudiesInner = StudysetRequestRelationshipsStudiesInnerOneOf | string;
+
+/**
+ * 
+ * @export
+ * @interface StudysetRequestRelationshipsStudiesInnerOneOf
+ */
+export interface StudysetRequestRelationshipsStudiesInnerOneOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetRequestRelationshipsStudiesInnerOneOf
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StudysetRequestRelationshipsStudiesInnerOneOf
+     */
+    'curation_stub_uuid'?: string;
 }
 /**
  * 
