@@ -863,6 +863,7 @@ let isOa: boolean; // (optional) (default to undefined)
 let publication: string; //search for papers from a particular journal (optional) (default to undefined)
 let pmid: string; //search for particular pmid (optional) (default to undefined)
 let doi: string; //search for study with specific doi (optional) (default to undefined)
+let neurovaultId: string; //search for study with specific neurovault id (optional) (default to undefined)
 let flat: boolean; //do not return any embedded relationships. When set, it is incompatible with nested.  (optional) (default to undefined)
 let info: boolean; //show additional for endpoint-object relationships without being fully nested. Incompatible with nested (optional) (default to undefined)
 let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
@@ -897,6 +898,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
     publication,
     pmid,
     doi,
+    neurovaultId,
     flat,
     info,
     paginate
@@ -936,6 +938,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | **publication** | [**string**] | search for papers from a particular journal | (optional) defaults to undefined|
 | **pmid** | [**string**] | search for particular pmid | (optional) defaults to undefined|
 | **doi** | [**string**] | search for study with specific doi | (optional) defaults to undefined|
+| **neurovaultId** | [**string**] | search for study with specific neurovault id | (optional) defaults to undefined|
 | **flat** | [**boolean**] | do not return any embedded relationships. When set, it is incompatible with nested.  | (optional) defaults to undefined|
 | **info** | [**boolean**] | show additional for endpoint-object relationships without being fully nested. Incompatible with nested | (optional) defaults to undefined|
 | **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|

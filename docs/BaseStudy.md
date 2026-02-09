@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **level** | **string** |  | [optional] [default to undefined]
 **is_oa** | **boolean** |  | [optional] [default to undefined]
 **pmcid** | **string** |  | [optional] [default to undefined]
+**neurovault_id** | [**BaseStudyNeurovaultId**](BaseStudyNeurovaultId.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -36,6 +37,7 @@ const instance: BaseStudy = {
     level,
     is_oa,
     pmcid,
+    neurovault_id,
 };
 ```
 
