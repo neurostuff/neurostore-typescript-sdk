@@ -356,17 +356,11 @@ export interface BaseStudy {
     'level'?: string | null;
     'is_oa'?: boolean | null;
     'pmcid'?: string | null;
-    'neurovault_id'?: BaseStudyNeurovaultId | null;
 }
 export interface BaseStudyList {
     'results'?: Array<BaseStudyReturn>;
     'metadata'?: Metadata;
 }
-/**
- * @type BaseStudyNeurovaultId
- */
-export type BaseStudyNeurovaultId = number | string;
-
 export interface BaseStudyReturn {
     'metadata'?: object | null;
     'versions'?: Array<BaseStudyVersionsInner>;
@@ -380,7 +374,6 @@ export interface BaseStudyReturn {
     'level'?: string | null;
     'is_oa'?: boolean | null;
     'pmcid'?: string | null;
-    'neurovault_id'?: BaseStudyNeurovaultId | null;
     /**
      * time the resource was created on the database
      */

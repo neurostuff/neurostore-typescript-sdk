@@ -17,7 +17,6 @@ Name | Type | Description | Notes
 **level** | **string** |  | [optional] [default to undefined]
 **is_oa** | **boolean** |  | [optional] [default to undefined]
 **pmcid** | **string** |  | [optional] [default to undefined]
-**neurovault_id** | [**BaseStudyNeurovaultId**](BaseStudyNeurovaultId.md) |  | [optional] [default to undefined]
 **created_at** | **string** | time the resource was created on the database | [optional] [readonly] [default to undefined]
 **updated_at** | **string** | when the resource was last modified/updated. | [optional] [readonly] [default to undefined]
 **id** | **string** | short UUID specifying the location of this resource | [optional] [default to undefined]
@@ -44,7 +43,6 @@ const instance: BaseStudyReturn = {
     level,
     is_oa,
     pmcid,
-    neurovault_id,
     created_at,
     updated_at,
     id,
