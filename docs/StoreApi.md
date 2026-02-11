@@ -2372,11 +2372,13 @@ const apiInstance = new StoreApi(configuration);
 
 let id: string; // (default to undefined)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
+let summary: boolean; //return a lightweight summary payload with study metadata and per-analysis coordinate counts; incompatible with nested (optional) (default to undefined)
 let gzip: boolean; //return the content as gzipped content (optional) (default to undefined)
 
 const { status, data } = await apiInstance.studysetsIdGet(
     id,
     nested,
+    summary,
     gzip
 );
 ```
@@ -2387,6 +2389,7 @@ const { status, data } = await apiInstance.studysetsIdGet(
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**string**] |  | defaults to undefined|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
+| **summary** | [**boolean**] | return a lightweight summary payload with study metadata and per-analysis coordinate counts; incompatible with nested | (optional) defaults to undefined|
 | **gzip** | [**boolean**] | return the content as gzipped content | (optional) defaults to undefined|
 
 
