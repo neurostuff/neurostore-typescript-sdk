@@ -147,6 +147,10 @@ export interface AnalysisReturn {
     'entities'?: Array<Entity>;
     'order'?: number | null;
     'metadata'?: object | null;
+    /**
+     * Number of point coordinates linked to this analysis.
+     */
+    'point_count'?: number | null;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
     'has_z_maps'?: boolean;
