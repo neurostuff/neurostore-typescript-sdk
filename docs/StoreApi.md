@@ -859,6 +859,7 @@ let description: string; //search description field for a term (optional) (defau
 let authors: string; //search authors (optional) (default to undefined)
 let level: 'group' | 'meta'; //select between studies with group results or meta results (optional) (default to 'group')
 let dataType: 'coordinate' | 'image' | 'both'; //whether searching for studies that contain coordinates, images, or both (optional) (default to undefined)
+let mapType: 'z' | 't' | 'beta_variance' | 'any'; //filter by stored map-type flags (optional) (default to undefined)
 let isOa: boolean; // (optional) (default to undefined)
 let publication: string; //search for papers from a particular journal (optional) (default to undefined)
 let pmid: string; //search for particular pmid (optional) (default to undefined)
@@ -894,6 +895,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
     authors,
     level,
     dataType,
+    mapType,
     isOa,
     publication,
     pmid,
@@ -934,6 +936,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | **authors** | [**string**] | search authors | (optional) defaults to undefined|
 | **level** | [**&#39;group&#39; | &#39;meta&#39;**]**Array<&#39;group&#39; &#124; &#39;meta&#39;>** | select between studies with group results or meta results | (optional) defaults to 'group'|
 | **dataType** | [**&#39;coordinate&#39; | &#39;image&#39; | &#39;both&#39;**]**Array<&#39;coordinate&#39; &#124; &#39;image&#39; &#124; &#39;both&#39;>** | whether searching for studies that contain coordinates, images, or both | (optional) defaults to undefined|
+| **mapType** | [**&#39;z&#39; | &#39;t&#39; | &#39;beta_variance&#39; | &#39;any&#39;**]**Array<&#39;z&#39; &#124; &#39;t&#39; &#124; &#39;beta_variance&#39; &#124; &#39;any&#39;>** | filter by stored map-type flags | (optional) defaults to undefined|
 | **isOa** | [**boolean**] |  | (optional) defaults to undefined|
 | **publication** | [**string**] | search for papers from a particular journal | (optional) defaults to undefined|
 | **pmid** | [**string**] | search for particular pmid | (optional) defaults to undefined|
@@ -1994,6 +1997,7 @@ let source: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'
 let authors: string; //search authors (optional) (default to undefined)
 let userId: string; //user id you want to filter by (optional) (default to undefined)
 let dataType: 'coordinate' | 'image' | 'both'; //whether searching for studies that contain coordinates, images, or both (optional) (default to undefined)
+let mapType: 'z' | 't' | 'beta_variance' | 'any'; //filter by stored map-type flags (optional) (default to undefined)
 let studysetOwner: string; //for all studies filter which studysets are listed based on who owns the studyset (optional) (default to undefined)
 let level: 'group' | 'meta'; //select between studies with group results or meta results (optional) (default to 'group')
 let pmid: string; //search for particular pmid (optional) (default to undefined)
@@ -2016,6 +2020,7 @@ const { status, data } = await apiInstance.studiesGet(
     authors,
     userId,
     dataType,
+    mapType,
     studysetOwner,
     level,
     pmid,
@@ -2043,6 +2048,7 @@ const { status, data } = await apiInstance.studiesGet(
 | **authors** | [**string**] | search authors | (optional) defaults to undefined|
 | **userId** | [**string**] | user id you want to filter by | (optional) defaults to undefined|
 | **dataType** | [**&#39;coordinate&#39; | &#39;image&#39; | &#39;both&#39;**]**Array<&#39;coordinate&#39; &#124; &#39;image&#39; &#124; &#39;both&#39;>** | whether searching for studies that contain coordinates, images, or both | (optional) defaults to undefined|
+| **mapType** | [**&#39;z&#39; | &#39;t&#39; | &#39;beta_variance&#39; | &#39;any&#39;**]**Array<&#39;z&#39; &#124; &#39;t&#39; &#124; &#39;beta_variance&#39; &#124; &#39;any&#39;>** | filter by stored map-type flags | (optional) defaults to undefined|
 | **studysetOwner** | [**string**] | for all studies filter which studysets are listed based on who owns the studyset | (optional) defaults to undefined|
 | **level** | [**&#39;group&#39; | &#39;meta&#39;**]**Array<&#39;group&#39; &#124; &#39;meta&#39;>** | select between studies with group results or meta results | (optional) defaults to 'group'|
 | **pmid** | [**string**] | search for particular pmid | (optional) defaults to undefined|

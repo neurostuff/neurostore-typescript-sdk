@@ -147,6 +147,11 @@ export interface AnalysisReturn {
     'entities'?: Array<Entity>;
     'order'?: number | null;
     'metadata'?: object | null;
+    'has_coordinates'?: boolean;
+    'has_images'?: boolean;
+    'has_z_maps'?: boolean;
+    'has_t_maps'?: boolean;
+    'has_beta_and_variance_maps'?: boolean;
 }
 export interface AnalysisReturnRelationships {
     'study'?: string;
@@ -398,6 +403,11 @@ export interface BaseStudyReturn {
      * human readable username
      */
     'username'?: string | null;
+    'has_coordinates'?: boolean;
+    'has_images'?: boolean;
+    'has_z_maps'?: boolean;
+    'has_t_maps'?: boolean;
+    'has_beta_and_variance_maps'?: boolean;
     'features'?: object;
 }
 /**
@@ -1152,6 +1162,9 @@ export interface StudyReturn {
     'studysets'?: Array<StudyReturnAllOfStudysets>;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
+    'has_z_maps'?: boolean;
+    'has_t_maps'?: boolean;
+    'has_beta_and_variance_maps'?: boolean;
     'base_study'?: string | null;
     'pmcid'?: string | null;
 }
@@ -6337,6 +6350,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
@@ -6348,7 +6362,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6463,6 +6477,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (dataType !== undefined) {
                 localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (mapType !== undefined) {
+                localVarQueryParameter['map_type'] = mapType;
             }
 
             if (isOa !== undefined) {
@@ -7296,6 +7314,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {string} [pmid] search for particular pmid
@@ -7304,7 +7323,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7381,6 +7400,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (dataType !== undefined) {
                 localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (mapType !== undefined) {
+                localVarQueryParameter['map_type'] = mapType;
             }
 
             if (studysetOwner !== undefined) {
@@ -8235,6 +8258,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
@@ -8246,8 +8270,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
+        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8527,6 +8551,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {string} [pmid] search for particular pmid
@@ -8535,8 +8560,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8925,6 +8950,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
@@ -8936,8 +8962,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9160,6 +9186,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {string} [pmid] search for particular pmid
@@ -9168,8 +9195,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -9528,6 +9555,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
      * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {boolean} [isOa] 
      * @param {string} [publication] search for papers from a particular journal
      * @param {string} [pmid] search for particular pmid
@@ -9539,8 +9567,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9782,6 +9810,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
      * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
      * @param {string} [pmid] search for particular pmid
@@ -9790,8 +9819,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9980,6 +10009,13 @@ export const BaseStudiesGetDataTypeEnum = {
     Both: 'both'
 } as const;
 export type BaseStudiesGetDataTypeEnum = typeof BaseStudiesGetDataTypeEnum[keyof typeof BaseStudiesGetDataTypeEnum];
+export const BaseStudiesGetMapTypeEnum = {
+    Z: 'z',
+    T: 't',
+    BetaVariance: 'beta_variance',
+    Any: 'any'
+} as const;
+export type BaseStudiesGetMapTypeEnum = typeof BaseStudiesGetMapTypeEnum[keyof typeof BaseStudiesGetMapTypeEnum];
 export const StudiesGetSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -9995,6 +10031,13 @@ export const StudiesGetDataTypeEnum = {
     Both: 'both'
 } as const;
 export type StudiesGetDataTypeEnum = typeof StudiesGetDataTypeEnum[keyof typeof StudiesGetDataTypeEnum];
+export const StudiesGetMapTypeEnum = {
+    Z: 'z',
+    T: 't',
+    BetaVariance: 'beta_variance',
+    Any: 'any'
+} as const;
+export type StudiesGetMapTypeEnum = typeof StudiesGetMapTypeEnum[keyof typeof StudiesGetMapTypeEnum];
 export const StudiesGetLevelEnum = {
     Group: 'group',
     Meta: 'meta'
@@ -10053,6 +10096,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
@@ -10064,7 +10108,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10179,6 +10223,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (dataType !== undefined) {
                 localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (mapType !== undefined) {
+                localVarQueryParameter['map_type'] = mapType;
             }
 
             if (isOa !== undefined) {
@@ -10371,6 +10419,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {string} [pmid] search for particular pmid
@@ -10379,7 +10428,7 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10456,6 +10505,10 @@ export const StudiesApiAxiosParamCreator = function (configuration?: Configurati
 
             if (dataType !== undefined) {
                 localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (mapType !== undefined) {
+                localVarQueryParameter['map_type'] = mapType;
             }
 
             if (studysetOwner !== undefined) {
@@ -10703,6 +10756,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
@@ -10714,8 +10768,8 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
+        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10781,6 +10835,7 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {string} [pmid] search for particular pmid
@@ -10789,8 +10844,8 @@ export const StudiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StudiesApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10890,6 +10945,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [authors] search authors
          * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
          * @param {string} [pmid] search for particular pmid
@@ -10901,8 +10957,8 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10956,6 +11012,7 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
          * @param {string} [pmid] search for particular pmid
@@ -10964,8 +11021,8 @@ export const StudiesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -11048,6 +11105,7 @@ export class StudiesApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {BaseStudiesGetLevelEnum} [level] select between studies with group results or meta results
      * @param {BaseStudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {boolean} [isOa] 
      * @param {string} [publication] search for papers from a particular journal
      * @param {string} [pmid] search for particular pmid
@@ -11059,8 +11117,8 @@ export class StudiesApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11118,6 +11176,7 @@ export class StudiesApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
      * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
      * @param {string} [pmid] search for particular pmid
@@ -11126,8 +11185,8 @@ export class StudiesApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
-        return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
+        return StudiesApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11192,6 +11251,13 @@ export const BaseStudiesGetDataTypeEnum = {
     Both: 'both'
 } as const;
 export type BaseStudiesGetDataTypeEnum = typeof BaseStudiesGetDataTypeEnum[keyof typeof BaseStudiesGetDataTypeEnum];
+export const BaseStudiesGetMapTypeEnum = {
+    Z: 'z',
+    T: 't',
+    BetaVariance: 'beta_variance',
+    Any: 'any'
+} as const;
+export type BaseStudiesGetMapTypeEnum = typeof BaseStudiesGetMapTypeEnum[keyof typeof BaseStudiesGetMapTypeEnum];
 export const StudiesGetSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -11207,6 +11273,13 @@ export const StudiesGetDataTypeEnum = {
     Both: 'both'
 } as const;
 export type StudiesGetDataTypeEnum = typeof StudiesGetDataTypeEnum[keyof typeof StudiesGetDataTypeEnum];
+export const StudiesGetMapTypeEnum = {
+    Z: 'z',
+    T: 't',
+    BetaVariance: 'beta_variance',
+    Any: 'any'
+} as const;
+export type StudiesGetMapTypeEnum = typeof StudiesGetMapTypeEnum[keyof typeof StudiesGetMapTypeEnum];
 export const StudiesGetLevelEnum = {
     Group: 'group',
     Meta: 'meta'

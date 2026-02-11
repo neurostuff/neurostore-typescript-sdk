@@ -22,6 +22,11 @@ Name | Type | Description | Notes
 **entities** | [**Array&lt;Entity&gt;**](Entity.md) |  | [optional] [default to undefined]
 **order** | **number** |  | [optional] [default to undefined]
 **metadata** | **object** |  | [optional] [default to undefined]
+**has_coordinates** | **boolean** |  | [optional] [default to undefined]
+**has_images** | **boolean** |  | [optional] [default to undefined]
+**has_z_maps** | **boolean** |  | [optional] [default to undefined]
+**has_t_maps** | **boolean** |  | [optional] [default to undefined]
+**has_beta_and_variance_maps** | **boolean** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -46,6 +51,11 @@ const instance: AnalysisReturn = {
     entities,
     order,
     metadata,
+    has_coordinates,
+    has_images,
+    has_z_maps,
+    has_t_maps,
+    has_beta_and_variance_maps,
 };
 ```
 

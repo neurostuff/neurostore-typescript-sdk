@@ -27,6 +27,9 @@ Name | Type | Description | Notes
 **studysets** | [**Array&lt;StudyReturnAllOfStudysets&gt;**](StudyReturnAllOfStudysets.md) |  | [optional] [default to undefined]
 **has_coordinates** | **boolean** |  | [optional] [default to undefined]
 **has_images** | **boolean** |  | [optional] [default to undefined]
+**has_z_maps** | **boolean** |  | [optional] [default to undefined]
+**has_t_maps** | **boolean** |  | [optional] [default to undefined]
+**has_beta_and_variance_maps** | **boolean** |  | [optional] [default to undefined]
 **base_study** | **string** |  | [optional] [default to undefined]
 **pmcid** | **string** |  | [optional] [default to undefined]
 
@@ -58,6 +61,9 @@ const instance: StudyReturn = {
     studysets,
     has_coordinates,
     has_images,
+    has_z_maps,
+    has_t_maps,
+    has_beta_and_variance_maps,
     base_study,
     pmcid,
 };

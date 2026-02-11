@@ -23,6 +23,11 @@ Name | Type | Description | Notes
 **_public** | **boolean** | whether the resource is listed in public searches or not | [optional] [default to true]
 **user** | **string** | who owns the resource | [optional] [readonly] [default to undefined]
 **username** | **string** | human readable username | [optional] [default to undefined]
+**has_coordinates** | **boolean** |  | [optional] [default to undefined]
+**has_images** | **boolean** |  | [optional] [default to undefined]
+**has_z_maps** | **boolean** |  | [optional] [default to undefined]
+**has_t_maps** | **boolean** |  | [optional] [default to undefined]
+**has_beta_and_variance_maps** | **boolean** |  | [optional] [default to undefined]
 **features** | **object** |  | [optional] [default to undefined]
 
 ## Example
@@ -49,6 +54,11 @@ const instance: BaseStudyReturn = {
     _public,
     user,
     username,
+    has_coordinates,
+    has_images,
+    has_z_maps,
+    has_t_maps,
+    has_beta_and_variance_maps,
     features,
 };
 ```
