@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**coordinates** | **Array&lt;number | null&gt;** | Location of the significant coordinate in three dimensional space. | [optional] [default to undefined]
+**coordinates** | **Array&lt;number&gt;** | Location of the significant coordinate in three dimensional space. | [optional] [default to undefined]
 **space** | **string** | Template space used to determine coordinate Examples include TAL or MNI. | [optional] [default to undefined]
 **kind** | **string** | Method of how point was derived (e.g., center of mass) | [optional] [default to undefined]
 **label_id** | **string** | If the point is associated with an image, this is the value the point takes in that image. | [optional] [default to undefined]

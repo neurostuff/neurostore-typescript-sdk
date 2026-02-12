@@ -800,7 +800,7 @@ export interface PointBase {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number | null>;
+    'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -858,7 +858,7 @@ export interface PointRequest {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number | null>;
+    'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -911,7 +911,7 @@ export interface PointReturn {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number | null>;
+    'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
