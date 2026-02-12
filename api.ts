@@ -829,6 +829,10 @@ export interface PointCommon {
      */
     'deactivation'?: boolean | null;
     /**
+     * whether the coordinate is marked as a seed location
+     */
+    'is_seed'?: boolean | null;
+    /**
      * determines the row to display the coordinate
      */
     'order'?: number | null;
@@ -895,6 +899,10 @@ export interface PointRequest {
      */
     'deactivation'?: boolean | null;
     /**
+     * whether the coordinate is marked as a seed location
+     */
+    'is_seed'?: boolean | null;
+    /**
      * determines the row to display the coordinate
      */
     'order'?: number | null;
@@ -959,6 +967,10 @@ export interface PointReturn {
      * wheather the coordinate represents an decrease in activation relative to a baseline
      */
     'deactivation'?: boolean | null;
+    /**
+     * whether the coordinate is marked as a seed location
+     */
+    'is_seed'?: boolean | null;
     /**
      * determines the row to display the coordinate
      */

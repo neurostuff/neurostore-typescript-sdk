@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **cluster_size** | **number** | size of the cluster in cubic millimeters | [optional] [default to undefined]
 **subpeak** | **boolean** | whether the reported peak is the max-peak statistic or a sub-maxmimal peak. | [optional] [default to undefined]
 **deactivation** | **boolean** | wheather the coordinate represents an decrease in activation relative to a baseline | [optional] [default to undefined]
+**is_seed** | **boolean** | whether the coordinate is marked as a seed location | [optional] [default to undefined]
 **order** | **number** | determines the row to display the coordinate | [optional] [default to undefined]
 
 ## Example
@@ -53,6 +54,7 @@ const instance: PointReturn = {
     cluster_size,
     subpeak,
     deactivation,
+    is_seed,
     order,
 };
 ```
