@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**coordinates** | **Array&lt;number | null&gt;** | Location of the significant coordinate in three dimensional space. | [optional] [default to undefined]
+**coordinates** | **Array&lt;number&gt;** | Location of the significant coordinate in three dimensional space. | [optional] [default to undefined]
 **space** | **string** | Template space used to determine coordinate Examples include TAL or MNI. | [optional] [default to undefined]
 **kind** | **string** | Method of how point was derived (e.g., center of mass) | [optional] [default to undefined]
 **label_id** | **string** | If the point is associated with an image, this is the value the point takes in that image. | [optional] [default to undefined]
@@ -25,7 +25,6 @@ Name | Type | Description | Notes
 **cluster_size** | **number** | size of the cluster in cubic millimeters | [optional] [default to undefined]
 **subpeak** | **boolean** | whether the reported peak is the max-peak statistic or a sub-maxmimal peak. | [optional] [default to undefined]
 **deactivation** | **boolean** | wheather the coordinate represents an decrease in activation relative to a baseline | [optional] [default to undefined]
-**is_seed** | **boolean** | whether the coordinate is marked as a seed location | [optional] [default to undefined]
 **order** | **number** | determines the row to display the coordinate | [optional] [default to undefined]
 
 ## Example
@@ -54,7 +53,6 @@ const instance: PointReturn = {
     cluster_size,
     subpeak,
     deactivation,
-    is_seed,
     order,
 };
 ```

@@ -147,10 +147,6 @@ export interface AnalysisReturn {
     'entities'?: Array<Entity>;
     'order'?: number | null;
     'metadata'?: object | null;
-    /**
-     * Number of point coordinates linked to this analysis.
-     */
-    'point_count'?: number | null;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
     'has_z_maps'?: boolean;
@@ -800,7 +796,7 @@ export interface PointBase {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number | null>;
+    'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -829,10 +825,6 @@ export interface PointCommon {
      */
     'deactivation'?: boolean | null;
     /**
-     * whether the coordinate is marked as a seed location
-     */
-    'is_seed'?: boolean | null;
-    /**
      * determines the row to display the coordinate
      */
     'order'?: number | null;
@@ -844,9 +836,9 @@ export interface PointList {
 export interface PointRelationships {
     'image'?: string | null;
     'values'?: PointRelationshipsValues;
-    'x'?: number | null;
-    'y'?: number | null;
-    'z'?: number | null;
+    'x'?: number;
+    'y'?: number;
+    'z'?: number;
     'entities'?: Array<Entity>;
 }
 /**
@@ -858,7 +850,7 @@ export interface PointRequest {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number | null>;
+    'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -873,9 +865,9 @@ export interface PointRequest {
     'label_id'?: string | null;
     'image'?: string | null;
     'values'?: PointRelationshipsValues;
-    'x'?: number | null;
-    'y'?: number | null;
-    'z'?: number | null;
+    'x'?: number;
+    'y'?: number;
+    'z'?: number;
     'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
@@ -899,10 +891,6 @@ export interface PointRequest {
      */
     'deactivation'?: boolean | null;
     /**
-     * whether the coordinate is marked as a seed location
-     */
-    'is_seed'?: boolean | null;
-    /**
      * determines the row to display the coordinate
      */
     'order'?: number | null;
@@ -911,7 +899,7 @@ export interface PointReturn {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number | null>;
+    'coordinates'?: Array<number>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -950,9 +938,9 @@ export interface PointReturn {
     'username'?: string | null;
     'image'?: string | null;
     'values'?: PointRelationshipsValues;
-    'x'?: number | null;
-    'y'?: number | null;
-    'z'?: number | null;
+    'x'?: number;
+    'y'?: number;
+    'z'?: number;
     'entities'?: Array<Entity>;
     'analysis'?: string;
     /**
@@ -967,10 +955,6 @@ export interface PointReturn {
      * wheather the coordinate represents an decrease in activation relative to a baseline
      */
     'deactivation'?: boolean | null;
-    /**
-     * whether the coordinate is marked as a seed location
-     */
-    'is_seed'?: boolean | null;
     /**
      * determines the row to display the coordinate
      */
@@ -5815,12 +5799,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
-         * @param {boolean} [summary] return a lightweight summary payload with study metadata and per-analysis coordinate counts; incompatible with nested
          * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdGet: async (id: string, nested?: boolean, summary?: boolean, gzip?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsIdGet: async (id: string, nested?: boolean, gzip?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studysetsIdGet', 'id', id)
             const localVarPath = `/studysets/{id}`
@@ -5838,10 +5821,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
-            }
-
-            if (summary !== undefined) {
-                localVarQueryParameter['summary'] = summary;
             }
 
             if (gzip !== undefined) {
@@ -6072,13 +6051,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
-         * @param {boolean} [summary] return a lightweight summary payload with study metadata and per-analysis coordinate counts; incompatible with nested
          * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsIdGet(id: string, nested?: boolean, summary?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdGet(id, nested, summary, gzip, options);
+        async studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsIdGet(id, nested, gzip, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studysetsIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6213,13 +6191,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @summary GET a studyset
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
-         * @param {boolean} [summary] return a lightweight summary payload with study metadata and per-analysis coordinate counts; incompatible with nested
          * @param {boolean} [gzip] return the content as gzipped content
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsIdGet(id: string, nested?: boolean, summary?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudysetReturn> {
-            return localVarFp.studysetsIdGet(id, nested, summary, gzip, options).then((request) => request(axios, basePath));
+        studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudysetReturn> {
+            return localVarFp.studysetsIdGet(id, nested, gzip, options).then((request) => request(axios, basePath));
         },
         /**
          * Update a studyset.
@@ -6349,13 +6326,12 @@ export class StoreApi extends BaseAPI {
      * @summary GET a studyset
      * @param {string} id 
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
-     * @param {boolean} [summary] return a lightweight summary payload with study metadata and per-analysis coordinate counts; incompatible with nested
      * @param {boolean} [gzip] return the content as gzipped content
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studysetsIdGet(id: string, nested?: boolean, summary?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studysetsIdGet(id, nested, summary, gzip, options).then((request) => request(this.axios, this.basePath));
+    public studysetsIdGet(id: string, nested?: boolean, gzip?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studysetsIdGet(id, nested, gzip, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
