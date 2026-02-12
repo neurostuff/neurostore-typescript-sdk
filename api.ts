@@ -800,7 +800,7 @@ export interface PointBase {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number>;
+    'coordinates'?: Array<number | null>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -844,9 +844,9 @@ export interface PointList {
 export interface PointRelationships {
     'image'?: string | null;
     'values'?: PointRelationshipsValues;
-    'x'?: number;
-    'y'?: number;
-    'z'?: number;
+    'x'?: number | null;
+    'y'?: number | null;
+    'z'?: number | null;
     'entities'?: Array<Entity>;
 }
 /**
@@ -858,7 +858,7 @@ export interface PointRequest {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number>;
+    'coordinates'?: Array<number | null>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -873,9 +873,9 @@ export interface PointRequest {
     'label_id'?: string | null;
     'image'?: string | null;
     'values'?: PointRelationshipsValues;
-    'x'?: number;
-    'y'?: number;
-    'z'?: number;
+    'x'?: number | null;
+    'y'?: number | null;
+    'z'?: number | null;
     'entities'?: Array<Entity>;
     /**
      * short UUID specifying the location of this resource
@@ -911,7 +911,7 @@ export interface PointReturn {
     /**
      * Location of the significant coordinate in three dimensional space.
      */
-    'coordinates'?: Array<number>;
+    'coordinates'?: Array<number | null>;
     /**
      * Template space used to determine coordinate Examples include TAL or MNI.
      */
@@ -950,9 +950,9 @@ export interface PointReturn {
     'username'?: string | null;
     'image'?: string | null;
     'values'?: PointRelationshipsValues;
-    'x'?: number;
-    'y'?: number;
-    'z'?: number;
+    'x'?: number | null;
+    'y'?: number | null;
+    'z'?: number | null;
     'entities'?: Array<Entity>;
     'analysis'?: string;
     /**
