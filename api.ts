@@ -679,6 +679,20 @@ export interface ImageReturn {
     'username'?: string | null;
 }
 /**
+ * JSON-LD elements for data tracking
+ */
+export interface JsonLd {
+    '@context'?: JsonLdContext;
+    /**
+     * URI of the resource
+     */
+    '@id'?: string;
+    /**
+     * One of the NiMADS data types
+     */
+    '@type'?: string;
+}
+/**
  * Context for the shorthand names
  */
 export interface JsonLdContext {
@@ -686,6 +700,19 @@ export interface JsonLdContext {
      * common URI prefix for @type
      */
     '@vocab'?: string;
+}
+/**
+ * data included in every list response
+ */
+export interface Metadata {
+    /**
+     * total number of entries 
+     */
+    'total_count'?: number;
+    /**
+     * count of elements for unique entries
+     */
+    'unique_count'?: number;
 }
 export interface NestedPutAttributes {
     'id'?: string;
@@ -982,6 +1009,19 @@ export interface PointReturn {
 export interface PointValue {
     'kind'?: string | null;
     'value'?: number | null;
+}
+/**
+ * common readable resource attributes
+ */
+export interface ReadableResourceAttributes {
+    /**
+     * time the resource was created on the database
+     */
+    'created_at'?: string;
+    /**
+     * when the resource was last modified/updated.
+     */
+    'updated_at'?: string | null;
 }
 /**
  * common attributes for user owned resources
@@ -1485,6 +1525,19 @@ export interface UserList {
     'metadata'?: Metadata;
 }
 /**
+ * common resource attributes
+ */
+export interface UserResourceAttributes {
+    /**
+     * who owns the resource
+     */
+    'user'?: string | null;
+    /**
+     * human readable username
+     */
+    'username'?: string | null;
+}
+/**
  * common resource attributes not tied to a specific user
  */
 export interface UserlessResourceAttributes {
@@ -1496,6 +1549,19 @@ export interface UserlessResourceAttributes {
      * when the resource was last modified/updated.
      */
     'updated_at'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     */
+    'public'?: boolean;
+}
+/**
+ * common resource attributes
+ */
+export interface WriteableResourceAttributes {
     /**
      * short UUID specifying the location of this resource
      */

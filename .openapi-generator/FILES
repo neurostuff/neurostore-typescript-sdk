@@ -55,7 +55,9 @@ docs/ImageRelationships.md
 docs/ImageRequest.md
 docs/ImageReturn.md
 docs/ImagesApi.md
+docs/JsonLd.md
 docs/JsonLdContext.md
+docs/Metadata.md
 docs/NestedPutAttributes.md
 docs/NoteCollectionBase.md
 docs/NoteCollectionList.md
@@ -84,6 +86,7 @@ docs/PointRequest.md
 docs/PointReturn.md
 docs/PointValue.md
 docs/PointsApi.md
+docs/ReadableResourceAttributes.md
 docs/ResourceAttributes.md
 docs/StoreApi.md
 docs/StudiesApi.md
@@ -119,6 +122,8 @@ docs/TablesApi.md
 docs/User.md
 docs/UserApi.md
 docs/UserList.md
+docs/UserResourceAttributes.md
 docs/UserlessResourceAttributes.md
+docs/WriteableResourceAttributes.md
 git_push.sh
 index.ts
