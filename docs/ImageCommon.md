@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **analysis** | **string** |  | [optional] [default to undefined]
+**study** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -14,6 +15,7 @@ import { ImageCommon } from './api';
 
 const instance: ImageCommon = {
     analysis,
+    study,
 };
 ```
 

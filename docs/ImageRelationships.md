@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **analysis** | **string** |  | [optional] [default to undefined]
+**study** | **string** |  | [optional] [default to undefined]
 **entities** | [**Array&lt;Entity&gt;**](Entity.md) |  | [optional] [default to undefined]
 **analysis_name** | **string** |  | [optional] [default to undefined]
 
@@ -16,6 +17,7 @@ import { ImageRelationships } from './api';
 
 const instance: ImageRelationships = {
     analysis,
+    study,
     entities,
     analysis_name,
 };

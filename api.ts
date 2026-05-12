@@ -577,14 +577,16 @@ export interface ImageBase {
     'add_date'?: string | null;
 }
 export interface ImageCommon {
-    'analysis'?: string;
+    'analysis'?: string | null;
+    'study'?: string | null;
 }
 export interface ImageList {
     'results'?: Array<ImageReturn>;
     'metadata'?: Metadata;
 }
 export interface ImageRelationships {
-    'analysis'?: string;
+    'analysis'?: string | null;
+    'study'?: string | null;
     'entities'?: Array<Entity>;
     'analysis_name'?: string | null;
 }
@@ -613,7 +615,8 @@ export interface ImageRequest {
      * Date the image was added.
      */
     'add_date'?: string | null;
-    'analysis'?: string;
+    'analysis'?: string | null;
+    'study'?: string | null;
     'entities'?: Array<Entity>;
     'analysis_name'?: string | null;
     /**
@@ -650,7 +653,8 @@ export interface ImageReturn {
      * Date the image was added.
      */
     'add_date'?: string | null;
-    'analysis'?: string;
+    'analysis'?: string | null;
+    'study'?: string | null;
     'entities'?: Array<Entity>;
     'analysis_name'?: string | null;
     /**
@@ -2734,13 +2738,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
+         * @param {string} [study] Filter images by study id
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
          * @param {string} [space] search space field
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/images/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2779,6 +2784,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (filename !== undefined) {
                 localVarQueryParameter['filename'] = filename;
+            }
+
+            if (study !== undefined) {
+                localVarQueryParameter['study'] = study;
             }
 
             if (analysisName !== undefined) {
@@ -5186,14 +5195,15 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
+         * @param {string} [study] Filter images by study id
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
          * @param {string} [space] search space field
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options);
+        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.imagesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6170,14 +6180,15 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [filename] search filename field
+         * @param {string} [study] Filter images by study id
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
          * @param {string} [space] search space field
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
-            return localVarFp.imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(axios, basePath));
+        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
+            return localVarFp.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an image
@@ -7037,14 +7048,15 @@ export class StoreApi extends BaseAPI {
      * @param {number} [pageSize] number of results to show on a page
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [filename] search filename field
+     * @param {string} [study] Filter images by study id
      * @param {string} [analysisName] search analysis_name field
      * @param {string} [valueType] search value_type field
      * @param {string} [space] search space field
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
+    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
