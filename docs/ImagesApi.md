@@ -33,6 +33,7 @@ let desc: boolean; //sort results by descending order (as opposed to ascending o
 let pageSize: number; //number of results to show on a page (optional) (default to undefined)
 let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
 let filename: string; //search filename field (optional) (default to undefined)
+let study: string; //Filter images by study id (optional) (default to undefined)
 let analysisName: string; //search analysis_name field (optional) (default to undefined)
 let valueType: string; //search value_type field (optional) (default to undefined)
 let space: string; //search space field (optional) (default to undefined)
@@ -45,6 +46,7 @@ const { status, data } = await apiInstance.imagesGet(
     pageSize,
     paginate,
     filename,
+    study,
     analysisName,
     valueType,
     space
@@ -62,6 +64,7 @@ const { status, data } = await apiInstance.imagesGet(
 | **pageSize** | [**number**] | number of results to show on a page | (optional) defaults to undefined|
 | **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|
 | **filename** | [**string**] | search filename field | (optional) defaults to undefined|
+| **study** | [**string**] | Filter images by study id | (optional) defaults to undefined|
 | **analysisName** | [**string**] | search analysis_name field | (optional) defaults to undefined|
 | **valueType** | [**string**] | search value_type field | (optional) defaults to undefined|
 | **space** | [**string**] | search space field | (optional) defaults to undefined|

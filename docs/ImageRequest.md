@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **value_type** | **string** | The values the image represents. For example, T-statistic or Z-statistic, or Betas. | [optional] [default to undefined]
 **add_date** | **string** | Date the image was added. | [optional] [readonly] [default to undefined]
 **analysis** | **string** |  | [optional] [default to undefined]
+**study** | **string** |  | [optional] [default to undefined]
 **entities** | [**Array&lt;Entity&gt;**](Entity.md) |  | [optional] [default to undefined]
 **analysis_name** | **string** |  | [optional] [default to undefined]
 **id** | **string** | short UUID specifying the location of this resource | [optional] [default to undefined]
@@ -30,6 +31,7 @@ const instance: ImageRequest = {
     value_type,
     add_date,
     analysis,
+    study,
     entities,
     analysis_name,
     id,
