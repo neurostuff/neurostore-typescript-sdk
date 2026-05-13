@@ -721,6 +721,13 @@ export interface Metadata {
 export interface NestedPutAttributes {
     'id'?: string;
 }
+export interface NeurostoreResourcesNeurostoreStudysetReleasesSearch200Response {
+    'metadata'?: NeurostoreResourcesNeurostoreStudysetReleasesSearch200ResponseMetadata;
+    'results'?: Array<object>;
+}
+export interface NeurostoreResourcesNeurostoreStudysetReleasesSearch200ResponseMetadata {
+    'total_count'?: number;
+}
 export interface NoteCollectionBase {
     /**
      * The note will contain all note_keys as keys and have a value of either null or the value type specified in note_keys.
@@ -1575,6 +1582,236 @@ export interface WriteableResourceAttributes {
      */
     'public'?: boolean;
 }
+
+/**
+ * NeurostoreStudysetReleasesApi - axios parameter creator
+ */
+export const NeurostoreStudysetReleasesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Download NeuroStore studyset release tarball
+         * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesNeurostoreStudysetReleasesDownload: async (version: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'version' is not null or undefined
+            assertParamExists('neurostoreResourcesNeurostoreStudysetReleasesDownload', 'version', version)
+            const localVarPath = `/neurostore-studyset-releases/{version}/download`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary GET NeuroStore studyset release manifest
+         * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesNeurostoreStudysetReleasesGet: async (version: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'version' is not null or undefined
+            assertParamExists('neurostoreResourcesNeurostoreStudysetReleasesGet', 'version', version)
+            const localVarPath = `/neurostore-studyset-releases/{version}`
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary GET NeuroStore studyset release list
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesNeurostoreStudysetReleasesSearch: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/neurostore-studyset-releases/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NeurostoreStudysetReleasesApi - functional programming interface
+ */
+export const NeurostoreStudysetReleasesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NeurostoreStudysetReleasesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Download NeuroStore studyset release tarball
+         * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesNeurostoreStudysetReleasesDownload(version: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<File>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesNeurostoreStudysetReleasesDownload(version, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NeurostoreStudysetReleasesApi.neurostoreResourcesNeurostoreStudysetReleasesDownload']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary GET NeuroStore studyset release manifest
+         * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesNeurostoreStudysetReleasesGet(version: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesNeurostoreStudysetReleasesGet(version, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NeurostoreStudysetReleasesApi.neurostoreResourcesNeurostoreStudysetReleasesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary GET NeuroStore studyset release list
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesNeurostoreStudysetReleasesSearch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NeurostoreResourcesNeurostoreStudysetReleasesSearch200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesNeurostoreStudysetReleasesSearch(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['NeurostoreStudysetReleasesApi.neurostoreResourcesNeurostoreStudysetReleasesSearch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * NeurostoreStudysetReleasesApi - factory interface
+ */
+export const NeurostoreStudysetReleasesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NeurostoreStudysetReleasesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Download NeuroStore studyset release tarball
+         * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesNeurostoreStudysetReleasesDownload(version: string, options?: RawAxiosRequestConfig): AxiosPromise<File> {
+            return localVarFp.neurostoreResourcesNeurostoreStudysetReleasesDownload(version, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary GET NeuroStore studyset release manifest
+         * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesNeurostoreStudysetReleasesGet(version: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.neurostoreResourcesNeurostoreStudysetReleasesGet(version, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary GET NeuroStore studyset release list
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesNeurostoreStudysetReleasesSearch(options?: RawAxiosRequestConfig): AxiosPromise<NeurostoreResourcesNeurostoreStudysetReleasesSearch200Response> {
+            return localVarFp.neurostoreResourcesNeurostoreStudysetReleasesSearch(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * NeurostoreStudysetReleasesApi - object-oriented interface
+ */
+export class NeurostoreStudysetReleasesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Download NeuroStore studyset release tarball
+     * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesNeurostoreStudysetReleasesDownload(version: string, options?: RawAxiosRequestConfig) {
+        return NeurostoreStudysetReleasesApiFp(this.configuration).neurostoreResourcesNeurostoreStudysetReleasesDownload(version, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary GET NeuroStore studyset release manifest
+     * @param {string} version nightly, latest, or a monthly release in YYYY-MM format.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesNeurostoreStudysetReleasesGet(version: string, options?: RawAxiosRequestConfig) {
+        return NeurostoreStudysetReleasesApiFp(this.configuration).neurostoreResourcesNeurostoreStudysetReleasesGet(version, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary GET NeuroStore studyset release list
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesNeurostoreStudysetReleasesSearch(options?: RawAxiosRequestConfig) {
+        return NeurostoreStudysetReleasesApiFp(this.configuration).neurostoreResourcesNeurostoreStudysetReleasesSearch(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
 
 /**
  * StoreApi - axios parameter creator
