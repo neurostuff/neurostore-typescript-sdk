@@ -55,7 +55,6 @@ docs/JsonLd.md
 docs/JsonLdContext.md
 docs/Metadata.md
 docs/NestedPutAttributes.md
-docs/NeurostoreStudysetReleasesApi.md
 docs/NeurostoreStudysetReleasesGet200Response.md
 docs/NeurostoreStudysetReleasesGet200ResponseMetadata.md
 docs/NoteCollectionBase.md
