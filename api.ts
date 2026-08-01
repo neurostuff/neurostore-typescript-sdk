@@ -148,6 +148,10 @@ export interface AnalysisReturn {
     'order'?: number | null;
     'metadata'?: object | null;
     /**
+     * ID of the analysis this one was cloned from, if any.
+     */
+    'source_id'?: string | null;
+    /**
      * Number of point coordinates linked to this analysis.
      */
     'point_count'?: number | null;

@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **entities** | [**Array&lt;Entity&gt;**](Entity.md) |  | [optional] [default to undefined]
 **order** | **number** |  | [optional] [default to undefined]
 **metadata** | **object** |  | [optional] [default to undefined]
+**source_id** | **string** | ID of the analysis this one was cloned from, if any. | [optional] [readonly] [default to undefined]
 **point_count** | **number** | Number of point coordinates linked to this analysis. | [optional] [default to undefined]
 **has_coordinates** | **boolean** |  | [optional] [default to undefined]
 **has_images** | **boolean** |  | [optional] [default to undefined]
@@ -52,6 +53,7 @@ const instance: AnalysisReturn = {
     entities,
     order,
     metadata,
+    source_id,
     point_count,
     has_coordinates,
     has_images,
