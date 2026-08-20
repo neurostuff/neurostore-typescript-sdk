@@ -583,6 +583,10 @@ export interface ImageBase {
 export interface ImageCommon {
     'analysis'?: string | null;
     'study'?: string | null;
+    /**
+     * determines the position to display the image within its analysis (or study, when the image has no analysis)
+     */
+    'order'?: number | null;
 }
 export interface ImageList {
     'results'?: Array<ImageReturn>;
@@ -631,6 +635,10 @@ export interface ImageRequest {
      * whether the resource is listed in public searches or not
      */
     'public'?: boolean;
+    /**
+     * determines the position to display the image within its analysis (or study, when the image has no analysis)
+     */
+    'order'?: number | null;
 }
 export interface ImageReturn {
     /**
@@ -685,6 +693,10 @@ export interface ImageReturn {
      * human readable username
      */
     'username'?: string | null;
+    /**
+     * determines the position to display the image within its analysis (or study, when the image has no analysis)
+     */
+    'order'?: number | null;
 }
 /**
  * JSON-LD elements for data tracking

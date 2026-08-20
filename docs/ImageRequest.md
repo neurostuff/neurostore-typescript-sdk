@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **analysis_name** | **string** |  | [optional] [default to undefined]
 **id** | **string** | short UUID specifying the location of this resource | [optional] [default to undefined]
 **_public** | **boolean** | whether the resource is listed in public searches or not | [optional] [default to true]
+**order** | **number** | determines the position to display the image within its analysis (or study, when the image has no analysis) | [optional] [default to undefined]
 
 ## Example
 
@@ -36,6 +37,7 @@ const instance: ImageRequest = {
     analysis_name,
     id,
     _public,
+    order,
 };
 ```
 
