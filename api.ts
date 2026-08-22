@@ -588,6 +588,12 @@ export interface ImageCommon {
      */
     'order'?: number | null;
 }
+/**
+ * Read-only image fields that are withheld unless a request asks for them by name.
+ */
+export interface ImageDetail {
+    'value_summary'?: ImageValueSummary | null;
+}
 export interface ImageList {
     'results'?: Array<ImageReturn>;
     'metadata'?: Metadata;
@@ -697,6 +703,76 @@ export interface ImageReturn {
      * determines the position to display the image within its analysis (or study, when the image has no analysis)
      */
     'order'?: number | null;
+    'value_summary'?: ImageValueSummary | null;
+}
+/**
+ * Distribution statistics for the image\'s voxel values, computed once and stored. Present only when image_value_summary=true is requested, and null when the image has never been summarized. Counts cover every voxel in the file; the distribution fields (min/max/mean/std, percentiles, histogram) cover only the finite, non-zero voxels, because neuroimaging maps store their background as zero or nan.
+ */
+export interface ImageValueSummary {
+    /**
+     * SUCCESS when the numbers below are populated, FAILURE when the image could not be read.
+     */
+    'status'?: string | null;
+    /**
+     * Why the last attempt failed, when status is not SUCCESS.
+     */
+    'error'?: string | null;
+    /**
+     * Which version of the summarizer produced these numbers.
+     */
+    'summarizer_version'?: number | null;
+    'computed_at'?: string | null;
+    /**
+     * SHA-256 of the file that was summarized, so a client can tell whether the numbers still describe the file at url.
+     */
+    'source_sha256'?: string | null;
+    'source_bytes'?: number | null;
+    /**
+     * Total voxels in the file; the denominator for fraction_nan and fraction_zero.
+     */
+    'n_voxels'?: number | null;
+    /**
+     * Finite, non-zero voxels; the n behind the distribution fields and the denominator for fraction_negative.
+     */
+    'n_values'?: number | null;
+    /**
+     * Non-finite (nan or inf) voxels over n_voxels.
+     */
+    'fraction_nan'?: number | null;
+    /**
+     * Exactly-zero voxels over n_voxels.
+     */
+    'fraction_zero'?: number | null;
+    /**
+     * Negative voxels over n_values. A z or t map with a fraction near zero here is either one-sided or mislabelled.
+     */
+    'fraction_negative'?: number | null;
+    'min'?: number | null;
+    'max'?: number | null;
+    'mean'?: number | null;
+    'std'?: number | null;
+    /**
+     * Percentile value keyed by probe, e.g. {\"0.1\": -5.2, \"1\": -3.1, ... \"99.9\": 5.8}.
+     */
+    'percentiles'?: { [key: string]: number | null; } | null;
+    'histogram'?: ImageValueSummaryHistogram | null;
+}
+/**
+ * Equal-width bins over [min, max]. Bin edges are implied by the bounds and the length of counts.
+ */
+export interface ImageValueSummaryHistogram {
+    'min'?: number | null;
+    'max'?: number | null;
+    'bin_width'?: number | null;
+    'counts'?: Array<number>;
+    /**
+     * Values below min, clipped out of the binned range.
+     */
+    'underflow'?: number | null;
+    /**
+     * Values above max, clipped out of the binned range.
+     */
+    'overflow'?: number | null;
 }
 /**
  * JSON-LD elements for data tracking
@@ -1616,10 +1692,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1666,6 +1744,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
+            }
+
+            if (imageMetadata !== undefined) {
+                localVarQueryParameter['image_metadata'] = imageMetadata;
+            }
+
+            if (imageValueSummary !== undefined) {
+                localVarQueryParameter['image_value_summary'] = imageValueSummary;
             }
 
 
@@ -1722,10 +1808,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @summary GET an analysis
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesIdGet: async (id: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesIdGet: async (id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('analysesIdGet', 'id', id)
             const localVarPath = `/analyses/{id}`
@@ -1743,6 +1831,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
+            }
+
+            if (imageMetadata !== undefined) {
+                localVarQueryParameter['image_metadata'] = imageMetadata;
+            }
+
+            if (imageValueSummary !== undefined) {
+                localVarQueryParameter['image_value_summary'] = imageValueSummary;
             }
 
 
@@ -2765,10 +2861,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
          * @param {string} [space] search space field
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/images/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2825,6 +2923,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['space'] = space;
             }
 
+            if (imageMetadata !== undefined) {
+                localVarQueryParameter['image_metadata'] = imageMetadata;
+            }
+
+            if (imageValueSummary !== undefined) {
+                localVarQueryParameter['image_value_summary'] = imageValueSummary;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2878,10 +2984,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * Retrieve information about a particular image from an analysis.
          * @summary GET an image
          * @param {string} id 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesIdGet: async (id: string, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('imagesIdGet', 'id', id)
             const localVarPath = `/images/{id}`
@@ -2896,6 +3004,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (imageMetadata !== undefined) {
+                localVarQueryParameter['image_metadata'] = imageMetadata;
+            }
+
+            if (imageValueSummary !== undefined) {
+                localVarQueryParameter['image_value_summary'] = imageValueSummary;
+            }
 
 
     
@@ -3975,10 +4091,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4081,6 +4199,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['flat'] = flat;
             }
 
+            if (imageMetadata !== undefined) {
+                localVarQueryParameter['image_metadata'] = imageMetadata;
+            }
+
+            if (imageValueSummary !== undefined) {
+                localVarQueryParameter['image_value_summary'] = imageValueSummary;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4137,10 +4263,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesIdGet: async (id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesIdGet: async (id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studiesIdGet', 'id', id)
             const localVarPath = `/studies/{id}`
@@ -4166,6 +4294,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (flat !== undefined) {
                 localVarQueryParameter['flat'] = flat;
+            }
+
+            if (imageMetadata !== undefined) {
+                localVarQueryParameter['image_metadata'] = imageMetadata;
+            }
+
+            if (imageValueSummary !== undefined) {
+                localVarQueryParameter['image_value_summary'] = imageValueSummary;
             }
 
 
@@ -4958,11 +5094,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options);
+        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4985,11 +5123,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @summary GET an analysis
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesIdGet(id, nested, options);
+        async analysesIdGet(id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesIdGet(id, nested, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5320,11 +5460,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
          * @param {string} [space] search space field
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, options);
+        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.imagesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5346,11 +5488,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * Retrieve information about a particular image from an analysis.
          * @summary GET an image
          * @param {string} id 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesIdGet(id, options);
+        async imagesIdGet(id: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesIdGet(id, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.imagesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5750,11 +5894,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5779,11 +5925,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesIdGet(id, nested, studysetOwner, flat, options);
+        async studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesIdGet(id, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6050,11 +6198,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [study] Filter tables by study id
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(axios, basePath));
+        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -6071,11 +6221,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @summary GET an analysis
          * @param {string} id 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisReturn> {
-            return localVarFp.analysesIdGet(id, nested, options).then((request) => request(axios, basePath));
+        analysesIdGet(id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisReturn> {
+            return localVarFp.analysesIdGet(id, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * Update an existing analysis.
@@ -6343,11 +6495,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [analysisName] search analysis_name field
          * @param {string} [valueType] search value_type field
          * @param {string} [space] search space field
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
-            return localVarFp.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, options).then((request) => request(axios, basePath));
+        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
+            return localVarFp.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an image
@@ -6363,11 +6517,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * Retrieve information about a particular image from an analysis.
          * @summary GET an image
          * @param {string} id 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<ImageReturn> {
-            return localVarFp.imagesIdGet(id, options).then((request) => request(axios, basePath));
+        imagesIdGet(id: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ImageReturn> {
+            return localVarFp.imagesIdGet(id, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * Update a specific image.
@@ -6683,11 +6839,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -6706,11 +6864,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+         * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+         * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyReturn> {
-            return localVarFp.studiesIdGet(id, nested, studysetOwner, flat, options).then((request) => request(axios, basePath));
+        studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyReturn> {
+            return localVarFp.studiesIdGet(id, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * Update a study.
@@ -6924,11 +7084,13 @@ export class StoreApi extends BaseAPI {
      * @param {string} [study] Filter tables by study id
      * @param {string} [name] search the name field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+     * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6947,11 +7109,13 @@ export class StoreApi extends BaseAPI {
      * @summary GET an analysis
      * @param {string} id 
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
+     * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+     * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysesIdGet(id: string, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesIdGet(id, nested, options).then((request) => request(this.axios, this.basePath));
+    public analysesIdGet(id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesIdGet(id, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7240,11 +7404,13 @@ export class StoreApi extends BaseAPI {
      * @param {string} [analysisName] search analysis_name field
      * @param {string} [valueType] search value_type field
      * @param {string} [space] search space field
+     * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+     * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, options).then((request) => request(this.axios, this.basePath));
+    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7262,11 +7428,13 @@ export class StoreApi extends BaseAPI {
      * Retrieve information about a particular image from an analysis.
      * @summary GET an image
      * @param {string} id 
+     * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+     * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public imagesIdGet(id: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).imagesIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    public imagesIdGet(id: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).imagesIdGet(id, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7610,11 +7778,13 @@ export class StoreApi extends BaseAPI {
      * @param {string} [pmid] search for particular pmid
      * @param {string} [doi] search for study with specific doi
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+     * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+     * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7635,11 +7805,13 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
+     * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
+     * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesIdGet(id, nested, studysetOwner, flat, options).then((request) => request(this.axios, this.basePath));
+    public studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesIdGet(id, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

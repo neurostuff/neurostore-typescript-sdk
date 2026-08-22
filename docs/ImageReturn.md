@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **user** | **string** | who owns the resource | [optional] [readonly] [default to undefined]
 **username** | **string** | human readable username | [optional] [default to undefined]
 **order** | **number** | determines the position to display the image within its analysis (or study, when the image has no analysis) | [optional] [default to undefined]
+**value_summary** | [**ImageValueSummary**](ImageValueSummary.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -46,6 +47,7 @@ const instance: ImageReturn = {
     user,
     username,
     order,
+    value_summary,
 };
 ```
 

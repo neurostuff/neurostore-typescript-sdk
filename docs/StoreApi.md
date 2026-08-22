@@ -102,6 +102,8 @@ let paginate: boolean; //whether to paginate results (true) or return all result
 let study: string; //Filter tables by study id (optional) (default to undefined)
 let name: string; //search the name field for a term (optional) (default to undefined)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
+let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
+let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.analysesGet(
     search,
@@ -112,7 +114,9 @@ const { status, data } = await apiInstance.analysesGet(
     paginate,
     study,
     name,
-    nested
+    nested,
+    imageMetadata,
+    imageValueSummary
 );
 ```
 
@@ -129,6 +133,8 @@ const { status, data } = await apiInstance.analysesGet(
 | **study** | [**string**] | Filter tables by study id | (optional) defaults to undefined|
 | **name** | [**string**] | search the name field for a term | (optional) defaults to undefined|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
+| **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
+| **imageValueSummary** | [**boolean**] | include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. | (optional) defaults to false|
 
 
 ### Return type
@@ -221,10 +227,14 @@ const apiInstance = new StoreApi(configuration);
 
 let id: string; // (default to undefined)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
+let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
+let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.analysesIdGet(
     id,
-    nested
+    nested,
+    imageMetadata,
+    imageValueSummary
 );
 ```
 
@@ -234,6 +244,8 @@ const { status, data } = await apiInstance.analysesIdGet(
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**string**] |  | defaults to undefined|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
+| **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
+| **imageValueSummary** | [**boolean**] | include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. | (optional) defaults to false|
 
 
 ### Return type
@@ -1467,6 +1479,8 @@ let study: string; //Filter images by study id (optional) (default to undefined)
 let analysisName: string; //search analysis_name field (optional) (default to undefined)
 let valueType: string; //search value_type field (optional) (default to undefined)
 let space: string; //search space field (optional) (default to undefined)
+let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
+let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.imagesGet(
     search,
@@ -1479,7 +1493,9 @@ const { status, data } = await apiInstance.imagesGet(
     study,
     analysisName,
     valueType,
-    space
+    space,
+    imageMetadata,
+    imageValueSummary
 );
 ```
 
@@ -1498,6 +1514,8 @@ const { status, data } = await apiInstance.imagesGet(
 | **analysisName** | [**string**] | search analysis_name field | (optional) defaults to undefined|
 | **valueType** | [**string**] | search value_type field | (optional) defaults to undefined|
 | **space** | [**string**] | search space field | (optional) defaults to undefined|
+| **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
+| **imageValueSummary** | [**boolean**] | include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. | (optional) defaults to false|
 
 
 ### Return type
@@ -1589,9 +1607,13 @@ const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
 let id: string; // (default to undefined)
+let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
+let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.imagesIdGet(
-    id
+    id,
+    imageMetadata,
+    imageValueSummary
 );
 ```
 
@@ -1600,6 +1622,8 @@ const { status, data } = await apiInstance.imagesIdGet(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**string**] |  | defaults to undefined|
+| **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
+| **imageValueSummary** | [**boolean**] | include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. | (optional) defaults to false|
 
 
 ### Return type
@@ -3092,6 +3116,8 @@ let level: 'group' | 'meta'; //select between studies with group results or meta
 let pmid: string; //search for particular pmid (optional) (default to undefined)
 let doi: string; //search for study with specific doi (optional) (default to undefined)
 let flat: boolean; //do not return any embedded relationships. When set, it is incompatible with nested.  (optional) (default to undefined)
+let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
+let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.studiesGet(
     search,
@@ -3114,7 +3140,9 @@ const { status, data } = await apiInstance.studiesGet(
     level,
     pmid,
     doi,
-    flat
+    flat,
+    imageMetadata,
+    imageValueSummary
 );
 ```
 
@@ -3143,6 +3171,8 @@ const { status, data } = await apiInstance.studiesGet(
 | **pmid** | [**string**] | search for particular pmid | (optional) defaults to undefined|
 | **doi** | [**string**] | search for study with specific doi | (optional) defaults to undefined|
 | **flat** | [**boolean**] | do not return any embedded relationships. When set, it is incompatible with nested.  | (optional) defaults to undefined|
+| **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
+| **imageValueSummary** | [**boolean**] | include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. | (optional) defaults to false|
 
 
 ### Return type
@@ -3237,12 +3267,16 @@ let id: string; // (default to undefined)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
 let studysetOwner: string; //for all studies filter which studysets are listed based on who owns the studyset (optional) (default to undefined)
 let flat: boolean; //do not return any embedded relationships. When set, it is incompatible with nested.  (optional) (default to undefined)
+let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
+let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.studiesIdGet(
     id,
     nested,
     studysetOwner,
-    flat
+    flat,
+    imageMetadata,
+    imageValueSummary
 );
 ```
 
@@ -3254,6 +3288,8 @@ const { status, data } = await apiInstance.studiesIdGet(
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
 | **studysetOwner** | [**string**] | for all studies filter which studysets are listed based on who owns the studyset | (optional) defaults to undefined|
 | **flat** | [**boolean**] | do not return any embedded relationships. When set, it is incompatible with nested.  | (optional) defaults to undefined|
+| **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
+| **imageValueSummary** | [**boolean**] | include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. | (optional) defaults to false|
 
 
 ### Return type

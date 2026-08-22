@@ -47,10 +47,13 @@ docs/ErrorDetail.md
 docs/ErrorResponse.md
 docs/ImageBase.md
 docs/ImageCommon.md
+docs/ImageDetail.md
 docs/ImageList.md
 docs/ImageRelationships.md
 docs/ImageRequest.md
 docs/ImageReturn.md
+docs/ImageValueSummary.md
+docs/ImageValueSummaryHistogram.md
 docs/JsonLd.md
 docs/JsonLdContext.md
 docs/Metadata.md
