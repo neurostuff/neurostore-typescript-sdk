@@ -155,6 +155,10 @@ export interface AnalysisReturn {
      * Number of point coordinates linked to this analysis.
      */
     'point_count'?: number | null;
+    /**
+     * Number of images linked to this analysis.
+     */
+    'image_count'?: number | null;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
     'has_z_maps'?: boolean;
