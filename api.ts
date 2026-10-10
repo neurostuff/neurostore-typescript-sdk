@@ -1379,6 +1379,20 @@ export interface StudyReturnRelationships {
  */
 export type StudyReturnRelationshipsAnalyses = Array<AnalysisReturn> | Array<string>;
 
+/**
+ * Claims copied to the replacements of split or merged keys.
+ */
+export interface StudySchemaCarried {
+    'claims'?: number;
+}
+export interface StudySchemaSetAside {
+    /**
+     * Class[key] for an entity, or absent for an analysis row.
+     */
+    'entity'?: string;
+    'key'?: string;
+    'reason'?: string;
+}
 export interface StudySchemaUpload {
     /**
      * A study_schema CoordinateParse (neuroimaging-paper-parse); a revision when revision_of is set.
@@ -1423,13 +1437,107 @@ export interface StudySchemaUploadPipeline {
      */
     'commit'?: string;
 }
-export interface StudySchemaUploadsPost200Response {
-    [key: string]: any;
-
+/**
+ * What one upload changed. Keys appear for the parts uploaded.
+ */
+export interface StudySchemaUploadSummary {
+    'kind'?: StudySchemaUploadSummaryKindEnum;
+    'base_study_id'?: string;
+    /**
+     * The paper\'s pipeline-owned study.
+     */
+    'study_id'?: string;
+    'parse_id'?: string;
+    'skeleton'?: StudySchemaUploadSummarySkeleton;
+    'carried'?: StudySchemaCarried;
+    /**
+     * For a parse: stored records whose set-aside keys (no earlier parse held them) this parse holds, re-ingested onto the new entities. 
+     */
+    'set_aside_resolved'?: Array<StudySchemaUploadSummarySetAsideResolvedInner>;
+    'record'?: StudySchemaUploadSummaryRecord;
     /**
      * The stored run behind each part of the upload, keyed parse and record.
      */
     'provenance'?: { [key: string]: PipelineRunProvenance; };
+}
+
+export const StudySchemaUploadSummaryKindEnum = {
+    Parse: 'parse',
+    ParseAndRecord: 'parse_and_record',
+    Record: 'record',
+    Revision: 'revision'
+} as const;
+
+export type StudySchemaUploadSummaryKindEnum = typeof StudySchemaUploadSummaryKindEnum[keyof typeof StudySchemaUploadSummaryKindEnum];
+
+/**
+ * For a record, how its analyses and claims resolved.
+ */
+export interface StudySchemaUploadSummaryRecord {
+    'config_id'?: string;
+    'analyses'?: StudySchemaUploadSummaryRecordAnalyses;
+    'claims'?: StudySchemaUploadSummaryRecordClaims;
+    'carried'?: StudySchemaCarried;
+}
+export interface StudySchemaUploadSummaryRecordAnalyses {
+    'resolved'?: number;
+    /**
+     * Keys (or local_ids) that resolve to no analysis; stored as FAILURE rows.
+     */
+    'unresolved'?: Array<string>;
+    /**
+     * Set-aside positional keys, held until a record names them by content.
+     */
+    'parked'?: Array<StudySchemaSetAside>;
+    /**
+     * Keys that resolve to history because a revision since split, merged or dropped them.
+     */
+    'superseded'?: Array<StudySchemaUploadSummaryRecordAnalysesSupersededInner>;
+}
+export interface StudySchemaUploadSummaryRecordAnalysesSupersededInner {
+    'key'?: string;
+    'replaced_by'?: Array<string>;
+    'reason'?: string;
+}
+export interface StudySchemaUploadSummaryRecordClaims {
+    'created'?: number;
+    'matched'?: number;
+    'rejected_paths'?: Array<string>;
+    /**
+     * Record entities with no key to identify them by.
+     */
+    'unkeyed_entities'?: Array<string>;
+    /**
+     * Set-aside entities: positional keys, or keys no stored parse holds (resolved later by a parse that holds them; see set_aside_resolved). 
+     */
+    'parked_entities'?: Array<StudySchemaSetAside>;
+}
+export interface StudySchemaUploadSummarySetAsideResolvedInner {
+    'config_id'?: string;
+    'keys'?: Array<string>;
+}
+/**
+ * For a parse, what it did to the study\'s analyses.
+ */
+export interface StudySchemaUploadSummarySkeleton {
+    'created'?: number;
+    'updated'?: number;
+    /**
+     * Analyses moved to the history study because this version dropped their key.
+     */
+    'superseded'?: number;
+    /**
+     * Keys of analyses whose role is not uploaded.
+     */
+    'not_uploaded'?: Array<string>;
+    /**
+     * Analyses an original re-parse reads from other cells (same table and name, new key), one pair each; their entities keep the old hash as an alias. 
+     */
+    'aliased'?: Array<StudySchemaUploadSummarySkeletonAliasedInner>;
+}
+export interface StudySchemaUploadSummarySkeletonAliasedInner {
+    'from'?: string;
+    'to'?: string;
 }
 export interface StudysetBase {
     /**
@@ -6095,7 +6203,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudySchemaUploadsPost200Response>> {
+        async studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudySchemaUploadSummary>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studySchemaUploadsPost(studySchemaUpload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studySchemaUploadsPost']?.[localVarOperationServerIndex]?.url;
@@ -7038,7 +7146,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): AxiosPromise<StudySchemaUploadsPost200Response> {
+        studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): AxiosPromise<StudySchemaUploadSummary> {
             return localVarFp.studySchemaUploadsPost(studySchemaUpload, options).then((request) => request(axios, basePath));
         },
         /**
