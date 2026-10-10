@@ -70,6 +70,8 @@ docs/PipelineConfigList.md
 docs/PipelineEmbedding.md
 docs/PipelineEmbeddingList.md
 docs/PipelineList.md
+docs/PipelineRunProvenance.md
+docs/PipelineRunProvenanceSchema.md
 docs/PipelineStudyResult.md
 docs/PipelineStudyResultList.md
 docs/PipelineStudyResultPost.md
@@ -96,6 +98,18 @@ docs/StudyReturnAllOfStudysets.md
 docs/StudyReturnAllOfStudysetsOneOf.md
 docs/StudyReturnRelationships.md
 docs/StudyReturnRelationshipsAnalyses.md
+docs/StudySchemaCarried.md
+docs/StudySchemaSetAside.md
+docs/StudySchemaUpload.md
+docs/StudySchemaUploadPipeline.md
+docs/StudySchemaUploadSummary.md
+docs/StudySchemaUploadSummaryRecord.md
+docs/StudySchemaUploadSummaryRecordAnalyses.md
+docs/StudySchemaUploadSummaryRecordAnalysesSupersededInner.md
+docs/StudySchemaUploadSummaryRecordClaims.md
+docs/StudySchemaUploadSummarySetAsideResolvedInner.md
+docs/StudySchemaUploadSummarySkeleton.md
+docs/StudySchemaUploadSummarySkeletonAliasedInner.md
 docs/StudysetBase.md
 docs/StudysetList.md
 docs/StudysetRequest.md

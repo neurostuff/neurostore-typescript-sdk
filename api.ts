@@ -908,6 +908,35 @@ export interface PipelineList {
     'results'?: Array<Pipeline>;
     'metadata'?: Metadata;
 }
+export interface PipelineRunProvenance {
+    /**
+     * The pipeline-study-result that stores the document.
+     */
+    'result_id'?: string;
+    'config_id'?: string;
+    /**
+     * The caller\'s run id the result was uploaded with.
+     */
+    'run_id'?: string | null;
+    'pipeline'?: string;
+    'version'?: string;
+    'commit'?: string | null;
+    'schema'?: PipelineRunProvenanceSchema;
+    /**
+     * The parse\'s producer (name, version, stage, model, prompt_version).
+     */
+    'parse_version'?: { [key: string]: any; };
+    'date_executed'?: string;
+    'created_at'?: string;
+    'updated_at'?: string | null;
+}
+/**
+ * The study_schema schema the document follows (name, version).
+ */
+export interface PipelineRunProvenanceSchema {
+    'name'?: string;
+    'version'?: string;
+}
 export interface PipelineStudyResult {
     'id': string;
     'pipeline_config_id'?: string;
@@ -1350,6 +1379,166 @@ export interface StudyReturnRelationships {
  */
 export type StudyReturnRelationshipsAnalyses = Array<AnalysisReturn> | Array<string>;
 
+/**
+ * Claims copied to the replacements of split or merged keys.
+ */
+export interface StudySchemaCarried {
+    'claims'?: number;
+}
+export interface StudySchemaSetAside {
+    /**
+     * Class[key] for an entity, or absent for an analysis row.
+     */
+    'entity'?: string;
+    'key'?: string;
+    'reason'?: string;
+}
+export interface StudySchemaUpload {
+    /**
+     * A study_schema CoordinateParse (neuroimaging-paper-parse); a revision when revision_of is set.
+     */
+    'coordinate_parse'?: { [key: string]: any; };
+    /**
+     * A study_schema extraction record (neuroimaging-study-extraction).
+     */
+    'record'?: { [key: string]: any; };
+    /**
+     * The ParsedPaper the parse read, for table captions and the bibliography.
+     */
+    'parsed_paper'?: { [key: string]: any; };
+    /**
+     * For a record uploaded alone, the parse_id of the stored parse it read.
+     */
+    'parse_id'?: string;
+    /**
+     * The base study; otherwise found by the parse header\'s identifiers.
+     */
+    'base_study_id'?: string;
+    /**
+     * The caller\'s id for the pipeline run, stored on each result the upload writes. Re-uploading the same documents with the same run_id returns the same results and adds none; a run_id that already stored a different document for the paper is refused (422). 
+     */
+    'run_id'?: string;
+    'pipeline'?: StudySchemaUploadPipeline;
+}
+/**
+ * The pipeline run that produced the record.
+ */
+export interface StudySchemaUploadPipeline {
+    /**
+     * Default pondie.
+     */
+    'name'?: string;
+    /**
+     * Default the record\'s extraction_metadata.extractor_version.
+     */
+    'version'?: string;
+    /**
+     * The commit of the code that produced the record. Two commits of one version are different configs.
+     */
+    'commit'?: string;
+}
+/**
+ * What one upload changed. Keys appear for the parts uploaded.
+ */
+export interface StudySchemaUploadSummary {
+    'kind'?: StudySchemaUploadSummaryKindEnum;
+    'base_study_id'?: string;
+    /**
+     * The paper\'s pipeline-owned study.
+     */
+    'study_id'?: string;
+    'parse_id'?: string;
+    'skeleton'?: StudySchemaUploadSummarySkeleton;
+    'carried'?: StudySchemaCarried;
+    /**
+     * For a parse: stored records whose set-aside keys (no earlier parse held them) this parse holds, re-ingested onto the new entities. 
+     */
+    'set_aside_resolved'?: Array<StudySchemaUploadSummarySetAsideResolvedInner>;
+    'record'?: StudySchemaUploadSummaryRecord;
+    /**
+     * The stored run behind each part of the upload, keyed parse and record.
+     */
+    'provenance'?: { [key: string]: PipelineRunProvenance; };
+}
+
+export const StudySchemaUploadSummaryKindEnum = {
+    Parse: 'parse',
+    ParseAndRecord: 'parse_and_record',
+    Record: 'record',
+    Revision: 'revision'
+} as const;
+
+export type StudySchemaUploadSummaryKindEnum = typeof StudySchemaUploadSummaryKindEnum[keyof typeof StudySchemaUploadSummaryKindEnum];
+
+/**
+ * For a record, how its analyses and claims resolved.
+ */
+export interface StudySchemaUploadSummaryRecord {
+    'config_id'?: string;
+    'analyses'?: StudySchemaUploadSummaryRecordAnalyses;
+    'claims'?: StudySchemaUploadSummaryRecordClaims;
+    'carried'?: StudySchemaCarried;
+}
+export interface StudySchemaUploadSummaryRecordAnalyses {
+    'resolved'?: number;
+    /**
+     * Keys (or local_ids) that resolve to no analysis; stored as FAILURE rows.
+     */
+    'unresolved'?: Array<string>;
+    /**
+     * Set-aside positional keys, held until a record names them by content.
+     */
+    'parked'?: Array<StudySchemaSetAside>;
+    /**
+     * Keys that resolve to history because a revision since split, merged or dropped them.
+     */
+    'superseded'?: Array<StudySchemaUploadSummaryRecordAnalysesSupersededInner>;
+}
+export interface StudySchemaUploadSummaryRecordAnalysesSupersededInner {
+    'key'?: string;
+    'replaced_by'?: Array<string>;
+    'reason'?: string;
+}
+export interface StudySchemaUploadSummaryRecordClaims {
+    'created'?: number;
+    'matched'?: number;
+    'rejected_paths'?: Array<string>;
+    /**
+     * Record entities with no key to identify them by.
+     */
+    'unkeyed_entities'?: Array<string>;
+    /**
+     * Set-aside entities: positional keys, or keys no stored parse holds (resolved later by a parse that holds them; see set_aside_resolved). 
+     */
+    'parked_entities'?: Array<StudySchemaSetAside>;
+}
+export interface StudySchemaUploadSummarySetAsideResolvedInner {
+    'config_id'?: string;
+    'keys'?: Array<string>;
+}
+/**
+ * For a parse, what it did to the study\'s analyses.
+ */
+export interface StudySchemaUploadSummarySkeleton {
+    'created'?: number;
+    'updated'?: number;
+    /**
+     * Analyses moved to the history study because this version dropped their key.
+     */
+    'superseded'?: number;
+    /**
+     * Keys of analyses whose role is not uploaded.
+     */
+    'not_uploaded'?: Array<string>;
+    /**
+     * Analyses an original re-parse reads from other cells (same table and name, new key), one pair each; their entities keep the old hash as an alias. 
+     */
+    'aliased'?: Array<StudySchemaUploadSummarySkeletonAliasedInner>;
+}
+export interface StudySchemaUploadSummarySkeletonAliasedInner {
+    'from'?: string;
+    'to'?: string;
+}
 export interface StudysetBase {
     /**
      * Descriptive and human readable name of the studyset.
@@ -4410,6 +4599,44 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+         * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+         * @param {StudySchemaUpload} [studySchemaUpload] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        studySchemaUploadsPost: async (studySchemaUpload?: StudySchemaUpload, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/study-schema-uploads/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(studySchemaUpload, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get a list of studysets.
          * @summary GET a list of studysets
          * @param {string} [search] search for entries that contain the substring
@@ -5970,6 +6197,19 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+         * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+         * @param {StudySchemaUpload} [studySchemaUpload] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudySchemaUploadSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studySchemaUploadsPost(studySchemaUpload, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.studySchemaUploadsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get a list of studysets.
          * @summary GET a list of studysets
          * @param {string} [search] search for entries that contain the substring
@@ -6898,6 +7138,16 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          */
         studiesPost(source?: StudiesPostSourceEnum, sourceId?: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig): AxiosPromise<StudyReturn> {
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+         * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+         * @param {StudySchemaUpload} [studySchemaUpload] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): AxiosPromise<StudySchemaUploadSummary> {
+            return localVarFp.studySchemaUploadsPost(studySchemaUpload, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of studysets.
@@ -7841,6 +8091,17 @@ export class StoreApi extends BaseAPI {
      */
     public studiesPost(source?: StudiesPostSourceEnum, sourceId?: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+     * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+     * @param {StudySchemaUpload} [studySchemaUpload] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studySchemaUploadsPost(studySchemaUpload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

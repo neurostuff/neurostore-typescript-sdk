@@ -1,0 +1,23 @@
+# PipelineRunProvenanceSchema
+
+The study_schema schema the document follows (name, version).
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**name** | **string** |  | [optional] [default to undefined]
+**version** | **string** |  | [optional] [default to undefined]
+
+## Example
+
+```typescript
+import { PipelineRunProvenanceSchema } from './api';
+
+const instance: PipelineRunProvenanceSchema = {
+    name,
+    version,
+};
+```
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
