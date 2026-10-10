@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **result_id** | **string** | The pipeline-study-result that stores the document. | [optional] [default to undefined]
 **config_id** | **string** |  | [optional] [default to undefined]
+**run_id** | **string** | The caller\&#39;s run id the result was uploaded with. | [optional] [default to undefined]
 **pipeline** | **string** |  | [optional] [default to undefined]
 **version** | **string** |  | [optional] [default to undefined]
 **commit** | **string** |  | [optional] [default to undefined]
@@ -24,6 +25,7 @@ import { PipelineRunProvenance } from './api';
 const instance: PipelineRunProvenance = {
     result_id,
     config_id,
+    run_id,
     pipeline,
     version,
     commit,

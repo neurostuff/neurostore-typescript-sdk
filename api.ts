@@ -914,6 +914,10 @@ export interface PipelineRunProvenance {
      */
     'result_id'?: string;
     'config_id'?: string;
+    /**
+     * The caller\'s run id the result was uploaded with.
+     */
+    'run_id'?: string | null;
     'pipeline'?: string;
     'version'?: string;
     'commit'?: string | null;
@@ -1396,6 +1400,10 @@ export interface StudySchemaUpload {
      * The base study; otherwise found by the parse header\'s identifiers.
      */
     'base_study_id'?: string;
+    /**
+     * The caller\'s id for the pipeline run, stored on each result the upload writes. Re-uploading the same documents with the same run_id returns the same results and adds none; a run_id that already stored a different document for the paper is refused (422). 
+     */
+    'run_id'?: string;
     'pipeline'?: StudySchemaUploadPipeline;
 }
 /**
