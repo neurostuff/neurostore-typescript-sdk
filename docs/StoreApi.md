@@ -3430,9 +3430,9 @@ const { status, data } = await apiInstance.studiesPost(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **studySchemaUploadsPost**
-> { [key: string]: any; } studySchemaUploadsPost()
+> StudySchemaUploadsPost200Response studySchemaUploadsPost()
 
-The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
 
 ### Example
 
@@ -3462,7 +3462,7 @@ const { status, data } = await apiInstance.studySchemaUploadsPost(
 
 ### Return type
 
-**{ [key: string]: any; }**
+**StudySchemaUploadsPost200Response**
 
 ### Authorization
 

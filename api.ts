@@ -908,6 +908,31 @@ export interface PipelineList {
     'results'?: Array<Pipeline>;
     'metadata'?: Metadata;
 }
+export interface PipelineRunProvenance {
+    /**
+     * The pipeline-study-result that stores the document.
+     */
+    'result_id'?: string;
+    'config_id'?: string;
+    'pipeline'?: string;
+    'version'?: string;
+    'commit'?: string | null;
+    'schema'?: PipelineRunProvenanceSchema;
+    /**
+     * The parse\'s producer (name, version, stage, model, prompt_version).
+     */
+    'parse_version'?: { [key: string]: any; };
+    'date_executed'?: string;
+    'created_at'?: string;
+    'updated_at'?: string | null;
+}
+/**
+ * The study_schema schema the document follows (name, version).
+ */
+export interface PipelineRunProvenanceSchema {
+    'name'?: string;
+    'version'?: string;
+}
 export interface PipelineStudyResult {
     'id': string;
     'pipeline_config_id'?: string;
@@ -1374,10 +1399,29 @@ export interface StudySchemaUpload {
     'pipeline'?: StudySchemaUploadPipeline;
 }
 /**
- * The pipeline that produced the record (name; default pondie).
+ * The pipeline run that produced the record.
  */
 export interface StudySchemaUploadPipeline {
+    /**
+     * Default pondie.
+     */
     'name'?: string;
+    /**
+     * Default the record\'s extraction_metadata.extractor_version.
+     */
+    'version'?: string;
+    /**
+     * The commit of the code that produced the record. Two commits of one version are different configs.
+     */
+    'commit'?: string;
+}
+export interface StudySchemaUploadsPost200Response {
+    [key: string]: any;
+
+    /**
+     * The stored run behind each part of the upload, keyed parse and record.
+     */
+    'provenance'?: { [key: string]: PipelineRunProvenance; };
 }
 export interface StudysetBase {
     /**
@@ -4439,7 +4483,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
          * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
          * @param {StudySchemaUpload} [studySchemaUpload] 
          * @param {*} [options] Override http request option.
@@ -6037,13 +6081,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
          * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
          * @param {StudySchemaUpload} [studySchemaUpload] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+        async studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudySchemaUploadsPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studySchemaUploadsPost(studySchemaUpload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studySchemaUploadsPost']?.[localVarOperationServerIndex]?.url;
@@ -6980,13 +7024,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
          * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
          * @param {StudySchemaUpload} [studySchemaUpload] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+        studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): AxiosPromise<StudySchemaUploadsPost200Response> {
             return localVarFp.studySchemaUploadsPost(studySchemaUpload, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7934,7 +7978,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+     * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
      * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
      * @param {StudySchemaUpload} [studySchemaUpload] 
      * @param {*} [options] Override http request option.

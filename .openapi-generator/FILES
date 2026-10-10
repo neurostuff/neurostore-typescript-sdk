@@ -70,6 +70,8 @@ docs/PipelineConfigList.md
 docs/PipelineEmbedding.md
 docs/PipelineEmbeddingList.md
 docs/PipelineList.md
+docs/PipelineRunProvenance.md
+docs/PipelineRunProvenanceSchema.md
 docs/PipelineStudyResult.md
 docs/PipelineStudyResultList.md
 docs/PipelineStudyResultPost.md
@@ -98,6 +100,7 @@ docs/StudyReturnRelationships.md
 docs/StudyReturnRelationshipsAnalyses.md
 docs/StudySchemaUpload.md
 docs/StudySchemaUploadPipeline.md
+docs/StudySchemaUploadsPost200Response.md
 docs/StudysetBase.md
 docs/StudysetList.md
 docs/StudysetRequest.md
