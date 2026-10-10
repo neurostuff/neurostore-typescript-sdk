@@ -62,6 +62,7 @@ All URIs are relative to *https://neurostore.org/api*
 |[**studiesIdGet**](#studiesidget) | **GET** /studies/{id} | GET a study|
 |[**studiesIdPut**](#studiesidput) | **PUT** /studies/{id} | PUT/update a study|
 |[**studiesPost**](#studiespost) | **POST** /studies/ | POST/create a study|
+|[**studySchemaUploadsPost**](#studyschemauploadspost) | **POST** /study-schema-uploads/ | Store a coordinate parse, a revision, an extraction record, or a parse with its record|
 |[**studysetsGet**](#studysetsget) | **GET** /studysets/ | GET a list of studysets|
 |[**studysetsIdDelete**](#studysetsiddelete) | **DELETE** /studysets/{id} | DELETE a studyset|
 |[**studysetsIdGet**](#studysetsidget) | **GET** /studysets/{id} | GET a studyset|
@@ -3425,6 +3426,61 @@ const { status, data } = await apiInstance.studiesPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **studySchemaUploadsPost**
+> { [key: string]: any; } studySchemaUploadsPost()
+
+The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration,
+    StudySchemaUpload
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let studySchemaUpload: StudySchemaUpload; // (optional)
+
+const { status, data } = await apiInstance.studySchemaUploadsPost(
+    studySchemaUpload
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **studySchemaUpload** | **StudySchemaUpload**|  | |
+
+
+### Return type
+
+**{ [key: string]: any; }**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | What the upload changed |  -  |
+|**403** | Forbidden |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
+|**422** | Unprocessable Entity |  * X-Request-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

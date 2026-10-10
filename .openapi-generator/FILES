@@ -96,6 +96,8 @@ docs/StudyReturnAllOfStudysets.md
 docs/StudyReturnAllOfStudysetsOneOf.md
 docs/StudyReturnRelationships.md
 docs/StudyReturnRelationshipsAnalyses.md
+docs/StudySchemaUpload.md
+docs/StudySchemaUploadPipeline.md
 docs/StudysetBase.md
 docs/StudysetList.md
 docs/StudysetRequest.md

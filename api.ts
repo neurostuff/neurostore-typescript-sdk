@@ -1350,6 +1350,35 @@ export interface StudyReturnRelationships {
  */
 export type StudyReturnRelationshipsAnalyses = Array<AnalysisReturn> | Array<string>;
 
+export interface StudySchemaUpload {
+    /**
+     * A study_schema CoordinateParse (neuroimaging-paper-parse); a revision when revision_of is set.
+     */
+    'coordinate_parse'?: { [key: string]: any; };
+    /**
+     * A study_schema extraction record (neuroimaging-study-extraction).
+     */
+    'record'?: { [key: string]: any; };
+    /**
+     * The ParsedPaper the parse read, for table captions and the bibliography.
+     */
+    'parsed_paper'?: { [key: string]: any; };
+    /**
+     * For a record uploaded alone, the parse_id of the stored parse it read.
+     */
+    'parse_id'?: string;
+    /**
+     * The base study; otherwise found by the parse header\'s identifiers.
+     */
+    'base_study_id'?: string;
+    'pipeline'?: StudySchemaUploadPipeline;
+}
+/**
+ * The pipeline that produced the record (name; default pondie).
+ */
+export interface StudySchemaUploadPipeline {
+    'name'?: string;
+}
 export interface StudysetBase {
     /**
      * Descriptive and human readable name of the studyset.
@@ -4410,6 +4439,44 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+         * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+         * @param {StudySchemaUpload} [studySchemaUpload] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        studySchemaUploadsPost: async (studySchemaUpload?: StudySchemaUpload, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/study-schema-uploads/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(studySchemaUpload, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get a list of studysets.
          * @summary GET a list of studysets
          * @param {string} [search] search for entries that contain the substring
@@ -5970,6 +6037,19 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+         * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+         * @param {StudySchemaUpload} [studySchemaUpload] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studySchemaUploadsPost(studySchemaUpload, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.studySchemaUploadsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get a list of studysets.
          * @summary GET a list of studysets
          * @param {string} [search] search for entries that contain the substring
@@ -6898,6 +6978,16 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          */
         studiesPost(source?: StudiesPostSourceEnum, sourceId?: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig): AxiosPromise<StudyReturn> {
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+         * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+         * @param {StudySchemaUpload} [studySchemaUpload] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.studySchemaUploadsPost(studySchemaUpload, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of studysets.
@@ -7841,6 +7931,17 @@ export class StoreApi extends BaseAPI {
      */
     public studiesPost(source?: StudiesPostSourceEnum, sourceId?: string, studyRequest?: StudyRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesPost(source, sourceId, studyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The pipeline\'s one writer. Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims and votes to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. 
+     * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
+     * @param {StudySchemaUpload} [studySchemaUpload] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public studySchemaUploadsPost(studySchemaUpload?: StudySchemaUpload, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studySchemaUploadsPost(studySchemaUpload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
