@@ -46,7 +46,31 @@ export interface AnalysisCommon {
     'entities'?: Array<Entity>;
     'order'?: number | null;
     'metadata'?: object | null;
+    /**
+     * What the coordinates are for (study_schema CoordinateRole): `result`, `anchor`, `localization`, `reference` or `other`; an open vocabulary, so the source\'s own wording may appear. Only a result is released in a studyset. Null on an analysis from before roles, which is read as a result, except on a set the study_schema ingester wrote, which is unclassified.
+     */
+    'role'?: string | null;
+    /**
+     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s.
+     */
+    'role_source'?: string | null;
+    /**
+     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. Set only on results.
+     */
+    'outcome'?: AnalysisCommonOutcomeEnum | null;
+    /**
+     * The coordinates are quoted from an earlier study, not this one\'s.
+     */
+    'from_prior_study'?: boolean | null;
 }
+
+export const AnalysisCommonOutcomeEnum = {
+    SignificantEffect: 'significant_effect',
+    NoSignificantEffect: 'no_significant_effect'
+} as const;
+
+export type AnalysisCommonOutcomeEnum = typeof AnalysisCommonOutcomeEnum[keyof typeof AnalysisCommonOutcomeEnum];
+
 export interface AnalysisList {
     'metadata'?: Metadata;
     'results'?: Array<AnalysisReturn>;
@@ -80,7 +104,31 @@ export interface AnalysisRequest {
     'entities'?: Array<Entity>;
     'order'?: number | null;
     'metadata'?: object | null;
+    /**
+     * What the coordinates are for (study_schema CoordinateRole): `result`, `anchor`, `localization`, `reference` or `other`; an open vocabulary, so the source\'s own wording may appear. Only a result is released in a studyset. Null on an analysis from before roles, which is read as a result, except on a set the study_schema ingester wrote, which is unclassified.
+     */
+    'role'?: string | null;
+    /**
+     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s.
+     */
+    'role_source'?: string | null;
+    /**
+     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. Set only on results.
+     */
+    'outcome'?: AnalysisRequestOutcomeEnum | null;
+    /**
+     * The coordinates are quoted from an earlier study, not this one\'s.
+     */
+    'from_prior_study'?: boolean | null;
 }
+
+export const AnalysisRequestOutcomeEnum = {
+    SignificantEffect: 'significant_effect',
+    NoSignificantEffect: 'no_significant_effect'
+} as const;
+
+export type AnalysisRequestOutcomeEnum = typeof AnalysisRequestOutcomeEnum[keyof typeof AnalysisRequestOutcomeEnum];
+
 export interface AnalysisRequestRelationships {
     'study'?: string;
     'images'?: AnalysisRequestRelationshipsImages;
@@ -148,6 +196,22 @@ export interface AnalysisReturn {
     'order'?: number | null;
     'metadata'?: object | null;
     /**
+     * What the coordinates are for (study_schema CoordinateRole): `result`, `anchor`, `localization`, `reference` or `other`; an open vocabulary, so the source\'s own wording may appear. Only a result is released in a studyset. Null on an analysis from before roles, which is read as a result, except on a set the study_schema ingester wrote, which is unclassified.
+     */
+    'role'?: string | null;
+    /**
+     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s.
+     */
+    'role_source'?: string | null;
+    /**
+     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. Set only on results.
+     */
+    'outcome'?: AnalysisReturnOutcomeEnum | null;
+    /**
+     * The coordinates are quoted from an earlier study, not this one\'s.
+     */
+    'from_prior_study'?: boolean | null;
+    /**
      * ID of the analysis this one was cloned from, if any.
      */
     'source_id'?: string | null;
@@ -165,6 +229,14 @@ export interface AnalysisReturn {
     'has_t_maps'?: boolean;
     'has_beta_and_variance_maps'?: boolean;
 }
+
+export const AnalysisReturnOutcomeEnum = {
+    SignificantEffect: 'significant_effect',
+    NoSignificantEffect: 'no_significant_effect'
+} as const;
+
+export type AnalysisReturnOutcomeEnum = typeof AnalysisReturnOutcomeEnum[keyof typeof AnalysisReturnOutcomeEnum];
+
 export interface AnalysisReturnRelationships {
     'study'?: string;
     'images'?: AnalysisReturnRelationshipsImages;
@@ -2007,7 +2079,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
-         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -4407,7 +4479,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -5457,7 +5529,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
-         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -6254,7 +6326,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -6576,7 +6648,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
-         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -7214,7 +7286,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -7474,7 +7546,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [pageSize] number of results to show on a page
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [study] Filter tables by study id
-     * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+     * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
      * @param {string} [name] search the name field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -8165,7 +8237,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-     * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+     * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
      * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
      * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
