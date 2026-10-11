@@ -51,11 +51,11 @@ export interface AnalysisCommon {
      */
     'role'?: string | null;
     /**
-     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s.
+     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s, whose name and version are in `metadata.role_source` (study_schema\'s `role_source`).
      */
-    'role_source'?: string | null;
+    'relabelled_by'?: string | null;
     /**
-     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. Set only on results.
+     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. The ingester sets it only on results.
      */
     'outcome'?: AnalysisCommonOutcomeEnum | null;
     /**
@@ -109,11 +109,11 @@ export interface AnalysisRequest {
      */
     'role'?: string | null;
     /**
-     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s.
+     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s, whose name and version are in `metadata.role_source` (study_schema\'s `role_source`).
      */
-    'role_source'?: string | null;
+    'relabelled_by'?: string | null;
     /**
-     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. Set only on results.
+     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. The ingester sets it only on results.
      */
     'outcome'?: AnalysisRequestOutcomeEnum | null;
     /**
@@ -200,11 +200,11 @@ export interface AnalysisReturn {
      */
     'role'?: string | null;
     /**
-     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s.
+     * The parse_id of the reviewed revision whose relabel verdict set `role`; a later parse does not replace a relabelled role. Null while the role is the classifier\'s, whose name and version are in `metadata.role_source` (study_schema\'s `role_source`).
      */
-    'role_source'?: string | null;
+    'relabelled_by'?: string | null;
     /**
-     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. Set only on results.
+     * Whether anything survived the analysis\'s threshold (study_schema AnalysisOutcome), from the extraction record. The ingester sets it only on results.
      */
     'outcome'?: AnalysisReturnOutcomeEnum | null;
     /**
