@@ -1570,7 +1570,7 @@ export interface StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInner
      */
     'level'?: string;
     /**
-     * both_directions: the cell is listed both positive and negative. shared_name: two cells would name the same condition. 
+     * both_directions: a level is given both positive and negative; one conflict per level, even when it appears under two labels. shared_name: two cells would name the same condition. 
      */
     'reason'?: StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInnerReasonEnum;
     /**
@@ -1650,10 +1650,19 @@ export interface StudySchemaUploadSummarySkeletonOrphanedClaimsInner {
      */
     'claims'?: number;
     /**
-     * Why the claims stayed; free text.
+     * Why the claims stayed. not_carried: the upload is a revision and the analysis is neither linked nor split or merged. alias_conflict: an original parse, and the key is in alias_conflicts. no_successor: an original parse with no successor. 
      */
-    'reason'?: string;
+    'reason'?: StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum;
 }
+
+export const StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum = {
+    NoSuccessor: 'no_successor',
+    AliasConflict: 'alias_conflict',
+    NotCarried: 'not_carried'
+} as const;
+
+export type StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum = typeof StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum[keyof typeof StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum];
+
 export interface StudysetBase {
     /**
      * Descriptive and human readable name of the studyset.
