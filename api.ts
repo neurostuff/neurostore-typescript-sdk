@@ -1385,6 +1385,25 @@ export type StudyReturnRelationshipsAnalyses = Array<AnalysisReturn> | Array<str
 export interface StudySchemaCarried {
     'claims'?: number;
 }
+export interface StudySchemaRenameCandidate {
+    'class'?: string;
+    /**
+     * The old name or key.
+     */
+    'from'?: string;
+    /**
+     * The new name or key.
+     */
+    'to'?: string;
+    /**
+     * The old entity.
+     */
+    'entity_id'?: string;
+    /**
+     * The entity for the new name.
+     */
+    'candidate_id'?: string;
+}
 export interface StudySchemaSetAside {
     /**
      * Class[key] for an entity, or absent for an analysis row.
@@ -1476,6 +1495,10 @@ export type StudySchemaUploadSummaryKindEnum = typeof StudySchemaUploadSummaryKi
 export interface StudySchemaUploadSummaryRecord {
     'config_id'?: string;
     'analyses'?: StudySchemaUploadSummaryRecordAnalyses;
+    /**
+     * Record analyses whose effect cells set no conditions (the analysis gets none) because the cells contradict each other. One entry per record entry, keyed by its key, or its local_id when it has none. 
+     */
+    'condition_conflicts'?: Array<StudySchemaUploadSummaryRecordConditionConflictsInner>;
     'claims'?: StudySchemaUploadSummaryRecordClaims;
     'carried'?: StudySchemaCarried;
 }
@@ -1503,15 +1526,66 @@ export interface StudySchemaUploadSummaryRecordClaims {
     'created'?: number;
     'matched'?: number;
     'rejected_paths'?: Array<string>;
+    'entities'?: StudySchemaUploadSummaryRecordClaimsEntities;
     /**
-     * Record entities with no key to identify them by.
+     * Paths of analysis or coordinate-set items with no cells or spans to locate them by; they are not stored as entities.
      */
-    'unkeyed_entities'?: Array<string>;
+    'unlocated'?: Array<string>;
+    /**
+     * Paths of entity lists that are not lists, and of their items that are not objects; not stored as entities.
+     */
+    'unidentified'?: Array<string>;
+    /**
+     * Paths of items whose hash an earlier item of the record already has (one analysis read twice from the same cells under the same name); not stored.
+     */
+    'duplicates'?: Array<string>;
+    /**
+     * Entities the record names differently from a stored entity in the same place. They are linked as renamed_by_extractor candidates; claims stay on the old entity until a curator links them. 
+     */
+    'rename_candidates'?: Array<StudySchemaRenameCandidate>;
+    /**
+     * Paths of new items whose hash was an alias of another entity; the alias is dropped.
+     */
+    'released_aliases'?: Array<string>;
     /**
      * Set-aside entities: positional keys, or keys no stored parse holds (resolved later by a parse that holds them; see set_aside_resolved). 
      */
     'parked_entities'?: Array<StudySchemaSetAside>;
 }
+/**
+ * The record\'s entities that were created or matched to stored ones.
+ */
+export interface StudySchemaUploadSummaryRecordClaimsEntities {
+    'created'?: number;
+    'matched'?: number;
+}
+export interface StudySchemaUploadSummaryRecordConditionConflictsInner {
+    'key'?: string;
+    'cells'?: Array<StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInner>;
+}
+export interface StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInner {
+    'term'?: string;
+    /**
+     * The cell\'s level, or its label when it has no level.
+     */
+    'level'?: string;
+    /**
+     * both_directions: a level is given both positive and negative; one conflict per level, even when it appears under two labels. shared_name: two cells would name the same condition. 
+     */
+    'reason'?: StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInnerReasonEnum;
+    /**
+     * The condition name the cells share. Only for shared_name.
+     */
+    'name'?: string;
+}
+
+export const StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInnerReasonEnum = {
+    BothDirections: 'both_directions',
+    SharedName: 'shared_name'
+} as const;
+
+export type StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInnerReasonEnum = typeof StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInnerReasonEnum[keyof typeof StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInnerReasonEnum];
+
 export interface StudySchemaUploadSummarySetAsideResolvedInner {
     'config_id'?: string;
     'keys'?: Array<string>;
@@ -1527,18 +1601,68 @@ export interface StudySchemaUploadSummarySkeleton {
      */
     'superseded'?: number;
     /**
-     * Keys of analyses whose role is not uploaded.
+     * How many text or figure analyses the parse lists as read and left out. Their reasons are kept in the study\'s metadata, not returned here. 
      */
-    'not_uploaded'?: Array<string>;
+    'omitted_analyses'?: number;
     /**
      * Analyses an original re-parse reads from other cells (same table and name, new key), one pair each; their entities keep the old hash as an alias. 
      */
     'aliased'?: Array<StudySchemaUploadSummarySkeletonAliasedInner>;
+    /**
+     * Re-read analyses whose new hash already belongs to another entity; nothing is re-hashed for that entity class and its claims stay where they are. Present for an original parse, absent for a revision. 
+     */
+    'alias_conflicts'?: Array<StudySchemaUploadSummarySkeletonAliasConflictsInner>;
+    /**
+     * Analyses read from the same place under a new name. Each old entity is linked to a candidate entity for the new name as renamed_by_extractor; no claims move. Present for an original parse, absent for a revision. 
+     */
+    'rename_candidates'?: Array<StudySchemaRenameCandidate>;
+    /**
+     * Entities that hold claims and stayed on a superseded (history) analysis: not re-hashed onto a successor, not linked as a rename candidate, and not copied by a split or merge verdict. Always present; empty when none. 
+     */
+    'orphaned_claims'?: Array<StudySchemaUploadSummarySkeletonOrphanedClaimsInner>;
+}
+export interface StudySchemaUploadSummarySkeletonAliasConflictsInner {
+    'class'?: string;
+    'from'?: string;
+    'to'?: string;
+    'entity_id'?: string;
+    /**
+     * The entity that already holds the new hash.
+     */
+    'holder_id'?: string;
 }
 export interface StudySchemaUploadSummarySkeletonAliasedInner {
     'from'?: string;
     'to'?: string;
 }
+export interface StudySchemaUploadSummarySkeletonOrphanedClaimsInner {
+    /**
+     * The superseded analysis\'s key.
+     */
+    'key'?: string;
+    /**
+     * The entity class.
+     */
+    'class'?: string;
+    'entity_id'?: string;
+    /**
+     * How many claims the entity holds.
+     */
+    'claims'?: number;
+    /**
+     * Why the claims stayed. not_carried: the upload is a revision and the analysis is neither linked nor split or merged. alias_conflict: an original parse, and the key is in alias_conflicts. no_successor: an original parse with no successor. 
+     */
+    'reason'?: StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum;
+}
+
+export const StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum = {
+    NoSuccessor: 'no_successor',
+    AliasConflict: 'alias_conflict',
+    NotCarried: 'not_carried'
+} as const;
+
+export type StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum = typeof StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum[keyof typeof StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum];
+
 export interface StudysetBase {
     /**
      * Descriptive and human readable name of the studyset.

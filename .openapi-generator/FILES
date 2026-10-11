@@ -99,6 +99,7 @@ docs/StudyReturnAllOfStudysetsOneOf.md
 docs/StudyReturnRelationships.md
 docs/StudyReturnRelationshipsAnalyses.md
 docs/StudySchemaCarried.md
+docs/StudySchemaRenameCandidate.md
 docs/StudySchemaSetAside.md
 docs/StudySchemaUpload.md
 docs/StudySchemaUploadPipeline.md
@@ -107,9 +108,14 @@ docs/StudySchemaUploadSummaryRecord.md
 docs/StudySchemaUploadSummaryRecordAnalyses.md
 docs/StudySchemaUploadSummaryRecordAnalysesSupersededInner.md
 docs/StudySchemaUploadSummaryRecordClaims.md
+docs/StudySchemaUploadSummaryRecordClaimsEntities.md
+docs/StudySchemaUploadSummaryRecordConditionConflictsInner.md
+docs/StudySchemaUploadSummaryRecordConditionConflictsInnerCellsInner.md
 docs/StudySchemaUploadSummarySetAsideResolvedInner.md
 docs/StudySchemaUploadSummarySkeleton.md
+docs/StudySchemaUploadSummarySkeletonAliasConflictsInner.md
 docs/StudySchemaUploadSummarySkeletonAliasedInner.md
+docs/StudySchemaUploadSummarySkeletonOrphanedClaimsInner.md
 docs/StudysetBase.md
 docs/StudysetList.md
 docs/StudysetRequest.md
