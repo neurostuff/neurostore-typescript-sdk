@@ -101,6 +101,7 @@ let desc: boolean; //sort results by descending order (as opposed to ascending o
 let pageSize: number; //number of results to show on a page (optional) (default to undefined)
 let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
 let study: string; //Filter tables by study id (optional) (default to undefined)
+let role: 'result' | 'anchor' | 'localization' | 'reference' | 'other'; //Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. `result` also matches an analysis with no role outside the study_schema pipeline\'s versions (one from before roles); a pipeline analysis with no role matches no value. Without `role`, analyses of every role are listed. (optional) (default to undefined)
 let name: string; //search the name field for a term (optional) (default to undefined)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
 let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
@@ -114,6 +115,7 @@ const { status, data } = await apiInstance.analysesGet(
     pageSize,
     paginate,
     study,
+    role,
     name,
     nested,
     imageMetadata,
@@ -132,6 +134,7 @@ const { status, data } = await apiInstance.analysesGet(
 | **pageSize** | [**number**] | number of results to show on a page | (optional) defaults to undefined|
 | **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|
 | **study** | [**string**] | Filter tables by study id | (optional) defaults to undefined|
+| **role** | [**&#39;result&#39; | &#39;anchor&#39; | &#39;localization&#39; | &#39;reference&#39; | &#39;other&#39;**]**Array<&#39;result&#39; &#124; &#39;anchor&#39; &#124; &#39;localization&#39; &#124; &#39;reference&#39; &#124; &#39;other&#39;>** | Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed. | (optional) defaults to undefined|
 | **name** | [**string**] | search the name field for a term | (optional) defaults to undefined|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
 | **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
@@ -3111,6 +3114,7 @@ let source: 'neurostore' | 'neurovault' | 'pubmed' | 'neurosynth' | 'neuroquery'
 let authors: string; //search authors (optional) (default to undefined)
 let userId: string; //user id you want to filter by (optional) (default to undefined)
 let dataType: 'coordinate' | 'image' | 'both'; //whether searching for studies that contain coordinates, images, or both (optional) (default to undefined)
+let role: 'result' | 'anchor' | 'localization' | 'reference' | 'other'; //Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. `result` also matches an analysis with no role outside the study_schema pipeline\'s versions (one from before roles); a pipeline analysis with no role matches no value. Without `role`, analyses of every role are listed. (optional) (default to undefined)
 let mapType: 'z' | 't' | 'beta_variance' | 'any'; //filter by stored map-type flags (optional) (default to undefined)
 let studysetOwner: string; //for all studies filter which studysets are listed based on who owns the studyset (optional) (default to undefined)
 let level: 'group' | 'meta'; //select between studies with group results or meta results (optional) (default to 'group')
@@ -3136,6 +3140,7 @@ const { status, data } = await apiInstance.studiesGet(
     authors,
     userId,
     dataType,
+    role,
     mapType,
     studysetOwner,
     level,
@@ -3166,6 +3171,7 @@ const { status, data } = await apiInstance.studiesGet(
 | **authors** | [**string**] | search authors | (optional) defaults to undefined|
 | **userId** | [**string**] | user id you want to filter by | (optional) defaults to undefined|
 | **dataType** | [**&#39;coordinate&#39; | &#39;image&#39; | &#39;both&#39;**]**Array<&#39;coordinate&#39; &#124; &#39;image&#39; &#124; &#39;both&#39;>** | whether searching for studies that contain coordinates, images, or both | (optional) defaults to undefined|
+| **role** | [**&#39;result&#39; | &#39;anchor&#39; | &#39;localization&#39; | &#39;reference&#39; | &#39;other&#39;**]**Array<&#39;result&#39; &#124; &#39;anchor&#39; &#124; &#39;localization&#39; &#124; &#39;reference&#39; &#124; &#39;other&#39;>** | Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed. | (optional) defaults to undefined|
 | **mapType** | [**&#39;z&#39; | &#39;t&#39; | &#39;beta_variance&#39; | &#39;any&#39;**]**Array<&#39;z&#39; &#124; &#39;t&#39; &#124; &#39;beta_variance&#39; &#124; &#39;any&#39;>** | filter by stored map-type flags | (optional) defaults to undefined|
 | **studysetOwner** | [**string**] | for all studies filter which studysets are listed based on who owns the studyset | (optional) defaults to undefined|
 | **level** | [**&#39;group&#39; | &#39;meta&#39;**]**Array<&#39;group&#39; &#124; &#39;meta&#39;>** | select between studies with group results or meta results | (optional) defaults to 'group'|

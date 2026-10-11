@@ -2007,6 +2007,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
+         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -2014,7 +2015,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2053,6 +2054,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (study !== undefined) {
                 localVarQueryParameter['study'] = study;
+            }
+
+            if (role !== undefined) {
+                localVarQueryParameter['role'] = role;
             }
 
             if (name !== undefined) {
@@ -4402,6 +4407,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -4413,7 +4419,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4490,6 +4496,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (dataType !== undefined) {
                 localVarQueryParameter['data_type'] = dataType;
+            }
+
+            if (role !== undefined) {
+                localVarQueryParameter['role'] = role;
             }
 
             if (mapType !== undefined) {
@@ -5447,6 +5457,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
+         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -5454,8 +5465,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, imageMetadata, imageValueSummary, options);
+        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6243,6 +6254,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -6254,8 +6266,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
+        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6564,6 +6576,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
+         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -6571,8 +6584,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -7201,6 +7214,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -7212,8 +7226,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -7460,6 +7474,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [pageSize] number of results to show on a page
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [study] Filter tables by study id
+     * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
      * @param {string} [name] search the name field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -7467,8 +7482,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8150,6 +8165,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
+     * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role outside the study_schema pipeline\&#39;s versions (one from before roles); a pipeline analysis with no role matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
      * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
      * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -8161,8 +8177,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8413,6 +8429,14 @@ export class StoreApi extends BaseAPI {
     }
 }
 
+export const AnalysesGetRoleEnum = {
+    Result: 'result',
+    Anchor: 'anchor',
+    Localization: 'localization',
+    Reference: 'reference',
+    Other: 'other'
+} as const;
+export type AnalysesGetRoleEnum = typeof AnalysesGetRoleEnum[keyof typeof AnalysesGetRoleEnum];
 export const AnnotationsPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
@@ -8455,6 +8479,14 @@ export const StudiesGetDataTypeEnum = {
     Both: 'both'
 } as const;
 export type StudiesGetDataTypeEnum = typeof StudiesGetDataTypeEnum[keyof typeof StudiesGetDataTypeEnum];
+export const StudiesGetRoleEnum = {
+    Result: 'result',
+    Anchor: 'anchor',
+    Localization: 'localization',
+    Reference: 'reference',
+    Other: 'other'
+} as const;
+export type StudiesGetRoleEnum = typeof StudiesGetRoleEnum[keyof typeof StudiesGetRoleEnum];
 export const StudiesGetMapTypeEnum = {
     Z: 'z',
     T: 't',
