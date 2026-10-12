@@ -1673,7 +1673,7 @@ export interface StudySchemaUploadSummarySkeleton {
      */
     'omitted_analyses'?: number;
     /**
-     * Entities that hold claims and stayed on a superseded (history) analysis, not copied by a split or merge verdict. A changed name or point gives a new key, so the new analysis starts with no claims and the old one\'s are reported here. Always present; empty when none. 
+     * Entities that hold claims and stayed on a superseded (history) analysis, not copied by a split or merge verdict. A changed name, space or point gives a new key, so the new analysis starts with no claims and the old one\'s are reported here. Always present; empty when none. 
      */
     'orphaned_claims'?: Array<StudySchemaUploadSummarySkeletonOrphanedClaimsInner>;
 }

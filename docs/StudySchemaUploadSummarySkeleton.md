@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **updated** | **number** |  | [optional] [default to undefined]
 **superseded** | **number** | Analyses moved to the history study because this version dropped their key. | [optional] [default to undefined]
 **omitted_analyses** | **number** | How many text or figure analyses the parse lists as read and left out. Their reasons are kept in the study\&#39;s metadata, not returned here.  | [optional] [default to undefined]
-**orphaned_claims** | [**Array&lt;StudySchemaUploadSummarySkeletonOrphanedClaimsInner&gt;**](StudySchemaUploadSummarySkeletonOrphanedClaimsInner.md) | Entities that hold claims and stayed on a superseded (history) analysis, not copied by a split or merge verdict. A changed name or point gives a new key, so the new analysis starts with no claims and the old one\&#39;s are reported here. Always present; empty when none.  | [optional] [default to undefined]
+**orphaned_claims** | [**Array&lt;StudySchemaUploadSummarySkeletonOrphanedClaimsInner&gt;**](StudySchemaUploadSummarySkeletonOrphanedClaimsInner.md) | Entities that hold claims and stayed on a superseded (history) analysis, not copied by a split or merge verdict. A changed name, space or point gives a new key, so the new analysis starts with no claims and the old one\&#39;s are reported here. Always present; empty when none.  | [optional] [default to undefined]
 
 ## Example
 
