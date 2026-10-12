@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **_class** | **string** | The entity class. | [optional] [default to undefined]
 **entity_id** | **string** |  | [optional] [default to undefined]
 **claims** | **number** | How many claims the entity holds. | [optional] [default to undefined]
-**reason** | **string** | Why the claims stayed. not_carried: the upload is a revision and the analysis is neither linked nor split or merged. alias_conflict: an original parse, and the key is in alias_conflicts. no_successor: an original parse with no successor.  | [optional] [default to undefined]
+**reason** | **string** | Why the claims stayed. not_carried: the upload is a revision and the analysis is neither split nor merged. no_successor: an original parse that no longer holds the key.  | [optional] [default to undefined]
 
 ## Example
 

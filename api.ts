@@ -1460,11 +1460,11 @@ export interface StudySchemaCarried {
 export interface StudySchemaRenameCandidate {
     'class'?: string;
     /**
-     * The old name or key.
+     * The old name.
      */
     'from'?: string;
     /**
-     * The new name or key.
+     * The new name.
      */
     'to'?: string;
     /**
@@ -1600,7 +1600,7 @@ export interface StudySchemaUploadSummaryRecordClaims {
     'rejected_paths'?: Array<string>;
     'entities'?: StudySchemaUploadSummaryRecordClaimsEntities;
     /**
-     * Paths of analysis or coordinate-set items with no cells or spans to locate them by; they are not stored as entities.
+     * Paths of analysis or coordinate-set items that name no content key; they are not stored as entities.
      */
     'unlocated'?: Array<string>;
     /**
@@ -1608,17 +1608,13 @@ export interface StudySchemaUploadSummaryRecordClaims {
      */
     'unidentified'?: Array<string>;
     /**
-     * Paths of items whose hash an earlier item of the record already has (one analysis read twice from the same cells under the same name); not stored.
+     * Paths of items whose hash an earlier item of the record already has (two items naming one content key); not stored.
      */
     'duplicates'?: Array<string>;
     /**
-     * Entities the record names differently from a stored entity in the same place. They are linked as renamed_by_extractor candidates; claims stay on the old entity until a curator links them. 
+     * Entities the record names differently from a stored sibling of the same class and parent, each the only unmatched one there. They are linked as renamed_by_extractor candidates; claims stay on the old entity until a curator links them. Analyses and coordinate sets are never candidates: a new name is a new key. 
      */
     'rename_candidates'?: Array<StudySchemaRenameCandidate>;
-    /**
-     * Paths of new items whose hash was an alias of another entity; the alias is dropped.
-     */
-    'released_aliases'?: Array<string>;
     /**
      * Set-aside entities: positional keys, or keys no stored parse holds (resolved later by a parse that holds them; see set_aside_resolved). 
      */
@@ -1677,35 +1673,9 @@ export interface StudySchemaUploadSummarySkeleton {
      */
     'omitted_analyses'?: number;
     /**
-     * Analyses an original re-parse reads from other cells (same table and name, new key), one pair each; their entities keep the old hash as an alias. 
-     */
-    'aliased'?: Array<StudySchemaUploadSummarySkeletonAliasedInner>;
-    /**
-     * Re-read analyses whose new hash already belongs to another entity; nothing is re-hashed for that entity class and its claims stay where they are. Present for an original parse, absent for a revision. 
-     */
-    'alias_conflicts'?: Array<StudySchemaUploadSummarySkeletonAliasConflictsInner>;
-    /**
-     * Analyses read from the same place under a new name. Each old entity is linked to a candidate entity for the new name as renamed_by_extractor; no claims move. Present for an original parse, absent for a revision. 
-     */
-    'rename_candidates'?: Array<StudySchemaRenameCandidate>;
-    /**
-     * Entities that hold claims and stayed on a superseded (history) analysis: not re-hashed onto a successor, not linked as a rename candidate, and not copied by a split or merge verdict. Always present; empty when none. 
+     * Entities that hold claims and stayed on a superseded (history) analysis, not copied by a split or merge verdict. A changed name or point gives a new key, so the new analysis starts with no claims and the old one\'s are reported here. Always present; empty when none. 
      */
     'orphaned_claims'?: Array<StudySchemaUploadSummarySkeletonOrphanedClaimsInner>;
-}
-export interface StudySchemaUploadSummarySkeletonAliasConflictsInner {
-    'class'?: string;
-    'from'?: string;
-    'to'?: string;
-    'entity_id'?: string;
-    /**
-     * The entity that already holds the new hash.
-     */
-    'holder_id'?: string;
-}
-export interface StudySchemaUploadSummarySkeletonAliasedInner {
-    'from'?: string;
-    'to'?: string;
 }
 export interface StudySchemaUploadSummarySkeletonOrphanedClaimsInner {
     /**
@@ -1722,14 +1692,13 @@ export interface StudySchemaUploadSummarySkeletonOrphanedClaimsInner {
      */
     'claims'?: number;
     /**
-     * Why the claims stayed. not_carried: the upload is a revision and the analysis is neither linked nor split or merged. alias_conflict: an original parse, and the key is in alias_conflicts. no_successor: an original parse with no successor. 
+     * Why the claims stayed. not_carried: the upload is a revision and the analysis is neither split nor merged. no_successor: an original parse that no longer holds the key. 
      */
     'reason'?: StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum;
 }
 
 export const StudySchemaUploadSummarySkeletonOrphanedClaimsInnerReasonEnum = {
     NoSuccessor: 'no_successor',
-    AliasConflict: 'alias_conflict',
     NotCarried: 'not_carried'
 } as const;
 
@@ -4805,7 +4774,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s content keys (study_schema\'s ParsedAnalysis.key, from the analysis\'s name, space and points) and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
          * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
          * @param {StudySchemaUpload} [studySchemaUpload] 
          * @param {*} [options] Override http request option.
@@ -6405,7 +6374,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s content keys (study_schema\'s ParsedAnalysis.key, from the analysis\'s name, space and points) and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
          * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
          * @param {StudySchemaUpload} [studySchemaUpload] 
          * @param {*} [options] Override http request option.
@@ -7350,7 +7319,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.studiesPost(source, sourceId, studyRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+         * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s content keys (study_schema\'s ParsedAnalysis.key, from the analysis\'s name, space and points) and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
          * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
          * @param {StudySchemaUpload} [studySchemaUpload] 
          * @param {*} [options] Override http request option.
@@ -8306,7 +8275,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s cell keys and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
+     * Takes study_schema\'s CoordinateParse (alone, or as a revision with revision_of set) and/or an extraction record that read it. Analyses are keyed by the parse\'s content keys (study_schema\'s ParsedAnalysis.key, from the analysis\'s name, space and points) and stored as Analysis.source_id; a new version keeps the analyses it drops as non-public history; a revision\'s split and merge verdicts copy claims to the replacements (carried_from). The documents are validated against study_schema\'s JSON Schema by the service, not here. Admin only. This is a transaction rather than a resource: one upload is atomic across the study, its analyses and points, the claims and the history version it writes, so it either lands whole or not at all, which separate resource calls could not guarantee. The response\'s provenance names the stored run behind each part. 
      * @summary Store a coordinate parse, a revision, an extraction record, or a parse with its record
      * @param {StudySchemaUpload} [studySchemaUpload] 
      * @param {*} [options] Override http request option.
