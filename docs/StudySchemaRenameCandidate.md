@@ -6,8 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **_class** | **string** |  | [optional] [default to undefined]
-**from** | **string** | The old name or key. | [optional] [default to undefined]
-**to** | **string** | The new name or key. | [optional] [default to undefined]
+**from** | **string** | The old name. | [optional] [default to undefined]
+**to** | **string** | The new name. | [optional] [default to undefined]
 **entity_id** | **string** | The old entity. | [optional] [default to undefined]
 **candidate_id** | **string** | The entity for the new name. | [optional] [default to undefined]
 
