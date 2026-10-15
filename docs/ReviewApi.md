@@ -5,6 +5,8 @@ All URIs are relative to *https://neurostore.org/api*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**neurostoreResourcesReviewReviewBundlesViewGet**](#neurostoreresourcesreviewreviewbundlesviewget) | **GET** /review/sources/{id}/bundle | Everything the review app needs to open one paper for the caller|
+|[**neurostoreResourcesReviewReviewExportViewGet**](#neurostoreresourcesreviewreviewexportviewget) | **GET** /review/reviews/{id}/export | Export one review as a study_schema layout zip|
+|[**neurostoreResourcesReviewReviewExportsViewPost**](#neurostoreresourcesreviewreviewexportsviewpost) | **POST** /review/exports/ | Export the reviews that match the filters as a zip of layout trees|
 |[**neurostoreResourcesReviewReviewImportsViewPost**](#neurostoreresourcesreviewreviewimportsviewpost) | **POST** /review/imports/ | Load the papers of a study_schema layout zip for review|
 |[**neurostoreResourcesReviewReviewOpsViewPost**](#neurostoreresourcesreviewreviewopsviewpost) | **POST** /review/reviews/{id}/ops | Apply a batch of the owner\&#39;s ops to their review|
 |[**neurostoreResourcesReviewReviewSourcesViewSearch**](#neurostoreresourcesreviewreviewsourcesviewsearch) | **GET** /review/sources/ | List papers loaded for review, with each reviewer\&#39;s progress|
@@ -62,6 +64,115 @@ const { status, data } = await apiInstance.neurostoreResourcesReviewReviewBundle
 |**401** | Unauthorized |  -  |
 |**403** | Forbidden |  -  |
 |**404** | Not Found |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **neurostoreResourcesReviewReviewExportViewGet**
+> File neurostoreResourcesReviewReviewExportViewGet()
+
+Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The whole zip is built in memory before the response is sent. 
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.neurostoreResourcesReviewReviewExportViewGet(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**File**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/zip, application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | A zip of the review\&#39;s layout |  * Content-Disposition - An attachment named review-exports.zip <br>  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **neurostoreResourcesReviewReviewExportsViewPost**
+> File neurostoreResourcesReviewReviewExportsViewPost()
+
+One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under _source/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration,
+    NeurostoreResourcesReviewReviewExportsViewPostRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let neurostoreResourcesReviewReviewExportsViewPostRequest: NeurostoreResourcesReviewReviewExportsViewPostRequest; // (optional)
+
+const { status, data } = await apiInstance.neurostoreResourcesReviewReviewExportsViewPost(
+    neurostoreResourcesReviewReviewExportsViewPostRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **neurostoreResourcesReviewReviewExportsViewPostRequest** | **NeurostoreResourcesReviewReviewExportsViewPostRequest**|  | |
+
+
+### Return type
+
+**File**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/zip
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | A zip of the layout trees |  * Content-Disposition - An attachment named review-exports.zip <br>  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+|**422** | include_unreviewed was combined with a reviewer or state filter |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
