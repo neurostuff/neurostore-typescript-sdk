@@ -89,6 +89,10 @@ docs/ReadableResourceAttributes.md
 docs/ResourceAttributes.md
 docs/ReviewApi.md
 docs/ReviewDetail.md
+docs/ReviewImportReport.md
+docs/ReviewImportReportFailedInner.md
+docs/ReviewImportReportLoadedInner.md
+docs/ReviewImportReportSkippedInner.md
 docs/ReviewOpBatch.md
 docs/ReviewOpResult.md
 docs/ReviewProgress.md

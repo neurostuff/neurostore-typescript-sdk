@@ -5,6 +5,7 @@ All URIs are relative to *https://neurostore.org/api*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**neurostoreResourcesReviewReviewBundlesViewGet**](#neurostoreresourcesreviewreviewbundlesviewget) | **GET** /review/sources/{id}/bundle | Everything the review app needs to open one paper for the caller|
+|[**neurostoreResourcesReviewReviewImportsViewPost**](#neurostoreresourcesreviewreviewimportsviewpost) | **POST** /review/imports/ | Load the papers of a study_schema layout zip for review|
 |[**neurostoreResourcesReviewReviewOpsViewPost**](#neurostoreresourcesreviewreviewopsviewpost) | **POST** /review/reviews/{id}/ops | Apply a batch of the owner\&#39;s ops to their review|
 |[**neurostoreResourcesReviewReviewSourcesViewSearch**](#neurostoreresourcesreviewreviewsourcesviewsearch) | **GET** /review/sources/ | List papers loaded for review, with each reviewer\&#39;s progress|
 |[**neurostoreResourcesReviewReviewsViewGet**](#neurostoreresourcesreviewreviewsviewget) | **GET** /review/reviews/{id} | One reviewer\&#39;s review of a paper|
@@ -61,6 +62,61 @@ const { status, data } = await apiInstance.neurostoreResourcesReviewReviewBundle
 |**401** | Unauthorized |  -  |
 |**403** | Forbidden |  -  |
 |**404** | Not Found |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **neurostoreResourcesReviewReviewImportsViewPost**
+> ReviewImportReport neurostoreResourcesReviewReviewImportsViewPost()
+
+Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let file: File; //A zip of a study_schema layout, at most 200 MB. (default to undefined)
+
+const { status, data } = await apiInstance.neurostoreResourcesReviewReviewImportsViewPost(
+    file
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **file** | [**File**] | A zip of a study_schema layout, at most 200 MB. | defaults to undefined|
+
+
+### Return type
+
+**ReviewImportReport**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The report of what each paper did |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+|**413** | The file is over 200 MB |  * X-Request-ID -  <br>  |
+|**422** | Unprocessable Entity |  * X-Request-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -1284,6 +1284,25 @@ export interface ReviewDetail {
 }
 
 
+export interface ReviewImportReport {
+    'loaded': Array<ReviewImportReportLoadedInner>;
+    'skipped': Array<ReviewImportReportSkippedInner>;
+    'failed': Array<ReviewImportReportFailedInner>;
+}
+export interface ReviewImportReportFailedInner {
+    'study_id': string;
+    'problems': Array<string>;
+}
+export interface ReviewImportReportLoadedInner {
+    'study_id': string;
+    'source_id': string;
+    'base_study_id': string;
+}
+export interface ReviewImportReportSkippedInner {
+    'study_id': string;
+    'source_id': string;
+    'reason': string;
+}
 export interface ReviewOpBatch {
     /**
      * The review\'s last_seq the batch was made against.
@@ -2186,6 +2205,51 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
+         * @summary Load the papers of a study_schema layout zip for review
+         * @param {File} file A zip of a study_schema layout, at most 200 MB.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewImportsViewPost: async (file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('neurostoreResourcesReviewReviewImportsViewPost', 'file', file)
+            const localVarPath = `/review/imports/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Only the review\'s owner. The batch applies whole or not at all. A batch whose every client_op_id is already stored is a replay: it returns the stored ops and applies nothing. 
          * @summary Apply a batch of the owner\'s ops to their review
          * @param {string} id 
@@ -2422,6 +2486,19 @@ export const ReviewApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
+         * @summary Load the papers of a study_schema layout zip for review
+         * @param {File} file A zip of a study_schema layout, at most 200 MB.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesReviewReviewImportsViewPost(file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewImportReport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesReviewReviewImportsViewPost(file, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.neurostoreResourcesReviewReviewImportsViewPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Only the review\'s owner. The batch applies whole or not at all. A batch whose every client_op_id is already stored is a replay: it returns the stored ops and applies nothing. 
          * @summary Apply a batch of the owner\'s ops to their review
          * @param {string} id 
@@ -2511,6 +2588,16 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.neurostoreResourcesReviewReviewBundlesViewGet(id, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
+         * @summary Load the papers of a study_schema layout zip for review
+         * @param {File} file A zip of a study_schema layout, at most 200 MB.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewImportsViewPost(file: File, options?: RawAxiosRequestConfig): AxiosPromise<ReviewImportReport> {
+            return localVarFp.neurostoreResourcesReviewReviewImportsViewPost(file, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Only the review\'s owner. The batch applies whole or not at all. A batch whose every client_op_id is already stored is a replay: it returns the stored ops and applies nothing. 
          * @summary Apply a batch of the owner\'s ops to their review
          * @param {string} id 
@@ -2581,6 +2668,17 @@ export class ReviewApi extends BaseAPI {
      */
     public neurostoreResourcesReviewReviewBundlesViewGet(id: string, options?: RawAxiosRequestConfig) {
         return ReviewApiFp(this.configuration).neurostoreResourcesReviewReviewBundlesViewGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
+     * @summary Load the papers of a study_schema layout zip for review
+     * @param {File} file A zip of a study_schema layout, at most 200 MB.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesReviewReviewImportsViewPost(file: File, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).neurostoreResourcesReviewReviewImportsViewPost(file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
