@@ -17,7 +17,7 @@ All URIs are relative to *https://neurostore.org/api*
 # **reviewExportsPost**
 > File reviewExportsPost()
 
-One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under _source/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
+One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
 
 ### Example
 

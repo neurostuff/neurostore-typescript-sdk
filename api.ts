@@ -1359,6 +1359,10 @@ export interface ReviewProgress {
      * Targets the reviewer checked and left unchanged.
      */
     'verified'?: number;
+    /**
+     * Judgeable targets of the source that the reviewer verified, edited, added or removed.
+     */
+    'reviewed'?: number;
 }
 
 
@@ -1368,6 +1372,10 @@ export interface ReviewSource {
     'label'?: string | null;
     'origin'?: ReviewSourceOriginEnum;
     'created_at'?: string;
+    /**
+     * Targets a reviewer can judge in the source\'s record, its extracted values and its coordinate parse\'s analyses.
+     */
+    'total'?: number;
     'reviews'?: Array<ReviewProgress>;
 }
 
@@ -2187,7 +2195,7 @@ export interface WriteableResourceAttributes {
 export const ReviewApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under _source/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
+         * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
          * @summary Export the reviews that match the filters as a zip of layout trees
          * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
          * @param {*} [options] Override http request option.
@@ -2569,7 +2577,7 @@ export const ReviewApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReviewApiAxiosParamCreator(configuration)
     return {
         /**
-         * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under _source/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
+         * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
          * @summary Export the reviews that match the filters as a zip of layout trees
          * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
          * @param {*} [options] Override http request option.
@@ -2700,7 +2708,7 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = ReviewApiFp(configuration)
     return {
         /**
-         * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under _source/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
+         * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
          * @summary Export the reviews that match the filters as a zip of layout trees
          * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
          * @param {*} [options] Override http request option.
@@ -2802,7 +2810,7 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
  */
 export class ReviewApi extends BaseAPI {
     /**
-     * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under _source/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
+     * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
      * @summary Export the reviews that match the filters as a zip of layout trees
      * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
      * @param {*} [options] Override http request option.

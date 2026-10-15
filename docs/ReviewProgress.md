@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **updated_at** | **string** |  | [optional] [default to undefined]
 **edited** | **number** | Targets the reviewer edited, added or removed. | [optional] [default to undefined]
 **verified** | **number** | Targets the reviewer checked and left unchanged. | [optional] [default to undefined]
+**reviewed** | **number** | Judgeable targets of the source that the reviewer verified, edited, added or removed. | [optional] [default to undefined]
 
 ## Example
 
@@ -27,6 +28,7 @@ const instance: ReviewProgress = {
     updated_at,
     edited,
     verified,
+    reviewed,
 };
 ```
 
