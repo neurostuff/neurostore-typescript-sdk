@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **provenance** | **object** |  | [optional] [default to undefined]
 **annotations** | **object** |  | [optional] [default to undefined]
 **hidden** | **object** | The hidden set of the new record, as in the bundle. | [optional] [default to undefined]
+**entities** | **Array&lt;object&gt;** | The entity index of the new record, as in the bundle. | [optional] [default to undefined]
 
 ## Example
 
@@ -26,6 +27,7 @@ const instance: ReviewOpResult = {
     provenance,
     annotations,
     hidden,
+    entities,
 };
 ```
 

@@ -1337,6 +1337,10 @@ export interface ReviewOpResult {
      * The hidden set of the new record, as in the bundle.
      */
     'hidden'?: object;
+    /**
+     * The entity index of the new record, as in the bundle.
+     */
+    'entities'?: Array<object>;
 }
 /**
  * One reviewer\'s review of a paper, as the paper list shows it.
