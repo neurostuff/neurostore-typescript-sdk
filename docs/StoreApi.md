@@ -19,6 +19,7 @@ All URIs are relative to *https://neurostore.org/api*
 |[**annotationsIdPut**](#annotationsidput) | **PUT** /annotations/{id} | Update an annotation|
 |[**annotationsPost**](#annotationspost) | **POST** /annotations/ | Post Annotation|
 |[**baseStudiesGet**](#basestudiesget) | **GET** /base-studies/ | |
+|[**baseStudiesIdDelete**](#basestudiesiddelete) | **DELETE** /base-studies/{id} | Delete a base study|
 |[**baseStudiesIdGet**](#basestudiesidget) | **GET** /base-studies/{id} | Your GET endpoint|
 |[**baseStudiesIdPut**](#basestudiesidput) | **PUT** /base-studies/{id} | |
 |[**baseStudiesPost**](#basestudiespost) | **POST** /base-studies/ | |
@@ -1006,6 +1007,61 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **baseStudiesIdDelete**
+> BaseStudiesIdDelete200Response baseStudiesIdDelete()
+
+Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.baseStudiesIdDelete(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**BaseStudiesIdDelete200Response**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
+|**409** | The base study has papers loaded for review |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

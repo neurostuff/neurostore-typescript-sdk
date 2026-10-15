@@ -422,6 +422,9 @@ export interface AnnotationReturnRelationships {
  */
 export type AnnotationReturnRelationshipsNotes = Array<NoteCollectionReturn> | Array<string>;
 
+export interface BaseStudiesIdDelete200Response {
+    'id'?: string;
+}
 /**
  * @type BaseStudiesPost200Response
  */
@@ -597,6 +600,8 @@ export interface ErrorDetail {
     'context'?: { [key: string]: any; };
 }
 export interface ErrorResponse {
+    [key: string]: any;
+
     /**
      * HTTP status code
      */
@@ -1260,6 +1265,110 @@ export interface ResourceAttributes {
      */
     'username'?: string | null;
 }
+export interface ReviewDetail {
+    'id'?: string;
+    'source_id'?: string;
+    'user_id'?: string;
+    'state'?: ReviewState;
+    'last_seq'?: number;
+    'created_at'?: string;
+    'updated_at'?: string | null;
+    /**
+     * The extraction record with the review\'s ops applied.
+     */
+    'record'?: object;
+    'coordinate_revision'?: object | null;
+    'provenance'?: object;
+    'annotations'?: object;
+    'ops'?: Array<object>;
+}
+
+
+export interface ReviewOpBatch {
+    /**
+     * The review\'s last_seq the batch was made against.
+     */
+    'expected_last_seq': number;
+    'ops': Array<object>;
+}
+export interface ReviewOpResult {
+    'ops'?: Array<object>;
+    'last_seq'?: number;
+    'record'?: object;
+    'coordinate_revision'?: object | null;
+    'provenance'?: object;
+    'annotations'?: object;
+    /**
+     * The hidden set of the new record, as in the bundle.
+     */
+    'hidden'?: object;
+}
+/**
+ * One reviewer\'s review of a paper, as the paper list shows it.
+ */
+export interface ReviewProgress {
+    'user_id'?: string;
+    'user_name'?: string | null;
+    'state'?: ReviewState;
+    'last_seq'?: number;
+    'updated_at'?: string | null;
+    /**
+     * Targets the reviewer edited, added or removed.
+     */
+    'edited'?: number;
+    /**
+     * Targets the reviewer checked and left unchanged.
+     */
+    'verified'?: number;
+}
+
+
+export interface ReviewSource {
+    'id'?: string;
+    'base_study_id'?: string;
+    'label'?: string | null;
+    'origin'?: ReviewSourceOriginEnum;
+    'created_at'?: string;
+    'reviews'?: Array<ReviewProgress>;
+}
+
+export const ReviewSourceOriginEnum = {
+    Upload: 'upload',
+    PipelineRun: 'pipeline_run'
+} as const;
+
+export type ReviewSourceOriginEnum = typeof ReviewSourceOriginEnum[keyof typeof ReviewSourceOriginEnum];
+
+export interface ReviewSourceList {
+    'metadata'?: NeurostoreStudysetReleasesGet200ResponseMetadata;
+    'results'?: Array<ReviewSource>;
+}
+
+export const ReviewState = {
+    InProgress: 'in_progress',
+    Submitted: 'submitted',
+    Reference: 'reference'
+} as const;
+
+export type ReviewState = typeof ReviewState[keyof typeof ReviewState];
+
+
+export interface ReviewStatePatch {
+    'state': ReviewState;
+}
+
+
+export interface ReviewSummary {
+    'id'?: string;
+    'source_id'?: string;
+    'user_id'?: string;
+    'state'?: ReviewState;
+    'last_seq'?: number;
+    'created_at'?: string;
+    'updated_at'?: string | null;
+}
+
+
 export interface StudyBase {
     /**
      * Digital object identifier of the study.
@@ -2032,6 +2141,510 @@ export interface WriteableResourceAttributes {
      */
     'public'?: boolean;
 }
+
+/**
+ * ReviewApi - axios parameter creator
+ */
+export const ReviewApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Everything the review app needs to open one paper for the caller
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewBundlesViewGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('neurostoreResourcesReviewReviewBundlesViewGet', 'id', id)
+            const localVarPath = `/review/sources/{id}/bundle`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Only the review\'s owner. The batch applies whole or not at all. A batch whose every client_op_id is already stored is a replay: it returns the stored ops and applies nothing. 
+         * @summary Apply a batch of the owner\'s ops to their review
+         * @param {string} id 
+         * @param {ReviewOpBatch} [reviewOpBatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewOpsViewPost: async (id: string, reviewOpBatch?: ReviewOpBatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('neurostoreResourcesReviewReviewOpsViewPost', 'id', id)
+            const localVarPath = `/review/reviews/{id}/ops`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(reviewOpBatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List papers loaded for review, with each reviewer\'s progress
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [baseStudyId] Only the sources of this base study.
+         * @param {boolean} [mine] Only the sources the caller has a review of.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewSourcesViewSearch: async (page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/review/sources/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (baseStudyId !== undefined) {
+                localVarQueryParameter['base_study_id'] = baseStudyId;
+            }
+
+            if (mine !== undefined) {
+                localVarQueryParameter['mine'] = mine;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Any reviewer may read any review.
+         * @summary One reviewer\'s review of a paper
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewsViewGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('neurostoreResourcesReviewReviewsViewGet', 'id', id)
+            const localVarPath = `/review/reviews/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
+         * @summary Submit, reopen, or mark as the reference review
+         * @param {string} id 
+         * @param {ReviewStatePatch} [reviewStatePatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewsViewPatch: async (id: string, reviewStatePatch?: ReviewStatePatch, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('neurostoreResourcesReviewReviewsViewPatch', 'id', id)
+            const localVarPath = `/review/reviews/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(reviewStatePatch, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Starts the caller\'s review, in_progress, from the source\'s extraction record. A repeat call returns the existing review. 
+         * @summary Start the caller\'s review of a paper
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewSourceReviewsViewPut: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('neurostoreResourcesReviewSourceReviewsViewPut', 'id', id)
+            const localVarPath = `/review/sources/{id}/review`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ReviewApi - functional programming interface
+ */
+export const ReviewApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ReviewApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Everything the review app needs to open one paper for the caller
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesReviewReviewBundlesViewGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesReviewReviewBundlesViewGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.neurostoreResourcesReviewReviewBundlesViewGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Only the review\'s owner. The batch applies whole or not at all. A batch whose every client_op_id is already stored is a replay: it returns the stored ops and applies nothing. 
+         * @summary Apply a batch of the owner\'s ops to their review
+         * @param {string} id 
+         * @param {ReviewOpBatch} [reviewOpBatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesReviewReviewOpsViewPost(id: string, reviewOpBatch?: ReviewOpBatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewOpResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesReviewReviewOpsViewPost(id, reviewOpBatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.neurostoreResourcesReviewReviewOpsViewPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary List papers loaded for review, with each reviewer\'s progress
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [baseStudyId] Only the sources of this base study.
+         * @param {boolean} [mine] Only the sources the caller has a review of.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesReviewReviewSourcesViewSearch(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewSourceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesReviewReviewSourcesViewSearch(page, pageSize, baseStudyId, mine, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.neurostoreResourcesReviewReviewSourcesViewSearch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Any reviewer may read any review.
+         * @summary One reviewer\'s review of a paper
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesReviewReviewsViewGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesReviewReviewsViewGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.neurostoreResourcesReviewReviewsViewGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
+         * @summary Submit, reopen, or mark as the reference review
+         * @param {string} id 
+         * @param {ReviewStatePatch} [reviewStatePatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesReviewReviewsViewPatch(id: string, reviewStatePatch?: ReviewStatePatch, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesReviewReviewsViewPatch(id, reviewStatePatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.neurostoreResourcesReviewReviewsViewPatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Starts the caller\'s review, in_progress, from the source\'s extraction record. A repeat call returns the existing review. 
+         * @summary Start the caller\'s review of a paper
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async neurostoreResourcesReviewSourceReviewsViewPut(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewSummary>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.neurostoreResourcesReviewSourceReviewsViewPut(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.neurostoreResourcesReviewSourceReviewsViewPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ReviewApi - factory interface
+ */
+export const ReviewApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ReviewApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Everything the review app needs to open one paper for the caller
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewBundlesViewGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.neurostoreResourcesReviewReviewBundlesViewGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Only the review\'s owner. The batch applies whole or not at all. A batch whose every client_op_id is already stored is a replay: it returns the stored ops and applies nothing. 
+         * @summary Apply a batch of the owner\'s ops to their review
+         * @param {string} id 
+         * @param {ReviewOpBatch} [reviewOpBatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewOpsViewPost(id: string, reviewOpBatch?: ReviewOpBatch, options?: RawAxiosRequestConfig): AxiosPromise<ReviewOpResult> {
+            return localVarFp.neurostoreResourcesReviewReviewOpsViewPost(id, reviewOpBatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List papers loaded for review, with each reviewer\'s progress
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [baseStudyId] Only the sources of this base study.
+         * @param {boolean} [mine] Only the sources the caller has a review of.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewSourcesViewSearch(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ReviewSourceList> {
+            return localVarFp.neurostoreResourcesReviewReviewSourcesViewSearch(page, pageSize, baseStudyId, mine, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Any reviewer may read any review.
+         * @summary One reviewer\'s review of a paper
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewsViewGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<ReviewDetail> {
+            return localVarFp.neurostoreResourcesReviewReviewsViewGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
+         * @summary Submit, reopen, or mark as the reference review
+         * @param {string} id 
+         * @param {ReviewStatePatch} [reviewStatePatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewReviewsViewPatch(id: string, reviewStatePatch?: ReviewStatePatch, options?: RawAxiosRequestConfig): AxiosPromise<ReviewSummary> {
+            return localVarFp.neurostoreResourcesReviewReviewsViewPatch(id, reviewStatePatch, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Starts the caller\'s review, in_progress, from the source\'s extraction record. A repeat call returns the existing review. 
+         * @summary Start the caller\'s review of a paper
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        neurostoreResourcesReviewSourceReviewsViewPut(id: string, options?: RawAxiosRequestConfig): AxiosPromise<ReviewSummary> {
+            return localVarFp.neurostoreResourcesReviewSourceReviewsViewPut(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ReviewApi - object-oriented interface
+ */
+export class ReviewApi extends BaseAPI {
+    /**
+     * 
+     * @summary Everything the review app needs to open one paper for the caller
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesReviewReviewBundlesViewGet(id: string, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).neurostoreResourcesReviewReviewBundlesViewGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Only the review\'s owner. The batch applies whole or not at all. A batch whose every client_op_id is already stored is a replay: it returns the stored ops and applies nothing. 
+     * @summary Apply a batch of the owner\'s ops to their review
+     * @param {string} id 
+     * @param {ReviewOpBatch} [reviewOpBatch] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesReviewReviewOpsViewPost(id: string, reviewOpBatch?: ReviewOpBatch, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).neurostoreResourcesReviewReviewOpsViewPost(id, reviewOpBatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List papers loaded for review, with each reviewer\'s progress
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [baseStudyId] Only the sources of this base study.
+     * @param {boolean} [mine] Only the sources the caller has a review of.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesReviewReviewSourcesViewSearch(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).neurostoreResourcesReviewReviewSourcesViewSearch(page, pageSize, baseStudyId, mine, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Any reviewer may read any review.
+     * @summary One reviewer\'s review of a paper
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesReviewReviewsViewGet(id: string, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).neurostoreResourcesReviewReviewsViewGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
+     * @summary Submit, reopen, or mark as the reference review
+     * @param {string} id 
+     * @param {ReviewStatePatch} [reviewStatePatch] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesReviewReviewsViewPatch(id: string, reviewStatePatch?: ReviewStatePatch, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).neurostoreResourcesReviewReviewsViewPatch(id, reviewStatePatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Starts the caller\'s review, in_progress, from the source\'s extraction record. A repeat call returns the existing review. 
+     * @summary Start the caller\'s review of a paper
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public neurostoreResourcesReviewSourceReviewsViewPut(id: string, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).neurostoreResourcesReviewSourceReviewsViewPut(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
 
 /**
  * StoreApi - axios parameter creator
@@ -2847,6 +3460,44 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             if (paginate !== undefined) {
                 localVarQueryParameter['paginate'] = paginate;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
+         * @summary Delete a base study
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        baseStudiesIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('baseStudiesIdDelete', 'id', id)
+            const localVarPath = `/base-studies/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -5738,6 +6389,19 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
+         * @summary Delete a base study
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async baseStudiesIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudiesIdDelete200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Your GET endpoint
          * @param {string} id 
@@ -6812,6 +7476,16 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
+         * Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
+         * @summary Delete a base study
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        baseStudiesIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudiesIdDelete200Response> {
+            return localVarFp.baseStudiesIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Your GET endpoint
          * @param {string} id 
@@ -7722,6 +8396,17 @@ export class StoreApi extends BaseAPI {
      */
     public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
+     * @summary Delete a base study
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public baseStudiesIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
