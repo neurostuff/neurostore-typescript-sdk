@@ -59,7 +59,6 @@ docs/JsonLd.md
 docs/JsonLdContext.md
 docs/Metadata.md
 docs/NestedPutAttributes.md
-docs/NeurostoreResourcesReviewReviewExportsViewPostRequest.md
 docs/NeurostoreStudysetReleasesGet200Response.md
 docs/NeurostoreStudysetReleasesGet200ResponseMetadata.md
 docs/NoteCollectionBase.md
@@ -90,6 +89,7 @@ docs/ReadableResourceAttributes.md
 docs/ResourceAttributes.md
 docs/ReviewApi.md
 docs/ReviewDetail.md
+docs/ReviewExportsPostRequest.md
 docs/ReviewImportReport.md
 docs/ReviewImportReportFailedInner.md
 docs/ReviewImportReportLoadedInner.md
