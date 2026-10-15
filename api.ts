@@ -2221,7 +2221,7 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The whole zip is built in memory before the response is sent. 
+         * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The record is never changed by the export; run/provenance/<id>.json beside it names the review, its state and the source record it derives from. The whole zip is built in memory before the response is sent. 
          * @summary Export one review as a study_schema layout zip
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -2578,7 +2578,7 @@ export const ReviewApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The whole zip is built in memory before the response is sent. 
+         * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The record is never changed by the export; run/provenance/<id>.json beside it names the review, its state and the source record it derives from. The whole zip is built in memory before the response is sent. 
          * @summary Export one review as a study_schema layout zip
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -2706,7 +2706,7 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.neurostoreResourcesReviewReviewBundlesViewGet(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The whole zip is built in memory before the response is sent. 
+         * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The record is never changed by the export; run/provenance/<id>.json beside it names the review, its state and the source record it derives from. The whole zip is built in memory before the response is sent. 
          * @summary Export one review as a study_schema layout zip
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -2809,7 +2809,7 @@ export class ReviewApi extends BaseAPI {
     }
 
     /**
-     * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The whole zip is built in memory before the response is sent. 
+     * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one, and its ops in seq order. The record is never changed by the export; run/provenance/<id>.json beside it names the review, its state and the source record it derives from. The whole zip is built in memory before the response is sent. 
      * @summary Export one review as a study_schema layout zip
      * @param {string} id 
      * @param {*} [options] Override http request option.
