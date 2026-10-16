@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**metadata** | [**NeurostoreStudysetReleasesGet200ResponseMetadata**](NeurostoreStudysetReleasesGet200ResponseMetadata.md) |  | [optional] [default to undefined]
-**results** | [**Array&lt;ReviewSource&gt;**](ReviewSource.md) |  | [optional] [default to undefined]
+**metadata** | [**ReviewSourceListMetadata**](ReviewSourceListMetadata.md) |  | [default to undefined]
+**results** | [**Array&lt;ReviewSource&gt;**](ReviewSource.md) |  | [default to undefined]
 
 ## Example
 

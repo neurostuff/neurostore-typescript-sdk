@@ -106,6 +106,7 @@ docs/ReviewSetAside.md
 docs/ReviewSetAsideReason.md
 docs/ReviewSource.md
 docs/ReviewSourceList.md
+docs/ReviewSourceListMetadata.md
 docs/ReviewState.md
 docs/ReviewStatePatch.md
 docs/ReviewStoredOp.md

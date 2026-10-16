@@ -1270,7 +1270,7 @@ export interface ReviewAssignee {
     'name': string | null;
 }
 export interface ReviewAssigneeList {
-    'results'?: Array<ReviewAssignee>;
+    'results': Array<ReviewAssignee>;
 }
 export interface ReviewAssignment {
     'base_study_id': string;
@@ -1279,14 +1279,14 @@ export interface ReviewAssignment {
     'assigned_by_id': string | null;
 }
 export interface ReviewDetail {
-    'id'?: string;
-    'source_id'?: string;
-    'user_id'?: string;
-    'state'?: ReviewState;
+    'id': string;
+    'source_id': string;
+    'user_id': string;
+    'state': ReviewState;
     'set_aside'?: ReviewSetAside;
-    'last_seq'?: number;
-    'created_at'?: string;
-    'updated_at'?: string | null;
+    'last_seq': number;
+    'created_at': string;
+    'updated_at': string | null;
     /**
      * The extraction record with the review\'s ops applied.
      */
@@ -1347,19 +1347,22 @@ export interface ReviewOpBatch {
      * The review\'s last_seq the batch was made against.
      */
     'expected_last_seq': number;
+    /**
+     * The batch\'s ops, at least and at most as many as the contract served at GET /api/review/schemas/review-ops allows. 
+     */
     'ops': Array<object>;
 }
 export interface ReviewOpResult {
-    'ops'?: Array<ReviewStoredOp>;
-    'last_seq'?: number;
-    'record'?: object;
-    'coordinate_revision'?: object | null;
-    'provenance'?: object;
-    'annotations'?: object;
+    'ops': Array<ReviewStoredOp>;
+    'last_seq': number;
+    'record': object;
+    'coordinate_revision': object | null;
+    'provenance': object;
+    'annotations': object;
     /**
      * The hidden set of the new record, as in the bundle.
      */
-    'hidden'?: object;
+    'hidden': object;
     /**
      * The entity index of the new record, as in the bundle.
      */
@@ -1369,32 +1372,32 @@ export interface ReviewOpResult {
  * One reviewer\'s review of a paper, as the paper list shows it.
  */
 export interface ReviewProgress {
-    'user_id'?: string;
-    'user_name'?: string | null;
-    'state'?: ReviewState;
+    'user_id': string;
+    'user_name': string | null;
+    'state': ReviewState;
     'set_aside'?: ReviewSetAside;
-    'last_seq'?: number;
-    'updated_at'?: string | null;
+    'last_seq': number;
+    'updated_at': string | null;
     /**
      * Targets the reviewer edited, added or removed.
      */
-    'edited'?: number;
+    'edited': number;
     /**
      * Targets the reviewer checked and left unchanged.
      */
-    'verified'?: number;
+    'verified': number;
     /**
      * Judgeable targets of the source that the reviewer verified, edited, added or removed. Unlike edited and verified, which count every provenance key, this counts only among the source\'s judgeable targets.
      */
-    'reviewed'?: number;
+    'reviewed': number;
     /**
      * The ops the reviewer has applied to this review.
      */
-    'op_count'?: number;
+    'op_count': number;
     /**
      * When the reviewer last applied an op; null before any.
      */
-    'last_edit_at'?: string | null;
+    'last_edit_at': string | null;
 }
 
 
@@ -1426,23 +1429,23 @@ export type ReviewSetAsideReason = typeof ReviewSetAsideReason[keyof typeof Revi
 
 
 export interface ReviewSource {
-    'id'?: string;
-    'base_study_id'?: string;
-    'label'?: string | null;
+    'id': string;
+    'base_study_id': string;
+    'label': string | null;
     /**
      * pipeline_run when the source names a pipeline config and a run, else upload.
      */
-    'origin'?: ReviewSourceOriginEnum;
-    'created_at'?: string;
+    'origin': ReviewSourceOriginEnum;
+    'created_at': string;
     /**
      * Targets a reviewer can judge in the source\'s record, its extracted values and its coordinate parse\'s analyses.
      */
-    'total'?: number;
-    'reviews'?: Array<ReviewProgress>;
+    'total': number;
+    'reviews': Array<ReviewProgress>;
     /**
      * The users the paper (base study) is assigned to.
      */
-    'assignees'?: Array<ReviewAssignee>;
+    'assignees': Array<ReviewAssignee>;
 }
 
 export const ReviewSourceOriginEnum = {
@@ -1453,8 +1456,11 @@ export const ReviewSourceOriginEnum = {
 export type ReviewSourceOriginEnum = typeof ReviewSourceOriginEnum[keyof typeof ReviewSourceOriginEnum];
 
 export interface ReviewSourceList {
-    'metadata'?: NeurostoreStudysetReleasesGet200ResponseMetadata;
-    'results'?: Array<ReviewSource>;
+    'metadata': ReviewSourceListMetadata;
+    'results': Array<ReviewSource>;
+}
+export interface ReviewSourceListMetadata {
+    'total_count': number;
 }
 
 export const ReviewState = {
@@ -1475,20 +1481,20 @@ export interface ReviewStatePatch {
 
 
 /**
- * An applied op as the review stores it: StoredOp of store/backend/neurostore/review/schema/review-bundle.schema.json. In an op result each one also carries `inverse`, the ops that undo it without their client_op_ids, unless it is a note; the bundle\'s stored ops do not. 
+ * An applied op as the review stores it: $defs/StoredOp of the contract served at GET /api/review/schemas/review-bundle. In an op result each one also carries `inverse`, the ops that undo it without their client_op_ids, unless it is a note; the bundle\'s stored ops do not. 
  */
 export interface ReviewStoredOp {
     'inverse'?: Array<object>;
 }
 export interface ReviewSummary {
-    'id'?: string;
-    'source_id'?: string;
-    'user_id'?: string;
-    'state'?: ReviewState;
+    'id': string;
+    'source_id': string;
+    'user_id': string;
+    'state': ReviewState;
     'set_aside'?: ReviewSetAside;
-    'last_seq'?: number;
-    'created_at'?: string;
-    'updated_at'?: string | null;
+    'last_seq': number;
+    'created_at': string;
+    'updated_at': string | null;
 }
 
 
@@ -2433,7 +2439,7 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
          * @summary Load the papers of a study_schema layout zip for review
-         * @param {File} file A zip of a study_schema layout, at most 200 MB.
+         * @param {File} file A zip of a study_schema layout. The whole request body is at most 200 MiB.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2704,9 +2710,9 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
-         * @summary One study_schema JSON Schema the review app reads
-         * @param {string} name extraction-record or coordinate-parse
+         * extraction-record and coordinate-parse are the JSON Schemas of the study_schema version the server runs, with their description annotations removed (a property named description is kept). review-bundle and review-ops are the JSON Schema 2020-12 contracts of the review bundle and of a batch of review ops, whole. The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+         * @summary One JSON Schema of the review API
+         * @param {string} name extraction-record, coordinate-parse, review-bundle or review-ops
          * @param {string} [ifNoneMatch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2946,7 +2952,7 @@ export const ReviewApiFp = function(configuration?: Configuration) {
         /**
          * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
          * @summary Load the papers of a study_schema layout zip for review
-         * @param {File} file A zip of a study_schema layout, at most 200 MB.
+         * @param {File} file A zip of a study_schema layout. The whole request body is at most 200 MiB.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3035,9 +3041,9 @@ export const ReviewApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
-         * @summary One study_schema JSON Schema the review app reads
-         * @param {string} name extraction-record or coordinate-parse
+         * extraction-record and coordinate-parse are the JSON Schemas of the study_schema version the server runs, with their description annotations removed (a property named description is kept). review-bundle and review-ops are the JSON Schema 2020-12 contracts of the review bundle and of a batch of review ops, whole. The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+         * @summary One JSON Schema of the review API
+         * @param {string} name extraction-record, coordinate-parse, review-bundle or review-ops
          * @param {string} [ifNoneMatch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3145,7 +3151,7 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
         /**
          * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
          * @summary Load the papers of a study_schema layout zip for review
-         * @param {File} file A zip of a study_schema layout, at most 200 MB.
+         * @param {File} file A zip of a study_schema layout. The whole request body is at most 200 MiB.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3213,9 +3219,9 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.reviewReviewsIdPatch(id, reviewStatePatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
-         * @summary One study_schema JSON Schema the review app reads
-         * @param {string} name extraction-record or coordinate-parse
+         * extraction-record and coordinate-parse are the JSON Schemas of the study_schema version the server runs, with their description annotations removed (a property named description is kept). review-bundle and review-ops are the JSON Schema 2020-12 contracts of the review bundle and of a batch of review ops, whole. The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+         * @summary One JSON Schema of the review API
+         * @param {string} name extraction-record, coordinate-parse, review-bundle or review-ops
          * @param {string} [ifNoneMatch] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3313,7 +3319,7 @@ export class ReviewApi extends BaseAPI {
     /**
      * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
      * @summary Load the papers of a study_schema layout zip for review
-     * @param {File} file A zip of a study_schema layout, at most 200 MB.
+     * @param {File} file A zip of a study_schema layout. The whole request body is at most 200 MiB.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -3388,9 +3394,9 @@ export class ReviewApi extends BaseAPI {
     }
 
     /**
-     * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
-     * @summary One study_schema JSON Schema the review app reads
-     * @param {string} name extraction-record or coordinate-parse
+     * extraction-record and coordinate-parse are the JSON Schemas of the study_schema version the server runs, with their description annotations removed (a property named description is kept). review-bundle and review-ops are the JSON Schema 2020-12 contracts of the review bundle and of a batch of review ops, whole. The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+     * @summary One JSON Schema of the review API
+     * @param {string} name extraction-record, coordinate-parse, review-bundle or review-ops
      * @param {string} [ifNoneMatch] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

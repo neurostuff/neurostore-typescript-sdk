@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**results** | [**Array&lt;ReviewAssignee&gt;**](ReviewAssignee.md) |  | [optional] [default to undefined]
+**results** | [**Array&lt;ReviewAssignee&gt;**](ReviewAssignee.md) |  | [default to undefined]
 
 ## Example
 

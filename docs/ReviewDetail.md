@@ -5,14 +5,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **string** |  | [optional] [default to undefined]
-**source_id** | **string** |  | [optional] [default to undefined]
-**user_id** | **string** |  | [optional] [default to undefined]
-**state** | [**ReviewState**](ReviewState.md) |  | [optional] [default to undefined]
+**id** | **string** |  | [default to undefined]
+**source_id** | **string** |  | [default to undefined]
+**user_id** | **string** |  | [default to undefined]
+**state** | [**ReviewState**](ReviewState.md) |  | [default to undefined]
 **set_aside** | [**ReviewSetAside**](ReviewSetAside.md) |  | [optional] [default to undefined]
-**last_seq** | **number** |  | [optional] [default to undefined]
-**created_at** | **string** |  | [optional] [default to undefined]
-**updated_at** | **string** |  | [optional] [default to undefined]
+**last_seq** | **number** |  | [default to undefined]
+**created_at** | **string** |  | [default to undefined]
+**updated_at** | **string** |  | [default to undefined]
 **record** | **object** | The extraction record with the review\&#39;s ops applied. | [optional] [default to undefined]
 **coordinate_revision** | **object** |  | [optional] [default to undefined]
 **provenance** | **object** |  | [optional] [default to undefined]

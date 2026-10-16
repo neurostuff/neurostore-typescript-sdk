@@ -5,13 +5,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ops** | [**Array&lt;ReviewStoredOp&gt;**](ReviewStoredOp.md) |  | [optional] [default to undefined]
-**last_seq** | **number** |  | [optional] [default to undefined]
-**record** | **object** |  | [optional] [default to undefined]
-**coordinate_revision** | **object** |  | [optional] [default to undefined]
-**provenance** | **object** |  | [optional] [default to undefined]
-**annotations** | **object** |  | [optional] [default to undefined]
-**hidden** | **object** | The hidden set of the new record, as in the bundle. | [optional] [default to undefined]
+**ops** | [**Array&lt;ReviewStoredOp&gt;**](ReviewStoredOp.md) |  | [default to undefined]
+**last_seq** | **number** |  | [default to undefined]
+**record** | **object** |  | [default to undefined]
+**coordinate_revision** | **object** |  | [default to undefined]
+**provenance** | **object** |  | [default to undefined]
+**annotations** | **object** |  | [default to undefined]
+**hidden** | **object** | The hidden set of the new record, as in the bundle. | [default to undefined]
 **entities** | **Array&lt;object&gt;** | The entity index of the new record, as in the bundle. | [optional] [default to undefined]
 
 ## Example
