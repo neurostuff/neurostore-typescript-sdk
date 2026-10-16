@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **created_at** | **string** |  | [optional] [default to undefined]
 **total** | **number** | Targets a reviewer can judge in the source\&#39;s record, its extracted values and its coordinate parse\&#39;s analyses. | [optional] [default to undefined]
 **reviews** | [**Array&lt;ReviewProgress&gt;**](ReviewProgress.md) |  | [optional] [default to undefined]
+**assignees** | [**Array&lt;ReviewAssignee&gt;**](ReviewAssignee.md) | The users the paper (base study) is assigned to. | [optional] [default to undefined]
 
 ## Example
 
@@ -26,6 +27,7 @@ const instance: ReviewSource = {
     created_at,
     total,
     reviews,
+    assignees,
 };
 ```
 

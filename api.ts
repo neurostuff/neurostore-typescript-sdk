@@ -1265,6 +1265,19 @@ export interface ResourceAttributes {
      */
     'username'?: string | null;
 }
+export interface ReviewAssignee {
+    'user_id': string;
+    'name': string | null;
+}
+export interface ReviewAssigneeList {
+    'results'?: Array<ReviewAssignee>;
+}
+export interface ReviewAssignment {
+    'base_study_id': string;
+    'user_id': string;
+    'name': string | null;
+    'assigned_by_id': string | null;
+}
 export interface ReviewDetail {
     'id'?: string;
     'source_id'?: string;
@@ -1321,6 +1334,14 @@ export interface ReviewImportReportSkippedInner {
     'source_id': string;
     'reason': string;
 }
+export interface ReviewMe {
+    'user_id': string;
+    'name': string | null;
+    /**
+     * Whether the caller is a lead reviewer (admin-reviewer and admin).
+     */
+    'lead': boolean;
+}
 export interface ReviewOpBatch {
     /**
      * The review\'s last_seq the batch was made against.
@@ -1366,9 +1387,20 @@ export interface ReviewProgress {
      * Judgeable targets of the source that the reviewer verified, edited, added or removed. Unlike edited and verified, which count every provenance key, this counts only among the source\'s judgeable targets.
      */
     'reviewed'?: number;
+    /**
+     * The ops the reviewer has applied to this review.
+     */
+    'op_count'?: number;
+    /**
+     * When the reviewer last applied an op; null before any.
+     */
+    'last_edit_at'?: string | null;
 }
 
 
+export interface ReviewReviewerList {
+    'results': Array<ReviewAssignee>;
+}
 /**
  * Present only while the review is set aside.
  */
@@ -1407,6 +1439,10 @@ export interface ReviewSource {
      */
     'total'?: number;
     'reviews'?: Array<ReviewProgress>;
+    /**
+     * The users the paper (base study) is assigned to.
+     */
+    'assignees'?: Array<ReviewAssignee>;
 }
 
 export const ReviewSourceOriginEnum = {
@@ -2235,6 +2271,128 @@ export interface WriteableResourceAttributes {
 export const ReviewApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary The users a paper is assigned to
+         * @param {string} id The base study (paper).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewBaseStudiesIdAssignmentsGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('reviewBaseStudiesIdAssignmentsGet', 'id', id)
+            const localVarPath = `/review/base-studies/{id}/assignments`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * A reviewer releases their own assignment; a lead reviewer releases anyone\'s. Releasing a user who is not assigned changes nothing and answers 204. 
+         * @summary Release a paper from a reviewer
+         * @param {string} id The base study (paper).
+         * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewBaseStudiesIdAssignmentsUserIdDelete: async (id: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('reviewBaseStudiesIdAssignmentsUserIdDelete', 'id', id)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('reviewBaseStudiesIdAssignmentsUserIdDelete', 'userId', userId)
+            const localVarPath = `/review/base-studies/{id}/assignments/{user_id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * A reviewer assigns a paper to themselves. A lead reviewer (admin-reviewer and admin) assigns it to any admin-reviewer. Assigning an already assigned user changes nothing and answers 200. The assignee must hold the admin-reviewer role, or the request is refused with 422. 
+         * @summary Assign a paper to a reviewer, or reassign it
+         * @param {string} id The base study (paper).
+         * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewBaseStudiesIdAssignmentsUserIdPut: async (id: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('reviewBaseStudiesIdAssignmentsUserIdPut', 'id', id)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('reviewBaseStudiesIdAssignmentsUserIdPut', 'userId', userId)
+            const localVarPath = `/review/base-studies/{id}/assignments/{user_id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
          * @summary Export the reviews that match the filters as a zip of layout trees
          * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
@@ -2311,6 +2469,74 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary The caller, as a reviewer
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewMeGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/review/me`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary The admin-reviewers, to assign papers to
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewReviewersGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/review/reviewers/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2526,10 +2752,11 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {number} [pageSize] 
          * @param {string} [baseStudyId] Only the sources of this base study.
          * @param {boolean} [mine] Only the sources the caller has a review of.
+         * @param {ReviewSourcesGetAssignedEnum} [assigned] Only the sources whose paper is assigned to the caller.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reviewSourcesGet: async (page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        reviewSourcesGet: async (page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, assigned?: ReviewSourcesGetAssignedEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/review/sources/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2560,6 +2787,10 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (mine !== undefined) {
                 localVarQueryParameter['mine'] = mine;
+            }
+
+            if (assigned !== undefined) {
+                localVarQueryParameter['assigned'] = assigned;
             }
 
 
@@ -2659,6 +2890,47 @@ export const ReviewApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReviewApiAxiosParamCreator(configuration)
     return {
         /**
+         * 
+         * @summary The users a paper is assigned to
+         * @param {string} id The base study (paper).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reviewBaseStudiesIdAssignmentsGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewAssigneeList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewBaseStudiesIdAssignmentsGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewBaseStudiesIdAssignmentsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * A reviewer releases their own assignment; a lead reviewer releases anyone\'s. Releasing a user who is not assigned changes nothing and answers 204. 
+         * @summary Release a paper from a reviewer
+         * @param {string} id The base study (paper).
+         * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reviewBaseStudiesIdAssignmentsUserIdDelete(id: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewBaseStudiesIdAssignmentsUserIdDelete(id, userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewBaseStudiesIdAssignmentsUserIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * A reviewer assigns a paper to themselves. A lead reviewer (admin-reviewer and admin) assigns it to any admin-reviewer. Assigning an already assigned user changes nothing and answers 200. The assignee must hold the admin-reviewer role, or the request is refused with 422. 
+         * @summary Assign a paper to a reviewer, or reassign it
+         * @param {string} id The base study (paper).
+         * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reviewBaseStudiesIdAssignmentsUserIdPut(id: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewAssignment>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewBaseStudiesIdAssignmentsUserIdPut(id, userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewBaseStudiesIdAssignmentsUserIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
          * @summary Export the reviews that match the filters as a zip of layout trees
          * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
@@ -2682,6 +2954,30 @@ export const ReviewApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.reviewImportsPost(file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewImportsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary The caller, as a reviewer
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reviewMeGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewMe>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewMeGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewMeGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary The admin-reviewers, to assign papers to
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reviewReviewersGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewReviewerList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewReviewersGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewReviewersGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2759,11 +3055,12 @@ export const ReviewApiFp = function(configuration?: Configuration) {
          * @param {number} [pageSize] 
          * @param {string} [baseStudyId] Only the sources of this base study.
          * @param {boolean} [mine] Only the sources the caller has a review of.
+         * @param {ReviewSourcesGetAssignedEnum} [assigned] Only the sources whose paper is assigned to the caller.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async reviewSourcesGet(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewSourceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewSourcesGet(page, pageSize, baseStudyId, mine, options);
+        async reviewSourcesGet(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, assigned?: ReviewSourcesGetAssignedEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewSourceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewSourcesGet(page, pageSize, baseStudyId, mine, assigned, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewSourcesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2804,6 +3101,38 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = ReviewApiFp(configuration)
     return {
         /**
+         * 
+         * @summary The users a paper is assigned to
+         * @param {string} id The base study (paper).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewBaseStudiesIdAssignmentsGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<ReviewAssigneeList> {
+            return localVarFp.reviewBaseStudiesIdAssignmentsGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * A reviewer releases their own assignment; a lead reviewer releases anyone\'s. Releasing a user who is not assigned changes nothing and answers 204. 
+         * @summary Release a paper from a reviewer
+         * @param {string} id The base study (paper).
+         * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewBaseStudiesIdAssignmentsUserIdDelete(id: string, userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.reviewBaseStudiesIdAssignmentsUserIdDelete(id, userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * A reviewer assigns a paper to themselves. A lead reviewer (admin-reviewer and admin) assigns it to any admin-reviewer. Assigning an already assigned user changes nothing and answers 200. The assignee must hold the admin-reviewer role, or the request is refused with 422. 
+         * @summary Assign a paper to a reviewer, or reassign it
+         * @param {string} id The base study (paper).
+         * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewBaseStudiesIdAssignmentsUserIdPut(id: string, userId: string, options?: RawAxiosRequestConfig): AxiosPromise<ReviewAssignment> {
+            return localVarFp.reviewBaseStudiesIdAssignmentsUserIdPut(id, userId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
          * @summary Export the reviews that match the filters as a zip of layout trees
          * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
@@ -2822,6 +3151,24 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
          */
         reviewImportsPost(file: File, options?: RawAxiosRequestConfig): AxiosPromise<ReviewImportReport> {
             return localVarFp.reviewImportsPost(file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary The caller, as a reviewer
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewMeGet(options?: RawAxiosRequestConfig): AxiosPromise<ReviewMe> {
+            return localVarFp.reviewMeGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary The admin-reviewers, to assign papers to
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewReviewersGet(options?: RawAxiosRequestConfig): AxiosPromise<ReviewReviewerList> {
+            return localVarFp.reviewReviewersGet(options).then((request) => request(axios, basePath));
         },
         /**
          * Any reviewer may export any review. The zip holds the paper\'s documents and text, the review\'s record, its coordinate revision when it has one (each analysis\'s verdict taken from the review\'s provenance, a rejected analysis written as omit), and its ops in seq order. The record is never changed by the export; run/provenance/<id>.json beside it names the review, its state, whether it was reviewed and whether its record was edited, and the source record it derives from. The whole zip is built in memory before the response is sent. 
@@ -2883,11 +3230,12 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
          * @param {number} [pageSize] 
          * @param {string} [baseStudyId] Only the sources of this base study.
          * @param {boolean} [mine] Only the sources the caller has a review of.
+         * @param {ReviewSourcesGetAssignedEnum} [assigned] Only the sources whose paper is assigned to the caller.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reviewSourcesGet(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ReviewSourceList> {
-            return localVarFp.reviewSourcesGet(page, pageSize, baseStudyId, mine, options).then((request) => request(axios, basePath));
+        reviewSourcesGet(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, assigned?: ReviewSourcesGetAssignedEnum, options?: RawAxiosRequestConfig): AxiosPromise<ReviewSourceList> {
+            return localVarFp.reviewSourcesGet(page, pageSize, baseStudyId, mine, assigned, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2917,6 +3265,41 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
  */
 export class ReviewApi extends BaseAPI {
     /**
+     * 
+     * @summary The users a paper is assigned to
+     * @param {string} id The base study (paper).
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public reviewBaseStudiesIdAssignmentsGet(id: string, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewBaseStudiesIdAssignmentsGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * A reviewer releases their own assignment; a lead reviewer releases anyone\'s. Releasing a user who is not assigned changes nothing and answers 204. 
+     * @summary Release a paper from a reviewer
+     * @param {string} id The base study (paper).
+     * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public reviewBaseStudiesIdAssignmentsUserIdDelete(id: string, userId: string, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewBaseStudiesIdAssignmentsUserIdDelete(id, userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * A reviewer assigns a paper to themselves. A lead reviewer (admin-reviewer and admin) assigns it to any admin-reviewer. Assigning an already assigned user changes nothing and answers 200. The assignee must hold the admin-reviewer role, or the request is refused with 422. 
+     * @summary Assign a paper to a reviewer, or reassign it
+     * @param {string} id The base study (paper).
+     * @param {string} userId The assignee. A reviewer may name only themselves; a lead reviewer may name anyone.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public reviewBaseStudiesIdAssignmentsUserIdPut(id: string, userId: string, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewBaseStudiesIdAssignmentsUserIdPut(id, userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * One layout tree per reviewer, under the reviewer\'s id. A source with no review is included, as loaded under unreviewed/, only when include_unreviewed is true. An empty filter list means no filter. include_unreviewed cannot be combined with user_ids or states; that request is refused with 422. The whole zip is built in memory before the response is sent, so split a large export with source_ids or base_study_ids. 
      * @summary Export the reviews that match the filters as a zip of layout trees
      * @param {ReviewExportsPostRequest} [reviewExportsPostRequest] 
@@ -2936,6 +3319,26 @@ export class ReviewApi extends BaseAPI {
      */
     public reviewImportsPost(file: File, options?: RawAxiosRequestConfig) {
         return ReviewApiFp(this.configuration).reviewImportsPost(file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary The caller, as a reviewer
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public reviewMeGet(options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewMeGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary The admin-reviewers, to assign papers to
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public reviewReviewersGet(options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewReviewersGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3003,11 +3406,12 @@ export class ReviewApi extends BaseAPI {
      * @param {number} [pageSize] 
      * @param {string} [baseStudyId] Only the sources of this base study.
      * @param {boolean} [mine] Only the sources the caller has a review of.
+     * @param {ReviewSourcesGetAssignedEnum} [assigned] Only the sources whose paper is assigned to the caller.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public reviewSourcesGet(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, options?: RawAxiosRequestConfig) {
-        return ReviewApiFp(this.configuration).reviewSourcesGet(page, pageSize, baseStudyId, mine, options).then((request) => request(this.axios, this.basePath));
+    public reviewSourcesGet(page?: number, pageSize?: number, baseStudyId?: string, mine?: boolean, assigned?: ReviewSourcesGetAssignedEnum, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewSourcesGet(page, pageSize, baseStudyId, mine, assigned, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3033,6 +3437,10 @@ export class ReviewApi extends BaseAPI {
     }
 }
 
+export const ReviewSourcesGetAssignedEnum = {
+    Me: 'me'
+} as const;
+export type ReviewSourcesGetAssignedEnum = typeof ReviewSourcesGetAssignedEnum[keyof typeof ReviewSourcesGetAssignedEnum];
 
 
 /**

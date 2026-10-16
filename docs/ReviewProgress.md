@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **edited** | **number** | Targets the reviewer edited, added or removed. | [optional] [default to undefined]
 **verified** | **number** | Targets the reviewer checked and left unchanged. | [optional] [default to undefined]
 **reviewed** | **number** | Judgeable targets of the source that the reviewer verified, edited, added or removed. Unlike edited and verified, which count every provenance key, this counts only among the source\&#39;s judgeable targets. | [optional] [default to undefined]
+**op_count** | **number** | The ops the reviewer has applied to this review. | [optional] [default to undefined]
+**last_edit_at** | **string** | When the reviewer last applied an op; null before any. | [optional] [default to undefined]
 
 ## Example
 
@@ -31,6 +33,8 @@ const instance: ReviewProgress = {
     edited,
     verified,
     reviewed,
+    op_count,
+    last_edit_at,
 };
 ```
 

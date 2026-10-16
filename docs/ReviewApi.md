@@ -4,8 +4,13 @@ All URIs are relative to *https://neurostore.org/api*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
+|[**reviewBaseStudiesIdAssignmentsGet**](#reviewbasestudiesidassignmentsget) | **GET** /review/base-studies/{id}/assignments | The users a paper is assigned to|
+|[**reviewBaseStudiesIdAssignmentsUserIdDelete**](#reviewbasestudiesidassignmentsuseriddelete) | **DELETE** /review/base-studies/{id}/assignments/{user_id} | Release a paper from a reviewer|
+|[**reviewBaseStudiesIdAssignmentsUserIdPut**](#reviewbasestudiesidassignmentsuseridput) | **PUT** /review/base-studies/{id}/assignments/{user_id} | Assign a paper to a reviewer, or reassign it|
 |[**reviewExportsPost**](#reviewexportspost) | **POST** /review/exports/ | Export the reviews that match the filters as a zip of layout trees|
 |[**reviewImportsPost**](#reviewimportspost) | **POST** /review/imports/ | Load the papers of a study_schema layout zip for review|
+|[**reviewMeGet**](#reviewmeget) | **GET** /review/me | The caller, as a reviewer|
+|[**reviewReviewersGet**](#reviewreviewersget) | **GET** /review/reviewers/ | The admin-reviewers, to assign papers to|
 |[**reviewReviewsIdExportGet**](#reviewreviewsidexportget) | **GET** /review/reviews/{id}/export | Export one review as a study_schema layout zip|
 |[**reviewReviewsIdGet**](#reviewreviewsidget) | **GET** /review/reviews/{id} | One reviewer\&#39;s review of a paper|
 |[**reviewReviewsIdOpsPost**](#reviewreviewsidopspost) | **POST** /review/reviews/{id}/ops | Apply a batch of the owner\&#39;s ops to their review|
@@ -14,6 +19,175 @@ All URIs are relative to *https://neurostore.org/api*
 |[**reviewSourcesGet**](#reviewsourcesget) | **GET** /review/sources/ | List papers loaded for review, with each reviewer\&#39;s progress|
 |[**reviewSourcesIdBundleGet**](#reviewsourcesidbundleget) | **GET** /review/sources/{id}/bundle | Everything the review app needs to open one paper for the caller|
 |[**reviewSourcesIdReviewPut**](#reviewsourcesidreviewput) | **PUT** /review/sources/{id}/review | Start the caller\&#39;s review of a paper|
+
+# **reviewBaseStudiesIdAssignmentsGet**
+> ReviewAssigneeList reviewBaseStudiesIdAssignmentsGet()
+
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let id: string; //The base study (paper). (default to undefined)
+
+const { status, data } = await apiInstance.reviewBaseStudiesIdAssignmentsGet(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] | The base study (paper). | defaults to undefined|
+
+
+### Return type
+
+**ReviewAssigneeList**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reviewBaseStudiesIdAssignmentsUserIdDelete**
+> reviewBaseStudiesIdAssignmentsUserIdDelete()
+
+A reviewer releases their own assignment; a lead reviewer releases anyone\'s. Releasing a user who is not assigned changes nothing and answers 204. 
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let id: string; //The base study (paper). (default to undefined)
+let userId: string; //The assignee. A reviewer may name only themselves; a lead reviewer may name anyone. (default to undefined)
+
+const { status, data } = await apiInstance.reviewBaseStudiesIdAssignmentsUserIdDelete(
+    id,
+    userId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] | The base study (paper). | defaults to undefined|
+| **userId** | [**string**] | The assignee. A reviewer may name only themselves; a lead reviewer may name anyone. | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**204** | The assignment is released, or was not there |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | A reviewer named another user |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reviewBaseStudiesIdAssignmentsUserIdPut**
+> ReviewAssignment reviewBaseStudiesIdAssignmentsUserIdPut()
+
+A reviewer assigns a paper to themselves. A lead reviewer (admin-reviewer and admin) assigns it to any admin-reviewer. Assigning an already assigned user changes nothing and answers 200. The assignee must hold the admin-reviewer role, or the request is refused with 422. 
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let id: string; //The base study (paper). (default to undefined)
+let userId: string; //The assignee. A reviewer may name only themselves; a lead reviewer may name anyone. (default to undefined)
+
+const { status, data } = await apiInstance.reviewBaseStudiesIdAssignmentsUserIdPut(
+    id,
+    userId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] | The base study (paper). | defaults to undefined|
+| **userId** | [**string**] | The assignee. A reviewer may name only themselves; a lead reviewer may name anyone. | defaults to undefined|
+
+
+### Return type
+
+**ReviewAssignment**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The user was already assigned |  -  |
+|**201** | The user was assigned |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | A reviewer named another user |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
+|**422** | The assignee does not hold the admin-reviewer role |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reviewExportsPost**
 > File reviewExportsPost()
@@ -122,6 +296,96 @@ const { status, data } = await apiInstance.reviewImportsPost(
 |**403** | Forbidden |  -  |
 |**413** | The file is over 200 MB |  * X-Request-ID -  <br>  |
 |**422** | Unprocessable Entity |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reviewMeGet**
+> ReviewMe reviewMeGet()
+
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+const { status, data } = await apiInstance.reviewMeGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**ReviewMe**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reviewReviewersGet**
+> ReviewReviewerList reviewReviewersGet()
+
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+const { status, data } = await apiInstance.reviewReviewersGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**ReviewReviewerList**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -432,12 +696,14 @@ let page: number; // (optional) (default to 1)
 let pageSize: number; // (optional) (default to 20)
 let baseStudyId: string; //Only the sources of this base study. (optional) (default to undefined)
 let mine: boolean; //Only the sources the caller has a review of. (optional) (default to false)
+let assigned: 'me'; //Only the sources whose paper is assigned to the caller. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.reviewSourcesGet(
     page,
     pageSize,
     baseStudyId,
-    mine
+    mine,
+    assigned
 );
 ```
 
@@ -449,6 +715,7 @@ const { status, data } = await apiInstance.reviewSourcesGet(
 | **pageSize** | [**number**] |  | (optional) defaults to 20|
 | **baseStudyId** | [**string**] | Only the sources of this base study. | (optional) defaults to undefined|
 | **mine** | [**boolean**] | Only the sources the caller has a review of. | (optional) defaults to false|
+| **assigned** | [**&#39;me&#39;**]**Array<&#39;me&#39;>** | Only the sources whose paper is assigned to the caller. | (optional) defaults to undefined|
 
 
 ### Return type
