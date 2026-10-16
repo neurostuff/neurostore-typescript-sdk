@@ -1360,7 +1360,7 @@ export interface ReviewProgress {
      */
     'verified'?: number;
     /**
-     * Judgeable targets of the source that the reviewer verified, edited, added or removed.
+     * Judgeable targets of the source that the reviewer verified, edited, added or removed. Unlike edited and verified, which count every provenance key, this counts only among the source\'s judgeable targets.
      */
     'reviewed'?: number;
 }
@@ -1370,6 +1370,9 @@ export interface ReviewSource {
     'id'?: string;
     'base_study_id'?: string;
     'label'?: string | null;
+    /**
+     * pipeline_run when the source names a pipeline config and a run, else upload.
+     */
     'origin'?: ReviewSourceOriginEnum;
     'created_at'?: string;
     /**
