@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **coordinate_revision** | **object** |  | [optional] [default to undefined]
 **provenance** | **object** |  | [optional] [default to undefined]
 **annotations** | **object** |  | [optional] [default to undefined]
-**ops** | **Array&lt;object&gt;** |  | [optional] [default to undefined]
+**ops** | [**Array&lt;ReviewStoredOp&gt;**](ReviewStoredOp.md) |  | [optional] [default to undefined]
 
 ## Example
 

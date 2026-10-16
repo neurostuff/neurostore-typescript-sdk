@@ -1280,7 +1280,7 @@ export interface ReviewDetail {
     'coordinate_revision'?: object | null;
     'provenance'?: object;
     'annotations'?: object;
-    'ops'?: Array<object>;
+    'ops'?: Array<ReviewStoredOp>;
 }
 
 
@@ -1327,7 +1327,7 @@ export interface ReviewOpBatch {
     'ops': Array<object>;
 }
 export interface ReviewOpResult {
-    'ops'?: Array<object>;
+    'ops'?: Array<ReviewStoredOp>;
     'last_seq'?: number;
     'record'?: object;
     'coordinate_revision'?: object | null;
@@ -1408,6 +1408,12 @@ export interface ReviewStatePatch {
 }
 
 
+/**
+ * An applied op as the review stores it: StoredOp of store/backend/neurostore/review/schema/review-bundle.schema.json. In an op result each one also carries `inverse`, the ops that undo it without their client_op_ids, unless it is a note; the bundle\'s stored ops do not. 
+ */
+export interface ReviewStoredOp {
+    'inverse'?: Array<object>;
+}
 export interface ReviewSummary {
     'id'?: string;
     'source_id'?: string;

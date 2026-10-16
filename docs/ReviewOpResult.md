@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ops** | **Array&lt;object&gt;** |  | [optional] [default to undefined]
+**ops** | [**Array&lt;ReviewStoredOp&gt;**](ReviewStoredOp.md) |  | [optional] [default to undefined]
 **last_seq** | **number** |  | [optional] [default to undefined]
 **record** | **object** |  | [optional] [default to undefined]
 **coordinate_revision** | **object** |  | [optional] [default to undefined]
