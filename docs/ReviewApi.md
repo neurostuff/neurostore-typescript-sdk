@@ -10,6 +10,7 @@ All URIs are relative to *https://neurostore.org/api*
 |[**reviewReviewsIdGet**](#reviewreviewsidget) | **GET** /review/reviews/{id} | One reviewer\&#39;s review of a paper|
 |[**reviewReviewsIdOpsPost**](#reviewreviewsidopspost) | **POST** /review/reviews/{id}/ops | Apply a batch of the owner\&#39;s ops to their review|
 |[**reviewReviewsIdPatch**](#reviewreviewsidpatch) | **PATCH** /review/reviews/{id} | Submit, reopen, or mark as the reference review|
+|[**reviewSchemasNameGet**](#reviewschemasnameget) | **GET** /review/schemas/{name} | One study_schema JSON Schema the review app reads|
 |[**reviewSourcesGet**](#reviewsourcesget) | **GET** /review/sources/ | List papers loaded for review, with each reviewer\&#39;s progress|
 |[**reviewSourcesIdBundleGet**](#reviewsourcesidbundleget) | **GET** /review/sources/{id}/bundle | Everything the review app needs to open one paper for the caller|
 |[**reviewSourcesIdReviewPut**](#reviewsourcesidreviewput) | **PUT** /review/sources/{id}/review | Start the caller\&#39;s review of a paper|
@@ -351,6 +352,64 @@ const { status, data } = await apiInstance.reviewReviewsIdPatch(
 |**403** | Forbidden |  -  |
 |**404** | Not Found |  * X-Request-ID -  <br>  |
 |**409** | The transition is not allowed, or the paper already has a reference review |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reviewSchemasNameGet**
+> object reviewSchemasNameGet()
+
+The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let name: string; //extraction-record or coordinate-parse (default to undefined)
+let ifNoneMatch: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.reviewSchemasNameGet(
+    name,
+    ifNoneMatch
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **name** | [**string**] | extraction-record or coordinate-parse | defaults to undefined|
+| **ifNoneMatch** | [**string**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+**object**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The JSON Schema |  * ETag -  <br>  * Cache-Control -  <br>  |
+|**304** | The schema has not changed since the ETag in If-None-Match |  * ETag -  <br>  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

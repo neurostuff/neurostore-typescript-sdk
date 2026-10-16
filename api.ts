@@ -2441,6 +2441,48 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+         * @summary One study_schema JSON Schema the review app reads
+         * @param {string} name extraction-record or coordinate-parse
+         * @param {string} [ifNoneMatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewSchemasNameGet: async (name: string, ifNoneMatch?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('reviewSchemasNameGet', 'name', name)
+            const localVarPath = `/review/schemas/{name}`
+                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            if (ifNoneMatch != null) {
+                localVarHeaderParameter['If-None-Match'] = String(ifNoneMatch);
+            }
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary List papers loaded for review, with each reviewer\'s progress
          * @param {number} [page] 
@@ -2660,6 +2702,20 @@ export const ReviewApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+         * @summary One study_schema JSON Schema the review app reads
+         * @param {string} name extraction-record or coordinate-parse
+         * @param {string} [ifNoneMatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reviewSchemasNameGet(name: string, ifNoneMatch?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewSchemasNameGet(name, ifNoneMatch, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewSchemasNameGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary List papers loaded for review, with each reviewer\'s progress
          * @param {number} [page] 
@@ -2773,6 +2829,17 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.reviewReviewsIdPatch(id, reviewStatePatch, options).then((request) => request(axios, basePath));
         },
         /**
+         * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+         * @summary One study_schema JSON Schema the review app reads
+         * @param {string} name extraction-record or coordinate-parse
+         * @param {string} [ifNoneMatch] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewSchemasNameGet(name: string, ifNoneMatch?: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.reviewSchemasNameGet(name, ifNoneMatch, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary List papers loaded for review, with each reviewer\'s progress
          * @param {number} [page] 
@@ -2878,6 +2945,18 @@ export class ReviewApi extends BaseAPI {
      */
     public reviewReviewsIdPatch(id: string, reviewStatePatch?: ReviewStatePatch, options?: RawAxiosRequestConfig) {
         return ReviewApiFp(this.configuration).reviewReviewsIdPatch(id, reviewStatePatch, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * The extraction-record or coordinate-parse JSON Schema of the study_schema version the server runs, with its description annotations removed (a property named description is kept). The ETag is a hash of the body; a request whose If-None-Match holds it is answered with 304. 
+     * @summary One study_schema JSON Schema the review app reads
+     * @param {string} name extraction-record or coordinate-parse
+     * @param {string} [ifNoneMatch] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public reviewSchemasNameGet(name: string, ifNoneMatch?: string, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewSchemasNameGet(name, ifNoneMatch, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
