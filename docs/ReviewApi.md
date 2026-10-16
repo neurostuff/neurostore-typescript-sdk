@@ -9,7 +9,7 @@ All URIs are relative to *https://neurostore.org/api*
 |[**reviewReviewsIdExportGet**](#reviewreviewsidexportget) | **GET** /review/reviews/{id}/export | Export one review as a study_schema layout zip|
 |[**reviewReviewsIdGet**](#reviewreviewsidget) | **GET** /review/reviews/{id} | One reviewer\&#39;s review of a paper|
 |[**reviewReviewsIdOpsPost**](#reviewreviewsidopspost) | **POST** /review/reviews/{id}/ops | Apply a batch of the owner\&#39;s ops to their review|
-|[**reviewReviewsIdPatch**](#reviewreviewsidpatch) | **PATCH** /review/reviews/{id} | Submit, reopen, or mark as the reference review|
+|[**reviewReviewsIdPatch**](#reviewreviewsidpatch) | **PATCH** /review/reviews/{id} | Submit, reopen, set aside, or mark as the reference review|
 |[**reviewSchemasNameGet**](#reviewschemasnameget) | **GET** /review/schemas/{name} | One study_schema JSON Schema the review app reads|
 |[**reviewSourcesGet**](#reviewsourcesget) | **GET** /review/sources/ | List papers loaded for review, with each reviewer\&#39;s progress|
 |[**reviewSourcesIdBundleGet**](#reviewsourcesidbundleget) | **GET** /review/sources/{id}/bundle | Everything the review app needs to open one paper for the caller|
@@ -299,7 +299,7 @@ const { status, data } = await apiInstance.reviewReviewsIdOpsPost(
 # **reviewReviewsIdPatch**
 > ReviewSummary reviewReviewsIdPatch()
 
-The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
+The owner moves in_progress to submitted and back, and sets an unusable paper aside (set_aside, with a reason) and resumes it (back to in_progress). Only an admin sets reference, and a paper has at most one reference review. 
 
 ### Example
 

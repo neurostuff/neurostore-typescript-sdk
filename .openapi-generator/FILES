@@ -97,6 +97,8 @@ docs/ReviewImportReportSkippedInner.md
 docs/ReviewOpBatch.md
 docs/ReviewOpResult.md
 docs/ReviewProgress.md
+docs/ReviewSetAside.md
+docs/ReviewSetAsideReason.md
 docs/ReviewSource.md
 docs/ReviewSourceList.md
 docs/ReviewState.md

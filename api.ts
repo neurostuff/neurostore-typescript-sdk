@@ -1270,6 +1270,7 @@ export interface ReviewDetail {
     'source_id'?: string;
     'user_id'?: string;
     'state'?: ReviewState;
+    'set_aside'?: ReviewSetAside;
     'last_seq'?: number;
     'created_at'?: string;
     'updated_at'?: string | null;
@@ -1295,7 +1296,8 @@ export interface ReviewExportsPostRequest {
 export const ReviewExportsPostRequestStatesEnum = {
     InProgress: 'in_progress',
     Submitted: 'submitted',
-    Reference: 'reference'
+    Reference: 'reference',
+    SetAside: 'set_aside'
 } as const;
 
 export type ReviewExportsPostRequestStatesEnum = typeof ReviewExportsPostRequestStatesEnum[keyof typeof ReviewExportsPostRequestStatesEnum];
@@ -1349,6 +1351,7 @@ export interface ReviewProgress {
     'user_id'?: string;
     'user_name'?: string | null;
     'state'?: ReviewState;
+    'set_aside'?: ReviewSetAside;
     'last_seq'?: number;
     'updated_at'?: string | null;
     /**
@@ -1364,6 +1367,30 @@ export interface ReviewProgress {
      */
     'reviewed'?: number;
 }
+
+
+/**
+ * Present only while the review is set aside.
+ */
+export interface ReviewSetAside {
+    'reason': ReviewSetAsideReason;
+    'note': string | null;
+}
+
+
+/**
+ * Why the paper was set aside; other needs a note.
+ */
+
+export const ReviewSetAsideReason = {
+    NoUsableText: 'no_usable_text',
+    OutOfScope: 'out_of_scope',
+    NoResults: 'no_results',
+    Duplicate: 'duplicate',
+    Other: 'other'
+} as const;
+
+export type ReviewSetAsideReason = typeof ReviewSetAsideReason[keyof typeof ReviewSetAsideReason];
 
 
 export interface ReviewSource {
@@ -1397,7 +1424,8 @@ export interface ReviewSourceList {
 export const ReviewState = {
     InProgress: 'in_progress',
     Submitted: 'submitted',
-    Reference: 'reference'
+    Reference: 'reference',
+    SetAside: 'set_aside'
 } as const;
 
 export type ReviewState = typeof ReviewState[keyof typeof ReviewState];
@@ -1405,6 +1433,8 @@ export type ReviewState = typeof ReviewState[keyof typeof ReviewState];
 
 export interface ReviewStatePatch {
     'state': ReviewState;
+    'reason'?: ReviewSetAsideReason;
+    'note'?: string;
 }
 
 
@@ -1419,6 +1449,7 @@ export interface ReviewSummary {
     'source_id'?: string;
     'user_id'?: string;
     'state'?: ReviewState;
+    'set_aside'?: ReviewSetAside;
     'last_seq'?: number;
     'created_at'?: string;
     'updated_at'?: string | null;
@@ -2405,8 +2436,8 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
-         * @summary Submit, reopen, or mark as the reference review
+         * The owner moves in_progress to submitted and back, and sets an unusable paper aside (set_aside, with a reason) and resumes it (back to in_progress). Only an admin sets reference, and a paper has at most one reference review. 
+         * @summary Submit, reopen, set aside, or mark as the reference review
          * @param {string} id 
          * @param {ReviewStatePatch} [reviewStatePatch] 
          * @param {*} [options] Override http request option.
@@ -2694,8 +2725,8 @@ export const ReviewApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
-         * @summary Submit, reopen, or mark as the reference review
+         * The owner moves in_progress to submitted and back, and sets an unusable paper aside (set_aside, with a reason) and resumes it (back to in_progress). Only an admin sets reference, and a paper has at most one reference review. 
+         * @summary Submit, reopen, set aside, or mark as the reference review
          * @param {string} id 
          * @param {ReviewStatePatch} [reviewStatePatch] 
          * @param {*} [options] Override http request option.
@@ -2824,8 +2855,8 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.reviewReviewsIdOpsPost(id, reviewOpBatch, options).then((request) => request(axios, basePath));
         },
         /**
-         * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
-         * @summary Submit, reopen, or mark as the reference review
+         * The owner moves in_progress to submitted and back, and sets an unusable paper aside (set_aside, with a reason) and resumes it (back to in_progress). Only an admin sets reference, and a paper has at most one reference review. 
+         * @summary Submit, reopen, set aside, or mark as the reference review
          * @param {string} id 
          * @param {ReviewStatePatch} [reviewStatePatch] 
          * @param {*} [options] Override http request option.
@@ -2942,8 +2973,8 @@ export class ReviewApi extends BaseAPI {
     }
 
     /**
-     * The owner moves in_progress to submitted and back. Only an admin sets reference, and a paper has at most one reference review. 
-     * @summary Submit, reopen, or mark as the reference review
+     * The owner moves in_progress to submitted and back, and sets an unusable paper aside (set_aside, with a reason) and resumes it (back to in_progress). Only an admin sets reference, and a paper has at most one reference review. 
+     * @summary Submit, reopen, set aside, or mark as the reference review
      * @param {string} id 
      * @param {ReviewStatePatch} [reviewStatePatch] 
      * @param {*} [options] Override http request option.

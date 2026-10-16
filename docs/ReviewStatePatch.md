@@ -6,6 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **state** | [**ReviewState**](ReviewState.md) |  | [default to undefined]
+**reason** | [**ReviewSetAsideReason**](ReviewSetAsideReason.md) |  | [optional] [default to undefined]
+**note** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -14,6 +16,8 @@ import { ReviewStatePatch } from './api';
 
 const instance: ReviewStatePatch = {
     state,
+    reason,
+    note,
 };
 ```
 

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **user_id** | **string** |  | [optional] [default to undefined]
 **user_name** | **string** |  | [optional] [default to undefined]
 **state** | [**ReviewState**](ReviewState.md) |  | [optional] [default to undefined]
+**set_aside** | [**ReviewSetAside**](ReviewSetAside.md) |  | [optional] [default to undefined]
 **last_seq** | **number** |  | [optional] [default to undefined]
 **updated_at** | **string** |  | [optional] [default to undefined]
 **edited** | **number** | Targets the reviewer edited, added or removed. | [optional] [default to undefined]
@@ -24,6 +25,7 @@ const instance: ReviewProgress = {
     user_id,
     user_name,
     state,
+    set_aside,
     last_seq,
     updated_at,
     edited,

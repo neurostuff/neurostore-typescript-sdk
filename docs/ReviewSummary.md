@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **source_id** | **string** |  | [optional] [default to undefined]
 **user_id** | **string** |  | [optional] [default to undefined]
 **state** | [**ReviewState**](ReviewState.md) |  | [optional] [default to undefined]
+**set_aside** | [**ReviewSetAside**](ReviewSetAside.md) |  | [optional] [default to undefined]
 **last_seq** | **number** |  | [optional] [default to undefined]
 **created_at** | **string** |  | [optional] [default to undefined]
 **updated_at** | **string** |  | [optional] [default to undefined]
@@ -23,6 +24,7 @@ const instance: ReviewSummary = {
     source_id,
     user_id,
     state,
+    set_aside,
     last_seq,
     created_at,
     updated_at,
