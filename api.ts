@@ -2437,6 +2437,65 @@ export const ReviewApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Lead reviewers only (admin-reviewer and admin). Each record the run stored under the config loads with the coordinate parse it read, and with the pipeline\'s revision when it read one. Neurostore keeps no parsed paper or text, so the zip holds each paper\'s parsed paper and text as a study_schema layout; its parses and records are not read. A text whose sha256 is not the one the run read fails its paper. 
+         * @summary Load the records of a pipeline run already in neurostore for review
+         * @param {string} configId The pipeline config whose records to load.
+         * @param {string} runId The run of that config.
+         * @param {File} file A zip of a study_schema layout with each paper\\\&#39;s parsed paper and text. The whole request body is at most 200 MiB.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewImportsPipelinePost: async (configId: string, runId: string, file: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'configId' is not null or undefined
+            assertParamExists('reviewImportsPipelinePost', 'configId', configId)
+            // verify required parameter 'runId' is not null or undefined
+            assertParamExists('reviewImportsPipelinePost', 'runId', runId)
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('reviewImportsPipelinePost', 'file', file)
+            const localVarPath = `/review/imports/pipeline`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            if (configId !== undefined) { 
+                localVarFormParams.append('config_id', configId as any);
+            }
+    
+            if (runId !== undefined) { 
+                localVarFormParams.append('run_id', runId as any);
+            }
+    
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
          * @summary Load the papers of a study_schema layout zip for review
          * @param {File} file A zip of a study_schema layout. The whole request body is at most 200 MiB.
@@ -2950,6 +3009,21 @@ export const ReviewApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Lead reviewers only (admin-reviewer and admin). Each record the run stored under the config loads with the coordinate parse it read, and with the pipeline\'s revision when it read one. Neurostore keeps no parsed paper or text, so the zip holds each paper\'s parsed paper and text as a study_schema layout; its parses and records are not read. A text whose sha256 is not the one the run read fails its paper. 
+         * @summary Load the records of a pipeline run already in neurostore for review
+         * @param {string} configId The pipeline config whose records to load.
+         * @param {string} runId The run of that config.
+         * @param {File} file A zip of a study_schema layout with each paper\\\&#39;s parsed paper and text. The whole request body is at most 200 MiB.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reviewImportsPipelinePost(configId: string, runId: string, file: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReviewImportReport>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reviewImportsPipelinePost(configId, runId, file, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReviewApi.reviewImportsPipelinePost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
          * @summary Load the papers of a study_schema layout zip for review
          * @param {File} file A zip of a study_schema layout. The whole request body is at most 200 MiB.
@@ -3149,6 +3223,18 @@ export const ReviewApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.reviewExportsPost(reviewExportsPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Lead reviewers only (admin-reviewer and admin). Each record the run stored under the config loads with the coordinate parse it read, and with the pipeline\'s revision when it read one. Neurostore keeps no parsed paper or text, so the zip holds each paper\'s parsed paper and text as a study_schema layout; its parses and records are not read. A text whose sha256 is not the one the run read fails its paper. 
+         * @summary Load the records of a pipeline run already in neurostore for review
+         * @param {string} configId The pipeline config whose records to load.
+         * @param {string} runId The run of that config.
+         * @param {File} file A zip of a study_schema layout with each paper\\\&#39;s parsed paper and text. The whole request body is at most 200 MiB.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reviewImportsPipelinePost(configId: string, runId: string, file: File, options?: RawAxiosRequestConfig): AxiosPromise<ReviewImportReport> {
+            return localVarFp.reviewImportsPipelinePost(configId, runId, file, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Lead reviewers only (admin-reviewer and admin). Each paper is checked and stored on its own: the report names what loaded, what was already loaded and what failed, and why. A file that is not a layout is refused whole. 
          * @summary Load the papers of a study_schema layout zip for review
          * @param {File} file A zip of a study_schema layout. The whole request body is at most 200 MiB.
@@ -3314,6 +3400,19 @@ export class ReviewApi extends BaseAPI {
      */
     public reviewExportsPost(reviewExportsPostRequest?: ReviewExportsPostRequest, options?: RawAxiosRequestConfig) {
         return ReviewApiFp(this.configuration).reviewExportsPost(reviewExportsPostRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Lead reviewers only (admin-reviewer and admin). Each record the run stored under the config loads with the coordinate parse it read, and with the pipeline\'s revision when it read one. Neurostore keeps no parsed paper or text, so the zip holds each paper\'s parsed paper and text as a study_schema layout; its parses and records are not read. A text whose sha256 is not the one the run read fails its paper. 
+     * @summary Load the records of a pipeline run already in neurostore for review
+     * @param {string} configId The pipeline config whose records to load.
+     * @param {string} runId The run of that config.
+     * @param {File} file A zip of a study_schema layout with each paper\\\&#39;s parsed paper and text. The whole request body is at most 200 MiB.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public reviewImportsPipelinePost(configId: string, runId: string, file: File, options?: RawAxiosRequestConfig) {
+        return ReviewApiFp(this.configuration).reviewImportsPipelinePost(configId, runId, file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

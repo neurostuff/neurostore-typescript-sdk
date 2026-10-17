@@ -8,6 +8,7 @@ All URIs are relative to *https://neurostore.org/api*
 |[**reviewBaseStudiesIdAssignmentsUserIdDelete**](#reviewbasestudiesidassignmentsuseriddelete) | **DELETE** /review/base-studies/{id}/assignments/{user_id} | Release a paper from a reviewer|
 |[**reviewBaseStudiesIdAssignmentsUserIdPut**](#reviewbasestudiesidassignmentsuseridput) | **PUT** /review/base-studies/{id}/assignments/{user_id} | Assign a paper to a reviewer, or reassign it|
 |[**reviewExportsPost**](#reviewexportspost) | **POST** /review/exports/ | Export the reviews that match the filters as a zip of layout trees|
+|[**reviewImportsPipelinePost**](#reviewimportspipelinepost) | **POST** /review/imports/pipeline | Load the records of a pipeline run already in neurostore for review|
 |[**reviewImportsPost**](#reviewimportspost) | **POST** /review/imports/ | Load the papers of a study_schema layout zip for review|
 |[**reviewMeGet**](#reviewmeget) | **GET** /review/me | The caller, as a reviewer|
 |[**reviewReviewersGet**](#reviewreviewersget) | **GET** /review/reviewers/ | The admin-reviewers, to assign papers to|
@@ -241,6 +242,69 @@ const { status, data } = await apiInstance.reviewExportsPost(
 |**401** | Unauthorized |  -  |
 |**403** | Forbidden |  -  |
 |**422** | include_unreviewed was combined with a reviewer or state filter, or a source\&#39;s paper has no article_id  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reviewImportsPipelinePost**
+> ReviewImportReport reviewImportsPipelinePost()
+
+Lead reviewers only (admin-reviewer and admin). Each record the run stored under the config loads with the coordinate parse it read, and with the pipeline\'s revision when it read one. Neurostore keeps no parsed paper or text, so the zip holds each paper\'s parsed paper and text as a study_schema layout; its parses and records are not read. A text whose sha256 is not the one the run read fails its paper. 
+
+### Example
+
+```typescript
+import {
+    ReviewApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ReviewApi(configuration);
+
+let configId: string; //The pipeline config whose records to load. (default to undefined)
+let runId: string; //The run of that config. (default to undefined)
+let file: File; //A zip of a study_schema layout with each paper\\\'s parsed paper and text. The whole request body is at most 200 MiB. (default to undefined)
+
+const { status, data } = await apiInstance.reviewImportsPipelinePost(
+    configId,
+    runId,
+    file
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **configId** | [**string**] | The pipeline config whose records to load. | defaults to undefined|
+| **runId** | [**string**] | The run of that config. | defaults to undefined|
+| **file** | [**File**] | A zip of a study_schema layout with each paper\\\&#39;s parsed paper and text. The whole request body is at most 200 MiB. | defaults to undefined|
+
+
+### Return type
+
+**ReviewImportReport**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The report of what each paper did |  -  |
+|**400** | The form has no config_id, run_id or file |  -  |
+|**401** | Unauthorized |  -  |
+|**403** | Forbidden |  -  |
+|**404** | The config is unknown, or the run stored no record under it |  -  |
+|**413** | The request body is over 200 MiB |  * X-Request-ID -  <br>  |
+|**422** | Unprocessable Entity |  * X-Request-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
