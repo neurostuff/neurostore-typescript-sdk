@@ -1181,6 +1181,7 @@ const { status, data } = await apiInstance.baseStudiesIdPut(
 # **baseStudiesPost**
 > BaseStudiesPost200Response baseStudiesPost()
 
+Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. 
 
 ### Example
 
