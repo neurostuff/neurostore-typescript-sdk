@@ -453,7 +453,7 @@ export interface BaseStudy {
      */
     'publication_status'?: BaseStudyPublicationStatusEnum | null;
     /**
-     * DOIs a preprint server registered for the paper, with the server (a study_schema PreprintServer). A base study holds an identifier once: on a POST, one another base study holds is not taken. 
+     * DOIs a preprint server registered for the paper, with the server. An identifier is held by one active base study: one another base study holds is not taken (see POST /base-studies). Returned normalized: DOIs in lower case. 
      */
     'preprint_dois'?: Array<BaseStudyPreprintDoisInner>;
     /**
@@ -491,8 +491,49 @@ export interface BaseStudyList {
 }
 export interface BaseStudyPreprintDoisInner {
     'doi': string;
-    'server': string;
+    /**
+     * The preprint server that registered the DOI (study_schema\'s PreprintServer).
+     */
+    'server': BaseStudyPreprintDoisInnerServerEnum;
 }
+
+export const BaseStudyPreprintDoisInnerServerEnum = {
+    Biorxiv: 'biorxiv',
+    Medrxiv: 'medrxiv',
+    Arxiv: 'arxiv',
+    Researchsquare: 'researchsquare',
+    OsfPreprints: 'osf_preprints',
+    Elife: 'elife',
+    Arabixiv: 'arabixiv',
+    Metaarxiv: 'metaarxiv',
+    Engrxiv: 'engrxiv',
+    FocusArchive: 'focus_archive',
+    Frenxiv: 'frenxiv',
+    InaRxiv: 'ina_rxiv',
+    Lawarxiv: 'lawarxiv',
+    LisScholarshipArchive: 'lis_scholarship_archive',
+    Marxiv: 'marxiv',
+    Mindrxiv: 'mindrxiv',
+    Nutrixiv: 'nutrixiv',
+    Paleorxiv: 'paleorxiv',
+    Psyarxiv: 'psyarxiv',
+    Socarxiv: 'socarxiv',
+    Sportrxiv: 'sportrxiv',
+    Africarxiv: 'africarxiv',
+    Mediarxiv: 'mediarxiv',
+    Bodoarxiv: 'bodoarxiv',
+    Edarxiv: 'edarxiv',
+    Biohackrxiv: 'biohackrxiv',
+    Ssrn: 'ssrn',
+    PreprintsOrg: 'preprints_org',
+    Authorea: 'authorea',
+    Techrxiv: 'techrxiv',
+    Chemrxiv: 'chemrxiv',
+    JmirPreprints: 'jmir_preprints'
+} as const;
+
+export type BaseStudyPreprintDoisInnerServerEnum = typeof BaseStudyPreprintDoisInnerServerEnum[keyof typeof BaseStudyPreprintDoisInnerServerEnum];
+
 export interface BaseStudyReturn {
     'metadata'?: object | null;
     'versions'?: Array<BaseStudyVersionsInner>;
@@ -511,7 +552,7 @@ export interface BaseStudyReturn {
      */
     'publication_status'?: BaseStudyReturnPublicationStatusEnum | null;
     /**
-     * DOIs a preprint server registered for the paper, with the server (a study_schema PreprintServer). A base study holds an identifier once: on a POST, one another base study holds is not taken. 
+     * DOIs a preprint server registered for the paper, with the server. An identifier is held by one active base study: one another base study holds is not taken (see POST /base-studies). Returned normalized: DOIs in lower case. 
      */
     'preprint_dois'?: Array<BaseStudyPreprintDoisInner>;
     /**
@@ -4538,7 +4579,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * The edit is taken as it is. The preprint and alternative identifier lists are added to, never removed from; a changed `doi`, `pmid` or `pmcid` replaces the stored one, which the base study then no longer holds. An identifier another base study holds stays with that base study, and the pair is recorded as a merge candidate: a PUT is not refused for it. 
          * @summary 
          * @param {string} id 
          * @param {BaseStudy} [baseStudy] 
@@ -4580,7 +4621,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. 
+         * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. A POST is not refused for this. A single object is resolved like a list, and a new base study (one object or a list) is created with its first version, owned by the caller. Identifiers are returned normalized: DOIs in lower case, PMCIDs as `PMC` and digits. 
          * @summary 
          * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
          * @param {*} [options] Override http request option.
@@ -7396,7 +7437,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * The edit is taken as it is. The preprint and alternative identifier lists are added to, never removed from; a changed `doi`, `pmid` or `pmcid` replaces the stored one, which the base study then no longer holds. An identifier another base study holds stays with that base study, and the pair is recorded as a merge candidate: a PUT is not refused for it. 
          * @summary 
          * @param {string} id 
          * @param {BaseStudy} [baseStudy] 
@@ -7410,7 +7451,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. 
+         * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. A POST is not refused for this. A single object is resolved like a list, and a new base study (one object or a list) is created with its first version, owned by the caller. Identifiers are returned normalized: DOIs in lower case, PMCIDs as `PMC` and digits. 
          * @summary 
          * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
          * @param {*} [options] Override http request option.
@@ -8477,7 +8518,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * The edit is taken as it is. The preprint and alternative identifier lists are added to, never removed from; a changed `doi`, `pmid` or `pmcid` replaces the stored one, which the base study then no longer holds. An identifier another base study holds stays with that base study, and the pair is recorded as a merge candidate: a PUT is not refused for it. 
          * @summary 
          * @param {string} id 
          * @param {BaseStudy} [baseStudy] 
@@ -8488,7 +8529,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.baseStudiesIdPut(id, baseStudy, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. 
+         * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. A POST is not refused for this. A single object is resolved like a list, and a new base study (one object or a list) is created with its first version, owned by the caller. Identifiers are returned normalized: DOIs in lower case, PMCIDs as `PMC` and digits. 
          * @summary 
          * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
          * @param {*} [options] Override http request option.
@@ -9402,7 +9443,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * 
+     * The edit is taken as it is. The preprint and alternative identifier lists are added to, never removed from; a changed `doi`, `pmid` or `pmcid` replaces the stored one, which the base study then no longer holds. An identifier another base study holds stays with that base study, and the pair is recorded as a merge candidate: a PUT is not refused for it. 
      * @summary 
      * @param {string} id 
      * @param {BaseStudy} [baseStudy] 
@@ -9414,7 +9455,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. 
+     * Creates a base study, or returns the active base study one or more of the posted identifiers (any bucket) already belong to, adding the identifiers it lacks. When the identifiers belong to several active base studies the one holding the strongest (version of record doi, pmid, pmcid, then a preprint\'s, then an alternative; the oldest on a tie) is returned, identifiers another base study holds are not taken, and the base studies are recorded as merge candidates. A POST is not refused for this. A single object is resolved like a list, and a new base study (one object or a list) is created with its first version, owned by the caller. Identifiers are returned normalized: DOIs in lower case, PMCIDs as `PMC` and digits. 
      * @summary 
      * @param {BaseStudiesPostRequest} [baseStudiesPostRequest] 
      * @param {*} [options] Override http request option.

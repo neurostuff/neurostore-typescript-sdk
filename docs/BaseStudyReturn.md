@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **is_oa** | **boolean** |  | [optional] [default to undefined]
 **pmcid** | **string** |  | [optional] [default to undefined]
 **publication_status** | **string** | study_schema\&#39;s publication_status: &#x60;preprint&#x60; while only a preprint\&#39;s identifiers are known, &#x60;published&#x60; once a version of record\&#39;s are.  | [optional] [default to undefined]
-**preprint_dois** | [**Array&lt;BaseStudyPreprintDoisInner&gt;**](BaseStudyPreprintDoisInner.md) | DOIs a preprint server registered for the paper, with the server (a study_schema PreprintServer). A base study holds an identifier once: on a POST, one another base study holds is not taken.  | [optional] [default to undefined]
+**preprint_dois** | [**Array&lt;BaseStudyPreprintDoisInner&gt;**](BaseStudyPreprintDoisInner.md) | DOIs a preprint server registered for the paper, with the server. An identifier is held by one active base study: one another base study holds is not taken (see POST /base-studies). Returned normalized: DOIs in lower case.  | [optional] [default to undefined]
 **preprint_pmids** | **Array&lt;string&gt;** | PubMed\&#39;s records of the paper\&#39;s preprint. | [optional] [default to undefined]
 **preprint_pmcids** | **Array&lt;string&gt;** | PubMed Central\&#39;s copies of the paper\&#39;s preprint. | [optional] [default to undefined]
 **alternative_dois** | **Array&lt;string&gt;** | Any other DOI of the paper that is neither the version of record\&#39;s &#x60;doi&#x60; nor a preprint\&#39;s.  | [optional] [default to undefined]

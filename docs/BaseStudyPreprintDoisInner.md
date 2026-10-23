@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **doi** | **string** |  | [default to undefined]
-**server** | **string** |  | [default to undefined]
+**server** | **string** | The preprint server that registered the DOI (study_schema\&#39;s PreprintServer). | [default to undefined]
 
 ## Example
 
