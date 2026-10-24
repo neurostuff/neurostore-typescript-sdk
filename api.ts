@@ -3673,7 +3673,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * List all analyses performed across studies.
          * @summary GET list of analyses
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -3688,7 +3687,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3700,10 +3699,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (search !== undefined) {
-                localVarQueryParameter['search'] = search;
-            }
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
@@ -4661,7 +4656,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Get all conditions
          * @summary GET Conditions
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -4672,7 +4666,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        conditionsGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/conditions/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4684,10 +4678,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (search !== undefined) {
-                localVarQueryParameter['search'] = search;
-            }
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
@@ -4883,7 +4873,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Retrieve and list images.
          * @summary GET a list of images
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -4899,7 +4888,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imagesGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/images/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4911,10 +4900,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (search !== undefined) {
-                localVarQueryParameter['search'] = search;
-            }
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
@@ -6493,15 +6478,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
-         * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {any} [unique] whether to list clones with originals
-         * @param {StudysetsGetSourceEnum} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studysetsGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, authors?: string, userId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studysets/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6552,20 +6534,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (description !== undefined) {
                 localVarQueryParameter['description'] = description;
-            }
-
-            if (sourceId !== undefined) {
-                localVarQueryParameter['source_id'] = sourceId;
-            }
-
-            if (unique !== undefined) {
-                for (const [key, value] of Object.entries(unique)) {
-                    localVarQueryParameter[key] = value;
-                }
-            }
-
-            if (source !== undefined) {
-                localVarQueryParameter['source'] = source;
             }
 
             if (authors !== undefined) {
@@ -6772,7 +6740,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * List all tables across studies.
          * @summary GET list of tables
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -6784,7 +6751,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tablesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        tablesGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tables/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6796,10 +6763,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (search !== undefined) {
-                localVarQueryParameter['search'] = search;
-            }
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
@@ -7161,7 +7124,6 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * List all analyses performed across studies.
          * @summary GET list of analyses
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7176,8 +7138,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(search, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options);
+        async analysesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7466,7 +7428,6 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * Get all conditions
          * @summary GET Conditions
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7477,8 +7438,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options);
+        async conditionsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ConditionList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsGet(sort, page, desc, pageSize, paginate, name, description, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.conditionsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7539,7 +7500,6 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * Retrieve and list images.
          * @summary GET a list of images
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7555,8 +7515,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options);
+        async imagesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesGet(sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.imagesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8081,16 +8041,13 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
-         * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {any} [unique] whether to list clones with originals
-         * @param {StudysetsGetSourceEnum} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, options);
+        async studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, authors?: string, userId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudysetList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, authors, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studysetsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8157,7 +8114,6 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * List all tables across studies.
          * @summary GET list of tables
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8169,8 +8125,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options);
+        async tablesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TableList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.tablesGet(sort, page, desc, pageSize, paginate, name, description, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.tablesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8293,7 +8249,6 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * List all analyses performed across studies.
          * @summary GET list of analyses
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8308,8 +8263,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(search, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        analysesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -8541,7 +8496,6 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Get all conditions
          * @summary GET Conditions
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8552,8 +8506,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): AxiosPromise<ConditionList> {
-            return localVarFp.conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(axios, basePath));
+        conditionsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig): AxiosPromise<ConditionList> {
+            return localVarFp.conditionsGet(sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a condition
@@ -8599,7 +8553,6 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Retrieve and list images.
          * @summary GET a list of images
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8615,8 +8568,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
-            return localVarFp.imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        imagesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ImageList> {
+            return localVarFp.imagesGet(sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an image
@@ -9033,16 +8986,13 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
-         * @param {string} [sourceId] id of the resource you are either filtering/copying on
-         * @param {any} [unique] whether to list clones with originals
-         * @param {StudysetsGetSourceEnum} [source] the source of the resource you would like to filter/copy from
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<StudysetList> {
-            return localVarFp.studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(axios, basePath));
+        studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, authors?: string, userId?: string, options?: RawAxiosRequestConfig): AxiosPromise<StudysetList> {
+            return localVarFp.studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, authors, userId, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a studyset
@@ -9094,7 +9044,6 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * List all tables across studies.
          * @summary GET list of tables
-         * @param {string} [search] search for entries that contain the substring
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9106,8 +9055,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<TableList> {
-            return localVarFp.tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
+        tablesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<TableList> {
+            return localVarFp.tablesGet(sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a table
@@ -9201,7 +9150,6 @@ export class StoreApi extends BaseAPI {
     /**
      * List all analyses performed across studies.
      * @summary GET list of analyses
-     * @param {string} [search] search for entries that contain the substring
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9216,8 +9164,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesGet(search, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesGet(sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9468,7 +9416,6 @@ export class StoreApi extends BaseAPI {
     /**
      * Get all conditions
      * @summary GET Conditions
-     * @param {string} [search] search for entries that contain the substring
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9479,8 +9426,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public conditionsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).conditionsGet(search, sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(this.axios, this.basePath));
+    public conditionsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).conditionsGet(sort, page, desc, pageSize, paginate, name, description, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9531,7 +9478,6 @@ export class StoreApi extends BaseAPI {
     /**
      * Retrieve and list images.
      * @summary GET a list of images
-     * @param {string} [search] search for entries that contain the substring
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9547,8 +9493,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public imagesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).imagesGet(search, sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public imagesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, filename?: string, study?: string, analysisName?: string, valueType?: string, space?: string, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).imagesGet(sort, page, desc, pageSize, paginate, filename, study, analysisName, valueType, space, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10001,16 +9947,13 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
-     * @param {string} [sourceId] id of the resource you are either filtering/copying on
-     * @param {any} [unique] whether to list clones with originals
-     * @param {StudysetsGetSourceEnum} [source] the source of the resource you would like to filter/copy from
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudysetsGetSourceEnum, authors?: string, userId?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, options).then((request) => request(this.axios, this.basePath));
+    public studysetsGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, authors?: string, userId?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studysetsGet(search, sort, page, desc, pageSize, paginate, nested, name, description, authors, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10067,7 +10010,6 @@ export class StoreApi extends BaseAPI {
     /**
      * List all tables across studies.
      * @summary GET list of tables
-     * @param {string} [search] search for entries that contain the substring
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -10079,8 +10021,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public tablesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).tablesGet(search, sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
+    public tablesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).tablesGet(sort, page, desc, pageSize, paginate, name, description, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10253,15 +10195,6 @@ export const StudiesPostSourceEnum = {
     Pubget: 'pubget'
 } as const;
 export type StudiesPostSourceEnum = typeof StudiesPostSourceEnum[keyof typeof StudiesPostSourceEnum];
-export const StudysetsGetSourceEnum = {
-    Neurostore: 'neurostore',
-    Neurovault: 'neurovault',
-    Pubmed: 'pubmed',
-    Neurosynth: 'neurosynth',
-    Neuroquery: 'neuroquery',
-    Pubget: 'pubget'
-} as const;
-export type StudysetsGetSourceEnum = typeof StudysetsGetSourceEnum[keyof typeof StudysetsGetSourceEnum];
 export const StudysetsPostSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',
