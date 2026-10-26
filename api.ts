@@ -443,6 +443,9 @@ export interface BaseStudy {
     'publication'?: string | null;
     'doi'?: string | null;
     'pmid'?: string | null;
+    /**
+     * The authors in published order, separated by \"; \" because a name may hold \", \". When a paper\'s structured author list has been uploaded the server derives this from it, and a value sent in a PUT, including null, is ignored. Values written before this was fixed may still be separated by \", \" or \";\".
+     */
     'authors'?: string | null;
     'year'?: number | null;
     'level'?: string | null;
@@ -542,6 +545,9 @@ export interface BaseStudyReturn {
     'publication'?: string | null;
     'doi'?: string | null;
     'pmid'?: string | null;
+    /**
+     * The authors in published order, separated by \"; \" because a name may hold \", \". When a paper\'s structured author list has been uploaded the server derives this from it, and a value sent in a PUT, including null, is ignored. Values written before this was fixed may still be separated by \", \" or \";\".
+     */
     'authors'?: string | null;
     'year'?: number | null;
     'level'?: string | null;

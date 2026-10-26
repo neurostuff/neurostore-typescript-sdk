@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **publication** | **string** |  | [optional] [default to undefined]
 **doi** | **string** |  | [optional] [default to undefined]
 **pmid** | **string** |  | [optional] [default to undefined]
-**authors** | **string** |  | [optional] [default to undefined]
+**authors** | **string** | The authors in published order, separated by \&quot;; \&quot; because a name may hold \&quot;, \&quot;. When a paper\&#39;s structured author list has been uploaded the server derives this from it, and a value sent in a PUT, including null, is ignored. Values written before this was fixed may still be separated by \&quot;, \&quot; or \&quot;;\&quot;. | [optional] [default to undefined]
 **year** | **number** |  | [optional] [default to undefined]
 **level** | **string** |  | [optional] [default to undefined]
 **is_oa** | **boolean** |  | [optional] [default to undefined]
