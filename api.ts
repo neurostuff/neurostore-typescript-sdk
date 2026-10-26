@@ -4301,6 +4301,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -4322,7 +4323,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4401,6 +4402,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (search !== undefined) {
                 localVarQueryParameter['search'] = search;
+            }
+
+            if (searchFullText !== undefined) {
+                localVarQueryParameter['search_full_text'] = searchFullText;
             }
 
             if (sort !== undefined) {
@@ -7342,6 +7347,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7363,8 +7369,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
+        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8425,6 +8431,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8446,8 +8453,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
@@ -9340,6 +9347,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
      * @param {boolean} [featureFlatten] 
      * @param {string} [search] search for entries that contain the substring
+     * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9361,8 +9369,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
