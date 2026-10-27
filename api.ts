@@ -4306,8 +4306,8 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
-         * @param {string} [search] search for entries that contain the substring
-         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper: each word may match the title, the abstract or the text. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the paper\&#39;s preferred full text, the copy its &#x60;fulltext_id&#x60; names (other copies are not searched): each word may match the title, the abstract or that text, and a quoted phrase must sit within one of them. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -6099,7 +6099,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * List studies
          * @summary GET a list of studies
-         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -6480,7 +6480,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Get a list of studysets.
          * @summary GET a list of studysets
-         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7352,8 +7352,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
-         * @param {string} [search] search for entries that contain the substring
-         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper: each word may match the title, the abstract or the text. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the paper\&#39;s preferred full text, the copy its &#x60;fulltext_id&#x60; names (other copies are not searched): each word may match the title, the abstract or that text, and a quoted phrase must sit within one of them. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7935,7 +7935,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * List studies
          * @summary GET a list of studies
-         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8044,7 +8044,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * Get a list of studysets.
          * @summary GET a list of studysets
-         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8436,8 +8436,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
-         * @param {string} [search] search for entries that contain the substring
-         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper: each word may match the title, the abstract or the text. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the paper\&#39;s preferred full text, the copy its &#x60;fulltext_id&#x60; names (other copies are not searched): each word may match the title, the abstract or that text, and a quoted phrase must sit within one of them. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8899,7 +8899,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * List studies
          * @summary GET a list of studies
-         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8990,7 +8990,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * Get a list of studysets.
          * @summary GET a list of studysets
-         * @param {string} [search] search for entries that contain the substring
+         * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9352,8 +9352,8 @@ export class StoreApi extends BaseAPI {
      * @param {number} [distanceThreshold] Distance threshold for semantic search (default 0.5)
      * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
      * @param {boolean} [featureFlatten] 
-     * @param {string} [search] search for entries that contain the substring
-     * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper: each word may match the title, the abstract or the text. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
+     * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
+     * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the paper\&#39;s preferred full text, the copy its &#x60;fulltext_id&#x60; names (other copies are not searched): each word may match the title, the abstract or that text, and a quoted phrase must sit within one of them. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9855,7 +9855,7 @@ export class StoreApi extends BaseAPI {
     /**
      * List studies
      * @summary GET a list of studies
-     * @param {string} [search] search for entries that contain the substring
+     * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9952,7 +9952,7 @@ export class StoreApi extends BaseAPI {
     /**
      * Get a list of studysets.
      * @summary GET a list of studysets
-     * @param {string} [search] search for entries that contain the substring
+     * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)

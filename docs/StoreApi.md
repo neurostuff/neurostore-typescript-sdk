@@ -888,8 +888,8 @@ let pipelineConfigId: string; //Pipeline configuration identifier to filter stud
 let distanceThreshold: number; //Distance threshold for semantic search (default 0.5) (optional) (default to undefined)
 let overallCap: number; //Maximum number of overall results to return (default 3000) (optional) (default to undefined)
 let featureFlatten: boolean; // (optional) (default to undefined)
-let search: string; //search for entries that contain the substring (optional) (default to undefined)
-let searchFullText: boolean; //Also match `search` against the text of the paper: each word may match the title, the abstract or the text. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed. (optional) (default to false)
+let search: string; //Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading `-` and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one. (optional) (default to undefined)
+let searchFullText: boolean; //Also match `search` against the paper\'s preferred full text, the copy its `fulltext_id` names (other copies are not searched): each word may match the title, the abstract or that text, and a quoted phrase must sit within one of them. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed. (optional) (default to false)
 let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
 let page: number; //page of results (optional) (default to undefined)
 let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
@@ -967,8 +967,8 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | **distanceThreshold** | [**number**] | Distance threshold for semantic search (default 0.5) | (optional) defaults to undefined|
 | **overallCap** | [**number**] | Maximum number of overall results to return (default 3000) | (optional) defaults to undefined|
 | **featureFlatten** | [**boolean**] |  | (optional) defaults to undefined|
-| **search** | [**string**] | search for entries that contain the substring | (optional) defaults to undefined|
-| **searchFullText** | [**boolean**] | Also match &#x60;search&#x60; against the text of the paper: each word may match the title, the abstract or the text. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed. | (optional) defaults to false|
+| **search** | [**string**] | Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one. | (optional) defaults to undefined|
+| **searchFullText** | [**boolean**] | Also match &#x60;search&#x60; against the paper\&#39;s preferred full text, the copy its &#x60;fulltext_id&#x60; names (other copies are not searched): each word may match the title, the abstract or that text, and a quoted phrase must sit within one of them. Without it a search matches titles and abstracts only. A match in a title counts most, then one in an abstract, then one in the text, so records found only in the text usually rank below the others; that order is not guaranteed. | (optional) defaults to false|
 | **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
 | **page** | [**number**] | page of results | (optional) defaults to undefined|
 | **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
@@ -3153,7 +3153,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
-let search: string; //search for entries that contain the substring (optional) (default to undefined)
+let search: string; //Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading `-` and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one. (optional) (default to undefined)
 let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
 let page: number; //page of results (optional) (default to undefined)
 let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
@@ -3210,7 +3210,7 @@ const { status, data } = await apiInstance.studiesGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **search** | [**string**] | search for entries that contain the substring | (optional) defaults to undefined|
+| **search** | [**string**] | Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one. | (optional) defaults to undefined|
 | **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
 | **page** | [**number**] | page of results | (optional) defaults to undefined|
 | **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
@@ -3561,7 +3561,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
-let search: string; //search for entries that contain the substring (optional) (default to undefined)
+let search: string; //Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading `-` and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one. (optional) (default to undefined)
 let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
 let page: number; //page of results (optional) (default to undefined)
 let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
@@ -3592,7 +3592,7 @@ const { status, data } = await apiInstance.studysetsGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **search** | [**string**] | search for entries that contain the substring | (optional) defaults to undefined|
+| **search** | [**string**] | Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix, and every word must match; quoted phrases, AND, OR, NOT, a leading &#x60;-&#x60; and parentheses are understood. A search of digits only is matched against the PMID instead, on records that have one. | (optional) defaults to undefined|
 | **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
 | **page** | [**number**] | page of results | (optional) defaults to undefined|
 | **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
