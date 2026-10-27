@@ -4307,7 +4307,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
-         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Results are ranked by relevance, in which a match in a title counts most, then one in an abstract, then one in the text; a record found only in the text can still rank above a weak title or abstract match.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7353,7 +7353,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
-         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Results are ranked by relevance, in which a match in a title counts most, then one in an abstract, then one in the text; a record found only in the text can still rank above a weak title or abstract match.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8437,7 +8437,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
          * @param {boolean} [featureFlatten] 
          * @param {string} [search] search for entries that contain the substring
-         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
+         * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Results are ranked by relevance, in which a match in a title counts most, then one in an abstract, then one in the text; a record found only in the text can still rank above a weak title or abstract match.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9353,7 +9353,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [overallCap] Maximum number of overall results to return (default 3000)
      * @param {boolean} [featureFlatten] 
      * @param {string} [search] search for entries that contain the substring
-     * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract.
+     * @param {boolean} [searchFullText] Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Results are ranked by relevance, in which a match in a title counts most, then one in an abstract, then one in the text; a record found only in the text can still rank above a weak title or abstract match.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)

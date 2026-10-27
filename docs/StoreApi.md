@@ -889,7 +889,7 @@ let distanceThreshold: number; //Distance threshold for semantic search (default
 let overallCap: number; //Maximum number of overall results to return (default 3000) (optional) (default to undefined)
 let featureFlatten: boolean; // (optional) (default to undefined)
 let search: string; //search for entries that contain the substring (optional) (default to undefined)
-let searchFullText: boolean; //Also match `search` against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract. (optional) (default to false)
+let searchFullText: boolean; //Also match `search` against the text of the paper. Without it a search matches titles and abstracts only. Results are ranked by relevance, in which a match in a title counts most, then one in an abstract, then one in the text; a record found only in the text can still rank above a weak title or abstract match. (optional) (default to false)
 let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
 let page: number; //page of results (optional) (default to undefined)
 let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
@@ -968,7 +968,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | **overallCap** | [**number**] | Maximum number of overall results to return (default 3000) | (optional) defaults to undefined|
 | **featureFlatten** | [**boolean**] |  | (optional) defaults to undefined|
 | **search** | [**string**] | search for entries that contain the substring | (optional) defaults to undefined|
-| **searchFullText** | [**boolean**] | Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Records found only in the text are listed after those found in a title or abstract. | (optional) defaults to false|
+| **searchFullText** | [**boolean**] | Also match &#x60;search&#x60; against the text of the paper. Without it a search matches titles and abstracts only. Results are ranked by relevance, in which a match in a title counts most, then one in an abstract, then one in the text; a record found only in the text can still rank above a weak title or abstract match. | (optional) defaults to false|
 | **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
 | **page** | [**number**] | page of results | (optional) defaults to undefined|
 | **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
