@@ -495,48 +495,10 @@ export interface BaseStudyList {
 export interface BaseStudyPreprintDoisInner {
     'doi': string;
     /**
-     * The preprint server that registered the DOI (study_schema\'s PreprintServer).
+     * The preprint server that registered the DOI: one of study_schema\'s PreprintServer values (biorxiv, medrxiv, arxiv, researchsquare, osf_preprints, psyarxiv, ssrn and others), or any other non-empty name for a server it does not list. 
      */
-    'server': BaseStudyPreprintDoisInnerServerEnum;
+    'server': string;
 }
-
-export const BaseStudyPreprintDoisInnerServerEnum = {
-    Biorxiv: 'biorxiv',
-    Medrxiv: 'medrxiv',
-    Arxiv: 'arxiv',
-    Researchsquare: 'researchsquare',
-    OsfPreprints: 'osf_preprints',
-    Elife: 'elife',
-    Arabixiv: 'arabixiv',
-    Metaarxiv: 'metaarxiv',
-    Engrxiv: 'engrxiv',
-    FocusArchive: 'focus_archive',
-    Frenxiv: 'frenxiv',
-    InaRxiv: 'ina_rxiv',
-    Lawarxiv: 'lawarxiv',
-    LisScholarshipArchive: 'lis_scholarship_archive',
-    Marxiv: 'marxiv',
-    Mindrxiv: 'mindrxiv',
-    Nutrixiv: 'nutrixiv',
-    Paleorxiv: 'paleorxiv',
-    Psyarxiv: 'psyarxiv',
-    Socarxiv: 'socarxiv',
-    Sportrxiv: 'sportrxiv',
-    Africarxiv: 'africarxiv',
-    Mediarxiv: 'mediarxiv',
-    Bodoarxiv: 'bodoarxiv',
-    Edarxiv: 'edarxiv',
-    Biohackrxiv: 'biohackrxiv',
-    Ssrn: 'ssrn',
-    PreprintsOrg: 'preprints_org',
-    Authorea: 'authorea',
-    Techrxiv: 'techrxiv',
-    Chemrxiv: 'chemrxiv',
-    JmirPreprints: 'jmir_preprints'
-} as const;
-
-export type BaseStudyPreprintDoisInnerServerEnum = typeof BaseStudyPreprintDoisInnerServerEnum[keyof typeof BaseStudyPreprintDoisInnerServerEnum];
-
 export interface BaseStudyReturn {
     'metadata'?: object | null;
     'versions'?: Array<BaseStudyVersionsInner>;
