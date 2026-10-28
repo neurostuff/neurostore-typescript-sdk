@@ -1821,6 +1821,10 @@ export interface StudySchemaUpload {
      */
     'parsed_paper'?: { [key: string]: any; };
     /**
+     * The parsed paper\'s text, whose sha256 is the parsed paper\'s text_sha256. Stored as one of the base study\'s full texts, with the licence of the copy it was read from. Needs parsed_paper. 
+     */
+    'text'?: string;
+    /**
      * For a record uploaded alone, the parse_id of the stored parse it read.
      */
     'parse_id'?: string;
@@ -1857,6 +1861,14 @@ export interface StudySchemaUploadPipeline {
 export interface StudySchemaUploadSummary {
     'kind'?: StudySchemaUploadSummaryKindEnum;
     'base_study_id'?: string;
+    /**
+     * The base study the upload named, and each one between it and base_study_id, when it was merged into base_study_id and the upload followed the merge. Absent otherwise. 
+     */
+    'merged_from'?: Array<string>;
+    /**
+     * The user who owned the base study before this upload, which leaves it owned by no one and public. Absent when no one did. 
+     */
+    'took_ownership_from'?: string;
     /**
      * The paper\'s pipeline-owned study.
      */
