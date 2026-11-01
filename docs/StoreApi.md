@@ -18,6 +18,10 @@ All URIs are relative to *https://neurostore.org/api*
 |[**annotationsIdGet**](#annotationsidget) | **GET** /annotations/{id} | Your GET endpoint|
 |[**annotationsIdPut**](#annotationsidput) | **PUT** /annotations/{id} | Update an annotation|
 |[**annotationsPost**](#annotationspost) | **POST** /annotations/ | Post Annotation|
+|[**apiKeysGet**](#apikeysget) | **GET** /api-keys/ | List your API keys|
+|[**apiKeysIdDelete**](#apikeysiddelete) | **DELETE** /api-keys/{id} | Revoke an API key|
+|[**apiKeysIntrospectGet**](#apikeysintrospectget) | **GET** /api-keys/introspect | Describe the API key making the request|
+|[**apiKeysPost**](#apikeyspost) | **POST** /api-keys/ | Create an API key|
 |[**baseStudiesGet**](#basestudiesget) | **GET** /base-studies/ | |
 |[**baseStudiesIdDelete**](#basestudiesiddelete) | **DELETE** /base-studies/{id} | Delete a base study|
 |[**baseStudiesIdGet**](#basestudiesidget) | **GET** /base-studies/{id} | Your GET endpoint|
@@ -855,6 +859,197 @@ const { status, data } = await apiInstance.annotationsPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apiKeysGet**
+> ApiKeyList apiKeysGet()
+
+List the caller\'s API keys, revoked ones included. Requires a login token, not an API key.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+const { status, data } = await apiInstance.apiKeysGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**ApiKeyList**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apiKeysIdDelete**
+> apiKeysIdDelete()
+
+Revoke one of the caller\'s API keys. Requires a login token, not an API key.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.apiKeysIdDelete(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**204** | Revoked |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apiKeysIntrospectGet**
+> ApiKeyIntrospection apiKeysIntrospectGet()
+
+Return the owner and scopes of the API key sent as the bearer token.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+const { status, data } = await apiInstance.apiKeysIntrospectGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**ApiKeyIntrospection**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **apiKeysPost**
+> ApiKeyCreated apiKeysPost()
+
+Create an API key that works on Neurostore and Neurosynth Compose until it is revoked. The key is returned only in this response. Requires a login token, not an API key.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration,
+    ApiKeyRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let apiKeyRequest: ApiKeyRequest; // (optional)
+
+const { status, data } = await apiInstance.apiKeysPost(
+    apiKeyRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **apiKeyRequest** | **ApiKeyRequest**|  | |
+
+
+### Return type
+
+**ApiKeyCreated**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

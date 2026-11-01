@@ -422,6 +422,96 @@ export interface AnnotationReturnRelationships {
  */
 export type AnnotationReturnRelationshipsNotes = Array<NoteCollectionReturn> | Array<string>;
 
+export interface ApiKey {
+    'id'?: string;
+    'name'?: string;
+    /**
+     * the first characters of the key, to tell keys apart
+     */
+    'prefix'?: string;
+    /**
+     * `read` allows GET requests; `write` allows every method.
+     */
+    'scopes'?: Set<ApiKeyScopesEnum>;
+    'created_at'?: string;
+    'last_used_at'?: string | null;
+    'revoked_at'?: string | null;
+}
+
+export const ApiKeyScopesEnum = {
+    Read: 'read',
+    Write: 'write'
+} as const;
+
+export type ApiKeyScopesEnum = typeof ApiKeyScopesEnum[keyof typeof ApiKeyScopesEnum];
+
+export interface ApiKeyCreated {
+    'id'?: string;
+    'name'?: string;
+    /**
+     * the first characters of the key, to tell keys apart
+     */
+    'prefix'?: string;
+    /**
+     * `read` allows GET requests; `write` allows every method.
+     */
+    'scopes'?: Set<ApiKeyCreatedScopesEnum>;
+    'created_at'?: string;
+    'last_used_at'?: string | null;
+    'revoked_at'?: string | null;
+    /**
+     * the full key; it cannot be retrieved again
+     */
+    'key'?: string;
+}
+
+export const ApiKeyCreatedScopesEnum = {
+    Read: 'read',
+    Write: 'write'
+} as const;
+
+export type ApiKeyCreatedScopesEnum = typeof ApiKeyCreatedScopesEnum[keyof typeof ApiKeyCreatedScopesEnum];
+
+export interface ApiKeyIntrospection {
+    /**
+     * the owner\'s external id
+     */
+    'user'?: string;
+    /**
+     * the owner\'s display name
+     */
+    'name'?: string | null;
+    /**
+     * `read` allows GET requests; `write` allows every method.
+     */
+    'scopes'?: Set<ApiKeyIntrospectionScopesEnum>;
+}
+
+export const ApiKeyIntrospectionScopesEnum = {
+    Read: 'read',
+    Write: 'write'
+} as const;
+
+export type ApiKeyIntrospectionScopesEnum = typeof ApiKeyIntrospectionScopesEnum[keyof typeof ApiKeyIntrospectionScopesEnum];
+
+export interface ApiKeyList {
+    'results'?: Array<ApiKey>;
+}
+export interface ApiKeyRequest {
+    'name': string;
+    /**
+     * `read` allows GET requests; `write` allows every method.
+     */
+    'scopes': Set<ApiKeyRequestScopesEnum>;
+}
+
+export const ApiKeyRequestScopesEnum = {
+    Read: 'read',
+    Write: 'write'
+} as const;
+
+export type ApiKeyRequestScopesEnum = typeof ApiKeyRequestScopesEnum[keyof typeof ApiKeyRequestScopesEnum];
+
 export interface BaseStudiesIdDelete200Response {
     'id'?: string;
 }
@@ -4263,6 +4353,150 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * List the caller\'s API keys, revoked ones included. Requires a login token, not an API key.
+         * @summary List your API keys
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-keys/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Revoke one of the caller\'s API keys. Requires a login token, not an API key.
+         * @summary Revoke an API key
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('apiKeysIdDelete', 'id', id)
+            const localVarPath = `/api-keys/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Return the owner and scopes of the API key sent as the bearer token.
+         * @summary Describe the API key making the request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysIntrospectGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-keys/introspect`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create an API key that works on Neurostore and Neurosynth Compose until it is revoked. The key is returned only in this response. Requires a login token, not an API key.
+         * @summary Create an API key
+         * @param {ApiKeyRequest} [apiKeyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysPost: async (apiKeyRequest?: ApiKeyRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api-keys/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(apiKeyRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
@@ -7309,6 +7543,56 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * List the caller\'s API keys, revoked ones included. Requires a login token, not an API key.
+         * @summary List your API keys
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiKeysGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiKeyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiKeysGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.apiKeysGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Revoke one of the caller\'s API keys. Requires a login token, not an API key.
+         * @summary Revoke an API key
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiKeysIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiKeysIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.apiKeysIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Return the owner and scopes of the API key sent as the bearer token.
+         * @summary Describe the API key making the request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiKeysIntrospectGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiKeyIntrospection>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiKeysIntrospectGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.apiKeysIntrospectGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Create an API key that works on Neurostore and Neurosynth Compose until it is revoked. The key is returned only in this response. Requires a login token, not an API key.
+         * @summary Create an API key
+         * @param {ApiKeyRequest} [apiKeyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiKeysPost(apiKeyRequest?: ApiKeyRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiKeyCreated>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiKeysPost(apiKeyRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.apiKeysPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
@@ -8393,6 +8677,44 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * List the caller\'s API keys, revoked ones included. Requires a login token, not an API key.
+         * @summary List your API keys
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysGet(options?: RawAxiosRequestConfig): AxiosPromise<ApiKeyList> {
+            return localVarFp.apiKeysGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Revoke one of the caller\'s API keys. Requires a login token, not an API key.
+         * @summary Revoke an API key
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiKeysIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Return the owner and scopes of the API key sent as the bearer token.
+         * @summary Describe the API key making the request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysIntrospectGet(options?: RawAxiosRequestConfig): AxiosPromise<ApiKeyIntrospection> {
+            return localVarFp.apiKeysIntrospectGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Create an API key that works on Neurostore and Neurosynth Compose until it is revoked. The key is returned only in this response. Requires a login token, not an API key.
+         * @summary Create an API key
+         * @param {ApiKeyRequest} [apiKeyRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiKeysPost(apiKeyRequest?: ApiKeyRequest, options?: RawAxiosRequestConfig): AxiosPromise<ApiKeyCreated> {
+            return localVarFp.apiKeysPost(apiKeyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary 
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
@@ -9306,6 +9628,48 @@ export class StoreApi extends BaseAPI {
      */
     public annotationsPost(source?: AnnotationsPostSourceEnum, sourceId?: string, annotationRequest?: AnnotationRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).annotationsPost(source, sourceId, annotationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the caller\'s API keys, revoked ones included. Requires a login token, not an API key.
+     * @summary List your API keys
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiKeysGet(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).apiKeysGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Revoke one of the caller\'s API keys. Requires a login token, not an API key.
+     * @summary Revoke an API key
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiKeysIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).apiKeysIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Return the owner and scopes of the API key sent as the bearer token.
+     * @summary Describe the API key making the request
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiKeysIntrospectGet(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).apiKeysIntrospectGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Create an API key that works on Neurostore and Neurosynth Compose until it is revoked. The key is returned only in this response. Requires a login token, not an API key.
+     * @summary Create an API key
+     * @param {ApiKeyRequest} [apiKeyRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public apiKeysPost(apiKeyRequest?: ApiKeyRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).apiKeysPost(apiKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
