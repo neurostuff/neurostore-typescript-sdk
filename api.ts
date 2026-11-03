@@ -120,6 +120,10 @@ export interface AnalysisRequest {
      * The coordinates are quoted from an earlier study, not this one\'s.
      */
     'from_prior_study'?: boolean | null;
+    /**
+     * The ids of the data sources the analysis\'s data come from; replaces its links.
+     */
+    'data_sources'?: Array<string>;
 }
 
 export const AnalysisRequestOutcomeEnum = {
@@ -228,6 +232,10 @@ export interface AnalysisReturn {
     'has_z_maps'?: boolean;
     'has_t_maps'?: boolean;
     'has_beta_and_variance_maps'?: boolean;
+    /**
+     * Present only when the request sets `data_sources=true`.
+     */
+    'data_sources'?: Array<DataSourceSummary>;
 }
 
 export const AnalysisReturnOutcomeEnum = {
@@ -663,6 +671,10 @@ export interface BaseStudyReturn {
     'has_t_maps'?: boolean;
     'has_beta_and_variance_maps'?: boolean;
     'features'?: object;
+    /**
+     * Present only when the request sets `data_sources=true`.
+     */
+    'data_sources'?: Array<DataSourceSummary>;
 }
 
 export const BaseStudyReturnPublicationStatusEnum = {
@@ -747,6 +759,172 @@ export interface ConditionReturn {
      * human readable username
      */
     'username'?: string | null;
+}
+export interface DataSourceAlias {
+    'id'?: string;
+    'alias': string;
+    /**
+     * What a match on the alias needs: `name`, a full name matched case-insensitively; `safe`, an acronym that stands alone; `context`, an acronym needing a dataset or imaging word nearby; `defined`, an acronym needing one of the data source\'s names in the same paper; `qualified`, a common word needing a qualifier such as \"dataset\" or an accession.
+     */
+    'tier': DataSourceAliasTierEnum;
+}
+
+export const DataSourceAliasTierEnum = {
+    Name: 'name',
+    Safe: 'safe',
+    Context: 'context',
+    Defined: 'defined',
+    Qualified: 'qualified'
+} as const;
+
+export type DataSourceAliasTierEnum = typeof DataSourceAliasTierEnum[keyof typeof DataSourceAliasTierEnum];
+
+export interface DataSourceCommon {
+    /**
+     * A short stable key, e.g. `ukb`.
+     */
+    'slug'?: string;
+    'name'?: string;
+    'description'?: string | null;
+    'kinds'?: Array<DataSourceCommonKindsEnum>;
+    'modalities'?: Array<string>;
+    /**
+     * The data source (repository or consortium) this one is hosted by or part of.
+     */
+    'part_of'?: string | null;
+    'url'?: string | null;
+    /**
+     * Where the url came from or what it points to, e.g. `rrid`, `re3data`, `jpnd`, `checked:official`, `checked:registry`, `checked:publication`.
+     */
+    'url_kind'?: string | null;
+    'rrids'?: Array<string>;
+    're3data_ids'?: Array<string>;
+    /**
+     * The catalogues the data source was found in.
+     */
+    'listed_in'?: Array<string>;
+    'aliases'?: Array<DataSourceAlias>;
+}
+
+export const DataSourceCommonKindsEnum = {
+    Study: 'study',
+    Consortium: 'consortium',
+    Repository: 'repository'
+} as const;
+
+export type DataSourceCommonKindsEnum = typeof DataSourceCommonKindsEnum[keyof typeof DataSourceCommonKindsEnum];
+
+export interface DataSourceList {
+    'results'?: Array<DataSourceReturn>;
+    'metadata'?: Metadata;
+}
+export interface DataSourceRequest {
+    /**
+     * A short stable key, e.g. `ukb`.
+     */
+    'slug'?: string;
+    'name'?: string;
+    'description'?: string | null;
+    'kinds'?: Array<DataSourceRequestKindsEnum>;
+    'modalities'?: Array<string>;
+    /**
+     * The data source (repository or consortium) this one is hosted by or part of.
+     */
+    'part_of'?: string | null;
+    'url'?: string | null;
+    /**
+     * Where the url came from or what it points to, e.g. `rrid`, `re3data`, `jpnd`, `checked:official`, `checked:registry`, `checked:publication`.
+     */
+    'url_kind'?: string | null;
+    'rrids'?: Array<string>;
+    're3data_ids'?: Array<string>;
+    /**
+     * The catalogues the data source was found in.
+     */
+    'listed_in'?: Array<string>;
+    'aliases'?: Array<DataSourceAlias>;
+    /**
+     * short UUID specifying the location of this resource
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     */
+    'public'?: boolean;
+}
+
+export const DataSourceRequestKindsEnum = {
+    Study: 'study',
+    Consortium: 'consortium',
+    Repository: 'repository'
+} as const;
+
+export type DataSourceRequestKindsEnum = typeof DataSourceRequestKindsEnum[keyof typeof DataSourceRequestKindsEnum];
+
+export interface DataSourceReturn {
+    /**
+     * A short stable key, e.g. `ukb`.
+     */
+    'slug'?: string;
+    'name'?: string;
+    'description'?: string | null;
+    'kinds'?: Array<DataSourceReturnKindsEnum>;
+    'modalities'?: Array<string>;
+    /**
+     * The data source (repository or consortium) this one is hosted by or part of.
+     */
+    'part_of'?: string | null;
+    'url'?: string | null;
+    /**
+     * Where the url came from or what it points to, e.g. `rrid`, `re3data`, `jpnd`, `checked:official`, `checked:registry`, `checked:publication`.
+     */
+    'url_kind'?: string | null;
+    'rrids'?: Array<string>;
+    're3data_ids'?: Array<string>;
+    /**
+     * The catalogues the data source was found in.
+     */
+    'listed_in'?: Array<string>;
+    'aliases'?: Array<DataSourceAlias>;
+    /**
+     * time the resource was created on the database
+     */
+    'created_at'?: string;
+    /**
+     * when the resource was last modified/updated.
+     */
+    'updated_at'?: string | null;
+    /**
+     * short UUID specifying the location of this resource
+     */
+    'id'?: string;
+    /**
+     * whether the resource is listed in public searches or not
+     */
+    'public'?: boolean;
+    /**
+     * who owns the resource
+     */
+    'user'?: string | null;
+    /**
+     * human readable username
+     */
+    'username'?: string | null;
+}
+
+export const DataSourceReturnKindsEnum = {
+    Study: 'study',
+    Consortium: 'consortium',
+    Repository: 'repository'
+} as const;
+
+export type DataSourceReturnKindsEnum = typeof DataSourceReturnKindsEnum[keyof typeof DataSourceReturnKindsEnum];
+
+export interface DataSourceSummary {
+    'id'?: string;
+    'slug'?: string;
+    'name'?: string;
+    'url'?: string | null;
 }
 /**
  * WARNING: not currently used. descriptor of level of analysis for a particular image/point (run, session, subject, group, meta)
@@ -1836,6 +2014,10 @@ export interface StudyReturn {
     'source_updated_at'?: string | null;
     'analyses'?: StudyReturnRelationshipsAnalyses;
     'tables'?: Array<string>;
+    /**
+     * Present only when the request sets `data_sources=true`.
+     */
+    'data_sources'?: Array<DataSourceSummary>;
     'studysets'?: Array<StudyReturnAllOfStudysets>;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
@@ -3743,6 +3925,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * List all analyses performed across studies.
          * @summary GET list of analyses
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -3757,7 +3940,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3769,6 +3952,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (dataSources !== undefined) {
+                localVarQueryParameter['data_sources'] = dataSources;
+            }
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
@@ -3867,13 +4054,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * Information pertaining to a particular analysis within a study.
          * @summary GET an analysis
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
          * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesIdGet: async (id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesIdGet: async (id: string, dataSources?: boolean, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('analysesIdGet', 'id', id)
             const localVarPath = `/analyses/{id}`
@@ -3888,6 +4076,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (dataSources !== undefined) {
+                localVarQueryParameter['data_sources'] = dataSources;
+            }
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
@@ -4499,6 +4691,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
@@ -4537,7 +4730,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4553,6 +4746,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             // authentication JSON-Web-Token required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (dataSources !== undefined) {
+                localVarQueryParameter['data_sources'] = dataSources;
+            }
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
@@ -4747,13 +4944,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Your GET endpoint
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet: async (id: string, flat?: boolean, info?: boolean, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesIdGet: async (id: string, dataSources?: boolean, flat?: boolean, info?: boolean, nested?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('baseStudiesIdGet', 'id', id)
             const localVarPath = `/base-studies/{id}`
@@ -4768,6 +4966,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (dataSources !== undefined) {
+                localVarQueryParameter['data_sources'] = dataSources;
+            }
 
             if (flat !== undefined) {
                 localVarQueryParameter['flat'] = flat;
@@ -5083,6 +5285,233 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(conditionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+         * @summary GET data sources
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
+         * @param {string} [slug] only the data source with this slug
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/data-sources/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (desc !== undefined) {
+                localVarQueryParameter['desc'] = desc;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (description !== undefined) {
+                localVarQueryParameter['description'] = description;
+            }
+
+            if (kind !== undefined) {
+                localVarQueryParameter['kind'] = kind;
+            }
+
+            if (slug !== undefined) {
+                localVarQueryParameter['slug'] = slug;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a data source and its analysis links. Admins only.
+         * @summary DELETE a data source
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesIdDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('dataSourcesIdDelete', 'id', id)
+            const localVarPath = `/data-sources/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve a data source and its aliases.
+         * @summary GET a data source
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('dataSourcesIdGet', 'id', id)
+            const localVarPath = `/data-sources/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update a data source; given aliases replace its aliases. Admins only.
+         * @summary PUT/update a data source
+         * @param {string} id 
+         * @param {DataSourceRequest} [dataSourceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesIdPut: async (id: string, dataSourceRequest?: DataSourceRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('dataSourcesIdPut', 'id', id)
+            const localVarPath = `/data-sources/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dataSourceRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create a data source. Admins only.
+         * @summary POST/Create a data source
+         * @param {DataSourceRequest} [dataSourceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesPost: async (dataSourceRequest?: DataSourceRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/data-sources/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dataSourceRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6307,6 +6736,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * List studies
          * @summary GET a list of studies
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -6334,7 +6764,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6350,6 +6780,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             // authentication JSON-Web-Token required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (dataSources !== undefined) {
+                localVarQueryParameter['data_sources'] = dataSources;
+            }
 
             if (search !== undefined) {
                 localVarQueryParameter['search'] = search;
@@ -6502,6 +6936,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * Get a study.
          * @summary GET a study
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
@@ -6510,7 +6945,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesIdGet: async (id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesIdGet: async (id: string, dataSources?: boolean, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('studiesIdGet', 'id', id)
             const localVarPath = `/studies/{id}`
@@ -6525,6 +6960,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (dataSources !== undefined) {
+                localVarQueryParameter['data_sources'] = dataSources;
+            }
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
@@ -7343,6 +7782,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * List all analyses performed across studies.
          * @summary GET list of analyses
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -7357,8 +7797,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options);
+        async analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(dataSources, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7380,14 +7820,15 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * Information pertaining to a particular analysis within a study.
          * @summary GET an analysis
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
          * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesIdGet(id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesIdGet(id, nested, imageMetadata, imageValueSummary, options);
+        async analysesIdGet(id: string, dataSources?: boolean, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysesIdGet(id, dataSources, nested, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7595,6 +8036,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
@@ -7633,8 +8075,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
+        async baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7656,14 +8098,15 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * 
          * @summary Your GET endpoint
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, flat, info, nested, options);
+        async baseStudiesIdGet(id: string, dataSources?: boolean, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesIdGet(id, dataSources, flat, info, nested, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -7765,6 +8208,80 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.conditionsPost(conditionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.conditionsPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+         * @summary GET data sources
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
+         * @param {string} [slug] only the data source with this slug
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, slug, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.dataSourcesGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Delete a data source and its analysis links. Admins only.
+         * @summary DELETE a data source
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async dataSourcesIdDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataSourcesIdDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.dataSourcesIdDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve a data source and its aliases.
+         * @summary GET a data source
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async dataSourcesIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataSourcesIdGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.dataSourcesIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Update a data source; given aliases replace its aliases. Admins only.
+         * @summary PUT/update a data source
+         * @param {string} id 
+         * @param {DataSourceRequest} [dataSourceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async dataSourcesIdPut(id: string, dataSourceRequest?: DataSourceRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataSourcesIdPut(id, dataSourceRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.dataSourcesIdPut']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Create a data source. Admins only.
+         * @summary POST/Create a data source
+         * @param {DataSourceRequest} [dataSourceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async dataSourcesPost(dataSourceRequest?: DataSourceRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataSourcesPost(dataSourceRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.dataSourcesPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8193,6 +8710,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * List studies
          * @summary GET a list of studies
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -8220,8 +8738,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
+        async studiesGet(dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(dataSources, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8243,6 +8761,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * Get a study.
          * @summary GET a study
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
@@ -8251,8 +8770,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesIdGet(id, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options);
+        async studiesIdGet(id: string, dataSources?: boolean, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesIdGet(id, dataSources, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8519,6 +9038,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * List all analyses performed across studies.
          * @summary GET list of analyses
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -8533,8 +9053,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
-            return localVarFp.analysesGet(sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+            return localVarFp.analysesGet(dataSources, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete an analysis
@@ -8550,14 +9070,15 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * Information pertaining to a particular analysis within a study.
          * @summary GET an analysis
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
          * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesIdGet(id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisReturn> {
-            return localVarFp.analysesIdGet(id, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        analysesIdGet(id: string, dataSources?: boolean, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisReturn> {
+            return localVarFp.analysesIdGet(id, dataSources, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * Update an existing analysis.
@@ -8717,6 +9238,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {number} [yearMin] Minimum publication year (inclusive) for study search
          * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
@@ -8755,8 +9277,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
@@ -8772,14 +9294,15 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * 
          * @summary Your GET endpoint
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
          * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyReturn> {
-            return localVarFp.baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(axios, basePath));
+        baseStudiesIdGet(id: string, dataSources?: boolean, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyReturn> {
+            return localVarFp.baseStudiesIdGet(id, dataSources, flat, info, nested, options).then((request) => request(axios, basePath));
         },
         /**
          * The edit is taken as it is. The preprint and alternative identifier lists are added to, never removed from; a changed `doi`, `pmid` or `pmcid` replaces the stored one, which the base study then no longer holds. An identifier another base study holds stays with that base study, and the pair is recorded as a merge candidate: a PUT is not refused for it. 
@@ -8858,6 +9381,65 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          */
         conditionsPost(conditionRequest?: ConditionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ConditionReturn> {
             return localVarFp.conditionsPost(conditionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+         * @summary GET data sources
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [name] search the name field for a term
+         * @param {string} [description] search description field for a term
+         * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
+         * @param {string} [slug] only the data source with this slug
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options?: RawAxiosRequestConfig): AxiosPromise<DataSourceList> {
+            return localVarFp.dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, slug, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Delete a data source and its analysis links. Admins only.
+         * @summary DELETE a data source
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesIdDelete(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.dataSourcesIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve a data source and its aliases.
+         * @summary GET a data source
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<DataSourceReturn> {
+            return localVarFp.dataSourcesIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update a data source; given aliases replace its aliases. Admins only.
+         * @summary PUT/update a data source
+         * @param {string} id 
+         * @param {DataSourceRequest} [dataSourceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesIdPut(id: string, dataSourceRequest?: DataSourceRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataSourceReturn> {
+            return localVarFp.dataSourcesIdPut(id, dataSourceRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Create a data source. Admins only.
+         * @summary POST/Create a data source
+         * @param {DataSourceRequest} [dataSourceRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        dataSourcesPost(dataSourceRequest?: DataSourceRequest, options?: RawAxiosRequestConfig): AxiosPromise<DataSourceReturn> {
+            return localVarFp.dataSourcesPost(dataSourceRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Retrieve and list images.
@@ -9195,6 +9777,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * List studies
          * @summary GET a list of studies
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -9222,8 +9805,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        studiesGet(dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(dataSources, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -9239,6 +9822,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * Get a study.
          * @summary GET a study
          * @param {string} id 
+         * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
@@ -9247,8 +9831,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyReturn> {
-            return localVarFp.studiesIdGet(id, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        studiesIdGet(id: string, dataSources?: boolean, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyReturn> {
+            return localVarFp.studiesIdGet(id, dataSources, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * Update a study.
@@ -9459,6 +10043,7 @@ export class StoreApi extends BaseAPI {
     /**
      * List all analyses performed across studies.
      * @summary GET list of analyses
+     * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
@@ -9473,8 +10058,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesGet(sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesGet(dataSources, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9492,14 +10077,15 @@ export class StoreApi extends BaseAPI {
      * Information pertaining to a particular analysis within a study.
      * @summary GET an analysis
      * @param {string} id 
+     * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
      * @param {boolean} [imageValueSummary] include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysesIdGet(id: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysesIdGet(id, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public analysesIdGet(id: string, dataSources?: boolean, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysesIdGet(id, dataSources, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9675,6 +10261,7 @@ export class StoreApi extends BaseAPI {
     /**
      * 
      * @summary 
+     * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {number} [yearMin] Minimum publication year (inclusive) for study search
      * @param {number} [x] X coordinate for spatial query (requires y, z, and radius)
@@ -9713,8 +10300,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public baseStudiesGet(nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9732,14 +10319,15 @@ export class StoreApi extends BaseAPI {
      * 
      * @summary Your GET endpoint
      * @param {string} id 
+     * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
      * @param {boolean} [info] show additional for endpoint-object relationships without being fully nested. Incompatible with nested
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public baseStudiesIdGet(id: string, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesIdGet(id, flat, info, nested, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesIdGet(id: string, dataSources?: boolean, flat?: boolean, info?: boolean, nested?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesIdGet(id, dataSources, flat, info, nested, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9825,6 +10413,70 @@ export class StoreApi extends BaseAPI {
      */
     public conditionsPost(conditionRequest?: ConditionRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).conditionsPost(conditionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+     * @summary GET data sources
+     * @param {string} [sort] Parameter to sort results on
+     * @param {number} [page] page of results
+     * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+     * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {string} [name] search the name field for a term
+     * @param {string} [description] search description field for a term
+     * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
+     * @param {string} [slug] only the data source with this slug
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, slug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a data source and its analysis links. Admins only.
+     * @summary DELETE a data source
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public dataSourcesIdDelete(id: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).dataSourcesIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve a data source and its aliases.
+     * @summary GET a data source
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public dataSourcesIdGet(id: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).dataSourcesIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update a data source; given aliases replace its aliases. Admins only.
+     * @summary PUT/update a data source
+     * @param {string} id 
+     * @param {DataSourceRequest} [dataSourceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public dataSourcesIdPut(id: string, dataSourceRequest?: DataSourceRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).dataSourcesIdPut(id, dataSourceRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Create a data source. Admins only.
+     * @summary POST/Create a data source
+     * @param {DataSourceRequest} [dataSourceRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public dataSourcesPost(dataSourceRequest?: DataSourceRequest, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).dataSourcesPost(dataSourceRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10193,6 +10845,7 @@ export class StoreApi extends BaseAPI {
     /**
      * List studies
      * @summary GET a list of studies
+     * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
      * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
@@ -10220,8 +10873,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesGet(search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesGet(search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesGet(dataSources, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10239,6 +10892,7 @@ export class StoreApi extends BaseAPI {
      * Get a study.
      * @summary GET a study
      * @param {string} id 
+     * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
      * @param {boolean} [flat] do not return any embedded relationships. When set, it is incompatible with nested. 
@@ -10247,8 +10901,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesIdGet(id: string, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesIdGet(id, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public studiesIdGet(id: string, dataSources?: boolean, nested?: boolean, studysetOwner?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesIdGet(id, dataSources, nested, studysetOwner, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10503,6 +11157,12 @@ export const BaseStudiesGetMapTypeEnum = {
     Any: 'any'
 } as const;
 export type BaseStudiesGetMapTypeEnum = typeof BaseStudiesGetMapTypeEnum[keyof typeof BaseStudiesGetMapTypeEnum];
+export const DataSourcesGetKindEnum = {
+    Study: 'study',
+    Consortium: 'consortium',
+    Repository: 'repository'
+} as const;
+export type DataSourcesGetKindEnum = typeof DataSourcesGetKindEnum[keyof typeof DataSourcesGetKindEnum];
 export const StudiesGetSourceEnum = {
     Neurostore: 'neurostore',
     Neurovault: 'neurovault',

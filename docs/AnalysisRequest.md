@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **relabelled_by** | **string** | The parse_id of the reviewed revision whose relabel verdict set &#x60;role&#x60;; a later parse does not replace a relabelled role. Null while the role is the classifier\&#39;s, whose name and version are in &#x60;metadata.role_source&#x60; (study_schema\&#39;s &#x60;role_source&#x60;). | [optional] [default to undefined]
 **outcome** | **string** | Whether anything survived the analysis\&#39;s threshold (study_schema AnalysisOutcome), from the extraction record. The ingester sets it only on results. | [optional] [default to undefined]
 **from_prior_study** | **boolean** | The coordinates are quoted from an earlier study, not this one\&#39;s. | [optional] [default to undefined]
+**data_sources** | **Array&lt;string&gt;** | The ids of the data sources the analysis\&#39;s data come from; replaces its links. | [optional] [default to undefined]
 
 ## Example
 
@@ -46,6 +47,7 @@ const instance: AnalysisRequest = {
     relabelled_by,
     outcome,
     from_prior_study,
+    data_sources,
 };
 ```
 

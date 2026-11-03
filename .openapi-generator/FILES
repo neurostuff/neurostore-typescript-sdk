@@ -49,6 +49,12 @@ docs/ConditionBase.md
 docs/ConditionList.md
 docs/ConditionRequest.md
 docs/ConditionReturn.md
+docs/DataSourceAlias.md
+docs/DataSourceCommon.md
+docs/DataSourceList.md
+docs/DataSourceRequest.md
+docs/DataSourceReturn.md
+docs/DataSourceSummary.md
 docs/Entity.md
 docs/ErrorDetail.md
 docs/ErrorResponse.md

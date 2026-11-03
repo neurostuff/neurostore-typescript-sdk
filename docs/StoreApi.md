@@ -32,6 +32,11 @@ All URIs are relative to *https://neurostore.org/api*
 |[**conditionsIdGet**](#conditionsidget) | **GET** /conditions/{id} | GET a condition|
 |[**conditionsIdPut**](#conditionsidput) | **PUT** /conditions/{id} | PUT/update a condition|
 |[**conditionsPost**](#conditionspost) | **POST** /conditions/ | POST/Create a condition|
+|[**dataSourcesGet**](#datasourcesget) | **GET** /data-sources/ | GET data sources|
+|[**dataSourcesIdDelete**](#datasourcesiddelete) | **DELETE** /data-sources/{id} | DELETE a data source|
+|[**dataSourcesIdGet**](#datasourcesidget) | **GET** /data-sources/{id} | GET a data source|
+|[**dataSourcesIdPut**](#datasourcesidput) | **PUT** /data-sources/{id} | PUT/update a data source|
+|[**dataSourcesPost**](#datasourcespost) | **POST** /data-sources/ | POST/Create a data source|
 |[**imagesGet**](#imagesget) | **GET** /images/ | GET a list of images|
 |[**imagesIdDelete**](#imagesiddelete) | **DELETE** /images/{id} | DELETE an image|
 |[**imagesIdGet**](#imagesidget) | **GET** /images/{id} | GET an image|
@@ -99,6 +104,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
+let dataSources: boolean; //include `data_sources`: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. (optional) (default to false)
 let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
 let page: number; //page of results (optional) (default to undefined)
 let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
@@ -112,6 +118,7 @@ let imageMetadata: boolean; //include each image\'s source metadata (the payload
 let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.analysesGet(
+    dataSources,
     sort,
     page,
     desc,
@@ -130,6 +137,7 @@ const { status, data } = await apiInstance.analysesGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **dataSources** | [**boolean**] | include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. | (optional) defaults to false|
 | **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
 | **page** | [**number**] | page of results | (optional) defaults to undefined|
 | **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
@@ -232,12 +240,14 @@ const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
 let id: string; // (default to undefined)
+let dataSources: boolean; //include `data_sources`: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. (optional) (default to false)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
 let imageMetadata: boolean; //include each image\'s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. (optional) (default to false)
 let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.analysesIdGet(
     id,
+    dataSources,
     nested,
     imageMetadata,
     imageValueSummary
@@ -249,6 +259,7 @@ const { status, data } = await apiInstance.analysesIdGet(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**string**] |  | defaults to undefined|
+| **dataSources** | [**boolean**] | include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. | (optional) defaults to false|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
 | **imageMetadata** | [**boolean**] | include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads. | (optional) defaults to false|
 | **imageValueSummary** | [**boolean**] | include each image\&#39;s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. | (optional) defaults to false|
@@ -1068,6 +1079,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
+let dataSources: boolean; //include `data_sources`: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. (optional) (default to false)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
 let yearMin: number; //Minimum publication year (inclusive) for study search (optional) (default to undefined)
 let x: number; //X coordinate for spatial query (requires y, z, and radius) (optional) (default to undefined)
@@ -1105,6 +1117,7 @@ let info: boolean; //show additional for endpoint-object relationships without b
 let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
 
 const { status, data } = await apiInstance.baseStudiesGet(
+    dataSources,
     nested,
     yearMin,
     x,
@@ -1147,6 +1160,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **dataSources** | [**boolean**] | include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. | (optional) defaults to false|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
 | **yearMin** | [**number**] | Minimum publication year (inclusive) for study search | (optional) defaults to undefined|
 | **x** | [**number**] | X coordinate for spatial query (requires y, z, and radius) | (optional) defaults to undefined|
@@ -1278,12 +1292,14 @@ const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
 let id: string; // (default to undefined)
+let dataSources: boolean; //include `data_sources`: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. (optional) (default to false)
 let flat: boolean; //do not return any embedded relationships. When set, it is incompatible with nested.  (optional) (default to undefined)
 let info: boolean; //show additional for endpoint-object relationships without being fully nested. Incompatible with nested (optional) (default to undefined)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.baseStudiesIdGet(
     id,
+    dataSources,
     flat,
     info,
     nested
@@ -1295,6 +1311,7 @@ const { status, data } = await apiInstance.baseStudiesIdGet(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**string**] |  | defaults to undefined|
+| **dataSources** | [**boolean**] | include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. | (optional) defaults to false|
 | **flat** | [**boolean**] | do not return any embedded relationships. When set, it is incompatible with nested.  | (optional) defaults to undefined|
 | **info** | [**boolean**] | show additional for endpoint-object relationships without being fully nested. Incompatible with nested | (optional) defaults to undefined|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
@@ -1705,6 +1722,295 @@ const { status, data } = await apiInstance.conditionsPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **dataSourcesGet**
+> DataSourceList dataSourcesGet()
+
+List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
+let page: number; //page of results (optional) (default to undefined)
+let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
+let pageSize: number; //number of results to show on a page (optional) (default to undefined)
+let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
+let name: string; //search the name field for a term (optional) (default to undefined)
+let description: string; //search description field for a term (optional) (default to undefined)
+let kind: 'study' | 'consortium' | 'repository'; //only data sources of this kind (optional) (default to undefined)
+let slug: string; //only the data source with this slug (optional) (default to undefined)
+
+const { status, data } = await apiInstance.dataSourcesGet(
+    sort,
+    page,
+    desc,
+    pageSize,
+    paginate,
+    name,
+    description,
+    kind,
+    slug
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
+| **page** | [**number**] | page of results | (optional) defaults to undefined|
+| **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
+| **pageSize** | [**number**] | number of results to show on a page | (optional) defaults to undefined|
+| **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|
+| **name** | [**string**] | search the name field for a term | (optional) defaults to undefined|
+| **description** | [**string**] | search description field for a term | (optional) defaults to undefined|
+| **kind** | [**&#39;study&#39; | &#39;consortium&#39; | &#39;repository&#39;**]**Array<&#39;study&#39; &#124; &#39;consortium&#39; &#124; &#39;repository&#39;>** | only data sources of this kind | (optional) defaults to undefined|
+| **slug** | [**string**] | only the data source with this slug | (optional) defaults to undefined|
+
+
+### Return type
+
+**DataSourceList**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **dataSourcesIdDelete**
+> dataSourcesIdDelete()
+
+Delete a data source and its analysis links. Admins only.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.dataSourcesIdDelete(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**403** | Only an admin can change data sources. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **dataSourcesIdGet**
+> DataSourceReturn dataSourcesIdGet()
+
+Retrieve a data source and its aliases.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.dataSourcesIdGet(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**DataSourceReturn**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**404** | Not Found |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **dataSourcesIdPut**
+> DataSourceReturn dataSourcesIdPut()
+
+Update a data source; given aliases replace its aliases. Admins only.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration,
+    DataSourceRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let id: string; // (default to undefined)
+let dataSourceRequest: DataSourceRequest; // (optional)
+
+const { status, data } = await apiInstance.dataSourcesIdPut(
+    id,
+    dataSourceRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **dataSourceRequest** | **DataSourceRequest**|  | |
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**DataSourceReturn**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**403** | Only an admin can change data sources. |  -  |
+|**422** | Unprocessable Entity |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **dataSourcesPost**
+> DataSourceReturn dataSourcesPost()
+
+Create a data source. Admins only.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration,
+    DataSourceRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let dataSourceRequest: DataSourceRequest; // (optional)
+
+const { status, data } = await apiInstance.dataSourcesPost(
+    dataSourceRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **dataSourceRequest** | **DataSourceRequest**|  | |
+
+
+### Return type
+
+**DataSourceReturn**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**403** | Only an admin can change data sources. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3348,6 +3654,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
+let dataSources: boolean; //include `data_sources`: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. (optional) (default to false)
 let search: string; //Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading `-` and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one. (optional) (default to undefined)
 let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
 let page: number; //page of results (optional) (default to undefined)
@@ -3374,6 +3681,7 @@ let imageMetadata: boolean; //include each image\'s source metadata (the payload
 let imageValueSummary: boolean; //include each image\'s stored value summary (percentiles, spread, histogram, nan/zero/negative counts). Withheld by default; never present in studyset payloads. (optional) (default to false)
 
 const { status, data } = await apiInstance.studiesGet(
+    dataSources,
     search,
     sort,
     page,
@@ -3405,6 +3713,7 @@ const { status, data } = await apiInstance.studiesGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **dataSources** | [**boolean**] | include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. | (optional) defaults to false|
 | **search** | [**string**] | Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one. | (optional) defaults to undefined|
 | **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
 | **page** | [**number**] | page of results | (optional) defaults to undefined|
@@ -3520,6 +3829,7 @@ const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
 let id: string; // (default to undefined)
+let dataSources: boolean; //include `data_sources`: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. (optional) (default to false)
 let nested: boolean; //whether to show the URI to a resource (false) or to embed the object in the response (true) (optional) (default to undefined)
 let studysetOwner: string; //for all studies filter which studysets are listed based on who owns the studyset (optional) (default to undefined)
 let flat: boolean; //do not return any embedded relationships. When set, it is incompatible with nested.  (optional) (default to undefined)
@@ -3528,6 +3838,7 @@ let imageValueSummary: boolean; //include each image\'s stored value summary (pe
 
 const { status, data } = await apiInstance.studiesIdGet(
     id,
+    dataSources,
     nested,
     studysetOwner,
     flat,
@@ -3541,6 +3852,7 @@ const { status, data } = await apiInstance.studiesIdGet(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**string**] |  | defaults to undefined|
+| **dataSources** | [**boolean**] | include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. | (optional) defaults to false|
 | **nested** | [**boolean**] | whether to show the URI to a resource (false) or to embed the object in the response (true) | (optional) defaults to undefined|
 | **studysetOwner** | [**string**] | for all studies filter which studysets are listed based on who owns the studyset | (optional) defaults to undefined|
 | **flat** | [**boolean**] | do not return any embedded relationships. When set, it is incompatible with nested.  | (optional) defaults to undefined|

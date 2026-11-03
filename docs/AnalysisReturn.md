@@ -34,6 +34,7 @@ Name | Type | Description | Notes
 **has_z_maps** | **boolean** |  | [optional] [default to undefined]
 **has_t_maps** | **boolean** |  | [optional] [default to undefined]
 **has_beta_and_variance_maps** | **boolean** |  | [optional] [default to undefined]
+**data_sources** | [**Array&lt;DataSourceSummary&gt;**](DataSourceSummary.md) | Present only when the request sets &#x60;data_sources&#x3D;true&#x60;. | [optional] [readonly] [default to undefined]
 
 ## Example
 
@@ -70,6 +71,7 @@ const instance: AnalysisReturn = {
     has_z_maps,
     has_t_maps,
     has_beta_and_variance_maps,
+    data_sources,
 };
 ```
 
