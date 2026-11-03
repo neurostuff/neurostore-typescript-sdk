@@ -1728,7 +1728,7 @@ const { status, data } = await apiInstance.conditionsPost(
 # **dataSourcesGet**
 > DataSourceList dataSourcesGet()
 
-List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+List the named studies (cohorts), consortia and repositories a paper\'s data can come from.
 
 ### Example
 
@@ -1749,7 +1749,6 @@ let paginate: boolean; //whether to paginate results (true) or return all result
 let name: string; //search the name field for a term (optional) (default to undefined)
 let description: string; //search description field for a term (optional) (default to undefined)
 let kind: 'study' | 'consortium' | 'repository'; //only data sources of this kind (optional) (default to undefined)
-let slug: string; //only the data source with this slug (optional) (default to undefined)
 
 const { status, data } = await apiInstance.dataSourcesGet(
     sort,
@@ -1759,8 +1758,7 @@ const { status, data } = await apiInstance.dataSourcesGet(
     paginate,
     name,
     description,
-    kind,
-    slug
+    kind
 );
 ```
 
@@ -1776,7 +1774,6 @@ const { status, data } = await apiInstance.dataSourcesGet(
 | **name** | [**string**] | search the name field for a term | (optional) defaults to undefined|
 | **description** | [**string**] | search description field for a term | (optional) defaults to undefined|
 | **kind** | [**&#39;study&#39; | &#39;consortium&#39; | &#39;repository&#39;**]**Array<&#39;study&#39; &#124; &#39;consortium&#39; &#124; &#39;repository&#39;>** | only data sources of this kind | (optional) defaults to undefined|
-| **slug** | [**string**] | only the data source with this slug | (optional) defaults to undefined|
 
 
 ### Return type
@@ -1855,7 +1852,7 @@ void (empty response body)
 # **dataSourcesIdGet**
 > DataSourceReturn dataSourcesIdGet()
 
-Retrieve a data source and its aliases.
+Retrieve a data source.
 
 ### Example
 
@@ -1907,7 +1904,7 @@ No authorization required
 # **dataSourcesIdPut**
 > DataSourceReturn dataSourcesIdPut()
 
-Update a data source; given aliases replace its aliases. Admins only.
+Update a data source; its id cannot change. Admins only.
 
 ### Example
 
@@ -1964,7 +1961,7 @@ const { status, data } = await apiInstance.dataSourcesIdPut(
 # **dataSourcesPost**
 > DataSourceReturn dataSourcesPost()
 
-Create a data source. Admins only.
+Create a data source under the id given in the body. Admins only.
 
 ### Example
 
@@ -2011,6 +2008,7 @@ const { status, data } = await apiInstance.dataSourcesPost(
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
 |**403** | Only an admin can change data sources. |  -  |
+|**422** | Unprocessable Entity |  * X-Request-ID -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

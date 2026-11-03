@@ -6,7 +6,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional] [default to undefined]
-**slug** | **string** |  | [optional] [default to undefined]
 **name** | **string** |  | [optional] [default to undefined]
 **url** | **string** |  | [optional] [default to undefined]
 
@@ -17,7 +16,6 @@ import { DataSourceSummary } from './api';
 
 const instance: DataSourceSummary = {
     id,
-    slug,
     name,
     url,
 };

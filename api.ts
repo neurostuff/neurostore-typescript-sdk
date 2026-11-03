@@ -760,30 +760,11 @@ export interface ConditionReturn {
      */
     'username'?: string | null;
 }
-export interface DataSourceAlias {
-    'id'?: string;
-    'alias': string;
-    /**
-     * What a match on the alias needs: `name`, a full name matched case-insensitively; `safe`, an acronym that stands alone; `context`, an acronym needing a dataset or imaging word nearby; `defined`, an acronym needing one of the data source\'s names in the same paper; `qualified`, a common word needing a qualifier such as \"dataset\" or an accession.
-     */
-    'tier': DataSourceAliasTierEnum;
-}
-
-export const DataSourceAliasTierEnum = {
-    Name: 'name',
-    Safe: 'safe',
-    Context: 'context',
-    Defined: 'defined',
-    Qualified: 'qualified'
-} as const;
-
-export type DataSourceAliasTierEnum = typeof DataSourceAliasTierEnum[keyof typeof DataSourceAliasTierEnum];
-
 export interface DataSourceCommon {
     /**
-     * A short stable key, e.g. `ukb`.
+     * The data source\'s key, e.g. `ukb`, given when it is created and never changed, so records made outside neurostore can name it before it is uploaded.
      */
-    'slug'?: string;
+    'id'?: string;
     'name'?: string;
     'description'?: string | null;
     'kinds'?: Array<DataSourceCommonKindsEnum>;
@@ -799,11 +780,6 @@ export interface DataSourceCommon {
     'url_kind'?: string | null;
     'rrids'?: Array<string>;
     're3data_ids'?: Array<string>;
-    /**
-     * The catalogues the data source was found in.
-     */
-    'listed_in'?: Array<string>;
-    'aliases'?: Array<DataSourceAlias>;
 }
 
 export const DataSourceCommonKindsEnum = {
@@ -820,9 +796,9 @@ export interface DataSourceList {
 }
 export interface DataSourceRequest {
     /**
-     * A short stable key, e.g. `ukb`.
+     * The data source\'s key, e.g. `ukb`, given when it is created and never changed, so records made outside neurostore can name it before it is uploaded.
      */
-    'slug'?: string;
+    'id'?: string;
     'name'?: string;
     'description'?: string | null;
     'kinds'?: Array<DataSourceRequestKindsEnum>;
@@ -838,19 +814,6 @@ export interface DataSourceRequest {
     'url_kind'?: string | null;
     'rrids'?: Array<string>;
     're3data_ids'?: Array<string>;
-    /**
-     * The catalogues the data source was found in.
-     */
-    'listed_in'?: Array<string>;
-    'aliases'?: Array<DataSourceAlias>;
-    /**
-     * short UUID specifying the location of this resource
-     */
-    'id'?: string;
-    /**
-     * whether the resource is listed in public searches or not
-     */
-    'public'?: boolean;
 }
 
 export const DataSourceRequestKindsEnum = {
@@ -863,9 +826,9 @@ export type DataSourceRequestKindsEnum = typeof DataSourceRequestKindsEnum[keyof
 
 export interface DataSourceReturn {
     /**
-     * A short stable key, e.g. `ukb`.
+     * The data source\'s key, e.g. `ukb`, given when it is created and never changed, so records made outside neurostore can name it before it is uploaded.
      */
-    'slug'?: string;
+    'id'?: string;
     'name'?: string;
     'description'?: string | null;
     'kinds'?: Array<DataSourceReturnKindsEnum>;
@@ -882,11 +845,6 @@ export interface DataSourceReturn {
     'rrids'?: Array<string>;
     're3data_ids'?: Array<string>;
     /**
-     * The catalogues the data source was found in.
-     */
-    'listed_in'?: Array<string>;
-    'aliases'?: Array<DataSourceAlias>;
-    /**
      * time the resource was created on the database
      */
     'created_at'?: string;
@@ -894,14 +852,6 @@ export interface DataSourceReturn {
      * when the resource was last modified/updated.
      */
     'updated_at'?: string | null;
-    /**
-     * short UUID specifying the location of this resource
-     */
-    'id'?: string;
-    /**
-     * whether the resource is listed in public searches or not
-     */
-    'public'?: boolean;
     /**
      * who owns the resource
      */
@@ -922,7 +872,6 @@ export type DataSourceReturnKindsEnum = typeof DataSourceReturnKindsEnum[keyof t
 
 export interface DataSourceSummary {
     'id'?: string;
-    'slug'?: string;
     'name'?: string;
     'url'?: string | null;
 }
@@ -5292,7 +5241,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from.
          * @summary GET data sources
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -5302,11 +5251,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
-         * @param {string} [slug] only the data source with this slug
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataSourcesGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        dataSourcesGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/data-sources/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5349,10 +5297,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (kind !== undefined) {
                 localVarQueryParameter['kind'] = kind;
-            }
-
-            if (slug !== undefined) {
-                localVarQueryParameter['slug'] = slug;
             }
 
 
@@ -5405,7 +5349,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Retrieve a data source and its aliases.
+         * Retrieve a data source.
          * @summary GET a data source
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -5439,7 +5383,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Update a data source; given aliases replace its aliases. Admins only.
+         * Update a data source; its id cannot change. Admins only.
          * @summary PUT/update a data source
          * @param {string} id 
          * @param {DataSourceRequest} [dataSourceRequest] 
@@ -5481,7 +5425,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Create a data source. Admins only.
+         * Create a data source under the id given in the body. Admins only.
          * @summary POST/Create a data source
          * @param {DataSourceRequest} [dataSourceRequest] 
          * @param {*} [options] Override http request option.
@@ -8211,7 +8155,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from.
          * @summary GET data sources
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -8221,12 +8165,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
-         * @param {string} [slug] only the data source with this slug
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, slug, options);
+        async dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DataSourceList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.dataSourcesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8245,7 +8188,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Retrieve a data source and its aliases.
+         * Retrieve a data source.
          * @summary GET a data source
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -8258,7 +8201,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Update a data source; given aliases replace its aliases. Admins only.
+         * Update a data source; its id cannot change. Admins only.
          * @summary PUT/update a data source
          * @param {string} id 
          * @param {DataSourceRequest} [dataSourceRequest] 
@@ -8272,7 +8215,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Create a data source. Admins only.
+         * Create a data source under the id given in the body. Admins only.
          * @summary POST/Create a data source
          * @param {DataSourceRequest} [dataSourceRequest] 
          * @param {*} [options] Override http request option.
@@ -9383,7 +9326,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.conditionsPost(conditionRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+         * List the named studies (cohorts), consortia and repositories a paper\'s data can come from.
          * @summary GET data sources
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -9393,12 +9336,11 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [name] search the name field for a term
          * @param {string} [description] search description field for a term
          * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
-         * @param {string} [slug] only the data source with this slug
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options?: RawAxiosRequestConfig): AxiosPromise<DataSourceList> {
-            return localVarFp.dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, slug, options).then((request) => request(axios, basePath));
+        dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, options?: RawAxiosRequestConfig): AxiosPromise<DataSourceList> {
+            return localVarFp.dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, options).then((request) => request(axios, basePath));
         },
         /**
          * Delete a data source and its analysis links. Admins only.
@@ -9411,7 +9353,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.dataSourcesIdDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Retrieve a data source and its aliases.
+         * Retrieve a data source.
          * @summary GET a data source
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -9421,7 +9363,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.dataSourcesIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Update a data source; given aliases replace its aliases. Admins only.
+         * Update a data source; its id cannot change. Admins only.
          * @summary PUT/update a data source
          * @param {string} id 
          * @param {DataSourceRequest} [dataSourceRequest] 
@@ -9432,7 +9374,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.dataSourcesIdPut(id, dataSourceRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create a data source. Admins only.
+         * Create a data source under the id given in the body. Admins only.
          * @summary POST/Create a data source
          * @param {DataSourceRequest} [dataSourceRequest] 
          * @param {*} [options] Override http request option.
@@ -10416,7 +10358,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * List the named studies (cohorts), consortia and repositories a paper\'s data can come from, with the aliases used to find them in text.
+     * List the named studies (cohorts), consortia and repositories a paper\'s data can come from.
      * @summary GET data sources
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
@@ -10426,12 +10368,11 @@ export class StoreApi extends BaseAPI {
      * @param {string} [name] search the name field for a term
      * @param {string} [description] search description field for a term
      * @param {DataSourcesGetKindEnum} [kind] only data sources of this kind
-     * @param {string} [slug] only the data source with this slug
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, slug?: string, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, slug, options).then((request) => request(this.axios, this.basePath));
+    public dataSourcesGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, name?: string, description?: string, kind?: DataSourcesGetKindEnum, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).dataSourcesGet(sort, page, desc, pageSize, paginate, name, description, kind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10446,7 +10387,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Retrieve a data source and its aliases.
+     * Retrieve a data source.
      * @summary GET a data source
      * @param {string} id 
      * @param {*} [options] Override http request option.
@@ -10457,7 +10398,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Update a data source; given aliases replace its aliases. Admins only.
+     * Update a data source; its id cannot change. Admins only.
      * @summary PUT/update a data source
      * @param {string} id 
      * @param {DataSourceRequest} [dataSourceRequest] 
@@ -10469,7 +10410,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Create a data source. Admins only.
+     * Create a data source under the id given in the body. Admins only.
      * @summary POST/Create a data source
      * @param {DataSourceRequest} [dataSourceRequest] 
      * @param {*} [options] Override http request option.
