@@ -1178,6 +1178,10 @@ export interface PipelineRunProvenance {
      * The parse\'s producer (name, version, stage, model, prompt_version).
      */
     'parse_version'?: { [key: string]: any; };
+    /**
+     * For a record uploaded with runs, the runs its config holds; null otherwise.
+     */
+    'runs'?: Array<StudySchemaRun> | null;
     'date_executed'?: string;
     'created_at'?: string;
     'updated_at'?: string | null;
@@ -1889,6 +1893,36 @@ export interface StudySchemaRenameCandidate {
      */
     'candidate_id'?: string;
 }
+/**
+ * One run behind a record, as the pipeline\'s runs table holds it.
+ */
+export interface StudySchemaRun {
+    /**
+     * Required. Names one run; a run_id stored with other fields is refused (RUN_CONFLICT).
+     */
+    'run_id'?: string;
+    /**
+     * Required. record, evidence or normalize.
+     */
+    'stage'?: string;
+    /**
+     * Required. The record source the run made or read.
+     */
+    'source'?: string;
+    'model'?: string | null;
+    /**
+     * repo@revision of the adapter the model ran with.
+     */
+    'adapter'?: string | null;
+    'prompt_version'?: string | null;
+    'schema_version'?: string | null;
+    'code_commit'?: string | null;
+    'machine'?: string | null;
+    /**
+     * Required. When the run was made, ISO 8601.
+     */
+    'created_at'?: string;
+}
 export interface StudySchemaSetAside {
     /**
      * Class[key] for an entity, or absent for an analysis row.
@@ -1944,6 +1978,10 @@ export interface StudySchemaUploadPipeline {
      * The commit of the code that produced the record. Two commits of one version are different configs.
      */
     'commit'?: string;
+    /**
+     * The runs that made the record: its record run, and the evidence and normalize runs that filled it in, at most one per stage. The record\'s config holds them in stage order with every field present, so uploads made by the same runs share one config and any other run gets another. Without runs the config is keyed as before. Validated by the service (422 SCHEMA, DUPLICATE_STAGE, DUPLICATE_RUN_ID, RUN_CONFLICT). 
+     */
+    'runs'?: Array<StudySchemaRun>;
 }
 /**
  * What one upload changed. Keys appear for the parts uploaded.
