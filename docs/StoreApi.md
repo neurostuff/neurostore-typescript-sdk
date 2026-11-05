@@ -9,6 +9,8 @@ All URIs are relative to *https://neurostore.org/api*
 |[**analysesIdGet**](#analysesidget) | **GET** /analyses/{id} | GET an analysis|
 |[**analysesIdPut**](#analysesidput) | **PUT** /analyses/{id} | PUT/update an analysis|
 |[**analysesPost**](#analysespost) | **POST** /analyses/ | POST/create an analysis|
+|[**analysisQueriesPost**](#analysisqueriespost) | **POST** /analysis-queries/ | Select analyses by what their extraction records say|
+|[**analysisTermsGet**](#analysistermsget) | **GET** /analysis-terms/ | The values an analysis query field takes|
 |[**annotationAnalysesGet**](#annotationanalysesget) | **GET** /annotation-analyses/ | Get annotation analyses|
 |[**annotationAnalysesIdGet**](#annotationanalysesidget) | **GET** /annotation-analyses/{id} | Your GET endpoint|
 |[**annotationAnalysesIdPut**](#annotationanalysesidput) | **PUT** /annotation-analyses/{id} | Your PUT endpoint|
@@ -392,6 +394,116 @@ const { status, data } = await apiInstance.analysesPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **analysisQueriesPost**
+> AnalysisQueryResult analysisQueriesPost()
+
+Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A criterion with ids (diagnosis, task, contrast set) also matches a value that is one of the analysis\'s ids. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and with `funnel` says what each criterion dropped. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration,
+    AnalysisQueryRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let analysisQueryRequest: AnalysisQueryRequest; // (optional)
+
+const { status, data } = await apiInstance.analysisQueriesPost(
+    analysisQueryRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **analysisQueryRequest** | **AnalysisQueryRequest**|  | |
+
+
+### Return type
+
+**AnalysisQueryResult**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The selected analyses, and what each criterion dropped |  -  |
+|**400** | The query is not valid. Field error codes: UNKNOWN_FIELD, INVALID_VALUE, MISSING_VALUE, and PATTERN_TOO_BROAD for a text pattern without three consecutive letters or digits.  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **analysisTermsGet**
+> AnalysisTermList analysisTermsGet()
+
+Each value of one field across the pipeline analyses\' features, with its label and how many analyses and papers carry it, most common first. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let field: 'diagnosis' | 'task' | 'contrast_set' | 'arm_kind' | 'species' | 'spatial_scope' | 'measure_type' | 'measure_family' | 'details_type' | 'effect_kind' | 'allocation' | 'assignment_structure' | 'blinding'; // (default to undefined)
+let search: string; //Keep the values or labels that contain this text, case-insensitively. (optional) (default to undefined)
+let limit: number; // (optional) (default to 50)
+
+const { status, data } = await apiInstance.analysisTermsGet(
+    field,
+    search,
+    limit
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **field** | [**&#39;diagnosis&#39; | &#39;task&#39; | &#39;contrast_set&#39; | &#39;arm_kind&#39; | &#39;species&#39; | &#39;spatial_scope&#39; | &#39;measure_type&#39; | &#39;measure_family&#39; | &#39;details_type&#39; | &#39;effect_kind&#39; | &#39;allocation&#39; | &#39;assignment_structure&#39; | &#39;blinding&#39;**]**Array<&#39;diagnosis&#39; &#124; &#39;task&#39; &#124; &#39;contrast_set&#39; &#124; &#39;arm_kind&#39; &#124; &#39;species&#39; &#124; &#39;spatial_scope&#39; &#124; &#39;measure_type&#39; &#124; &#39;measure_family&#39; &#124; &#39;details_type&#39; &#124; &#39;effect_kind&#39; &#124; &#39;allocation&#39; &#124; &#39;assignment_structure&#39; &#124; &#39;blinding&#39;>** |  | defaults to undefined|
+| **search** | [**string**] | Keep the values or labels that contain this text, case-insensitively. | (optional) defaults to undefined|
+| **limit** | [**number**] |  | (optional) defaults to 50|
+
+
+### Return type
+
+**AnalysisTermList**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The field\&#39;s values |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

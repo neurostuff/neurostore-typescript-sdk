@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **pipelines** | [**Array&lt;AnnotationPipelineExtensionPipelinesInner&gt;**](AnnotationPipelineExtensionPipelinesInner.md) | Optional pipeline descriptors used to populate annotation notes with feature columns. Each entry should include the pipeline name and the list of columns to import, along with optional version and config id.  | [optional] [default to undefined]
+**analysis_query** | [**AnnotationPipelineExtensionAnalysisQuery**](AnnotationPipelineExtensionAnalysisQuery.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -14,6 +15,7 @@ import { AnnotationPipelineExtension } from './api';
 
 const instance: AnnotationPipelineExtension = {
     pipelines,
+    analysis_query,
 };
 ```
 
