@@ -44,6 +44,8 @@ All URIs are relative to *https://neurostore.org/api*
 |[**imagesIdGet**](#imagesidget) | **GET** /images/{id} | GET an image|
 |[**imagesIdPut**](#imagesidput) | **PUT** /images/{id} | PUT/update an image|
 |[**imagesPost**](#imagespost) | **POST** /images/ | POST/create an image|
+|[**journalsGet**](#journalsget) | **GET** /journals/ | GET journals|
+|[**journalsIdGet**](#journalsidget) | **GET** /journals/{id} | GET a journal|
 |[**neurostoreStudysetReleasesGet**](#neurostorestudysetreleasesget) | **GET** /neurostore-studyset-releases/ | GET NeuroStore studyset release list|
 |[**neurostoreStudysetReleasesVersionDownloadGet**](#neurostorestudysetreleasesversiondownloadget) | **GET** /neurostore-studyset-releases/{version}/download | Download NeuroStore studyset release tarball|
 |[**neurostoreStudysetReleasesVersionGet**](#neurostorestudysetreleasesversionget) | **GET** /neurostore-studyset-releases/{version} | GET NeuroStore studyset release manifest|
@@ -1221,6 +1223,7 @@ let dataType: 'coordinate' | 'image' | 'both'; //whether searching for studies t
 let mapType: 'z' | 't' | 'beta_variance' | 'any'; //filter by stored map-type flags (optional) (default to undefined)
 let isOa: boolean; // (optional) (default to undefined)
 let publication: string; //search for papers from a particular journal (optional) (default to undefined)
+let journalId: string; //only papers neurostore identified as appearing in this journal (optional) (default to undefined)
 let pmid: string; //search for particular pmid (optional) (default to undefined)
 let doi: string; //search for study with specific doi (optional) (default to undefined)
 let neurovaultId: string; //search for study with specific neurovault id (optional) (default to undefined)
@@ -1259,6 +1262,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
     mapType,
     isOa,
     publication,
+    journalId,
     pmid,
     doi,
     neurovaultId,
@@ -1302,6 +1306,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | **mapType** | [**&#39;z&#39; | &#39;t&#39; | &#39;beta_variance&#39; | &#39;any&#39;**]**Array<&#39;z&#39; &#124; &#39;t&#39; &#124; &#39;beta_variance&#39; &#124; &#39;any&#39;>** | filter by stored map-type flags | (optional) defaults to undefined|
 | **isOa** | [**boolean**] |  | (optional) defaults to undefined|
 | **publication** | [**string**] | search for papers from a particular journal | (optional) defaults to undefined|
+| **journalId** | [**string**] | only papers neurostore identified as appearing in this journal | (optional) defaults to undefined|
 | **pmid** | [**string**] | search for particular pmid | (optional) defaults to undefined|
 | **doi** | [**string**] | search for study with specific doi | (optional) defaults to undefined|
 | **neurovaultId** | [**string**] | search for study with specific neurovault id | (optional) defaults to undefined|
@@ -2422,6 +2427,127 @@ const { status, data } = await apiInstance.imagesPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **journalsGet**
+> JournalList journalsGet()
+
+List the journals, preprint servers and conference series papers appeared in, each one OpenAlex source.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
+let page: number; //page of results (optional) (default to undefined)
+let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
+let pageSize: number; //number of results to show on a page (optional) (default to undefined)
+let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
+let search: string; //Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it. (optional) (default to undefined)
+let kind: JournalKind; //only journals of this kind (optional) (default to undefined)
+
+const { status, data } = await apiInstance.journalsGet(
+    sort,
+    page,
+    desc,
+    pageSize,
+    paginate,
+    search,
+    kind
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
+| **page** | [**number**] | page of results | (optional) defaults to undefined|
+| **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
+| **pageSize** | [**number**] | number of results to show on a page | (optional) defaults to undefined|
+| **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|
+| **search** | [**string**] | Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it. | (optional) defaults to undefined|
+| **kind** | **JournalKind** | only journals of this kind | (optional) defaults to undefined|
+
+
+### Return type
+
+**JournalList**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **journalsIdGet**
+> JournalReturn journalsIdGet()
+
+Retrieve a journal.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.journalsIdGet(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**JournalReturn**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**404** | No journal has this id. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -3765,6 +3891,7 @@ const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
 let dataSources: boolean; //include `data_sources`: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. (optional) (default to false)
+let journalId: string; //only papers neurostore identified as appearing in this journal (optional) (default to undefined)
 let search: string; //Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading `-` and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one. (optional) (default to undefined)
 let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
 let page: number; //page of results (optional) (default to undefined)
@@ -3792,6 +3919,7 @@ let imageValueSummary: boolean; //include each image\'s stored value summary (pe
 
 const { status, data } = await apiInstance.studiesGet(
     dataSources,
+    journalId,
     search,
     sort,
     page,
@@ -3824,6 +3952,7 @@ const { status, data } = await apiInstance.studiesGet(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **dataSources** | [**boolean**] | include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default. | (optional) defaults to false|
+| **journalId** | [**string**] | only papers neurostore identified as appearing in this journal | (optional) defaults to undefined|
 | **search** | [**string**] | Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one. | (optional) defaults to undefined|
 | **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
 | **page** | [**number**] | page of results | (optional) defaults to undefined|

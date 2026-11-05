@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **analyses** | [**StudyReturnRelationshipsAnalyses**](StudyReturnRelationshipsAnalyses.md) |  | [optional] [default to undefined]
 **tables** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **data_sources** | [**Array&lt;DataSourceSummary&gt;**](DataSourceSummary.md) | Present only when the request sets &#x60;data_sources&#x3D;true&#x60;. | [optional] [readonly] [default to undefined]
+**journal** | [**JournalSummary**](JournalSummary.md) |  | [optional] [default to undefined]
 **studysets** | [**Array&lt;StudyReturnAllOfStudysets&gt;**](StudyReturnAllOfStudysets.md) |  | [optional] [default to undefined]
 **has_coordinates** | **boolean** |  | [optional] [default to undefined]
 **has_images** | **boolean** |  | [optional] [default to undefined]
@@ -60,6 +61,7 @@ const instance: BaseStudyVersionsInner = {
     analyses,
     tables,
     data_sources,
+    journal,
     studysets,
     has_coordinates,
     has_images,

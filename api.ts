@@ -834,6 +834,7 @@ export interface BaseStudyReturn {
      * human readable username
      */
     'username'?: string | null;
+    'journal'?: JournalSummary | null;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
     'has_z_maps'?: boolean;
@@ -1325,6 +1326,76 @@ export interface ImageValueSummaryHistogram {
      * Values above max, clipped out of the binned range.
      */
     'overflow'?: number | null;
+}
+/**
+ * OpenAlex\'s source type.
+ */
+
+export const JournalKind = {
+    Journal: 'journal',
+    Repository: 'repository',
+    Conference: 'conference',
+    BookSeries: 'book series',
+    EbookPlatform: 'ebook platform',
+    Other: 'other'
+} as const;
+
+export type JournalKind = typeof JournalKind[keyof typeof JournalKind];
+
+
+export interface JournalList {
+    'results'?: Array<JournalReturn>;
+    'metadata'?: Metadata;
+}
+export interface JournalReturn {
+    /**
+     * time the resource was created on the database
+     */
+    'created_at'?: string;
+    /**
+     * when the resource was last modified/updated.
+     */
+    'updated_at'?: string | null;
+    'id'?: string;
+    /**
+     * OpenAlex\'s source id, bare (`S121666818`).
+     */
+    'openalex_id'?: string;
+    /**
+     * OpenAlex\'s name for the source.
+     */
+    'title'?: string;
+    /**
+     * NLM\'s ISO abbreviation, else its MEDLINE abbreviation.
+     */
+    'abbreviation'?: string | null;
+    'kind'?: JournalKind;
+    /**
+     * Every ISSN of the title, print and electronic.
+     */
+    'issns'?: Array<string>;
+    /**
+     * Which of `issns` links the title\'s print and electronic versions.
+     */
+    'issn_l'?: string | null;
+    /**
+     * The NLM Catalog\'s id for the title.
+     */
+    'nlm_id'?: string | null;
+    /**
+     * Wikidata\'s item for the title (`Q5936947`).
+     */
+    'wikidata_id'?: string | null;
+}
+
+
+/**
+ * The journal the paper appeared in, as neurostore identified it; null when it could not be identified. `publication` keeps the name as the source printed it.
+ */
+export interface JournalSummary {
+    'id'?: string;
+    'title'?: string;
+    'abbreviation'?: string | null;
 }
 /**
  * JSON-LD elements for data tracking
@@ -2140,6 +2211,7 @@ export interface StudyReturn {
      * Present only when the request sets `data_sources=true`.
      */
     'data_sources'?: Array<DataSourceSummary>;
+    'journal'?: JournalSummary | null;
     'studysets'?: Array<StudyReturnAllOfStudysets>;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
@@ -4974,6 +5046,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
+         * @param {string} [journalId] only papers neurostore identified as appearing in this journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {string} [neurovaultId] search for study with specific neurovault id
@@ -4983,7 +5056,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet: async (dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        baseStudiesGet: async (dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, journalId?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/base-studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5118,6 +5191,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (publication !== undefined) {
                 localVarQueryParameter['publication'] = publication;
+            }
+
+            if (journalId !== undefined) {
+                localVarQueryParameter['journal_id'] = journalId;
             }
 
             if (pmid !== undefined) {
@@ -6012,6 +6089,105 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(imageRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List the journals, preprint servers and conference series papers appeared in, each one OpenAlex source.
+         * @summary GET journals
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+         * @param {JournalKind} [kind] only journals of this kind
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        journalsGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/journals/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (desc !== undefined) {
+                localVarQueryParameter['desc'] = desc;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
+
+            if (search !== undefined) {
+                localVarQueryParameter['search'] = search;
+            }
+
+            if (kind !== undefined) {
+                localVarQueryParameter['kind'] = kind;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve a journal.
+         * @summary GET a journal
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        journalsIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('journalsIdGet', 'id', id)
+            const localVarPath = `/journals/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6985,6 +7161,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
+         * @param {string} [journalId] only papers neurostore identified as appearing in this journal
          * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -7012,7 +7189,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7031,6 +7208,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (dataSources !== undefined) {
                 localVarQueryParameter['data_sources'] = dataSources;
+            }
+
+            if (journalId !== undefined) {
+                localVarQueryParameter['journal_id'] = journalId;
             }
 
             if (search !== undefined) {
@@ -8342,6 +8523,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
+         * @param {string} [journalId] only papers neurostore identified as appearing in this journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {string} [neurovaultId] search for study with specific neurovault id
@@ -8351,8 +8533,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options);
+        async baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, journalId?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BaseStudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, journalId, pmid, doi, neurovaultId, flat, info, paginate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.baseStudiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -8636,6 +8818,38 @@ export const StoreApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.imagesPost(imageRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.imagesPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * List the journals, preprint servers and conference series papers appeared in, each one OpenAlex source.
+         * @summary GET journals
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+         * @param {JournalKind} [kind] only journals of this kind
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JournalList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.journalsGet(sort, page, desc, pageSize, paginate, search, kind, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.journalsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve a journal.
+         * @summary GET a journal
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async journalsIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JournalReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.journalsIdGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.journalsIdGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -8986,6 +9200,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
+         * @param {string} [journalId] only papers neurostore identified as appearing in this journal
          * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -9013,8 +9228,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(dataSources, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
+        async studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(dataSources, journalId, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9565,6 +9780,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {boolean} [isOa] 
          * @param {string} [publication] search for papers from a particular journal
+         * @param {string} [journalId] only papers neurostore identified as appearing in this journal
          * @param {string} [pmid] search for particular pmid
          * @param {string} [doi] search for study with specific doi
          * @param {string} [neurovaultId] search for study with specific neurovault id
@@ -9574,8 +9790,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
-            return localVarFp.baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
+        baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, journalId?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<BaseStudyList> {
+            return localVarFp.baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, journalId, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(axios, basePath));
         },
         /**
          * Owner or admin. Refused while a paper loaded for review reads one of the base study\'s texts. 
@@ -9800,6 +10016,32 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          */
         imagesPost(imageRequest?: ImageRequest, options?: RawAxiosRequestConfig): AxiosPromise<ImageReturn> {
             return localVarFp.imagesPost(imageRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * List the journals, preprint servers and conference series papers appeared in, each one OpenAlex source.
+         * @summary GET journals
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+         * @param {JournalKind} [kind] only journals of this kind
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options?: RawAxiosRequestConfig): AxiosPromise<JournalList> {
+            return localVarFp.journalsGet(sort, page, desc, pageSize, paginate, search, kind, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve a journal.
+         * @summary GET a journal
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        journalsIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<JournalReturn> {
+            return localVarFp.journalsIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10074,6 +10316,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
+         * @param {string} [journalId] only papers neurostore identified as appearing in this journal
          * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
          * @param {string} [sort] Parameter to sort results on
          * @param {number} [page] page of results
@@ -10101,8 +10344,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
-            return localVarFp.studiesGet(dataSources, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
+        studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+            return localVarFp.studiesGet(dataSources, journalId, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
          * delete a study
@@ -10611,6 +10854,7 @@ export class StoreApi extends BaseAPI {
      * @param {BaseStudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {boolean} [isOa] 
      * @param {string} [publication] search for papers from a particular journal
+     * @param {string} [journalId] only papers neurostore identified as appearing in this journal
      * @param {string} [pmid] search for particular pmid
      * @param {string} [doi] search for study with specific doi
      * @param {string} [neurovaultId] search for study with specific neurovault id
@@ -10620,8 +10864,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
+    public baseStudiesGet(dataSources?: boolean, nested?: boolean, yearMin?: number, x?: number, y?: number, z?: number, radius?: number, yearMax?: number, featureFilter?: Array<string>, pipelineConfig?: Array<string>, featureDisplay?: string, semanticSearch?: string, pipelineConfigId?: string, distanceThreshold?: number, overallCap?: number, featureFlatten?: boolean, search?: string, searchFullText?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, name?: string, description?: string, authors?: string, level?: BaseStudiesGetLevelEnum, dataType?: BaseStudiesGetDataTypeEnum, mapType?: BaseStudiesGetMapTypeEnum, isOa?: boolean, publication?: string, journalId?: string, pmid?: string, doi?: string, neurovaultId?: string, flat?: boolean, info?: boolean, paginate?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).baseStudiesGet(dataSources, nested, yearMin, x, y, z, radius, yearMax, featureFilter, pipelineConfig, featureDisplay, semanticSearch, pipelineConfigId, distanceThreshold, overallCap, featureFlatten, search, searchFullText, sort, page, desc, pageSize, name, description, authors, level, dataType, mapType, isOa, publication, journalId, pmid, doi, neurovaultId, flat, info, paginate, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10865,6 +11109,34 @@ export class StoreApi extends BaseAPI {
      */
     public imagesPost(imageRequest?: ImageRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).imagesPost(imageRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the journals, preprint servers and conference series papers appeared in, each one OpenAlex source.
+     * @summary GET journals
+     * @param {string} [sort] Parameter to sort results on
+     * @param {number} [page] page of results
+     * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+     * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+     * @param {JournalKind} [kind] only journals of this kind
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).journalsGet(sort, page, desc, pageSize, paginate, search, kind, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve a journal.
+     * @summary GET a journal
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public journalsIdGet(id: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).journalsIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11165,6 +11437,7 @@ export class StoreApi extends BaseAPI {
      * List studies
      * @summary GET a list of studies
      * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
+     * @param {string} [journalId] only papers neurostore identified as appearing in this journal
      * @param {string} [search] Words to find in the name and description. Each word is matched whole after English stemming, not as a substring or a prefix. Words must all match unless joined by OR; quoted phrases, AND, NOT, a leading &#x60;-&#x60; and parentheses are understood too. A search of digits only is matched against the PMID instead, on records that have one.
      * @param {string} [sort] Parameter to sort results on
      * @param {number} [page] page of results
@@ -11192,8 +11465,8 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesGet(dataSources?: boolean, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).studiesGet(dataSources, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
+    public studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).studiesGet(dataSources, journalId, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
