@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **commit** | **string** |  | [optional] [default to undefined]
 **schema** | [**PipelineRunProvenanceSchema**](PipelineRunProvenanceSchema.md) |  | [optional] [default to undefined]
 **parse_version** | **{ [key: string]: any; }** | The parse\&#39;s producer (name, version, stage, model, prompt_version). | [optional] [default to undefined]
+**runs** | [**Array&lt;StudySchemaRun&gt;**](StudySchemaRun.md) | For a record uploaded with runs, the runs its config holds; null otherwise. | [optional] [default to undefined]
 **date_executed** | **string** |  | [optional] [default to undefined]
 **created_at** | **string** |  | [optional] [default to undefined]
 **updated_at** | **string** |  | [optional] [default to undefined]
@@ -31,6 +32,7 @@ const instance: PipelineRunProvenance = {
     commit,
     schema,
     parse_version,
+    runs,
     date_executed,
     created_at,
     updated_at,
