@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **_public** | **boolean** | whether the resource is listed in public searches or not | [optional] [default to true]
 **user** | **string** | who owns the resource | [optional] [readonly] [default to undefined]
 **username** | **string** | human readable username | [optional] [default to undefined]
+**journal** | [**JournalSummary**](JournalSummary.md) |  | [optional] [default to undefined]
 **has_coordinates** | **boolean** |  | [optional] [default to undefined]
 **has_images** | **boolean** |  | [optional] [default to undefined]
 **has_z_maps** | **boolean** |  | [optional] [default to undefined]
@@ -69,6 +70,7 @@ const instance: BaseStudiesPost200Response = {
     _public,
     user,
     username,
+    journal,
     has_coordinates,
     has_images,
     has_z_maps,
