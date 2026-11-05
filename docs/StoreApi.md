@@ -2451,7 +2451,9 @@ let page: number; //page of results (optional) (default to undefined)
 let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
 let pageSize: number; //number of results to show on a page (optional) (default to undefined)
 let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
-let search: string; //Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it. (optional) (default to undefined)
+let title: string; //journals whose title contains this text (optional) (default to undefined)
+let abbreviation: string; //journals whose abbreviation contains this text (optional) (default to undefined)
+let issn: string; //the journal one of whose ISSNs (print or electronic) is this one (optional) (default to undefined)
 let kind: JournalKind; //only journals of this kind (optional) (default to undefined)
 
 const { status, data } = await apiInstance.journalsGet(
@@ -2460,7 +2462,9 @@ const { status, data } = await apiInstance.journalsGet(
     desc,
     pageSize,
     paginate,
-    search,
+    title,
+    abbreviation,
+    issn,
     kind
 );
 ```
@@ -2474,7 +2478,9 @@ const { status, data } = await apiInstance.journalsGet(
 | **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
 | **pageSize** | [**number**] | number of results to show on a page | (optional) defaults to undefined|
 | **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|
-| **search** | [**string**] | Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it. | (optional) defaults to undefined|
+| **title** | [**string**] | journals whose title contains this text | (optional) defaults to undefined|
+| **abbreviation** | [**string**] | journals whose abbreviation contains this text | (optional) defaults to undefined|
+| **issn** | [**string**] | the journal one of whose ISSNs (print or electronic) is this one | (optional) defaults to undefined|
 | **kind** | **JournalKind** | only journals of this kind | (optional) defaults to undefined|
 
 
