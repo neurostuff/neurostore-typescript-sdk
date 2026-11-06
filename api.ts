@@ -438,7 +438,7 @@ export interface AnalysisReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -705,7 +705,7 @@ export interface AnnotationReturnOneOf {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -954,7 +954,7 @@ export interface BaseStudyReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -1049,7 +1049,7 @@ export interface ConditionReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -1150,7 +1150,7 @@ export interface DataSourceReturn {
      */
     'updated_at'?: string | null;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -1372,7 +1372,7 @@ export interface ImageReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -1854,7 +1854,7 @@ export interface PointReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -1930,7 +1930,7 @@ export interface ResourceAttributes {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -2322,7 +2322,7 @@ export interface StudyReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -2844,7 +2844,7 @@ export interface StudysetReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -2931,7 +2931,7 @@ export interface TableReturn {
      */
     'public'?: boolean;
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -2968,7 +2968,7 @@ export interface UserList {
  */
 export interface UserResourceAttributes {
     /**
-     * who owns the resource
+     * The owner\'s Auth0 id, served only to the owner; null for anyone else, who sees `username`.
      */
     'user'?: string | null;
     /**
@@ -4324,6 +4324,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (dataSources !== undefined) {
                 localVarQueryParameter['data_sources'] = dataSources;
             }
@@ -4447,6 +4451,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (dataSources !== undefined) {
                 localVarQueryParameter['data_sources'] = dataSources;
@@ -4661,6 +4669,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (paginate !== undefined) {
                 localVarQueryParameter['paginate'] = paginate;
             }
@@ -4815,6 +4827,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (studysetId !== undefined) {
                 localVarQueryParameter['studyset_id'] = studysetId;
             }
@@ -4895,6 +4911,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (_export !== undefined) {
                 localVarQueryParameter['export'] = _export;
@@ -5429,6 +5449,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (dataSources !== undefined) {
                 localVarQueryParameter['data_sources'] = dataSources;
             }
@@ -5562,6 +5586,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
             }
@@ -5661,6 +5689,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -5780,6 +5812,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
             }
@@ -5883,6 +5919,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6006,6 +6046,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
             }
@@ -6127,6 +6171,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (imageMetadata !== undefined) {
                 localVarQueryParameter['image_metadata'] = imageMetadata;
@@ -7132,6 +7180,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (paginate !== undefined) {
                 localVarQueryParameter['paginate'] = paginate;
             }
@@ -7207,6 +7259,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -7532,6 +7588,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (dataSources !== undefined) {
                 localVarQueryParameter['data_sources'] = dataSources;
             }
@@ -7848,6 +7908,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
             }
@@ -7993,6 +8057,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
             }
@@ -8097,6 +8165,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (nested !== undefined) {
                 localVarQueryParameter['nested'] = nested;
@@ -8249,6 +8321,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
