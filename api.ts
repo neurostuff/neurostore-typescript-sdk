@@ -76,15 +76,14 @@ export interface AnalysisList {
     'results'?: Array<AnalysisReturn>;
 }
 /**
- * Criteria on a pipeline analysis. Group criteria (medical_condition, species, has_patients, has_healthy) match when any group the analysis ran on matches. 
+ * Criteria on a pipeline analysis. Group criteria (diagnosis, species, has_patients, has_healthy) match when any group the analysis ran on matches. 
  */
 export interface AnalysisQuery {
-    'name'?: AnalysisQueryText;
-    'medical_condition'?: AnalysisQueryMedicalCondition;
+    'diagnosis'?: AnalysisQueryText;
     'has_patients'?: AnalysisQueryBoolean;
     'has_healthy'?: AnalysisQueryBoolean;
     'species'?: AnalysisQueryText;
-    'task'?: AnalysisQueryNormalized;
+    'task'?: AnalysisQueryText;
     'spatial_scope'?: AnalysisQueryText;
     'coordinate_space'?: AnalysisQueryText;
     'measure_type'?: AnalysisQueryText;
@@ -115,8 +114,7 @@ export interface AnalysisQueryBooleanOneOf {
 export interface AnalysisQueryContrast {
     'positive'?: AnalysisQueryText;
     'negative'?: AnalysisQueryText;
-    'key'?: AnalysisQueryNormalizedIds;
-    'set'?: AnalysisQueryNormalizedIds;
+    'set'?: AnalysisQueryText;
     'kind'?: AnalysisQueryText;
     'groups'?: AnalysisQueryText;
 }
@@ -127,94 +125,6 @@ export interface AnalysisQueryDesign {
     'arm_kind'?: AnalysisQueryText;
     'longitudinal'?: AnalysisQueryBoolean;
 }
-export interface AnalysisQueryIds {
-    'ids'?: AnalysisQueryStrings;
-}
-/**
- * @type AnalysisQueryMedicalCondition
- * analysis-query-normalized, and `role` (primary, comorbid, none), which narrows the ids to the conditions ns-pond gave that role; a criterion with a role takes ids and no text. 
- */
-export type AnalysisQueryMedicalCondition = AnalysisQueryMedicalConditionOneOf | AnalysisQueryStrings;
-
-export interface AnalysisQueryMedicalConditionOneOf {
-    'ids'?: AnalysisQueryStrings;
-    'text'?: AnalysisQueryStrings;
-    'all'?: AnalysisQueryTerms;
-    'none'?: AnalysisQueryTerms;
-    /**
-     * Whether an id also matches the terms below it in its vocabulary.
-     */
-    'descendants'?: boolean;
-    'role'?: AnalysisQueryMedicalConditionOneOfRole;
-    'when_unmapped'?: AnalysisQueryMedicalConditionOneOfWhenUnmappedEnum;
-    'when_silent'?: AnalysisQueryWhenSilent;
-}
-
-export const AnalysisQueryMedicalConditionOneOfWhenUnmappedEnum = {
-    Exclude: 'exclude',
-    Include: 'include',
-    Text: 'text'
-} as const;
-
-export type AnalysisQueryMedicalConditionOneOfWhenUnmappedEnum = typeof AnalysisQueryMedicalConditionOneOfWhenUnmappedEnum[keyof typeof AnalysisQueryMedicalConditionOneOfWhenUnmappedEnum];
-
-/**
- * @type AnalysisQueryMedicalConditionOneOfRole
- */
-export type AnalysisQueryMedicalConditionOneOfRole = Array<string> | string;
-
-/**
- * @type AnalysisQueryNormalized
- * Text (a pattern, or a list of them, any of which may match), or ids and text. `ids` and `text` are any-of, and either may match; `all` needs every one and `none` refuses each. `when_unmapped` decides an analysis whose record states the feature but maps none of it: `exclude` (the default), `include`, or `text`, matching it by its wording alone, so a criterion without text excludes it. 
- */
-export type AnalysisQueryNormalized = AnalysisQueryNormalizedOneOf | AnalysisQueryStrings;
-
-/**
- * @type AnalysisQueryNormalizedIds
- * Ids (an id, or a list of them, any of which may match), as analysis-query-normalized without text. An analysis whose record states the feature but maps none of it is excluded unless `when_unmapped` is `include`. 
- */
-export type AnalysisQueryNormalizedIds = AnalysisQueryNormalizedIdsOneOf | AnalysisQueryStrings;
-
-export interface AnalysisQueryNormalizedIdsOneOf {
-    'ids'?: AnalysisQueryStrings;
-    'all'?: AnalysisQueryIds;
-    'none'?: AnalysisQueryIds;
-    /**
-     * Whether an id also matches the terms below it in its vocabulary.
-     */
-    'descendants'?: boolean;
-    'when_unmapped'?: AnalysisQueryNormalizedIdsOneOfWhenUnmappedEnum;
-    'when_silent'?: AnalysisQueryWhenSilent;
-}
-
-export const AnalysisQueryNormalizedIdsOneOfWhenUnmappedEnum = {
-    Exclude: 'exclude',
-    Include: 'include'
-} as const;
-
-export type AnalysisQueryNormalizedIdsOneOfWhenUnmappedEnum = typeof AnalysisQueryNormalizedIdsOneOfWhenUnmappedEnum[keyof typeof AnalysisQueryNormalizedIdsOneOfWhenUnmappedEnum];
-
-export interface AnalysisQueryNormalizedOneOf {
-    'ids'?: AnalysisQueryStrings;
-    'text'?: AnalysisQueryStrings;
-    'all'?: AnalysisQueryTerms;
-    'none'?: AnalysisQueryTerms;
-    /**
-     * Whether an id also matches the terms below it in its vocabulary.
-     */
-    'descendants'?: boolean;
-    'when_unmapped'?: AnalysisQueryNormalizedOneOfWhenUnmappedEnum;
-    'when_silent'?: AnalysisQueryWhenSilent;
-}
-
-export const AnalysisQueryNormalizedOneOfWhenUnmappedEnum = {
-    Exclude: 'exclude',
-    Include: 'include',
-    Text: 'text'
-} as const;
-
-export type AnalysisQueryNormalizedOneOfWhenUnmappedEnum = typeof AnalysisQueryNormalizedOneOfWhenUnmappedEnum[keyof typeof AnalysisQueryNormalizedOneOfWhenUnmappedEnum];
-
 export interface AnalysisQueryRange {
     'min'?: number;
     'max'?: number;
@@ -235,7 +145,7 @@ export interface AnalysisQueryRequest {
 }
 export interface AnalysisQueryResult {
     /**
-     * The query in canonical form: a normalized criterion as ids, text, all, none, descendants, when_unmapped and when_silent, every other as any/all/none lists. 
+     * The query in canonical form, every criterion as any/all/none lists.
      */
     'query'?: { [key: string]: any; };
     'counts'?: AnalysisQueryResultCounts;
@@ -261,47 +171,20 @@ export interface AnalysisQueryResultFunnelInner {
      * Analyses left by the criteria before this one whose record says nothing on it.
      */
     'silent'?: number | null;
-    /**
-     * For a normalized criterion, the analyses left by the criteria before this one whose record states the feature but maps none of it. 
-     */
-    'unmapped'?: number | null;
 }
 export interface AnalysisQueryResultResultsInner {
     'analysis'?: string;
     'study'?: string;
     'base_study'?: string;
     'name'?: string | null;
-    /**
-     * How the analysis matched each normalized criterion, by its path (`medical_condition`, `or[0].task`): by id, by text, as unmapped or as silent (under `include`). Absent where a mapped analysis matched only through `none`. 
-     */
-    'matched_by'?: { [key: string]: string; };
     'features'?: { [key: string]: any; };
 }
-
-export const AnalysisQueryResultResultsInnerMatchedByEnum = {
-    Id: 'id',
-    Text: 'text',
-    Unmapped: 'unmapped',
-    Silent: 'silent'
-} as const;
-
-export type AnalysisQueryResultResultsInnerMatchedByEnum = typeof AnalysisQueryResultResultsInnerMatchedByEnum[keyof typeof AnalysisQueryResultResultsInnerMatchedByEnum];
-
 /**
  * With `funnel`, how many analyses and papers have features.
  */
 export interface AnalysisQueryResultSearched {
     'analyses'?: number;
     'base_studies'?: number;
-}
-/**
- * @type AnalysisQueryStrings
- */
-export type AnalysisQueryStrings = Array<string> | string;
-
-export interface AnalysisQueryTerms {
-    'ids'?: AnalysisQueryStrings;
-    'text'?: AnalysisQueryStrings;
 }
 /**
  * @type AnalysisQueryText
@@ -526,15 +409,6 @@ export interface AnalysisTermList {
 export interface AnalysisTermListResultsInner {
     'value'?: string;
     'label'?: string | null;
-    /**
-     * The term directly above it (a task\'s or a contrast\'s family).
-     */
-    'parent'?: string | null;
-    /**
-     * The terms directly under it.
-     */
-    'children'?: Array<string>;
-    'synonyms'?: Array<string>;
     'analyses'?: number;
     'base_studies'?: number;
 }
@@ -581,7 +455,7 @@ export interface AnnotationPipelineExtension {
     'analysis_query'?: AnnotationPipelineExtensionAnalysisQuery;
 }
 /**
- * Run an analysis query over the annotation\'s studyset and write its result into the notes: `column` (boolean) is true for each analysis the query selects and false for every other, and each of `feature_columns` (string) carries that analysis\'s feature, or null where its record says nothing. The annotation\'s `metadata.analysis_queries.<column>` keeps the selection frozen: the canonical query, the selected analysis ids, the normalizers and fits (`mapping_tools`) their features came from, and when. 
+ * Run an analysis query over the annotation\'s studyset and write its result into the notes: `column` (boolean) is true for each analysis the query selects and false for every other, and each of `feature_columns` (string) carries that analysis\'s feature, or null where its record says nothing. 
  */
 export interface AnnotationPipelineExtensionAnalysisQuery {
     'query': AnalysisQuery;
@@ -590,10 +464,9 @@ export interface AnnotationPipelineExtensionAnalysisQuery {
 }
 
 export const AnnotationPipelineExtensionAnalysisQueryFeatureColumnsEnum = {
-    MedicalCondition: 'medical_condition',
+    Diagnosis: 'diagnosis',
     Task: 'task',
     Contrast: 'contrast',
-    ContrastKey: 'contrast_key',
     ContrastSet: 'contrast_set',
     SpatialScope: 'spatial_scope',
     MeasureType: 'measure_type',
@@ -1895,6 +1768,56 @@ export interface PointReturn {
 export interface PointValue {
     'kind'?: string | null;
     'value'?: number | null;
+}
+export interface QueryDataset {
+    'name'?: string;
+    'description'?: string;
+    /**
+     * The columns that identify a row.
+     */
+    'key'?: Array<string>;
+    'columns'?: Array<QueryDatasetColumnsInner>;
+}
+export interface QueryDatasetColumnsInner {
+    'name'?: string;
+    'type'?: QueryDatasetColumnsInnerTypeEnum;
+    'description'?: string;
+}
+
+export const QueryDatasetColumnsInnerTypeEnum = {
+    Text: 'text',
+    Integer: 'integer',
+    Boolean: 'boolean',
+    Timestamp: 'timestamp'
+} as const;
+
+export type QueryDatasetColumnsInnerTypeEnum = typeof QueryDatasetColumnsInnerTypeEnum[keyof typeof QueryDatasetColumnsInnerTypeEnum];
+
+export interface QueryDatasetList {
+    /**
+     * When the datasets were last refreshed.
+     */
+    'refreshed_at'?: string | null;
+    'results'?: Array<QueryDataset>;
+}
+export interface QueryResult {
+    'dataset'?: string;
+    /**
+     * The query as it was read, one key per `$` parameter given.
+     */
+    'query'?: { [key: string]: string; };
+    'columns'?: Array<QueryResultColumnsInner>;
+    /**
+     * One array per row, in the order of `columns`.
+     */
+    'rows'?: Array<Array<any>>;
+    'limit'?: number;
+    'offset'?: number;
+    'refreshed_at'?: string | null;
+}
+export interface QueryResultColumnsInner {
+    'name'?: string;
+    'type'?: string;
 }
 /**
  * common readable resource attributes
@@ -4556,7 +4479,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. 
+         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A criterion with ids (diagnosis, task, contrast set) also matches a value that is one of the analysis\'s ids. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and with `funnel` says what each criterion dropped. 
          * @summary Select analyses by what their extraction records say
          * @param {AnalysisQueryRequest} [analysisQueryRequest] 
          * @param {*} [options] Override http request option.
@@ -4590,16 +4513,15 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Each value of one field across the pipeline analyses\' features, with its label, parent, children and synonyms and how many analyses and papers carry it, most common first. A directional contrast key or set is listed in each direction it occurs in. 
+         * Each value of one field across the pipeline analyses\' features, with its label and how many analyses and papers carry it, most common first. 
          * @summary The values an analysis query field takes
          * @param {AnalysisTermsGetFieldEnum} field 
-         * @param {string} [search] Keep the values whose id, label or a synonym contains this text, case-insensitively. 
-         * @param {string} [parent] Keep the values directly under this term.
+         * @param {string} [search] Keep the values or labels that contain this text, case-insensitively.
          * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysisTermsGet: async (field: AnalysisTermsGetFieldEnum, search?: string, parent?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysisTermsGet: async (field: AnalysisTermsGetFieldEnum, search?: string, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'field' is not null or undefined
             assertParamExists('analysisTermsGet', 'field', field)
             const localVarPath = `/analysis-terms/`;
@@ -4620,10 +4542,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
             if (search !== undefined) {
                 localVarQueryParameter['search'] = search;
-            }
-
-            if (parent !== undefined) {
-                localVarQueryParameter['parent'] = parent;
             }
 
             if (limit !== undefined) {
@@ -7300,6 +7218,118 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+         * @summary Run an aggregate query over one dataset
+         * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+         * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+         * @param {string} [$where] A condition over columns; no aggregates.
+         * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+         * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+         * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+         * @param {number} [$limit] 
+         * @param {number} [$offset] 
+         * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryDatasetGet: async (dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dataset' is not null or undefined
+            assertParamExists('queryDatasetGet', 'dataset', dataset)
+            const localVarPath = `/query/{dataset}`
+                .replace(`{${"dataset"}}`, encodeURIComponent(String(dataset)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if ($select !== undefined) {
+                localVarQueryParameter['$select'] = $select;
+            }
+
+            if ($where !== undefined) {
+                localVarQueryParameter['$where'] = $where;
+            }
+
+            if ($group !== undefined) {
+                localVarQueryParameter['$group'] = $group;
+            }
+
+            if ($having !== undefined) {
+                localVarQueryParameter['$having'] = $having;
+            }
+
+            if ($order !== undefined) {
+                localVarQueryParameter['$order'] = $order;
+            }
+
+            if ($limit !== undefined) {
+                localVarQueryParameter['$limit'] = $limit;
+            }
+
+            if ($offset !== undefined) {
+                localVarQueryParameter['$offset'] = $offset;
+            }
+
+            if ($q !== undefined) {
+                localVarQueryParameter['$q'] = $q;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+         * @summary The datasets a public query reads
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/query/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
@@ -8432,7 +8462,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. 
+         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A criterion with ids (diagnosis, task, contrast set) also matches a value that is one of the analysis\'s ids. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and with `funnel` says what each criterion dropped. 
          * @summary Select analyses by what their extraction records say
          * @param {AnalysisQueryRequest} [analysisQueryRequest] 
          * @param {*} [options] Override http request option.
@@ -8445,17 +8475,16 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Each value of one field across the pipeline analyses\' features, with its label, parent, children and synonyms and how many analyses and papers carry it, most common first. A directional contrast key or set is listed in each direction it occurs in. 
+         * Each value of one field across the pipeline analyses\' features, with its label and how many analyses and papers carry it, most common first. 
          * @summary The values an analysis query field takes
          * @param {AnalysisTermsGetFieldEnum} field 
-         * @param {string} [search] Keep the values whose id, label or a synonym contains this text, case-insensitively. 
-         * @param {string} [parent] Keep the values directly under this term.
+         * @param {string} [search] Keep the values or labels that contain this text, case-insensitively.
          * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysisTermsGet(field: AnalysisTermsGetFieldEnum, search?: string, parent?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisTermList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analysisTermsGet(field, search, parent, limit, options);
+        async analysisTermsGet(field: AnalysisTermsGetFieldEnum, search?: string, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisTermList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analysisTermsGet(field, search, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysisTermsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -9342,6 +9371,39 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+         * @summary Run an aggregate query over one dataset
+         * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+         * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+         * @param {string} [$where] A condition over columns; no aggregates.
+         * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+         * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+         * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+         * @param {number} [$limit] 
+         * @param {number} [$offset] 
+         * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async queryDatasetGet(dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueryResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.queryDatasetGet(dataset, $select, $where, $group, $having, $order, $limit, $offset, $q, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.queryDatasetGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+         * @summary The datasets a public query reads
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async queryGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueryDatasetList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.queryGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.queryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
@@ -9737,7 +9799,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.analysesPost(analysisRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. 
+         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A criterion with ids (diagnosis, task, contrast set) also matches a value that is one of the analysis\'s ids. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and with `funnel` says what each criterion dropped. 
          * @summary Select analyses by what their extraction records say
          * @param {AnalysisQueryRequest} [analysisQueryRequest] 
          * @param {*} [options] Override http request option.
@@ -9747,17 +9809,16 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.analysisQueriesPost(analysisQueryRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Each value of one field across the pipeline analyses\' features, with its label, parent, children and synonyms and how many analyses and papers carry it, most common first. A directional contrast key or set is listed in each direction it occurs in. 
+         * Each value of one field across the pipeline analyses\' features, with its label and how many analyses and papers carry it, most common first. 
          * @summary The values an analysis query field takes
          * @param {AnalysisTermsGetFieldEnum} field 
-         * @param {string} [search] Keep the values whose id, label or a synonym contains this text, case-insensitively. 
-         * @param {string} [parent] Keep the values directly under this term.
+         * @param {string} [search] Keep the values or labels that contain this text, case-insensitively.
          * @param {number} [limit] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysisTermsGet(field: AnalysisTermsGetFieldEnum, search?: string, parent?: string, limit?: number, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisTermList> {
-            return localVarFp.analysisTermsGet(field, search, parent, limit, options).then((request) => request(axios, basePath));
+        analysisTermsGet(field: AnalysisTermsGetFieldEnum, search?: string, limit?: number, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisTermList> {
+            return localVarFp.analysisTermsGet(field, search, limit, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -10461,6 +10522,33 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.pointsPost(pointRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+         * @summary Run an aggregate query over one dataset
+         * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+         * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+         * @param {string} [$where] A condition over columns; no aggregates.
+         * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+         * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+         * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+         * @param {number} [$limit] 
+         * @param {number} [$offset] 
+         * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryDatasetGet(dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options?: RawAxiosRequestConfig): AxiosPromise<QueryResult> {
+            return localVarFp.queryDatasetGet(dataset, $select, $where, $group, $having, $order, $limit, $offset, $q, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+         * @summary The datasets a public query reads
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryGet(options?: RawAxiosRequestConfig): AxiosPromise<QueryDatasetList> {
+            return localVarFp.queryGet(options).then((request) => request(axios, basePath));
+        },
+        /**
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
@@ -10799,7 +10887,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. 
+     * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A criterion with ids (diagnosis, task, contrast set) also matches a value that is one of the analysis\'s ids. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and with `funnel` says what each criterion dropped. 
      * @summary Select analyses by what their extraction records say
      * @param {AnalysisQueryRequest} [analysisQueryRequest] 
      * @param {*} [options] Override http request option.
@@ -10810,17 +10898,16 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Each value of one field across the pipeline analyses\' features, with its label, parent, children and synonyms and how many analyses and papers carry it, most common first. A directional contrast key or set is listed in each direction it occurs in. 
+     * Each value of one field across the pipeline analyses\' features, with its label and how many analyses and papers carry it, most common first. 
      * @summary The values an analysis query field takes
      * @param {AnalysisTermsGetFieldEnum} field 
-     * @param {string} [search] Keep the values whose id, label or a synonym contains this text, case-insensitively. 
-     * @param {string} [parent] Keep the values directly under this term.
+     * @param {string} [search] Keep the values or labels that contain this text, case-insensitively.
      * @param {number} [limit] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysisTermsGet(field: AnalysisTermsGetFieldEnum, search?: string, parent?: string, limit?: number, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).analysisTermsGet(field, search, parent, limit, options).then((request) => request(this.axios, this.basePath));
+    public analysisTermsGet(field: AnalysisTermsGetFieldEnum, search?: string, limit?: number, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).analysisTermsGet(field, search, limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11585,6 +11672,35 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
+     * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+     * @summary Run an aggregate query over one dataset
+     * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+     * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+     * @param {string} [$where] A condition over columns; no aggregates.
+     * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+     * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+     * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+     * @param {number} [$limit] 
+     * @param {number} [$offset] 
+     * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public queryDatasetGet(dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).queryDatasetGet(dataset, $select, $where, $group, $having, $order, $limit, $offset, $q, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+     * @summary The datasets a public query reads
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public queryGet(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).queryGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * List studies
      * @summary GET a list of studies
      * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
@@ -11874,10 +11990,8 @@ export const AnalysesGetRoleEnum = {
 } as const;
 export type AnalysesGetRoleEnum = typeof AnalysesGetRoleEnum[keyof typeof AnalysesGetRoleEnum];
 export const AnalysisTermsGetFieldEnum = {
-    MedicalCondition: 'medical_condition',
+    Diagnosis: 'diagnosis',
     Task: 'task',
-    TaskFamily: 'task_family',
-    ContrastKey: 'contrast_key',
     ContrastSet: 'contrast_set',
     ArmKind: 'arm_kind',
     Species: 'species',

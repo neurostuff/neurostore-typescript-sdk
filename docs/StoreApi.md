@@ -71,6 +71,8 @@ All URIs are relative to *https://neurostore.org/api*
 |[**pointsIdGet**](#pointsidget) | **GET** /points/{id} | GET a point|
 |[**pointsIdPut**](#pointsidput) | **PUT** /points/{id} | PUT/update a point|
 |[**pointsPost**](#pointspost) | **POST** /points/ | POST Points|
+|[**queryDatasetGet**](#querydatasetget) | **GET** /query/{dataset} | Run an aggregate query over one dataset|
+|[**queryGet**](#queryget) | **GET** /query/ | The datasets a public query reads|
 |[**studiesGet**](#studiesget) | **GET** /studies/ | GET a list of studies|
 |[**studiesIdDelete**](#studiesiddelete) | **DELETE** /studies/{id} | DELETE a study|
 |[**studiesIdGet**](#studiesidget) | **GET** /studies/{id} | GET a study|
@@ -402,7 +404,7 @@ const { status, data } = await apiInstance.analysesPost(
 # **analysisQueriesPost**
 > AnalysisQueryResult analysisQueriesPost()
 
-Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. 
+Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A criterion with ids (diagnosis, task, contrast set) also matches a value that is one of the analysis\'s ids. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and with `funnel` says what each criterion dropped. 
 
 ### Example
 
@@ -455,7 +457,7 @@ No authorization required
 # **analysisTermsGet**
 > AnalysisTermList analysisTermsGet()
 
-Each value of one field across the pipeline analyses\' features, with its label, parent, children and synonyms and how many analyses and papers carry it, most common first. A directional contrast key or set is listed in each direction it occurs in. 
+Each value of one field across the pipeline analyses\' features, with its label and how many analyses and papers carry it, most common first. 
 
 ### Example
 
@@ -468,15 +470,13 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
-let field: 'medical_condition' | 'task' | 'task_family' | 'contrast_key' | 'contrast_set' | 'arm_kind' | 'species' | 'spatial_scope' | 'measure_type' | 'measure_family' | 'details_type' | 'effect_kind' | 'allocation' | 'assignment_structure' | 'blinding'; // (default to undefined)
-let search: string; //Keep the values whose id, label or a synonym contains this text, case-insensitively.  (optional) (default to undefined)
-let parent: string; //Keep the values directly under this term. (optional) (default to undefined)
+let field: 'diagnosis' | 'task' | 'contrast_set' | 'arm_kind' | 'species' | 'spatial_scope' | 'measure_type' | 'measure_family' | 'details_type' | 'effect_kind' | 'allocation' | 'assignment_structure' | 'blinding'; // (default to undefined)
+let search: string; //Keep the values or labels that contain this text, case-insensitively. (optional) (default to undefined)
 let limit: number; // (optional) (default to 50)
 
 const { status, data } = await apiInstance.analysisTermsGet(
     field,
     search,
-    parent,
     limit
 );
 ```
@@ -485,9 +485,8 @@ const { status, data } = await apiInstance.analysisTermsGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **field** | [**&#39;medical_condition&#39; | &#39;task&#39; | &#39;task_family&#39; | &#39;contrast_key&#39; | &#39;contrast_set&#39; | &#39;arm_kind&#39; | &#39;species&#39; | &#39;spatial_scope&#39; | &#39;measure_type&#39; | &#39;measure_family&#39; | &#39;details_type&#39; | &#39;effect_kind&#39; | &#39;allocation&#39; | &#39;assignment_structure&#39; | &#39;blinding&#39;**]**Array<&#39;medical_condition&#39; &#124; &#39;task&#39; &#124; &#39;task_family&#39; &#124; &#39;contrast_key&#39; &#124; &#39;contrast_set&#39; &#124; &#39;arm_kind&#39; &#124; &#39;species&#39; &#124; &#39;spatial_scope&#39; &#124; &#39;measure_type&#39; &#124; &#39;measure_family&#39; &#124; &#39;details_type&#39; &#124; &#39;effect_kind&#39; &#124; &#39;allocation&#39; &#124; &#39;assignment_structure&#39; &#124; &#39;blinding&#39;>** |  | defaults to undefined|
-| **search** | [**string**] | Keep the values whose id, label or a synonym contains this text, case-insensitively.  | (optional) defaults to undefined|
-| **parent** | [**string**] | Keep the values directly under this term. | (optional) defaults to undefined|
+| **field** | [**&#39;diagnosis&#39; | &#39;task&#39; | &#39;contrast_set&#39; | &#39;arm_kind&#39; | &#39;species&#39; | &#39;spatial_scope&#39; | &#39;measure_type&#39; | &#39;measure_family&#39; | &#39;details_type&#39; | &#39;effect_kind&#39; | &#39;allocation&#39; | &#39;assignment_structure&#39; | &#39;blinding&#39;**]**Array<&#39;diagnosis&#39; &#124; &#39;task&#39; &#124; &#39;contrast_set&#39; &#124; &#39;arm_kind&#39; &#124; &#39;species&#39; &#124; &#39;spatial_scope&#39; &#124; &#39;measure_type&#39; &#124; &#39;measure_family&#39; &#124; &#39;details_type&#39; &#124; &#39;effect_kind&#39; &#124; &#39;allocation&#39; &#124; &#39;assignment_structure&#39; &#124; &#39;blinding&#39;>** |  | defaults to undefined|
+| **search** | [**string**] | Keep the values or labels that contain this text, case-insensitively. | (optional) defaults to undefined|
 | **limit** | [**number**] |  | (optional) defaults to 50|
 
 
@@ -3880,6 +3879,129 @@ const { status, data } = await apiInstance.pointsPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **queryDatasetGet**
+> QueryResult queryDatasetGet()
+
+A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let dataset: string; //A dataset named by `GET /query/`. (default to undefined)
+let $select: string; //Comma-separated expressions, each optionally `AS alias`; `*` for every column. (optional) (default to undefined)
+let $where: string; //A condition over columns; no aggregates. (optional) (default to undefined)
+let $group: string; //Comma-separated columns, expressions or `$select` aliases. (optional) (default to undefined)
+let $having: string; //A condition over aggregates and `$select` aliases. (optional) (default to undefined)
+let $order: string; //Comma-separated expressions or aliases, each optionally `ASC` or `DESC`. (optional) (default to undefined)
+let $limit: number; // (optional) (default to 100)
+let $offset: number; // (optional) (default to 0)
+let $q: string; //Words to search for in titles and abstracts, as base-study search reads them; `base-studies` only. (optional) (default to undefined)
+
+const { status, data } = await apiInstance.queryDatasetGet(
+    dataset,
+    $select,
+    $where,
+    $group,
+    $having,
+    $order,
+    $limit,
+    $offset,
+    $q
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **dataset** | [**string**] | A dataset named by &#x60;GET /query/&#x60;. | defaults to undefined|
+| **$select** | [**string**] | Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column. | (optional) defaults to undefined|
+| **$where** | [**string**] | A condition over columns; no aggregates. | (optional) defaults to undefined|
+| **$group** | [**string**] | Comma-separated columns, expressions or &#x60;$select&#x60; aliases. | (optional) defaults to undefined|
+| **$having** | [**string**] | A condition over aggregates and &#x60;$select&#x60; aliases. | (optional) defaults to undefined|
+| **$order** | [**string**] | Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;. | (optional) defaults to undefined|
+| **$limit** | [**number**] |  | (optional) defaults to 100|
+| **$offset** | [**number**] |  | (optional) defaults to 0|
+| **$q** | [**string**] | Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only. | (optional) defaults to undefined|
+
+
+### Return type
+
+**QueryResult**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The rows |  * ETag -  <br>  |
+|**304** | Unchanged since the ETag sent in &#x60;If-None-Match&#x60; |  -  |
+|**400** | The query does not parse, or names something outside the dataset |  -  |
+|**422** | The query\&#39;s planned cost exceeds the caller\&#39;s limit, or it ran past the time limit |  -  |
+|**503** | Too many queries are running; retry after the &#x60;Retry-After&#x60; header\&#39;s seconds |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **queryGet**
+> QueryDatasetList queryGet()
+
+Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+const { status, data } = await apiInstance.queryGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**QueryDatasetList**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The datasets |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
