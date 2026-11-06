@@ -6,7 +6,7 @@ Context for the shorthand names
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**vocab** | **string** | common URI prefix for @type | [optional] [default to undefined]
+**at_vocab** | **string** | common URI prefix for @type | [optional] [default to undefined]
 
 ## Example
 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 import { JsonLdContext } from './api';
 
 const instance: JsonLdContext = {
-    vocab,
+    at_vocab,
 };
 ```
 

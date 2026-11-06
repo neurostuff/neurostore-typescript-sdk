@@ -6,9 +6,9 @@ JSON-LD elements for data tracking
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**context** | [**JsonLdContext**](JsonLdContext.md) |  | [optional] [default to undefined]
-**id** | **string** | URI of the resource | [optional] [default to undefined]
-**type** | **string** | One of the NiMADS data types | [optional] [default to undefined]
+**at_context** | [**JsonLdContext**](JsonLdContext.md) |  | [optional] [default to undefined]
+**at_id** | **string** | URI of the resource | [optional] [default to undefined]
+**at_type** | **string** | One of the NiMADS data types | [optional] [default to undefined]
 
 ## Example
 
@@ -16,9 +16,9 @@ Name | Type | Description | Notes
 import { JsonLd } from './api';
 
 const instance: JsonLd = {
-    context,
-    id,
-    type,
+    at_context,
+    at_id,
+    at_type,
 };
 ```
 
