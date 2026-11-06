@@ -402,7 +402,7 @@ const { status, data } = await apiInstance.analysesPost(
 # **analysisQueriesPost**
 > AnalysisQueryResult analysisQueriesPost()
 
-Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A criterion with ids (diagnosis, task, contrast set) also matches a value that is one of the analysis\'s ids. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and with `funnel` says what each criterion dropped. 
+Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. 
 
 ### Example
 
@@ -455,7 +455,7 @@ No authorization required
 # **analysisTermsGet**
 > AnalysisTermList analysisTermsGet()
 
-Each value of one field across the pipeline analyses\' features, with its label and how many analyses and papers carry it, most common first. 
+Each value of one field across the pipeline analyses\' features, with its label, parent, children and synonyms and how many analyses and papers carry it, most common first. A directional contrast key or set is listed in each direction it occurs in. 
 
 ### Example
 
@@ -468,13 +468,15 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
-let field: 'diagnosis' | 'task' | 'contrast_set' | 'arm_kind' | 'species' | 'spatial_scope' | 'measure_type' | 'measure_family' | 'details_type' | 'effect_kind' | 'allocation' | 'assignment_structure' | 'blinding'; // (default to undefined)
-let search: string; //Keep the values or labels that contain this text, case-insensitively. (optional) (default to undefined)
+let field: 'medical_condition' | 'task' | 'task_family' | 'contrast_key' | 'contrast_set' | 'arm_kind' | 'species' | 'spatial_scope' | 'measure_type' | 'measure_family' | 'details_type' | 'effect_kind' | 'allocation' | 'assignment_structure' | 'blinding'; // (default to undefined)
+let search: string; //Keep the values whose id, label or a synonym contains this text, case-insensitively.  (optional) (default to undefined)
+let parent: string; //Keep the values directly under this term. (optional) (default to undefined)
 let limit: number; // (optional) (default to 50)
 
 const { status, data } = await apiInstance.analysisTermsGet(
     field,
     search,
+    parent,
     limit
 );
 ```
@@ -483,8 +485,9 @@ const { status, data } = await apiInstance.analysisTermsGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **field** | [**&#39;diagnosis&#39; | &#39;task&#39; | &#39;contrast_set&#39; | &#39;arm_kind&#39; | &#39;species&#39; | &#39;spatial_scope&#39; | &#39;measure_type&#39; | &#39;measure_family&#39; | &#39;details_type&#39; | &#39;effect_kind&#39; | &#39;allocation&#39; | &#39;assignment_structure&#39; | &#39;blinding&#39;**]**Array<&#39;diagnosis&#39; &#124; &#39;task&#39; &#124; &#39;contrast_set&#39; &#124; &#39;arm_kind&#39; &#124; &#39;species&#39; &#124; &#39;spatial_scope&#39; &#124; &#39;measure_type&#39; &#124; &#39;measure_family&#39; &#124; &#39;details_type&#39; &#124; &#39;effect_kind&#39; &#124; &#39;allocation&#39; &#124; &#39;assignment_structure&#39; &#124; &#39;blinding&#39;>** |  | defaults to undefined|
-| **search** | [**string**] | Keep the values or labels that contain this text, case-insensitively. | (optional) defaults to undefined|
+| **field** | [**&#39;medical_condition&#39; | &#39;task&#39; | &#39;task_family&#39; | &#39;contrast_key&#39; | &#39;contrast_set&#39; | &#39;arm_kind&#39; | &#39;species&#39; | &#39;spatial_scope&#39; | &#39;measure_type&#39; | &#39;measure_family&#39; | &#39;details_type&#39; | &#39;effect_kind&#39; | &#39;allocation&#39; | &#39;assignment_structure&#39; | &#39;blinding&#39;**]**Array<&#39;medical_condition&#39; &#124; &#39;task&#39; &#124; &#39;task_family&#39; &#124; &#39;contrast_key&#39; &#124; &#39;contrast_set&#39; &#124; &#39;arm_kind&#39; &#124; &#39;species&#39; &#124; &#39;spatial_scope&#39; &#124; &#39;measure_type&#39; &#124; &#39;measure_family&#39; &#124; &#39;details_type&#39; &#124; &#39;effect_kind&#39; &#124; &#39;allocation&#39; &#124; &#39;assignment_structure&#39; &#124; &#39;blinding&#39;>** |  | defaults to undefined|
+| **search** | [**string**] | Keep the values whose id, label or a synonym contains this text, case-insensitively.  | (optional) defaults to undefined|
+| **parent** | [**string**] | Keep the values directly under this term. | (optional) defaults to undefined|
 | **limit** | [**number**] |  | (optional) defaults to 50|
 
 

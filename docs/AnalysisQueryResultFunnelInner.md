@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **base_studies** | **number** |  | [optional] [default to undefined]
 **dropped** | **number** |  | [optional] [default to undefined]
 **silent** | **number** | Analyses left by the criteria before this one whose record says nothing on it. | [optional] [default to undefined]
+**unmapped** | **number** | For a normalized criterion, the analyses left by the criteria before this one whose record states the feature but maps none of it.  | [optional] [default to undefined]
 
 ## Example
 
@@ -22,6 +23,7 @@ const instance: AnalysisQueryResultFunnelInner = {
     base_studies,
     dropped,
     silent,
+    unmapped,
 };
 ```
 
