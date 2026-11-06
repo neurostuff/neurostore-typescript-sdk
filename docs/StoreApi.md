@@ -161,7 +161,7 @@ const { status, data } = await apiInstance.analysesGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -275,7 +275,7 @@ const { status, data } = await apiInstance.analysesIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -547,7 +547,7 @@ const { status, data } = await apiInstance.annotationAnalysesGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -757,7 +757,7 @@ const { status, data } = await apiInstance.annotationsGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -862,7 +862,7 @@ const { status, data } = await apiInstance.annotationsIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -1443,7 +1443,7 @@ const { status, data } = await apiInstance.baseStudiesIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -1619,7 +1619,7 @@ const { status, data } = await apiInstance.conditionsGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -1721,7 +1721,7 @@ const { status, data } = await apiInstance.conditionsIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -1902,7 +1902,7 @@ const { status, data } = await apiInstance.dataSourcesGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -2005,7 +2005,7 @@ const { status, data } = await apiInstance.dataSourcesIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -2201,7 +2201,7 @@ const { status, data } = await apiInstance.imagesGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -2309,7 +2309,7 @@ const { status, data } = await apiInstance.imagesIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -3657,7 +3657,7 @@ const { status, data } = await apiInstance.pointsGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -3759,7 +3759,7 @@ const { status, data } = await apiInstance.pointsIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -4114,7 +4114,7 @@ const { status, data } = await apiInstance.studiesIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -4477,7 +4477,7 @@ const { status, data } = await apiInstance.studysetsIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -4667,7 +4667,7 @@ const { status, data } = await apiInstance.tablesGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -4772,7 +4772,7 @@ const { status, data } = await apiInstance.tablesIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 
@@ -4976,7 +4976,7 @@ const { status, data } = await apiInstance.usersIdGet(
 
 ### Authorization
 
-No authorization required
+[JSON-Web-Token](../README.md#JSON-Web-Token)
 
 ### HTTP request headers
 

@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **updated_at** | **string** | when the resource was last modified/updated. | [optional] [readonly] [default to undefined]
 **id** | **string** | short UUID specifying the location of this resource | [optional] [default to undefined]
 **_public** | **boolean** | whether the resource is listed in public searches or not | [optional] [default to true]
-**user** | **string** | who owns the resource | [optional] [readonly] [default to undefined]
+**user** | **string** | The owner\&#39;s Auth0 id, served only to the owner; null for anyone else, who sees &#x60;username&#x60;. | [optional] [readonly] [default to undefined]
 **username** | **string** | human readable username | [optional] [default to undefined]
 **order** | **number** | determines the position to display the image within its analysis (or study, when the image has no analysis) | [optional] [default to undefined]
 **value_summary** | [**ImageValueSummary**](ImageValueSummary.md) |  | [optional] [default to undefined]
