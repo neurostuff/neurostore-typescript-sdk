@@ -1896,6 +1896,56 @@ export interface PointValue {
     'kind'?: string | null;
     'value'?: number | null;
 }
+export interface QueryDataset {
+    'name'?: string;
+    'description'?: string;
+    /**
+     * The columns that identify a row.
+     */
+    'key'?: Array<string>;
+    'columns'?: Array<QueryDatasetColumnsInner>;
+}
+export interface QueryDatasetColumnsInner {
+    'name'?: string;
+    'type'?: QueryDatasetColumnsInnerTypeEnum;
+    'description'?: string;
+}
+
+export const QueryDatasetColumnsInnerTypeEnum = {
+    Text: 'text',
+    Integer: 'integer',
+    Boolean: 'boolean',
+    Timestamp: 'timestamp'
+} as const;
+
+export type QueryDatasetColumnsInnerTypeEnum = typeof QueryDatasetColumnsInnerTypeEnum[keyof typeof QueryDatasetColumnsInnerTypeEnum];
+
+export interface QueryDatasetList {
+    /**
+     * When the datasets were last refreshed.
+     */
+    'refreshed_at'?: string | null;
+    'results'?: Array<QueryDataset>;
+}
+export interface QueryResult {
+    'dataset'?: string;
+    /**
+     * The query as it was read, one key per `$` parameter given.
+     */
+    'query'?: { [key: string]: string; };
+    'columns'?: Array<QueryResultColumnsInner>;
+    /**
+     * One array per row, in the order of `columns`.
+     */
+    'rows'?: Array<Array<any>>;
+    'limit'?: number;
+    'offset'?: number;
+    'refreshed_at'?: string | null;
+}
+export interface QueryResultColumnsInner {
+    'name'?: string;
+    'type'?: string;
+}
 /**
  * common readable resource attributes
  */
@@ -7356,6 +7406,118 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+         * @summary Run an aggregate query over one dataset
+         * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+         * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+         * @param {string} [$where] A condition over columns; no aggregates.
+         * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+         * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+         * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+         * @param {number} [$limit] 
+         * @param {number} [$offset] 
+         * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryDatasetGet: async (dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dataset' is not null or undefined
+            assertParamExists('queryDatasetGet', 'dataset', dataset)
+            const localVarPath = `/query/{dataset}`
+                .replace(`{${"dataset"}}`, encodeURIComponent(String(dataset)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if ($select !== undefined) {
+                localVarQueryParameter['$select'] = $select;
+            }
+
+            if ($where !== undefined) {
+                localVarQueryParameter['$where'] = $where;
+            }
+
+            if ($group !== undefined) {
+                localVarQueryParameter['$group'] = $group;
+            }
+
+            if ($having !== undefined) {
+                localVarQueryParameter['$having'] = $having;
+            }
+
+            if ($order !== undefined) {
+                localVarQueryParameter['$order'] = $order;
+            }
+
+            if ($limit !== undefined) {
+                localVarQueryParameter['$limit'] = $limit;
+            }
+
+            if ($offset !== undefined) {
+                localVarQueryParameter['$offset'] = $offset;
+            }
+
+            if ($q !== undefined) {
+                localVarQueryParameter['$q'] = $q;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+         * @summary The datasets a public query reads
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/query/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
@@ -9418,6 +9580,39 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+         * @summary Run an aggregate query over one dataset
+         * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+         * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+         * @param {string} [$where] A condition over columns; no aggregates.
+         * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+         * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+         * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+         * @param {number} [$limit] 
+         * @param {number} [$offset] 
+         * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async queryDatasetGet(dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueryResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.queryDatasetGet(dataset, $select, $where, $group, $having, $order, $limit, $offset, $q, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.queryDatasetGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+         * @summary The datasets a public query reads
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async queryGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueryDatasetList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.queryGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.queryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * List studies
          * @summary GET a list of studies
          * @param {boolean} [dataSources] include &#x60;data_sources&#x60;: on an analysis, the data sources linked to it; on a study or base study, those of all its analyses. Withheld by default.
@@ -10535,6 +10730,33 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          */
         pointsPost(pointRequest?: PointRequest, options?: RawAxiosRequestConfig): AxiosPromise<PointReturn> {
             return localVarFp.pointsPost(pointRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+         * @summary Run an aggregate query over one dataset
+         * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+         * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+         * @param {string} [$where] A condition over columns; no aggregates.
+         * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+         * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+         * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+         * @param {number} [$limit] 
+         * @param {number} [$offset] 
+         * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryDatasetGet(dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options?: RawAxiosRequestConfig): AxiosPromise<QueryResult> {
+            return localVarFp.queryDatasetGet(dataset, $select, $where, $group, $having, $order, $limit, $offset, $q, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+         * @summary The datasets a public query reads
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryGet(options?: RawAxiosRequestConfig): AxiosPromise<QueryDatasetList> {
+            return localVarFp.queryGet(options).then((request) => request(axios, basePath));
         },
         /**
          * List studies
@@ -11658,6 +11880,35 @@ export class StoreApi extends BaseAPI {
      */
     public pointsPost(pointRequest?: PointRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).pointsPost(pointRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+     * @summary Run an aggregate query over one dataset
+     * @param {string} dataset A dataset named by &#x60;GET /query/&#x60;.
+     * @param {string} [$select] Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column.
+     * @param {string} [$where] A condition over columns; no aggregates.
+     * @param {string} [$group] Comma-separated columns, expressions or &#x60;$select&#x60; aliases.
+     * @param {string} [$having] A condition over aggregates and &#x60;$select&#x60; aliases.
+     * @param {string} [$order] Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;.
+     * @param {number} [$limit] 
+     * @param {number} [$offset] 
+     * @param {string} [$q] Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public queryDatasetGet(dataset: string, $select?: string, $where?: string, $group?: string, $having?: string, $order?: string, $limit?: number, $offset?: number, $q?: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).queryDatasetGet(dataset, $select, $where, $group, $having, $order, $limit, $offset, $q, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+     * @summary The datasets a public query reads
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public queryGet(options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).queryGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

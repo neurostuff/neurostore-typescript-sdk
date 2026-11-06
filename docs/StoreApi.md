@@ -71,6 +71,8 @@ All URIs are relative to *https://neurostore.org/api*
 |[**pointsIdGet**](#pointsidget) | **GET** /points/{id} | GET a point|
 |[**pointsIdPut**](#pointsidput) | **PUT** /points/{id} | PUT/update a point|
 |[**pointsPost**](#pointspost) | **POST** /points/ | POST Points|
+|[**queryDatasetGet**](#querydatasetget) | **GET** /query/{dataset} | Run an aggregate query over one dataset|
+|[**queryGet**](#queryget) | **GET** /query/ | The datasets a public query reads|
 |[**studiesGet**](#studiesget) | **GET** /studies/ | GET a list of studies|
 |[**studiesIdDelete**](#studiesiddelete) | **DELETE** /studies/{id} | DELETE a study|
 |[**studiesIdGet**](#studiesidget) | **GET** /studies/{id} | GET a study|
@@ -3880,6 +3882,129 @@ const { status, data } = await apiInstance.pointsPost(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **queryDatasetGet**
+> QueryResult queryDatasetGet()
+
+A subset of Socrata\'s SoQL. Each parameter takes an expression over the dataset\'s columns: literals, `= != < <= > >= + -`, `AND OR NOT`, `IS [NOT] NULL`, `[NOT] IN (…)`, `BETWEEN … AND …`, `LIKE` and `starts_with(column, \'text\')`; the aggregates `count(*)`, `count(column)`, `count(distinct column)`, `sum`, `avg`, `min` and `max`; and `date_trunc_y`, `date_trunc_ym`, `date_extract_y`, `lower`, `upper`, `coalesce` and `case(condition, value, …)`. Nothing else compiles. A query whose planned cost exceeds the caller\'s limit is refused; an API key with `read` scope has a higher limit. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let dataset: string; //A dataset named by `GET /query/`. (default to undefined)
+let $select: string; //Comma-separated expressions, each optionally `AS alias`; `*` for every column. (optional) (default to undefined)
+let $where: string; //A condition over columns; no aggregates. (optional) (default to undefined)
+let $group: string; //Comma-separated columns, expressions or `$select` aliases. (optional) (default to undefined)
+let $having: string; //A condition over aggregates and `$select` aliases. (optional) (default to undefined)
+let $order: string; //Comma-separated expressions or aliases, each optionally `ASC` or `DESC`. (optional) (default to undefined)
+let $limit: number; // (optional) (default to 100)
+let $offset: number; // (optional) (default to 0)
+let $q: string; //Words to search for in titles and abstracts, as base-study search reads them; `base-studies` only. (optional) (default to undefined)
+
+const { status, data } = await apiInstance.queryDatasetGet(
+    dataset,
+    $select,
+    $where,
+    $group,
+    $having,
+    $order,
+    $limit,
+    $offset,
+    $q
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **dataset** | [**string**] | A dataset named by &#x60;GET /query/&#x60;. | defaults to undefined|
+| **$select** | [**string**] | Comma-separated expressions, each optionally &#x60;AS alias&#x60;; &#x60;*&#x60; for every column. | (optional) defaults to undefined|
+| **$where** | [**string**] | A condition over columns; no aggregates. | (optional) defaults to undefined|
+| **$group** | [**string**] | Comma-separated columns, expressions or &#x60;$select&#x60; aliases. | (optional) defaults to undefined|
+| **$having** | [**string**] | A condition over aggregates and &#x60;$select&#x60; aliases. | (optional) defaults to undefined|
+| **$order** | [**string**] | Comma-separated expressions or aliases, each optionally &#x60;ASC&#x60; or &#x60;DESC&#x60;. | (optional) defaults to undefined|
+| **$limit** | [**number**] |  | (optional) defaults to 100|
+| **$offset** | [**number**] |  | (optional) defaults to 0|
+| **$q** | [**string**] | Words to search for in titles and abstracts, as base-study search reads them; &#x60;base-studies&#x60; only. | (optional) defaults to undefined|
+
+
+### Return type
+
+**QueryResult**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The rows |  * ETag -  <br>  |
+|**304** | Unchanged since the ETag sent in &#x60;If-None-Match&#x60; |  -  |
+|**400** | The query does not parse, or names something outside the dataset |  -  |
+|**422** | The query\&#39;s planned cost exceeds the caller\&#39;s limit, or it ran past the time limit |  -  |
+|**503** | Too many queries are running; retry after the &#x60;Retry-After&#x60; header\&#39;s seconds |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **queryGet**
+> QueryDatasetList queryGet()
+
+Every dataset a public query can read, with its columns, their types, and whether each may be grouped and aggregated. A dataset holds public records only and is refreshed nightly; `refreshed_at` says when. 
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+const { status, data } = await apiInstance.queryGet();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**QueryDatasetList**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | The datasets |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

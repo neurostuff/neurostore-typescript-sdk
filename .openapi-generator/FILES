@@ -128,6 +128,11 @@ docs/PointRelationshipsValues.md
 docs/PointRequest.md
 docs/PointReturn.md
 docs/PointValue.md
+docs/QueryDataset.md
+docs/QueryDatasetColumnsInner.md
+docs/QueryDatasetList.md
+docs/QueryResult.md
+docs/QueryResultColumnsInner.md
 docs/ReadableResourceAttributes.md
 docs/ResourceAttributes.md
 docs/ReviewApi.md
