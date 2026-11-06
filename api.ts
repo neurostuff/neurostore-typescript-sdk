@@ -113,12 +113,27 @@ export interface AnalysisQueryBooleanOneOf {
 
 
 export interface AnalysisQueryContrast {
-    'positive'?: AnalysisQueryText;
-    'negative'?: AnalysisQueryText;
+    'positive'?: AnalysisQueryContrastSide;
+    'negative'?: AnalysisQueryContrastSide;
     'key'?: AnalysisQueryNormalizedIds;
     'set'?: AnalysisQueryNormalizedIds;
     'kind'?: AnalysisQueryText;
     'groups'?: AnalysisQueryText;
+}
+/**
+ * @type AnalysisQueryContrastSide
+ * Criteria on one side of the contrast: what the cells signed onto it carry, through their factor levels. `name` is the side\'s text (its cells\' labels or levels and their conditions\' names); has_patients, has_healthy and medical_condition read the side\'s groups as the top-level criteria read the analysis\'s; `timepoint` is a timepoint\'s relation_to_intervention, `arm_kind` an arm\'s kind, and `facet` one of the side\'s contrast-key facets (`valence:negative`, `~wording`, a baseline kind such as `fixation`). A text criterion in its place is shorthand for its `name`. 
+ */
+export type AnalysisQueryContrastSide = AnalysisQueryContrastSideOneOf | AnalysisQueryText;
+
+export interface AnalysisQueryContrastSideOneOf {
+    'name'?: AnalysisQueryText;
+    'has_patients'?: AnalysisQueryBoolean;
+    'has_healthy'?: AnalysisQueryBoolean;
+    'medical_condition'?: AnalysisQueryNormalized;
+    'timepoint'?: AnalysisQueryText;
+    'arm_kind'?: AnalysisQueryText;
+    'facet'?: AnalysisQueryText;
 }
 export interface AnalysisQueryDesign {
     'allocation'?: AnalysisQueryText;
@@ -12150,6 +12165,8 @@ export const AnalysisTermsGetFieldEnum = {
     TaskFamily: 'task_family',
     ContrastKey: 'contrast_key',
     ContrastSet: 'contrast_set',
+    ContrastPositiveFacet: 'contrast_positive_facet',
+    ContrastNegativeFacet: 'contrast_negative_facet',
     ArmKind: 'arm_kind',
     Species: 'species',
     SpatialScope: 'spatial_scope',

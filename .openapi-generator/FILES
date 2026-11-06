@@ -11,6 +11,8 @@ docs/AnalysisQuery.md
 docs/AnalysisQueryBoolean.md
 docs/AnalysisQueryBooleanOneOf.md
 docs/AnalysisQueryContrast.md
+docs/AnalysisQueryContrastSide.md
+docs/AnalysisQueryContrastSideOneOf.md
 docs/AnalysisQueryDesign.md
 docs/AnalysisQueryIds.md
 docs/AnalysisQueryMedicalCondition.md
