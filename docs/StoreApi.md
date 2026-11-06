@@ -470,7 +470,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new StoreApi(configuration);
 
-let field: 'medical_condition' | 'task' | 'task_family' | 'contrast_key' | 'contrast_set' | 'arm_kind' | 'species' | 'spatial_scope' | 'measure_type' | 'measure_family' | 'details_type' | 'effect_kind' | 'allocation' | 'assignment_structure' | 'blinding'; // (default to undefined)
+let field: 'medical_condition' | 'task' | 'task_family' | 'contrast_key' | 'contrast_set' | 'contrast_positive_facet' | 'contrast_negative_facet' | 'arm_kind' | 'species' | 'spatial_scope' | 'measure_type' | 'measure_family' | 'details_type' | 'effect_kind' | 'allocation' | 'assignment_structure' | 'blinding'; // (default to undefined)
 let search: string; //Keep the values whose id, label or a synonym contains this text, case-insensitively.  (optional) (default to undefined)
 let parent: string; //Keep the values directly under this term. (optional) (default to undefined)
 let limit: number; // (optional) (default to 50)
@@ -487,7 +487,7 @@ const { status, data } = await apiInstance.analysisTermsGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **field** | [**&#39;medical_condition&#39; | &#39;task&#39; | &#39;task_family&#39; | &#39;contrast_key&#39; | &#39;contrast_set&#39; | &#39;arm_kind&#39; | &#39;species&#39; | &#39;spatial_scope&#39; | &#39;measure_type&#39; | &#39;measure_family&#39; | &#39;details_type&#39; | &#39;effect_kind&#39; | &#39;allocation&#39; | &#39;assignment_structure&#39; | &#39;blinding&#39;**]**Array<&#39;medical_condition&#39; &#124; &#39;task&#39; &#124; &#39;task_family&#39; &#124; &#39;contrast_key&#39; &#124; &#39;contrast_set&#39; &#124; &#39;arm_kind&#39; &#124; &#39;species&#39; &#124; &#39;spatial_scope&#39; &#124; &#39;measure_type&#39; &#124; &#39;measure_family&#39; &#124; &#39;details_type&#39; &#124; &#39;effect_kind&#39; &#124; &#39;allocation&#39; &#124; &#39;assignment_structure&#39; &#124; &#39;blinding&#39;>** |  | defaults to undefined|
+| **field** | [**&#39;medical_condition&#39; | &#39;task&#39; | &#39;task_family&#39; | &#39;contrast_key&#39; | &#39;contrast_set&#39; | &#39;contrast_positive_facet&#39; | &#39;contrast_negative_facet&#39; | &#39;arm_kind&#39; | &#39;species&#39; | &#39;spatial_scope&#39; | &#39;measure_type&#39; | &#39;measure_family&#39; | &#39;details_type&#39; | &#39;effect_kind&#39; | &#39;allocation&#39; | &#39;assignment_structure&#39; | &#39;blinding&#39;**]**Array<&#39;medical_condition&#39; &#124; &#39;task&#39; &#124; &#39;task_family&#39; &#124; &#39;contrast_key&#39; &#124; &#39;contrast_set&#39; &#124; &#39;contrast_positive_facet&#39; &#124; &#39;contrast_negative_facet&#39; &#124; &#39;arm_kind&#39; &#124; &#39;species&#39; &#124; &#39;spatial_scope&#39; &#124; &#39;measure_type&#39; &#124; &#39;measure_family&#39; &#124; &#39;details_type&#39; &#124; &#39;effect_kind&#39; &#124; &#39;allocation&#39; &#124; &#39;assignment_structure&#39; &#124; &#39;blinding&#39;>** |  | defaults to undefined|
 | **search** | [**string**] | Keep the values whose id, label or a synonym contains this text, case-insensitively.  | (optional) defaults to undefined|
 | **parent** | [**string**] | Keep the values directly under this term. | (optional) defaults to undefined|
 | **limit** | [**number**] |  | (optional) defaults to 50|
