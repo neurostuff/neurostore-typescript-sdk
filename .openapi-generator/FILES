@@ -12,14 +12,6 @@ docs/AnalysisQueryBoolean.md
 docs/AnalysisQueryBooleanOneOf.md
 docs/AnalysisQueryContrast.md
 docs/AnalysisQueryDesign.md
-docs/AnalysisQueryIds.md
-docs/AnalysisQueryMedicalCondition.md
-docs/AnalysisQueryMedicalConditionOneOf.md
-docs/AnalysisQueryMedicalConditionOneOfRole.md
-docs/AnalysisQueryNormalized.md
-docs/AnalysisQueryNormalizedIds.md
-docs/AnalysisQueryNormalizedIdsOneOf.md
-docs/AnalysisQueryNormalizedOneOf.md
 docs/AnalysisQueryRange.md
 docs/AnalysisQueryRequest.md
 docs/AnalysisQueryResult.md
@@ -27,8 +19,6 @@ docs/AnalysisQueryResultCounts.md
 docs/AnalysisQueryResultFunnelInner.md
 docs/AnalysisQueryResultResultsInner.md
 docs/AnalysisQueryResultSearched.md
-docs/AnalysisQueryStrings.md
-docs/AnalysisQueryTerms.md
 docs/AnalysisQueryText.md
 docs/AnalysisQueryValues.md
 docs/AnalysisQueryWhenSilent.md
