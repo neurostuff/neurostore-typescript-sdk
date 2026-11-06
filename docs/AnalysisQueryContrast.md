@@ -7,7 +7,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **positive** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 **negative** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
-**set** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
+**key** | [**AnalysisQueryNormalizedIds**](AnalysisQueryNormalizedIds.md) |  | [optional] [default to undefined]
+**set** | [**AnalysisQueryNormalizedIds**](AnalysisQueryNormalizedIds.md) |  | [optional] [default to undefined]
 **kind** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 **groups** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 
@@ -19,6 +20,7 @@ import { AnalysisQueryContrast } from './api';
 const instance: AnalysisQueryContrast = {
     positive,
     negative,
+    key,
     set,
     kind,
     groups,

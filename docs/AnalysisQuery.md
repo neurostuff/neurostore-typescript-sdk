@@ -1,16 +1,17 @@
 # AnalysisQuery
 
-Criteria on a pipeline analysis. Group criteria (diagnosis, species, has_patients, has_healthy) match when any group the analysis ran on matches. 
+Criteria on a pipeline analysis. Group criteria (medical_condition, species, has_patients, has_healthy) match when any group the analysis ran on matches. 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**diagnosis** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
+**name** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
+**medical_condition** | [**AnalysisQueryMedicalCondition**](AnalysisQueryMedicalCondition.md) |  | [optional] [default to undefined]
 **has_patients** | [**AnalysisQueryBoolean**](AnalysisQueryBoolean.md) |  | [optional] [default to undefined]
 **has_healthy** | [**AnalysisQueryBoolean**](AnalysisQueryBoolean.md) |  | [optional] [default to undefined]
 **species** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
-**task** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
+**task** | [**AnalysisQueryNormalized**](AnalysisQueryNormalized.md) |  | [optional] [default to undefined]
 **spatial_scope** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 **coordinate_space** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 **measure_type** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
@@ -30,7 +31,8 @@ Name | Type | Description | Notes
 import { AnalysisQuery } from './api';
 
 const instance: AnalysisQuery = {
-    diagnosis,
+    name,
+    medical_condition,
     has_patients,
     has_healthy,
     species,

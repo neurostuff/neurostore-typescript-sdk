@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**query** | **{ [key: string]: any; }** | The query in canonical form, every criterion as any/all/none lists. | [optional] [default to undefined]
+**query** | **{ [key: string]: any; }** | The query in canonical form: a normalized criterion as ids, text, all, none, descendants, when_unmapped and when_silent, every other as any/all/none lists.  | [optional] [default to undefined]
 **counts** | [**AnalysisQueryResultCounts**](AnalysisQueryResultCounts.md) |  | [optional] [default to undefined]
 **searched** | [**AnalysisQueryResultSearched**](AnalysisQueryResultSearched.md) |  | [optional] [default to undefined]
 **funnel** | [**Array&lt;AnalysisQueryResultFunnelInner&gt;**](AnalysisQueryResultFunnelInner.md) | With &#x60;funnel&#x60;, the criteria in order, each with what remains after it. | [optional] [default to undefined]
