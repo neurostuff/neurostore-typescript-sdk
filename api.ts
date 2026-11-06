@@ -6103,12 +6103,14 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
-         * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+         * @param {string} [title] journals whose title contains this text
+         * @param {string} [abbreviation] journals whose abbreviation contains this text
+         * @param {string} [issn] the journal one of whose ISSNs (print or electronic) is this one
          * @param {JournalKind} [kind] only journals of this kind
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        journalsGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        journalsGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, title?: string, abbreviation?: string, issn?: string, kind?: JournalKind, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/journals/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6141,8 +6143,16 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['paginate'] = paginate;
             }
 
-            if (search !== undefined) {
-                localVarQueryParameter['search'] = search;
+            if (title !== undefined) {
+                localVarQueryParameter['title'] = title;
+            }
+
+            if (abbreviation !== undefined) {
+                localVarQueryParameter['abbreviation'] = abbreviation;
+            }
+
+            if (issn !== undefined) {
+                localVarQueryParameter['issn'] = issn;
             }
 
             if (kind !== undefined) {
@@ -8828,13 +8838,15 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
-         * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+         * @param {string} [title] journals whose title contains this text
+         * @param {string} [abbreviation] journals whose abbreviation contains this text
+         * @param {string} [issn] the journal one of whose ISSNs (print or electronic) is this one
          * @param {JournalKind} [kind] only journals of this kind
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JournalList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.journalsGet(sort, page, desc, pageSize, paginate, search, kind, options);
+        async journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, title?: string, abbreviation?: string, issn?: string, kind?: JournalKind, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JournalList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.journalsGet(sort, page, desc, pageSize, paginate, title, abbreviation, issn, kind, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.journalsGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -10025,13 +10037,15 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
-         * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+         * @param {string} [title] journals whose title contains this text
+         * @param {string} [abbreviation] journals whose abbreviation contains this text
+         * @param {string} [issn] the journal one of whose ISSNs (print or electronic) is this one
          * @param {JournalKind} [kind] only journals of this kind
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options?: RawAxiosRequestConfig): AxiosPromise<JournalList> {
-            return localVarFp.journalsGet(sort, page, desc, pageSize, paginate, search, kind, options).then((request) => request(axios, basePath));
+        journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, title?: string, abbreviation?: string, issn?: string, kind?: JournalKind, options?: RawAxiosRequestConfig): AxiosPromise<JournalList> {
+            return localVarFp.journalsGet(sort, page, desc, pageSize, paginate, title, abbreviation, issn, kind, options).then((request) => request(axios, basePath));
         },
         /**
          * Retrieve a journal.
@@ -11119,13 +11133,15 @@ export class StoreApi extends BaseAPI {
      * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
      * @param {number} [pageSize] number of results to show on a page
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
-     * @param {string} [search] Journals whose title or abbreviation contains these words, or one of whose ISSNs equals it.
+     * @param {string} [title] journals whose title contains this text
+     * @param {string} [abbreviation] journals whose abbreviation contains this text
+     * @param {string} [issn] the journal one of whose ISSNs (print or electronic) is this one
      * @param {JournalKind} [kind] only journals of this kind
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, search?: string, kind?: JournalKind, options?: RawAxiosRequestConfig) {
-        return StoreApiFp(this.configuration).journalsGet(sort, page, desc, pageSize, paginate, search, kind, options).then((request) => request(this.axios, this.basePath));
+    public journalsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, title?: string, abbreviation?: string, issn?: string, kind?: JournalKind, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).journalsGet(sort, page, desc, pageSize, paginate, title, abbreviation, issn, kind, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
