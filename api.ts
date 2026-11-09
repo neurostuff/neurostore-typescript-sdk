@@ -240,19 +240,27 @@ export interface AnalysisQueryRange {
 export interface AnalysisQueryRequest {
     'query': AnalysisQuery;
     /**
-     * How many selected analyses to list; counts and study_ids cover them all.
+     * Which page of studies to list, in order of paper.
      */
-    'limit'?: number;
+    'page'?: number;
     /**
-     * How many selected analyses to skip before listing `limit` of them, in the listing\'s order (by paper, then analysis). With `next_offset`, pages through a selection larger than one listing. 
+     * How many studies a page lists, each with all its selected analyses; 0 lists none. 
      */
-    'offset'?: number;
+    'page_size'?: number;
     /**
-     * Only the analyses of these papers. Counts, `study_ids` and the funnel cover the same restricted set, so an empty query lists every analysis with features that these papers have. 
+     * False lists every selected study, whatever `page` and `page_size` say.
+     */
+    'paginate'?: boolean;
+    /**
+     * How much each listed study carries: `studies` only its ids, `analyses` also its selected analyses\' ids, names and matches, `features` also their features. With `paginate: false`, `studies` lists every selected study\'s id at once. 
+     */
+    'detail'?: AnalysisQueryRequestDetailEnum;
+    /**
+     * Only the analyses of these papers. The counts, results and funnel cover the same restricted set, so an empty query lists every analysis with features that these papers have. 
      */
     'base_study_ids'?: Array<string>;
     /**
-     * Only the analyses of these studies (the pipeline studies `study_ids` names). With `base_study_ids`, an analysis must be in both. 
+     * Only the analyses of these studies (the pipeline studies the results name). With `base_study_ids`, an analysis must be in both. 
      */
     'study_ids'?: Array<string>;
     /**
@@ -260,28 +268,30 @@ export interface AnalysisQueryRequest {
      */
     'funnel'?: boolean;
 }
+
+export const AnalysisQueryRequestDetailEnum = {
+    Studies: 'studies',
+    Analyses: 'analyses',
+    Features: 'features',
+} as const;
+
+export type AnalysisQueryRequestDetailEnum = typeof AnalysisQueryRequestDetailEnum[keyof typeof AnalysisQueryRequestDetailEnum];
+
 export interface AnalysisQueryResult {
+    'metadata'?: AnalysisQueryResultMetadata;
     /**
      * The query in canonical form: a normalized criterion as ids, text, all, none, descendants, when_unmapped and when_silent, every other as any/all/none lists. 
      */
     'query'?: { [key: string]: any; };
-    'counts'?: AnalysisQueryResultCounts;
     'searched'?: AnalysisQueryResultSearched;
     /**
      * With `funnel`, the criteria in order, each with what remains after it.
      */
     'funnel'?: Array<AnalysisQueryResultFunnelInner>;
-    'results'?: Array<AnalysisQueryResultResultsInner>;
-    'study_ids'?: Array<string>;
     /**
-     * The `offset` that lists the next selected analyses, or null when this listing reaches the last of them. 
+     * The page\'s studies, in order of paper, each with its selected analyses.
      */
-    'next_offset'?: number | null;
-}
-export interface AnalysisQueryResultCounts {
-    'analyses'?: number;
-    'studies'?: number;
-    'base_studies'?: number;
+    'results'?: Array<AnalysisQueryResultResultsInner>;
 }
 export interface AnalysisQueryResultFunnelInner {
     'criterion'?: string;
@@ -297,26 +307,45 @@ export interface AnalysisQueryResultFunnelInner {
      */
     'unmapped'?: number | null;
 }
+export interface AnalysisQueryResultMetadata {
+    /**
+     * How many studies the query selects, over every page.
+     */
+    'total_count'?: number;
+    /**
+     * How many analyses the query selects, over every page.
+     */
+    'analysis_count'?: number;
+}
 export interface AnalysisQueryResultResultsInner {
-    'analysis'?: string;
     'study'?: string;
     'base_study'?: string;
+    /**
+     * Absent when `detail` is `studies`.
+     */
+    'analyses'?: Array<AnalysisQueryResultResultsInnerAnalysesInner>;
+}
+export interface AnalysisQueryResultResultsInnerAnalysesInner {
+    'id'?: string;
     'name'?: string | null;
     /**
      * How the analysis matched each normalized criterion, by its path (`medical_condition`, `or[0].task`): by id, by text, as unmapped or as silent (under `include`). Absent where a mapped analysis matched only through `none`. 
      */
-    'matched_by'?: { [key: string]: AnalysisQueryResultResultsInnerMatchedByEnum; };
+    'matched_by'?: { [key: string]: AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum; };
+    /**
+     * Only when `detail` is `features`.
+     */
     'features'?: { [key: string]: any; };
 }
 
-export const AnalysisQueryResultResultsInnerMatchedByEnum = {
+export const AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = {
     Id: 'id',
     Text: 'text',
     Unmapped: 'unmapped',
     Silent: 'silent',
 } as const;
 
-export type AnalysisQueryResultResultsInnerMatchedByEnum = typeof AnalysisQueryResultResultsInnerMatchedByEnum[keyof typeof AnalysisQueryResultResultsInnerMatchedByEnum];
+export type AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = typeof AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum[keyof typeof AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum];
 
 /**
  * With `funnel`, how many analyses and papers have features.
@@ -4637,7 +4666,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features; `offset` and `next_offset` page through the listing. 
+         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored. The results are the studies with a selected analysis, a page at a time as on the list endpoints (all of them with `paginate: false`), each with as much as `detail` asks for: its selected analyses, how each matched every normalized criterion, and their features; with `funnel` the response also says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features. 
          * @summary Select analyses by what their extraction records say
          * @param {AnalysisQueryRequest} [analysisQueryRequest] 
          * @param {*} [options] Override http request option.
@@ -8645,7 +8674,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features; `offset` and `next_offset` page through the listing. 
+         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored. The results are the studies with a selected analysis, a page at a time as on the list endpoints (all of them with `paginate: false`), each with as much as `detail` asks for: its selected analyses, how each matched every normalized criterion, and their features; with `funnel` the response also says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features. 
          * @summary Select analyses by what their extraction records say
          * @param {AnalysisQueryRequest} [analysisQueryRequest] 
          * @param {*} [options] Override http request option.
@@ -9983,7 +10012,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.analysesPost(analysisRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features; `offset` and `next_offset` page through the listing. 
+         * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored. The results are the studies with a selected analysis, a page at a time as on the list endpoints (all of them with `paginate: false`), each with as much as `detail` asks for: its selected analyses, how each matched every normalized criterion, and their features; with `funnel` the response also says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features. 
          * @summary Select analyses by what their extraction records say
          * @param {AnalysisQueryRequest} [analysisQueryRequest] 
          * @param {*} [options] Override http request option.
@@ -11072,7 +11101,7 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored; the response names every selected analysis\'s study, for a studyset, and how it matched each normalized criterion, and with `funnel` says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features; `offset` and `next_offset` page through the listing. 
+     * Runs a query over each pipeline analysis\'s features, read from its paper\'s latest extraction record. Every criterion is optional and criteria combine with AND; a list means any of its values, and `or` takes sub-queries. Text criteria match whole words, case-insensitively, with `*` for any run of characters and `?` for one; a pattern needs three consecutive letters or digits. A normalized criterion (medical_condition, task, contrast.key, contrast.set) takes `ids`, the terms a normalizer mapped the record\'s wording to, which match their descendants (a task family its tasks, a family its contrast keys and sets) unless `descendants` is false, and `text`, a pattern over the wording and the terms\' labels; either may match. Contrast keys and sets are directional: a term with `:reversed` is the contrast stated the other way round. `when_unmapped` decides the analyses whose record states the feature but maps none of it, excluded by default; a healthy group\'s condition, or a value read as an absence, is silent. An analysis whose record is silent on a criterion does not match it unless the criterion says `when_silent: include`. Nothing is stored. The results are the studies with a selected analysis, a page at a time as on the list endpoints (all of them with `paginate: false`), each with as much as `detail` asks for: its selected analyses, how each matched every normalized criterion, and their features; with `funnel` the response also says what each criterion dropped. `base_study_ids` or `study_ids` restrict everything to those papers or studies, so an empty query with them returns their analyses\' features. 
      * @summary Select analyses by what their extraction records say
      * @param {AnalysisQueryRequest} [analysisQueryRequest] 
      * @param {*} [options] Override http request option.
