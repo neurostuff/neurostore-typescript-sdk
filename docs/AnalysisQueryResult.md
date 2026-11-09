@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **funnel** | [**Array&lt;AnalysisQueryResultFunnelInner&gt;**](AnalysisQueryResultFunnelInner.md) | With &#x60;funnel&#x60;, the criteria in order, each with what remains after it. | [optional] [default to undefined]
 **results** | [**Array&lt;AnalysisQueryResultResultsInner&gt;**](AnalysisQueryResultResultsInner.md) |  | [optional] [default to undefined]
 **study_ids** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
+**next_offset** | **number** | The &#x60;offset&#x60; that lists the next selected analyses, or null when this listing reaches the last of them.  | [optional] [default to undefined]
 
 ## Example
 
@@ -24,6 +25,7 @@ const instance: AnalysisQueryResult = {
     funnel,
     results,
     study_ids,
+    next_offset,
 };
 ```
 
