@@ -23,6 +23,16 @@ Name | Type | Description | Notes
 **role** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 **contrast** | [**AnalysisQueryContrast**](AnalysisQueryContrast.md) |  | [optional] [default to undefined]
 **design** | [**AnalysisQueryDesign**](AnalysisQueryDesign.md) |  | [optional] [default to undefined]
+**sample** | [**AnalysisQuerySample**](AnalysisQuerySample.md) |  | [optional] [default to undefined]
+**inference** | [**AnalysisQueryInference**](AnalysisQueryInference.md) |  | [optional] [default to undefined]
+**acquisition** | [**AnalysisQueryAcquisition**](AnalysisQueryAcquisition.md) |  | [optional] [default to undefined]
+**preprocessing** | [**AnalysisQueryPreprocessing**](AnalysisQueryPreprocessing.md) |  | [optional] [default to undefined]
+**model** | [**AnalysisQueryModel**](AnalysisQueryModel.md) |  | [optional] [default to undefined]
+**statistic** | [**AnalysisQueryStatistic**](AnalysisQueryStatistic.md) |  | [optional] [default to undefined]
+**connectivity** | [**AnalysisQueryConnectivity**](AnalysisQueryConnectivity.md) |  | [optional] [default to undefined]
+**region** | [**AnalysisQueryRegion**](AnalysisQueryRegion.md) |  | [optional] [default to undefined]
+**coordinates** | [**AnalysisQueryCoordinates**](AnalysisQueryCoordinates.md) |  | [optional] [default to undefined]
+**task_details** | [**AnalysisQueryTaskDetails**](AnalysisQueryTaskDetails.md) |  | [optional] [default to undefined]
 **or** | **Array&lt;{ [key: string]: any; }&gt;** | Sub-queries, any of which may match; each takes this object\&#39;s criteria. (Not a $ref to this schema, which resolvers that inline references cannot expand.)  | [optional] [default to undefined]
 
 ## Example
@@ -48,6 +58,16 @@ const instance: AnalysisQuery = {
     role,
     contrast,
     design,
+    sample,
+    inference,
+    acquisition,
+    preprocessing,
+    model,
+    statistic,
+    connectivity,
+    region,
+    coordinates,
+    task_details,
     or,
 };
 ```
