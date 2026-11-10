@@ -96,10 +96,31 @@ export interface AnalysisQuery {
     'role'?: AnalysisQueryText;
     'contrast'?: AnalysisQueryContrast;
     'design'?: AnalysisQueryDesign;
+    'sample'?: AnalysisQuerySample;
+    'inference'?: AnalysisQueryInference;
+    'acquisition'?: AnalysisQueryAcquisition;
+    'preprocessing'?: AnalysisQueryPreprocessing;
+    'model'?: AnalysisQueryModel;
+    'statistic'?: AnalysisQueryStatistic;
+    'connectivity'?: AnalysisQueryConnectivity;
+    'region'?: AnalysisQueryRegion;
+    'coordinates'?: AnalysisQueryCoordinates;
+    'task_details'?: AnalysisQueryTaskDetails;
     /**
      * Sub-queries, any of which may match; each takes this object\'s criteria. (Not a $ref to this schema, which resolvers that inline references cannot expand.) 
      */
     'or'?: Array<{ [key: string]: any; }>;
+}
+/**
+ * The analysis\'s acquisitions; a criterion on a number matches when any acquisition\'s does. Field strength in tesla, repetition and echo time in seconds, voxel size as the largest dimension in millimetres. 
+ */
+export interface AnalysisQueryAcquisition {
+    'modality'?: AnalysisQueryText;
+    'field_strength'?: AnalysisQueryRange;
+    'repetition_time'?: AnalysisQueryRange;
+    'echo_time'?: AnalysisQueryRange;
+    'voxel_size'?: AnalysisQueryRange;
+    'scanner'?: AnalysisQueryText;
 }
 /**
  * @type AnalysisQueryBoolean
@@ -112,6 +133,15 @@ export interface AnalysisQueryBooleanOneOf {
 }
 
 
+/**
+ * A connectivity analysis\'s method and inference target, and its seed and target regions\' names. 
+ */
+export interface AnalysisQueryConnectivity {
+    'method'?: AnalysisQueryText;
+    'inference_target'?: AnalysisQueryText;
+    'seed'?: AnalysisQueryText;
+    'target'?: AnalysisQueryText;
+}
 export interface AnalysisQueryContrast {
     'positive'?: AnalysisQueryContrastSide;
     'negative'?: AnalysisQueryContrastSide;
@@ -135,6 +165,14 @@ export interface AnalysisQueryContrastSideOneOf {
     'arm_kind'?: AnalysisQueryText;
     'facet'?: AnalysisQueryText;
 }
+/**
+ * The coordinate sets that name the analysis. 
+ */
+export interface AnalysisQueryCoordinates {
+    'role'?: AnalysisQueryText;
+    'result_kind'?: AnalysisQueryText;
+    'anchor_kind'?: AnalysisQueryText;
+}
 export interface AnalysisQueryDesign {
     'allocation'?: AnalysisQueryText;
     'assignment_structure'?: AnalysisQueryText;
@@ -144,6 +182,21 @@ export interface AnalysisQueryDesign {
 }
 export interface AnalysisQueryIds {
     'ids'?: AnalysisQueryStrings;
+}
+/**
+ * The analysis\'s inference settings. 
+ */
+export interface AnalysisQueryInference {
+    'level'?: AnalysisQueryText;
+    'height_threshold'?: AnalysisQueryRange;
+    'height_threshold_type'?: AnalysisQueryText;
+    'cluster_extent'?: AnalysisQueryRange;
+    'cluster_threshold'?: AnalysisQueryRange;
+    'correction'?: AnalysisQueryText;
+    'correction_scope'?: AnalysisQueryText;
+    'alpha'?: AnalysisQueryRange;
+    'tfce'?: AnalysisQueryBoolean;
+    'permutations'?: AnalysisQueryRange;
 }
 /**
  * @type AnalysisQueryMedicalCondition
@@ -178,6 +231,18 @@ export type AnalysisQueryMedicalConditionOneOfWhenUnmappedEnum = typeof Analysis
  */
 export type AnalysisQueryMedicalConditionOneOfRole = Array<string> | string;
 
+/**
+ * The analysis\'s model estimation and the models it takes inputs from. 
+ */
+export interface AnalysisQueryModel {
+    'family'?: AnalysisQueryText;
+    'type'?: AnalysisQueryText;
+    'software'?: AnalysisQueryText;
+    'hrf'?: AnalysisQueryText;
+    'estimator'?: AnalysisQueryText;
+    'term'?: AnalysisQueryText;
+    'term_type'?: AnalysisQueryText;
+}
 /**
  * @type AnalysisQueryNormalized
  * Text (a pattern, or a list of them, any of which may match), or ids and text. `ids` and `text` are any-of, and either may match; `all` needs every one and `none` refuses each. `when_unmapped` decides an analysis whose record states the feature but maps none of it: `exclude` (the default), `include`, or `text`, matching it by its wording alone, so a criterion without text excludes it. 
@@ -230,6 +295,14 @@ export const AnalysisQueryNormalizedOneOfWhenUnmappedEnum = {
 
 export type AnalysisQueryNormalizedOneOfWhenUnmappedEnum = typeof AnalysisQueryNormalizedOneOfWhenUnmappedEnum[keyof typeof AnalysisQueryNormalizedOneOfWhenUnmappedEnum];
 
+/**
+ * The preprocessing of the analysis\'s model and of the models it takes inputs from. Smoothing FWHM in millimetres. 
+ */
+export interface AnalysisQueryPreprocessing {
+    'smoothing_fwhm'?: AnalysisQueryRange;
+    'software'?: AnalysisQueryText;
+    'steps'?: AnalysisQueryText;
+}
 export interface AnalysisQueryRange {
     'min'?: number;
     'max'?: number;
@@ -237,6 +310,15 @@ export interface AnalysisQueryRange {
 }
 
 
+/**
+ * The regions the analysis names, its seeds and targets, and its coordinate sets\' regions. 
+ */
+export interface AnalysisQueryRegion {
+    'name'?: AnalysisQueryText;
+    'atlas'?: AnalysisQueryText;
+    'type'?: AnalysisQueryText;
+    'definition'?: AnalysisQueryText;
+}
 export interface AnalysisQueryRequest {
     'query': AnalysisQuery;
     /**
@@ -367,10 +449,50 @@ export interface AnalysisQueryResultSearched {
     'base_studies'?: number;
 }
 /**
+ * The groups the analysis ran on; a criterion on an item of each group (an age) matches when any group\'s does. Ages are in years; counts are summed over the groups. 
+ */
+export interface AnalysisQuerySample {
+    'age_mean'?: AnalysisQueryRange;
+    'age_sd'?: AnalysisQueryRange;
+    'age_min'?: AnalysisQueryRange;
+    'age_max'?: AnalysisQueryRange;
+    'age_median'?: AnalysisQueryRange;
+    'female_count'?: AnalysisQueryRange;
+    'male_count'?: AnalysisQueryRange;
+    'female_percent'?: AnalysisQueryRange;
+    'handedness'?: AnalysisQueryText;
+    'enrolled_count'?: AnalysisQueryRange;
+    'acquired_count'?: AnalysisQueryRange;
+    'excluded_count'?: AnalysisQueryRange;
+    'diagnostic_instrument'?: AnalysisQueryText;
+    'diagnostic_system'?: AnalysisQueryText;
+    'clinical_characteristics'?: AnalysisQueryText;
+    'education'?: AnalysisQueryText;
+}
+/**
+ * The statistic the analysis reports. 
+ */
+export interface AnalysisQueryStatistic {
+    'family'?: AnalysisQueryText;
+    'df_numerator'?: AnalysisQueryRange;
+    'df_denominator'?: AnalysisQueryRange;
+}
+/**
  * @type AnalysisQueryStrings
  */
 export type AnalysisQueryStrings = Array<string> | string;
 
+/**
+ * The analysis\'s tasks beyond their paradigm: stimuli and stimulus content, modalities, design, instructions and performance measures. 
+ */
+export interface AnalysisQueryTaskDetails {
+    'stimuli'?: AnalysisQueryText;
+    'stimulus_modality'?: AnalysisQueryText;
+    'response_modality'?: AnalysisQueryText;
+    'design_type'?: AnalysisQueryText;
+    'instructions'?: AnalysisQueryText;
+    'performance'?: AnalysisQueryText;
+}
 export interface AnalysisQueryTerms {
     'ids'?: AnalysisQueryStrings;
     'text'?: AnalysisQueryStrings;
