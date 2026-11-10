@@ -355,7 +355,7 @@ export interface AnalysisQueryResultResultsInnerAnalysesInnerFeatures {
      */
     'config_id'?: string | null;
     /**
-     * When the features were last written; a re-ingest that changes them moves it. 
+     * When the features were last written. Every re-ingest of the paper rewrites them, changed or not. 
      */
     'updated_at'?: string | null;
 }

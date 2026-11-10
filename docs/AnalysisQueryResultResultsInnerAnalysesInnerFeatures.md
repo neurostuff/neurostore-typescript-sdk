@@ -7,7 +7,7 @@ Only when `detail` is `features`. The analysis\'s display and the `analysis_feat
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **config_id** | **string** | The pipeline config of the record the features were read from. | [optional] [default to undefined]
-**updated_at** | **string** | When the features were last written; a re-ingest that changes them moves it.  | [optional] [default to undefined]
+**updated_at** | **string** | When the features were last written. Every re-ingest of the paper rewrites them, changed or not.  | [optional] [default to undefined]
 
 ## Example
 
