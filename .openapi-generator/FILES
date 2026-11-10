@@ -25,9 +25,10 @@ docs/AnalysisQueryNormalizedOneOf.md
 docs/AnalysisQueryRange.md
 docs/AnalysisQueryRequest.md
 docs/AnalysisQueryResult.md
-docs/AnalysisQueryResultCounts.md
 docs/AnalysisQueryResultFunnelInner.md
+docs/AnalysisQueryResultMetadata.md
 docs/AnalysisQueryResultResultsInner.md
+docs/AnalysisQueryResultResultsInnerAnalysesInner.md
 docs/AnalysisQueryResultSearched.md
 docs/AnalysisQueryStrings.md
 docs/AnalysisQueryTerms.md
