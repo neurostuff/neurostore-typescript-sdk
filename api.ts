@@ -332,10 +332,7 @@ export interface AnalysisQueryResultResultsInnerAnalysesInner {
      * How the analysis matched each normalized criterion, by its path (`medical_condition`, `or[0].task`): by id, by text, as unmapped or as silent (under `include`). Absent where a mapped analysis matched only through `none`. 
      */
     'matched_by'?: { [key: string]: AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum; };
-    /**
-     * Only when `detail` is `features`.
-     */
-    'features'?: { [key: string]: any; };
+    'features'?: AnalysisQueryResultResultsInnerAnalysesInnerFeatures;
 }
 
 export const AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = {
@@ -347,6 +344,21 @@ export const AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = {
 
 export type AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = typeof AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum[keyof typeof AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum];
 
+/**
+ * Only when `detail` is `features`. The analysis\'s display and every column its criteria read, named as stored (`is_meta_analysis`, `species`, `task_ids`, `medical_condition_role_ids`, `arm_kinds`, `contrast_positive_timepoints`, and the analysis\'s `role` and `has_coordinates`), with `task_family_ids` and the extraction they were read from. 
+ */
+export interface AnalysisQueryResultResultsInnerAnalysesInnerFeatures {
+    [key: string]: any;
+
+    /**
+     * The pipeline config of the record the features were read from.
+     */
+    'config_id'?: string | null;
+    /**
+     * When the features were last written. Every re-ingest of the paper rewrites them, changed or not. 
+     */
+    'updated_at'?: string | null;
+}
 /**
  * With `funnel`, how many analyses and papers have features.
  */
