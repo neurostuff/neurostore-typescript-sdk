@@ -18,8 +18,6 @@ Name | Type | Description | Notes
 **details_type** | **string** |  | [optional] [default to undefined]
 **is_meta_analysis** | **boolean** |  | [optional] [default to undefined]
 **n** | **number** |  | [optional] [default to undefined]
-**has_coordinates** | **boolean** |  | [optional] [default to undefined]
-**role** | **string** |  | [optional] [default to undefined]
 **contrast** | [**AnalysisFeaturesContrast**](AnalysisFeaturesContrast.md) |  | [optional] [default to undefined]
 **design** | [**AnalysisFeaturesDesign**](AnalysisFeaturesDesign.md) |  | [optional] [default to undefined]
 **groups** | [**AnalysisFeaturesGroups**](AnalysisFeaturesGroups.md) |  | [optional] [default to undefined]
@@ -51,8 +49,6 @@ const instance: AnalysisFeatures = {
     details_type,
     is_meta_analysis,
     n,
-    has_coordinates,
-    role,
     contrast,
     design,
     groups,

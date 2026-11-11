@@ -87,8 +87,6 @@ export interface AnalysisFeatures {
     'details_type'?: string;
     'is_meta_analysis'?: boolean;
     'n'?: number;
-    'has_coordinates'?: boolean;
-    'role'?: string;
     'contrast'?: AnalysisFeaturesContrast;
     'design'?: AnalysisFeaturesDesign;
     'groups'?: AnalysisFeaturesGroups;
@@ -619,6 +617,14 @@ export interface AnalysisQueryResultResultsInnerAnalysesInner {
      * How the analysis matched each normalized criterion, by its path (`medical_condition`, `or[0].task`): by id, by text, as unmapped or as silent (under `include`). Absent where a mapped analysis matched only through `none`. 
      */
     'matched_by'?: { [key: string]: AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum; };
+    /**
+     * With `features`, the analysis\'s coordinate role (the `role` criterion), which a review can change apart from its features. 
+     */
+    'role'?: string | null;
+    /**
+     * With `features`, whether the analysis has coordinates.
+     */
+    'has_coordinates'?: boolean;
     /**
      * With `features`, the pipeline config of the record they were read from.
      */
