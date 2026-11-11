@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **negative** | [**AnalysisQueryContrastSide**](AnalysisQueryContrastSide.md) |  | [optional] [default to undefined]
 **key** | [**AnalysisQueryNormalizedIds**](AnalysisQueryNormalizedIds.md) |  | [optional] [default to undefined]
 **set** | [**AnalysisQueryNormalizedIds**](AnalysisQueryNormalizedIds.md) |  | [optional] [default to undefined]
-**kind** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
+**kind** | [**AnalysisQueryValue**](AnalysisQueryValue.md) |  | [optional] [default to undefined]
 **groups** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 
 ## Example

@@ -1,12 +1,12 @@
 # AnalysisQueryPreprocessing
 
-The preprocessing of the analysis\'s model and of the models it takes inputs from. Smoothing FWHM in millimetres. 
+The preprocessing of the analysis\'s model and of the models it takes inputs from.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**smoothing_fwhm** | [**AnalysisQueryRange**](AnalysisQueryRange.md) |  | [optional] [default to undefined]
+**smoothing_fwhm_mm** | [**AnalysisQueryRange**](AnalysisQueryRange.md) |  | [optional] [default to undefined]
 **software** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 **steps** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 import { AnalysisQueryPreprocessing } from './api';
 
 const instance: AnalysisQueryPreprocessing = {
-    smoothing_fwhm,
+    smoothing_fwhm_mm,
     software,
     steps,
 };
