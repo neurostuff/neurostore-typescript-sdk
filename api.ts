@@ -71,6 +71,168 @@ export const AnalysisCommonOutcomeEnum = {
 
 export type AnalysisCommonOutcomeEnum = typeof AnalysisCommonOutcomeEnum[keyof typeof AnalysisCommonOutcomeEnum];
 
+/**
+ * Only when `detail` is `features`: what the analysis\'s record says, in the shape of the query, each criterion\'s value under its path. A normalized criterion has its mapped `ids` (and `role_ids`, `family_ids`) and the record\'s wording as `text`; a text criterion has the record\'s wording. An item the record is silent on is absent. 
+ */
+export interface AnalysisFeatures {
+    'medical_condition'?: AnalysisFeaturesMedicalCondition;
+    'has_patients'?: boolean;
+    'has_healthy'?: boolean;
+    'species'?: Array<string>;
+    'task'?: AnalysisFeaturesTask;
+    'spatial_scope'?: string;
+    'coordinate_space'?: string;
+    'measure_type'?: string;
+    'measure_family'?: string;
+    'details_type'?: string;
+    'is_meta_analysis'?: boolean;
+    'n'?: number;
+    'contrast'?: AnalysisFeaturesContrast;
+    'design'?: AnalysisFeaturesDesign;
+    'groups'?: AnalysisFeaturesGroups;
+    'inference_settings'?: AnalysisFeaturesInferenceSettings;
+    'acquisitions'?: AnalysisFeaturesAcquisitions;
+    'preprocessing'?: AnalysisFeaturesPreprocessing;
+    'model_estimation'?: AnalysisFeaturesModelEstimation;
+    'effect'?: AnalysisFeaturesEffect;
+    'details'?: AnalysisFeaturesDetails;
+    'regions'?: AnalysisFeaturesRegions;
+    'coordinate_sets'?: AnalysisFeaturesCoordinateSets;
+    'tasks'?: AnalysisFeaturesTasks;
+}
+export interface AnalysisFeaturesAcquisitions {
+    'modality'?: Array<string>;
+    'magnetic_field_strength_tesla'?: Array<number>;
+    'repetition_time_seconds'?: Array<number>;
+    'echo_time_seconds'?: Array<number>;
+    'acquisition_voxel_size_mm'?: Array<number>;
+    'device'?: Array<string>;
+}
+export interface AnalysisFeaturesContrast {
+    'key'?: AnalysisFeaturesContrastKey;
+    'set'?: AnalysisFeaturesContrastKey;
+    'kind'?: string;
+    'groups'?: AnalysisFeaturesContrastGroupsEnum;
+    'positive'?: AnalysisFeaturesContrastPositive;
+    'negative'?: AnalysisFeaturesContrastPositive;
+}
+
+export const AnalysisFeaturesContrastGroupsEnum = {
+    Between: 'between',
+    Within: 'within',
+} as const;
+
+export type AnalysisFeaturesContrastGroupsEnum = typeof AnalysisFeaturesContrastGroupsEnum[keyof typeof AnalysisFeaturesContrastGroupsEnum];
+
+export interface AnalysisFeaturesContrastKey {
+    'ids'?: Array<string>;
+}
+export interface AnalysisFeaturesContrastPositive {
+    'name'?: Array<string>;
+    'has_patients'?: boolean;
+    'has_healthy'?: boolean;
+    'medical_condition'?: AnalysisFeaturesContrastKey;
+    'timepoint'?: Array<string>;
+    'arm_kind'?: Array<string>;
+    'facet'?: Array<string>;
+}
+export interface AnalysisFeaturesCoordinateSets {
+    'role'?: Array<string>;
+    'result_kind'?: Array<string>;
+    'anchor_kind'?: Array<string>;
+}
+export interface AnalysisFeaturesDesign {
+    'allocation'?: string;
+    'assignment_structure'?: string;
+    'blinding'?: string;
+    'arm_kind'?: Array<string>;
+    'longitudinal'?: boolean;
+}
+export interface AnalysisFeaturesDetails {
+    'connectivity_method'?: string;
+    'inference_target'?: string;
+    'seed_regions'?: Array<string>;
+    'target_regions'?: Array<string>;
+}
+export interface AnalysisFeaturesEffect {
+    'statistic'?: AnalysisFeaturesEffectStatistic;
+}
+export interface AnalysisFeaturesEffectStatistic {
+    'family'?: string;
+    'degrees_of_freedom_numerator'?: number;
+    'degrees_of_freedom_denominator'?: number;
+}
+export interface AnalysisFeaturesGroups {
+    'age_mean'?: Array<number>;
+    'age_standard_deviation'?: Array<number>;
+    'age_minimum'?: Array<number>;
+    'age_maximum'?: Array<number>;
+    'age_median'?: Array<number>;
+    'female_count'?: number;
+    'male_count'?: number;
+    'female_percent'?: number;
+    'handedness'?: Array<string>;
+    'enrolled_count'?: number;
+    'acquired_count'?: number;
+    'excluded_count'?: number;
+    'diagnostic_instrument'?: Array<string>;
+    'diagnostic_system'?: Array<string>;
+    'clinical_characteristics'?: Array<string>;
+    'education_summary'?: Array<string>;
+}
+export interface AnalysisFeaturesInferenceSettings {
+    'inference_level'?: Array<string>;
+    'height_threshold_value'?: number;
+    'height_threshold_type'?: Array<string>;
+    'cluster_extent_threshold'?: number;
+    'clusterwise_threshold_value'?: number;
+    'multiple_comparison_method'?: Array<string>;
+    'correction_scope'?: string;
+    'alpha_level'?: number;
+    'tfce_used'?: boolean;
+    'permutation_count'?: number;
+}
+export interface AnalysisFeaturesMedicalCondition {
+    'ids'?: Array<string>;
+    'role_ids'?: Array<string>;
+    'text'?: Array<string>;
+}
+export interface AnalysisFeaturesModelEstimation {
+    'model_family'?: Array<string>;
+    'model_type'?: Array<string>;
+    'software'?: Array<string>;
+    'hrf_model'?: Array<string>;
+    'estimator'?: Array<string>;
+    'terms'?: AnalysisFeaturesModelEstimationTerms;
+}
+export interface AnalysisFeaturesModelEstimationTerms {
+    'name'?: Array<string>;
+    'type'?: Array<string>;
+}
+export interface AnalysisFeaturesPreprocessing {
+    'smoothing_fwhm_mm'?: Array<number>;
+    'software'?: Array<string>;
+    'steps'?: Array<string>;
+}
+export interface AnalysisFeaturesRegions {
+    'name'?: Array<string>;
+    'atlas'?: Array<string>;
+    'region_type'?: Array<string>;
+    'definition_method'?: Array<string>;
+}
+export interface AnalysisFeaturesTask {
+    'ids'?: Array<string>;
+    'family_ids'?: Array<string>;
+    'text'?: Array<string>;
+}
+export interface AnalysisFeaturesTasks {
+    'stimuli'?: Array<string>;
+    'stimulus_modality'?: Array<string>;
+    'response_modality'?: Array<string>;
+    'design_type'?: Array<string>;
+    'instructions'?: Array<string>;
+    'performance_measures'?: Array<string>;
+}
 export interface AnalysisList {
     'metadata'?: Metadata;
     'results'?: Array<AnalysisReturn>;
@@ -83,44 +245,44 @@ export interface AnalysisQuery {
     'medical_condition'?: AnalysisQueryMedicalCondition;
     'has_patients'?: AnalysisQueryBoolean;
     'has_healthy'?: AnalysisQueryBoolean;
-    'species'?: AnalysisQueryText;
+    'species'?: AnalysisQueryValue;
     'task'?: AnalysisQueryNormalized;
-    'spatial_scope'?: AnalysisQueryText;
+    'spatial_scope'?: AnalysisQueryValue;
     'coordinate_space'?: AnalysisQueryText;
-    'measure_type'?: AnalysisQueryText;
-    'measure_family'?: AnalysisQueryText;
-    'details_type'?: AnalysisQueryText;
+    'measure_type'?: AnalysisQueryValue;
+    'measure_family'?: AnalysisQueryValue;
+    'details_type'?: AnalysisQueryValue;
     'is_meta_analysis'?: AnalysisQueryBoolean;
     'n'?: AnalysisQueryRange;
     'has_coordinates'?: AnalysisQueryBoolean;
-    'role'?: AnalysisQueryText;
+    'role'?: AnalysisQueryValue;
     'contrast'?: AnalysisQueryContrast;
     'design'?: AnalysisQueryDesign;
-    'sample'?: AnalysisQuerySample;
-    'inference'?: AnalysisQueryInference;
-    'acquisition'?: AnalysisQueryAcquisition;
+    'acquisitions'?: AnalysisQueryAcquisitions;
+    'coordinate_sets'?: AnalysisQueryCoordinateSets;
+    'details'?: AnalysisQueryDetails;
+    'effect'?: AnalysisQueryEffect;
+    'groups'?: AnalysisQueryGroups;
+    'inference_settings'?: AnalysisQueryInferenceSettings;
+    'model_estimation'?: AnalysisQueryModelEstimation;
     'preprocessing'?: AnalysisQueryPreprocessing;
-    'model'?: AnalysisQueryModel;
-    'statistic'?: AnalysisQueryStatistic;
-    'connectivity'?: AnalysisQueryConnectivity;
-    'region'?: AnalysisQueryRegion;
-    'coordinates'?: AnalysisQueryCoordinates;
-    'task_details'?: AnalysisQueryTaskDetails;
+    'regions'?: AnalysisQueryRegions;
+    'tasks'?: AnalysisQueryTasks;
     /**
      * Sub-queries, any of which may match; each takes this object\'s criteria. (Not a $ref to this schema, which resolvers that inline references cannot expand.) 
      */
     'or'?: Array<{ [key: string]: any; }>;
 }
 /**
- * The analysis\'s acquisitions; a criterion on a number matches when any acquisition\'s does. Field strength in tesla, repetition and echo time in seconds, voxel size as the largest dimension in millimetres. 
+ * The analysis\'s acquisitions; a number matches when any acquisition\'s does. The voxel size is an acquisition\'s largest dimension.
  */
-export interface AnalysisQueryAcquisition {
-    'modality'?: AnalysisQueryText;
-    'field_strength'?: AnalysisQueryRange;
-    'repetition_time'?: AnalysisQueryRange;
-    'echo_time'?: AnalysisQueryRange;
-    'voxel_size'?: AnalysisQueryRange;
-    'scanner'?: AnalysisQueryText;
+export interface AnalysisQueryAcquisitions {
+    'modality'?: AnalysisQueryValue;
+    'magnetic_field_strength_tesla'?: AnalysisQueryRange;
+    'repetition_time_seconds'?: AnalysisQueryRange;
+    'echo_time_seconds'?: AnalysisQueryRange;
+    'acquisition_voxel_size_mm'?: AnalysisQueryRange;
+    'device'?: AnalysisQueryText;
 }
 /**
  * @type AnalysisQueryBoolean
@@ -133,21 +295,12 @@ export interface AnalysisQueryBooleanOneOf {
 }
 
 
-/**
- * A connectivity analysis\'s method and inference target, and its seed and target regions\' names. 
- */
-export interface AnalysisQueryConnectivity {
-    'method'?: AnalysisQueryText;
-    'inference_target'?: AnalysisQueryText;
-    'seed'?: AnalysisQueryText;
-    'target'?: AnalysisQueryText;
-}
 export interface AnalysisQueryContrast {
     'positive'?: AnalysisQueryContrastSide;
     'negative'?: AnalysisQueryContrastSide;
     'key'?: AnalysisQueryNormalizedIds;
     'set'?: AnalysisQueryNormalizedIds;
-    'kind'?: AnalysisQueryText;
+    'kind'?: AnalysisQueryValue;
     'groups'?: AnalysisQueryText;
 }
 /**
@@ -161,42 +314,86 @@ export interface AnalysisQueryContrastSideOneOf {
     'has_patients'?: AnalysisQueryBoolean;
     'has_healthy'?: AnalysisQueryBoolean;
     'medical_condition'?: AnalysisQueryNormalized;
-    'timepoint'?: AnalysisQueryText;
-    'arm_kind'?: AnalysisQueryText;
-    'facet'?: AnalysisQueryText;
+    'timepoint'?: AnalysisQueryValue;
+    'arm_kind'?: AnalysisQueryValue;
+    'facet'?: AnalysisQueryValue;
 }
 /**
- * The coordinate sets that name the analysis. 
+ * The coordinate sets that name the analysis.
  */
-export interface AnalysisQueryCoordinates {
-    'role'?: AnalysisQueryText;
-    'result_kind'?: AnalysisQueryText;
-    'anchor_kind'?: AnalysisQueryText;
+export interface AnalysisQueryCoordinateSets {
+    'role'?: AnalysisQueryValue;
+    'result_kind'?: AnalysisQueryValue;
+    'anchor_kind'?: AnalysisQueryValue;
 }
 export interface AnalysisQueryDesign {
-    'allocation'?: AnalysisQueryText;
-    'assignment_structure'?: AnalysisQueryText;
-    'blinding'?: AnalysisQueryText;
-    'arm_kind'?: AnalysisQueryText;
+    'allocation'?: AnalysisQueryValue;
+    'assignment_structure'?: AnalysisQueryValue;
+    'blinding'?: AnalysisQueryValue;
+    'arm_kind'?: AnalysisQueryValue;
     'longitudinal'?: AnalysisQueryBoolean;
+}
+/**
+ * A connectivity analysis\'s details; regions by their names.
+ */
+export interface AnalysisQueryDetails {
+    'connectivity_method'?: AnalysisQueryValue;
+    'inference_target'?: AnalysisQueryValue;
+    'seed_regions'?: AnalysisQueryText;
+    'target_regions'?: AnalysisQueryText;
+}
+/**
+ * The analysis\'s effect.
+ */
+export interface AnalysisQueryEffect {
+    'statistic'?: AnalysisQueryEffectStatistic;
+}
+/**
+ * The statistic the analysis reports.
+ */
+export interface AnalysisQueryEffectStatistic {
+    'family'?: AnalysisQueryValue;
+    'degrees_of_freedom_numerator'?: AnalysisQueryRange;
+    'degrees_of_freedom_denominator'?: AnalysisQueryRange;
+}
+/**
+ * The groups the analysis ran on; a number with an item per group (an age) matches when any group\'s does. Ages are in years; counts are summed over the groups; the female share is of those whose sex (or, where only that is reported, gender) is counted.
+ */
+export interface AnalysisQueryGroups {
+    'age_mean'?: AnalysisQueryRange;
+    'age_standard_deviation'?: AnalysisQueryRange;
+    'age_minimum'?: AnalysisQueryRange;
+    'age_maximum'?: AnalysisQueryRange;
+    'age_median'?: AnalysisQueryRange;
+    'female_count'?: AnalysisQueryRange;
+    'male_count'?: AnalysisQueryRange;
+    'female_percent'?: AnalysisQueryRange;
+    'handedness'?: AnalysisQueryValue;
+    'enrolled_count'?: AnalysisQueryRange;
+    'acquired_count'?: AnalysisQueryRange;
+    'excluded_count'?: AnalysisQueryRange;
+    'diagnostic_instrument'?: AnalysisQueryText;
+    'diagnostic_system'?: AnalysisQueryText;
+    'clinical_characteristics'?: AnalysisQueryText;
+    'education_summary'?: AnalysisQueryText;
 }
 export interface AnalysisQueryIds {
     'ids'?: AnalysisQueryStrings;
 }
 /**
- * The analysis\'s inference settings. 
+ * The analysis\'s inference settings.
  */
-export interface AnalysisQueryInference {
-    'level'?: AnalysisQueryText;
-    'height_threshold'?: AnalysisQueryRange;
+export interface AnalysisQueryInferenceSettings {
+    'inference_level'?: AnalysisQueryText;
+    'height_threshold_value'?: AnalysisQueryRange;
     'height_threshold_type'?: AnalysisQueryText;
-    'cluster_extent'?: AnalysisQueryRange;
-    'cluster_threshold'?: AnalysisQueryRange;
-    'correction'?: AnalysisQueryText;
-    'correction_scope'?: AnalysisQueryText;
-    'alpha'?: AnalysisQueryRange;
-    'tfce'?: AnalysisQueryBoolean;
-    'permutations'?: AnalysisQueryRange;
+    'cluster_extent_threshold'?: AnalysisQueryRange;
+    'clusterwise_threshold_value'?: AnalysisQueryRange;
+    'multiple_comparison_method'?: AnalysisQueryText;
+    'correction_scope'?: AnalysisQueryValue;
+    'alpha_level'?: AnalysisQueryRange;
+    'tfce_used'?: AnalysisQueryBoolean;
+    'permutation_count'?: AnalysisQueryRange;
 }
 /**
  * @type AnalysisQueryMedicalCondition
@@ -232,16 +429,22 @@ export type AnalysisQueryMedicalConditionOneOfWhenUnmappedEnum = typeof Analysis
 export type AnalysisQueryMedicalConditionOneOfRole = Array<string> | string;
 
 /**
- * The analysis\'s model estimation and the models it takes inputs from. 
+ * The analysis\'s model estimation and the models it takes inputs from.
  */
-export interface AnalysisQueryModel {
-    'family'?: AnalysisQueryText;
-    'type'?: AnalysisQueryText;
+export interface AnalysisQueryModelEstimation {
+    'model_family'?: AnalysisQueryText;
+    'model_type'?: AnalysisQueryText;
     'software'?: AnalysisQueryText;
-    'hrf'?: AnalysisQueryText;
+    'hrf_model'?: AnalysisQueryText;
     'estimator'?: AnalysisQueryText;
-    'term'?: AnalysisQueryText;
-    'term_type'?: AnalysisQueryText;
+    'terms'?: AnalysisQueryModelEstimationTerms;
+}
+/**
+ * Those models\' terms.
+ */
+export interface AnalysisQueryModelEstimationTerms {
+    'name'?: AnalysisQueryText;
+    'type'?: AnalysisQueryValue;
 }
 /**
  * @type AnalysisQueryNormalized
@@ -296,10 +499,10 @@ export const AnalysisQueryNormalizedOneOfWhenUnmappedEnum = {
 export type AnalysisQueryNormalizedOneOfWhenUnmappedEnum = typeof AnalysisQueryNormalizedOneOfWhenUnmappedEnum[keyof typeof AnalysisQueryNormalizedOneOfWhenUnmappedEnum];
 
 /**
- * The preprocessing of the analysis\'s model and of the models it takes inputs from. Smoothing FWHM in millimetres. 
+ * The preprocessing of the analysis\'s model and of the models it takes inputs from.
  */
 export interface AnalysisQueryPreprocessing {
-    'smoothing_fwhm'?: AnalysisQueryRange;
+    'smoothing_fwhm_mm'?: AnalysisQueryRange;
     'software'?: AnalysisQueryText;
     'steps'?: AnalysisQueryText;
 }
@@ -311,13 +514,13 @@ export interface AnalysisQueryRange {
 
 
 /**
- * The regions the analysis names, its seeds and targets, and its coordinate sets\' regions. 
+ * The regions the analysis names, its seeds and targets, and its coordinate sets\' regions.
  */
-export interface AnalysisQueryRegion {
+export interface AnalysisQueryRegions {
     'name'?: AnalysisQueryText;
     'atlas'?: AnalysisQueryText;
-    'type'?: AnalysisQueryText;
-    'definition'?: AnalysisQueryText;
+    'region_type'?: AnalysisQueryValue;
+    'definition_method'?: AnalysisQueryValue;
 }
 export interface AnalysisQueryRequest {
     'query': AnalysisQuery;
@@ -414,7 +617,23 @@ export interface AnalysisQueryResultResultsInnerAnalysesInner {
      * How the analysis matched each normalized criterion, by its path (`medical_condition`, `or[0].task`): by id, by text, as unmapped or as silent (under `include`). Absent where a mapped analysis matched only through `none`. 
      */
     'matched_by'?: { [key: string]: AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum; };
-    'features'?: AnalysisQueryResultResultsInnerAnalysesInnerFeatures;
+    /**
+     * With `features`, the analysis\'s coordinate role (the `role` criterion), which a review can change apart from its features. 
+     */
+    'role'?: string | null;
+    /**
+     * With `features`, whether the analysis has coordinates.
+     */
+    'has_coordinates'?: boolean;
+    /**
+     * With `features`, the pipeline config of the record they were read from.
+     */
+    'config_id'?: string | null;
+    /**
+     * With `features`, when they were last written. Every re-ingest of the paper rewrites them, changed or not. 
+     */
+    'updated_at'?: string | null;
+    'features'?: AnalysisFeatures;
 }
 
 export const AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = {
@@ -427,21 +646,6 @@ export const AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = {
 export type AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum = typeof AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum[keyof typeof AnalysisQueryResultResultsInnerAnalysesInnerMatchedByEnum];
 
 /**
- * Only when `detail` is `features`. The analysis\'s display and every column its criteria read, named as stored (`is_meta_analysis`, `species`, `task_ids`, `medical_condition_role_ids`, `arm_kinds`, `contrast_positive_timepoints`, and the analysis\'s `role` and `has_coordinates`), with `task_family_ids` and the extraction they were read from. A column the record is silent on is absent. 
- */
-export interface AnalysisQueryResultResultsInnerAnalysesInnerFeatures {
-    [key: string]: any;
-
-    /**
-     * The pipeline config of the record the features were read from.
-     */
-    'config_id'?: string | null;
-    /**
-     * When the features were last written. Every re-ingest of the paper rewrites them, changed or not. 
-     */
-    'updated_at'?: string | null;
-}
-/**
  * With `funnel`, how many analyses and papers have features.
  */
 export interface AnalysisQueryResultSearched {
@@ -449,49 +653,20 @@ export interface AnalysisQueryResultSearched {
     'base_studies'?: number;
 }
 /**
- * The groups the analysis ran on; a criterion on an item of each group (an age) matches when any group\'s does. Ages are in years; counts are summed over the groups. 
- */
-export interface AnalysisQuerySample {
-    'age_mean'?: AnalysisQueryRange;
-    'age_sd'?: AnalysisQueryRange;
-    'age_min'?: AnalysisQueryRange;
-    'age_max'?: AnalysisQueryRange;
-    'age_median'?: AnalysisQueryRange;
-    'female_count'?: AnalysisQueryRange;
-    'male_count'?: AnalysisQueryRange;
-    'female_percent'?: AnalysisQueryRange;
-    'handedness'?: AnalysisQueryText;
-    'enrolled_count'?: AnalysisQueryRange;
-    'acquired_count'?: AnalysisQueryRange;
-    'excluded_count'?: AnalysisQueryRange;
-    'diagnostic_instrument'?: AnalysisQueryText;
-    'diagnostic_system'?: AnalysisQueryText;
-    'clinical_characteristics'?: AnalysisQueryText;
-    'education'?: AnalysisQueryText;
-}
-/**
- * The statistic the analysis reports. 
- */
-export interface AnalysisQueryStatistic {
-    'family'?: AnalysisQueryText;
-    'df_numerator'?: AnalysisQueryRange;
-    'df_denominator'?: AnalysisQueryRange;
-}
-/**
  * @type AnalysisQueryStrings
  */
 export type AnalysisQueryStrings = Array<string> | string;
 
 /**
- * The analysis\'s tasks beyond their paradigm: stimuli and stimulus content, modalities, design, instructions and performance measures. 
+ * The analysis\'s tasks beyond their paradigm; stimuli include their stimulus content.
  */
-export interface AnalysisQueryTaskDetails {
+export interface AnalysisQueryTasks {
     'stimuli'?: AnalysisQueryText;
-    'stimulus_modality'?: AnalysisQueryText;
-    'response_modality'?: AnalysisQueryText;
-    'design_type'?: AnalysisQueryText;
+    'stimulus_modality'?: AnalysisQueryValue;
+    'response_modality'?: AnalysisQueryValue;
+    'design_type'?: AnalysisQueryValue;
     'instructions'?: AnalysisQueryText;
-    'performance'?: AnalysisQueryText;
+    'performance_measures'?: AnalysisQueryText;
 }
 export interface AnalysisQueryTerms {
     'ids'?: AnalysisQueryStrings;
@@ -502,6 +677,12 @@ export interface AnalysisQueryTerms {
  * A value, a list of values (any of them), or any/all/none lists.
  */
 export type AnalysisQueryText = AnalysisQueryValues | Array<string> | string;
+
+/**
+ * @type AnalysisQueryValue
+ * Values matched whole: a value, a list of values (any of them), or any/all/none lists. Unlike a text criterion, no pattern and no minimum length. 
+ */
+export type AnalysisQueryValue = AnalysisQueryValues | Array<string> | string;
 
 export interface AnalysisQueryValues {
     'any'?: Array<string>;
@@ -12341,12 +12522,11 @@ export type AnalysesGetRoleEnum = typeof AnalysesGetRoleEnum[keyof typeof Analys
 export const AnalysisTermsGetFieldEnum = {
     MedicalCondition: 'medical_condition',
     Task: 'task',
-    TaskFamily: 'task_family',
     ContrastKey: 'contrast_key',
     ContrastSet: 'contrast_set',
+    ArmKind: 'arm_kind',
     ContrastPositiveFacet: 'contrast_positive_facet',
     ContrastNegativeFacet: 'contrast_negative_facet',
-    ArmKind: 'arm_kind',
     Species: 'species',
     SpatialScope: 'spatial_scope',
     MeasureType: 'measure_type',
@@ -12356,6 +12536,22 @@ export const AnalysisTermsGetFieldEnum = {
     Allocation: 'allocation',
     AssignmentStructure: 'assignment_structure',
     Blinding: 'blinding',
+    GroupsHandedness: 'groups.handedness',
+    InferenceSettingsCorrectionScope: 'inference_settings.correction_scope',
+    AcquisitionsModality: 'acquisitions.modality',
+    ModelEstimationTermsType: 'model_estimation.terms.type',
+    EffectStatisticFamily: 'effect.statistic.family',
+    DetailsConnectivityMethod: 'details.connectivity_method',
+    DetailsInferenceTarget: 'details.inference_target',
+    RegionsRegionType: 'regions.region_type',
+    RegionsDefinitionMethod: 'regions.definition_method',
+    CoordinateSetsRole: 'coordinate_sets.role',
+    CoordinateSetsResultKind: 'coordinate_sets.result_kind',
+    CoordinateSetsAnchorKind: 'coordinate_sets.anchor_kind',
+    TasksStimulusModality: 'tasks.stimulus_modality',
+    TasksResponseModality: 'tasks.response_modality',
+    TasksDesignType: 'tasks.design_type',
+    TaskFamily: 'task_family',
 } as const;
 export type AnalysisTermsGetFieldEnum = typeof AnalysisTermsGetFieldEnum[keyof typeof AnalysisTermsGetFieldEnum];
 export const AnnotationsPostSourceEnum = {

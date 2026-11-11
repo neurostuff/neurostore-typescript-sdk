@@ -9,9 +9,9 @@ Name | Type | Description | Notes
 **has_patients** | [**AnalysisQueryBoolean**](AnalysisQueryBoolean.md) |  | [optional] [default to undefined]
 **has_healthy** | [**AnalysisQueryBoolean**](AnalysisQueryBoolean.md) |  | [optional] [default to undefined]
 **medical_condition** | [**AnalysisQueryNormalized**](AnalysisQueryNormalized.md) |  | [optional] [default to undefined]
-**timepoint** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
-**arm_kind** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
-**facet** | [**AnalysisQueryText**](AnalysisQueryText.md) |  | [optional] [default to undefined]
+**timepoint** | [**AnalysisQueryValue**](AnalysisQueryValue.md) |  | [optional] [default to undefined]
+**arm_kind** | [**AnalysisQueryValue**](AnalysisQueryValue.md) |  | [optional] [default to undefined]
+**facet** | [**AnalysisQueryValue**](AnalysisQueryValue.md) |  | [optional] [default to undefined]
 
 ## Example
 
