@@ -120,6 +120,11 @@ docs/DataSourceSummary.md
 docs/Entity.md
 docs/ErrorDetail.md
 docs/ErrorResponse.md
+docs/FulltextAttribution.md
+docs/FulltextList.md
+docs/FulltextReturn.md
+docs/FulltextSummary.md
+docs/FulltextWithheld.md
 docs/ImageBase.md
 docs/ImageCommon.md
 docs/ImageDetail.md
@@ -135,6 +140,7 @@ docs/JournalReturn.md
 docs/JournalSummary.md
 docs/JsonLd.md
 docs/JsonLdContext.md
+docs/LicenseId.md
 docs/Metadata.md
 docs/NestedPutAttributes.md
 docs/NeurostoreStudysetReleasesGet200Response.md

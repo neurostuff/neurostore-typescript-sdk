@@ -31,6 +31,7 @@ Name | Type | Description | Notes
 **user** | **string** | The owner\&#39;s Auth0 id, served only to the owner; null for anyone else, who sees &#x60;username&#x60;. | [optional] [readonly] [default to undefined]
 **username** | **string** | human readable username | [optional] [default to undefined]
 **journal** | [**JournalSummary**](JournalSummary.md) |  | [optional] [default to undefined]
+**fulltext_id** | **string** | The paper\&#39;s preferred full text (GET /fulltexts/{id}); null when it has none. GET /fulltexts/?base_study_id&#x3D; lists every copy. | [optional] [readonly] [default to undefined]
 **has_coordinates** | **boolean** |  | [optional] [default to undefined]
 **has_images** | **boolean** |  | [optional] [default to undefined]
 **has_z_maps** | **boolean** |  | [optional] [default to undefined]
@@ -71,6 +72,7 @@ const instance: BaseStudiesPost200Response = {
     user,
     username,
     journal,
+    fulltext_id,
     has_coordinates,
     has_images,
     has_z_maps,
