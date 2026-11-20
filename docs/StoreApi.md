@@ -1206,6 +1206,7 @@ let y: number; //Y coordinate for spatial query (requires x, z, and radius) (opt
 let z: number; //Z coordinate for spatial query (requires x, y, and radius) (optional) (default to undefined)
 let radius: number; //Radius for spatial query (requires x, y, and z) (optional) (default to undefined)
 let yearMax: number; //Maximum publication year (inclusive) for study search (optional) (default to undefined)
+let modality: Array<string>; //Only papers with at least one analysis acquired by any of these modalities, as `/analysis-terms/?field=acquisitions.modality` lists them (fmri, smri, dmri, pet, eeg, meg, ...). Matched whole and case-insensitively. A paper whose analyses use several modalities matches each of them. (optional) (default to undefined)
 let featureFilter: Array<string>; //Filter studies by feature content. Format: \"PipelineName[:version]:field_path=value\". Examples:   - \"TestPipeline:1.0.0:predictions.age_mean>20\" (specific version)   - \"TestPipeline:groups.diagnosis=ADHD\" (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with =, >, <, >=, <=.  (optional) (default to undefined)
 let pipelineConfig: Array<string>; //Filter studies by pipeline config content. Format: \"PipelineName[:version]:config_path=value\". Examples:   - \"TestPipeline:1.0.0:settings.min_age=20\" (specific version)   - \"TestPipeline:model.type=linear\" (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with =, >, <, >=, <=.  (optional) (default to undefined)
 let featureDisplay: string; //display features from pipelines (optional) (default to undefined)
@@ -1245,6 +1246,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
     z,
     radius,
     yearMax,
+    modality,
     featureFilter,
     pipelineConfig,
     featureDisplay,
@@ -1289,6 +1291,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | **z** | [**number**] | Z coordinate for spatial query (requires x, y, and radius) | (optional) defaults to undefined|
 | **radius** | [**number**] | Radius for spatial query (requires x, y, and z) | (optional) defaults to undefined|
 | **yearMax** | [**number**] | Maximum publication year (inclusive) for study search | (optional) defaults to undefined|
+| **modality** | **Array&lt;string&gt;** | Only papers with at least one analysis acquired by any of these modalities, as &#x60;/analysis-terms/?field&#x3D;acquisitions.modality&#x60; lists them (fmri, smri, dmri, pet, eeg, meg, ...). Matched whole and case-insensitively. A paper whose analyses use several modalities matches each of them. | (optional) defaults to undefined|
 | **featureFilter** | **Array&lt;string&gt;** | Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;.  | (optional) defaults to undefined|
 | **pipelineConfig** | **Array&lt;string&gt;** | Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;.  | (optional) defaults to undefined|
 | **featureDisplay** | [**string**] | display features from pipelines | (optional) defaults to undefined|
