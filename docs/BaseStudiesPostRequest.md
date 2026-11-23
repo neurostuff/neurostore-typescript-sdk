@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **level** | **string** |  | [optional] [default to undefined]
 **is_oa** | **boolean** |  | [optional] [default to undefined]
 **pmcid** | **string** |  | [optional] [default to undefined]
-**publication_status** | **string** | study_schema\&#39;s publication_status: &#x60;preprint&#x60; while only a preprint\&#39;s identifiers are known, &#x60;published&#x60; once a version of record\&#39;s are.  | [optional] [default to undefined]
+**publication_status** | **string** | A value of study_schema\&#39;s &#x60;PublicationStatus&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/bibliography.yaml): whether only a preprint\&#39;s identifiers are known, or a version of record\&#39;s too. Any other value is refused.  | [optional] [default to undefined]
 **preprint_dois** | [**Array&lt;BaseStudyPreprintDoisInner&gt;**](BaseStudyPreprintDoisInner.md) | DOIs a preprint server registered for the paper, with the server. An identifier is held by one active base study: one another base study holds is not taken (see POST /base-studies). Returned normalized: DOIs in lower case.  | [optional] [default to undefined]
 **preprint_pmids** | **Array&lt;string&gt;** | PubMed\&#39;s records of the paper\&#39;s preprint. | [optional] [default to undefined]
 **preprint_pmcids** | **Array&lt;string&gt;** | PubMed Central\&#39;s copies of the paper\&#39;s preprint. | [optional] [default to undefined]

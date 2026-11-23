@@ -1221,9 +1221,9 @@ export interface BaseStudy {
     'is_oa'?: boolean | null;
     'pmcid'?: string | null;
     /**
-     * study_schema\'s publication_status: `preprint` while only a preprint\'s identifiers are known, `published` once a version of record\'s are. 
+     * A value of study_schema\'s `PublicationStatus` (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/bibliography.yaml): whether only a preprint\'s identifiers are known, or a version of record\'s too. Any other value is refused. 
      */
-    'publication_status'?: BaseStudyPublicationStatusEnum | null;
+    'publication_status'?: string | null;
     /**
      * DOIs a preprint server registered for the paper, with the server. An identifier is held by one active base study: one another base study holds is not taken (see POST /base-studies). Returned normalized: DOIs in lower case. 
      */
@@ -1249,14 +1249,6 @@ export interface BaseStudy {
      */
     'alternative_pmcids'?: Array<string>;
 }
-
-export const BaseStudyPublicationStatusEnum = {
-    Preprint: 'preprint',
-    Published: 'published',
-} as const;
-
-export type BaseStudyPublicationStatusEnum = typeof BaseStudyPublicationStatusEnum[keyof typeof BaseStudyPublicationStatusEnum];
-
 export interface BaseStudyList {
     'results'?: Array<BaseStudyReturn>;
     'metadata'?: Metadata;
@@ -1264,7 +1256,7 @@ export interface BaseStudyList {
 export interface BaseStudyPreprintDoisInner {
     'doi': string;
     /**
-     * The preprint server that registered the DOI: one of study_schema\'s PreprintServer values (biorxiv, medrxiv, arxiv, researchsquare, osf_preprints, psyarxiv, ssrn and others), or any other non-empty name for a server it does not list. 
+     * The preprint server that registered the DOI: a value of study_schema\'s `PreprintServer` (in the same file as `PublicationStatus`), or any other non-empty name for a server it does not list. 
      */
     'server': string;
 }
@@ -1285,9 +1277,9 @@ export interface BaseStudyReturn {
     'is_oa'?: boolean | null;
     'pmcid'?: string | null;
     /**
-     * study_schema\'s publication_status: `preprint` while only a preprint\'s identifiers are known, `published` once a version of record\'s are. 
+     * A value of study_schema\'s `PublicationStatus` (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/bibliography.yaml): whether only a preprint\'s identifiers are known, or a version of record\'s too. Any other value is refused. 
      */
-    'publication_status'?: BaseStudyReturnPublicationStatusEnum | null;
+    'publication_status'?: string | null;
     /**
      * DOIs a preprint server registered for the paper, with the server. An identifier is held by one active base study: one another base study holds is not taken (see POST /base-studies). Returned normalized: DOIs in lower case. 
      */
@@ -1352,14 +1344,6 @@ export interface BaseStudyReturn {
      */
     'data_sources'?: Array<DataSourceSummary>;
 }
-
-export const BaseStudyReturnPublicationStatusEnum = {
-    Preprint: 'preprint',
-    Published: 'published',
-} as const;
-
-export type BaseStudyReturnPublicationStatusEnum = typeof BaseStudyReturnPublicationStatusEnum[keyof typeof BaseStudyReturnPublicationStatusEnum];
-
 /**
  * @type BaseStudyVersionsInner
  */
@@ -4847,7 +4831,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
-         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -4855,7 +4839,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet: async (dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        analysesGet: async (dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/analyses/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8109,7 +8093,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -8121,7 +8105,7 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet: async (dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        studiesGet: async (dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: string, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/studies/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -9158,7 +9142,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
-         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -9166,7 +9150,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
+        async analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalysisList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.analysesGet(dataSources, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.analysesGet']?.[localVarOperationServerIndex]?.url;
@@ -10226,7 +10210,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -10238,7 +10222,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
+        async studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: string, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.studiesGet(dataSources, journalId, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoreApi.studiesGet']?.[localVarOperationServerIndex]?.url;
@@ -10545,7 +10529,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} [pageSize] number of results to show on a page
          * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
          * @param {string} [study] Filter tables by study id
-         * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {string} [name] search the name field for a term
          * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
          * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -10553,7 +10537,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
+        analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<AnalysisList> {
             return localVarFp.analysesGet(dataSources, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11400,7 +11384,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [authors] search authors
          * @param {string} [userId] user id you want to filter by
          * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-         * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+         * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
          * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
          * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
          * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -11412,7 +11396,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
+        studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: string, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<StudyList> {
             return localVarFp.studiesGet(dataSources, journalId, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11657,7 +11641,7 @@ export class StoreApi extends BaseAPI {
      * @param {number} [pageSize] number of results to show on a page
      * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
      * @param {string} [study] Filter tables by study id
-     * @param {AnalysesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+     * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
      * @param {string} [name] search the name field for a term
      * @param {boolean} [nested] whether to show the URI to a resource (false) or to embed the object in the response (true)
      * @param {boolean} [imageMetadata] include each image\&#39;s source metadata (the payload it was ingested from). Withheld by default because it is large and unused by most clients; never present in studyset payloads.
@@ -11665,7 +11649,7 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: AnalysesGetRoleEnum, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+    public analysesGet(dataSources?: boolean, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, study?: string, role?: string, name?: string, nested?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).analysesGet(dataSources, sort, page, desc, pageSize, paginate, study, role, name, nested, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -12583,7 +12567,7 @@ export class StoreApi extends BaseAPI {
      * @param {string} [authors] search authors
      * @param {string} [userId] user id you want to filter by
      * @param {StudiesGetDataTypeEnum} [dataType] whether searching for studies that contain coordinates, images, or both
-     * @param {StudiesGetRoleEnum} [role] Only analyses with this coordinate role (study_schema CoordinateRole); on the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
+     * @param {string} [role] Only analyses with this coordinate role, a value of study_schema\&#39;s &#x60;CoordinateRole&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/analysis_enums.yaml), such as &#x60;result&#x60; or &#x60;anchor&#x60;; any other value is refused. On the studies list, only studies with such an analysis. &#x60;result&#x60; also matches an analysis with no role (one from before roles, or one added through the API), except a set the study_schema ingester wrote to the pipeline\&#39;s versions with no role, which matches no value. Without &#x60;role&#x60;, analyses of every role are listed.
      * @param {StudiesGetMapTypeEnum} [mapType] filter by stored map-type flags
      * @param {string} [studysetOwner] for all studies filter which studysets are listed based on who owns the studyset
      * @param {StudiesGetLevelEnum} [level] select between studies with group results or meta results
@@ -12595,7 +12579,7 @@ export class StoreApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: StudiesGetRoleEnum, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
+    public studiesGet(dataSources?: boolean, journalId?: string, search?: string, sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, nested?: boolean, name?: string, description?: string, sourceId?: string, unique?: any, source?: StudiesGetSourceEnum, authors?: string, userId?: string, dataType?: StudiesGetDataTypeEnum, role?: string, mapType?: StudiesGetMapTypeEnum, studysetOwner?: string, level?: StudiesGetLevelEnum, pmid?: string, doi?: string, flat?: boolean, imageMetadata?: boolean, imageValueSummary?: boolean, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).studiesGet(dataSources, journalId, search, sort, page, desc, pageSize, paginate, nested, name, description, sourceId, unique, source, authors, userId, dataType, role, mapType, studysetOwner, level, pmid, doi, flat, imageMetadata, imageValueSummary, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -12844,14 +12828,6 @@ export class StoreApi extends BaseAPI {
     }
 }
 
-export const AnalysesGetRoleEnum = {
-    Result: 'result',
-    Anchor: 'anchor',
-    Localization: 'localization',
-    Reference: 'reference',
-    Other: 'other',
-} as const;
-export type AnalysesGetRoleEnum = typeof AnalysesGetRoleEnum[keyof typeof AnalysesGetRoleEnum];
 export const AnalysisTermsGetFieldEnum = {
     MedicalCondition: 'medical_condition',
     Task: 'task',
@@ -12935,14 +12911,6 @@ export const StudiesGetDataTypeEnum = {
     Both: 'both',
 } as const;
 export type StudiesGetDataTypeEnum = typeof StudiesGetDataTypeEnum[keyof typeof StudiesGetDataTypeEnum];
-export const StudiesGetRoleEnum = {
-    Result: 'result',
-    Anchor: 'anchor',
-    Localization: 'localization',
-    Reference: 'reference',
-    Other: 'other',
-} as const;
-export type StudiesGetRoleEnum = typeof StudiesGetRoleEnum[keyof typeof StudiesGetRoleEnum];
 export const StudiesGetMapTypeEnum = {
     Z: 'z',
     T: 't',
