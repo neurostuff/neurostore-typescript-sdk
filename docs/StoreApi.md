@@ -39,6 +39,8 @@ All URIs are relative to *https://neurostore.org/api*
 |[**dataSourcesIdGet**](#datasourcesidget) | **GET** /data-sources/{id} | GET a data source|
 |[**dataSourcesIdPut**](#datasourcesidput) | **PUT** /data-sources/{id} | PUT/update a data source|
 |[**dataSourcesPost**](#datasourcespost) | **POST** /data-sources/ | POST/Create a data source|
+|[**fulltextsGet**](#fulltextsget) | **GET** /fulltexts/ | GET full texts|
+|[**fulltextsIdGet**](#fulltextsidget) | **GET** /fulltexts/{id} | GET a full text|
 |[**imagesGet**](#imagesget) | **GET** /images/ | GET a list of images|
 |[**imagesIdDelete**](#imagesiddelete) | **DELETE** /images/{id} | DELETE an image|
 |[**imagesIdGet**](#imagesidget) | **GET** /images/{id} | GET an image|
@@ -2131,6 +2133,130 @@ const { status, data } = await apiInstance.dataSourcesPost(
 |**200** | OK |  -  |
 |**403** | Only an admin can change data sources. |  -  |
 |**422** | Unprocessable Entity |  * X-Request-ID -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **fulltextsGet**
+> FulltextList fulltextsGet()
+
+List the full texts ingestion stored, each the text of one copy of a paper, for the papers the caller may see. A list never carries text: `redistributable` says whether GET /fulltexts/{id} returns it.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let sort: string; //Parameter to sort results on (optional) (default to 'created_at')
+let page: number; //page of results (optional) (default to undefined)
+let desc: boolean; //sort results by descending order (as opposed to ascending order) (optional) (default to undefined)
+let pageSize: number; //number of results to show on a page (optional) (default to undefined)
+let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
+let baseStudyId: string; //the full texts of this base study (optional) (default to undefined)
+let source: string; //only full texts from this ingestion source (`pubget`, `elsevier`, ...) (optional) (default to undefined)
+let license: LicenseId; //only full texts whose copy has this licence (optional) (default to undefined)
+
+const { status, data } = await apiInstance.fulltextsGet(
+    sort,
+    page,
+    desc,
+    pageSize,
+    paginate,
+    baseStudyId,
+    source,
+    license
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **sort** | [**string**] | Parameter to sort results on | (optional) defaults to 'created_at'|
+| **page** | [**number**] | page of results | (optional) defaults to undefined|
+| **desc** | [**boolean**] | sort results by descending order (as opposed to ascending order) | (optional) defaults to undefined|
+| **pageSize** | [**number**] | number of results to show on a page | (optional) defaults to undefined|
+| **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|
+| **baseStudyId** | [**string**] | the full texts of this base study | (optional) defaults to undefined|
+| **source** | [**string**] | only full texts from this ingestion source (&#x60;pubget&#x60;, &#x60;elsevier&#x60;, ...) | (optional) defaults to undefined|
+| **license** | **LicenseId** | only full texts whose copy has this licence | (optional) defaults to undefined|
+
+
+### Return type
+
+**FulltextList**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **fulltextsIdGet**
+> FulltextReturn fulltextsIdGet()
+
+Retrieve a full text: its provenance always, and its text only when the copy it was read from may be passed on (a Creative Commons, CC0 or public-domain licence stated by a named source, in a copy obtained publicly). Otherwise `text` is null and `text_withheld` says why and where the paper can be read.
+
+### Example
+
+```typescript
+import {
+    StoreApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new StoreApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.fulltextsIdGet(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**FulltextReturn**
+
+### Authorization
+
+[JSON-Web-Token](../README.md#JSON-Web-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**404** | No full text has this id, or its paper is not visible to the caller. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

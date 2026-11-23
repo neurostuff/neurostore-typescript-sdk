@@ -1337,6 +1337,10 @@ export interface BaseStudyReturn {
      */
     'username'?: string | null;
     'journal'?: JournalSummary | null;
+    /**
+     * The paper\'s preferred full text (GET /fulltexts/{id}); null when it has none. GET /fulltexts/?base_study_id= lists every copy.
+     */
+    'fulltext_id'?: string | null;
     'has_coordinates'?: boolean;
     'has_images'?: boolean;
     'has_z_maps'?: boolean;
@@ -1609,6 +1613,129 @@ export interface ErrorResponse {
      */
     'request_id': string;
 }
+/**
+ * What to credit when passing the text on.
+ */
+export interface FulltextAttribution {
+    'title'?: string | null;
+    'authors'?: string | null;
+    'year'?: number | null;
+    'publication'?: string | null;
+    'doi'?: string | null;
+    'license'?: LicenseId | null;
+    /**
+     * The licence as its source stated it (a licence URL, name or copyright line).
+     */
+    'license_statement'?: string | null;
+}
+
+
+export interface FulltextList {
+    'results'?: Array<FulltextSummary>;
+    'metadata'?: Metadata;
+}
+export interface FulltextReturn {
+    'id'?: string;
+    'base_study_id'?: string;
+    /**
+     * The ingestion source the text came from (`pubget`, `elsevier`, ...).
+     */
+    'source'?: string;
+    'source_version'?: string | null;
+    /**
+     * The licence of the copy the text was read from.
+     */
+    'license'?: LicenseId | null;
+    'sha256'?: string;
+    /**
+     * The copy the text was read from (study_schema\'s HeldCopy).
+     */
+    'text_copy'?: object | null;
+    /**
+     * Whether this is the base study\'s `fulltext_id`.
+     */
+    'preferred'?: boolean;
+    /**
+     * Whether GET /fulltexts/{id} returns the text.
+     */
+    'redistributable'?: boolean;
+    'attribution'?: FulltextAttribution;
+    /**
+     * time the resource was created on the database
+     */
+    'created_at'?: string;
+    /**
+     * when the resource was last modified/updated.
+     */
+    'updated_at'?: string | null;
+    /**
+     * The text, when `redistributable`; else null.
+     */
+    'text'?: string | null;
+    'text_withheld'?: FulltextWithheld | null;
+}
+
+
+export interface FulltextSummary {
+    /**
+     * time the resource was created on the database
+     */
+    'created_at'?: string;
+    /**
+     * when the resource was last modified/updated.
+     */
+    'updated_at'?: string | null;
+    'id'?: string;
+    'base_study_id'?: string;
+    /**
+     * The ingestion source the text came from (`pubget`, `elsevier`, ...).
+     */
+    'source'?: string;
+    'source_version'?: string | null;
+    /**
+     * The licence of the copy the text was read from.
+     */
+    'license'?: LicenseId | null;
+    'sha256'?: string;
+    /**
+     * The copy the text was read from (study_schema\'s HeldCopy).
+     */
+    'text_copy'?: object | null;
+    /**
+     * Whether this is the base study\'s `fulltext_id`.
+     */
+    'preferred'?: boolean;
+    /**
+     * Whether GET /fulltexts/{id} returns the text.
+     */
+    'redistributable'?: boolean;
+    'attribution'?: FulltextAttribution;
+}
+
+
+/**
+ * Why the text is not returned; null when it is.
+ */
+export interface FulltextWithheld {
+    /**
+     * `license`: the copy\'s licence does not allow passing the text on. `access`: the copy was obtained under text-and-data-mining terms, or how it was obtained was not recorded. `no_copy_record`: nothing records the copy, so its licence is unknown.
+     */
+    'reason'?: FulltextWithheldReasonEnum;
+    'message'?: string;
+    /**
+     * Where a reader can get the paper (its DOI, else its PubMed Central page).
+     */
+    'read_at'?: string | null;
+}
+
+export const FulltextWithheldReasonEnum = {
+    License: 'license',
+    Access: 'access',
+    NoCopyRecord: 'no_copy_record',
+} as const;
+
+export type FulltextWithheldReasonEnum = typeof FulltextWithheldReasonEnum[keyof typeof FulltextWithheldReasonEnum];
+
 export interface ImageBase {
     /**
      * Metadata about image such as software and version used and other relevant data about how the image was produced.
@@ -1922,6 +2049,26 @@ export interface JsonLdContext {
      */
     '@vocab'?: string;
 }
+/**
+ * study_schema\'s LicenseId. Every Creative Commons licence, `cc0` and `public_domain` let a text be passed on with attribution; `all_rights_reserved` (including text-mining-only terms) and `other` (such as a publisher\'s own user licence) do not.
+ */
+
+export const LicenseId = {
+    CcBy: 'cc_by',
+    CcBySa: 'cc_by_sa',
+    CcByNc: 'cc_by_nc',
+    CcByNcSa: 'cc_by_nc_sa',
+    CcByNd: 'cc_by_nd',
+    CcByNcNd: 'cc_by_nc_nd',
+    Cc0: 'cc0',
+    PublicDomain: 'public_domain',
+    AllRightsReserved: 'all_rights_reserved',
+    Other: 'other',
+} as const;
+
+export type LicenseId = typeof LicenseId[keyof typeof LicenseId];
+
+
 /**
  * data included in every list response
  */
@@ -6417,6 +6564,118 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * List the full texts ingestion stored, each the text of one copy of a paper, for the papers the caller may see. A list never carries text: `redistributable` says whether GET /fulltexts/{id} returns it.
+         * @summary GET full texts
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [baseStudyId] the full texts of this base study
+         * @param {string} [source] only full texts from this ingestion source (&#x60;pubget&#x60;, &#x60;elsevier&#x60;, ...)
+         * @param {LicenseId} [license] only full texts whose copy has this licence
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fulltextsGet: async (sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, baseStudyId?: string, source?: string, license?: LicenseId, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/fulltexts/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (desc !== undefined) {
+                localVarQueryParameter['desc'] = desc;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['page_size'] = pageSize;
+            }
+
+            if (paginate !== undefined) {
+                localVarQueryParameter['paginate'] = paginate;
+            }
+
+            if (baseStudyId !== undefined) {
+                localVarQueryParameter['base_study_id'] = baseStudyId;
+            }
+
+            if (source !== undefined) {
+                localVarQueryParameter['source'] = source;
+            }
+
+            if (license !== undefined) {
+                localVarQueryParameter['license'] = license;
+            }
+
+            localVarHeaderParameter['Accept'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve a full text: its provenance always, and its text only when the copy it was read from may be passed on (a Creative Commons, CC0 or public-domain licence stated by a named source, in a copy obtained publicly). Otherwise `text` is null and `text_withheld` says why and where the paper can be read.
+         * @summary GET a full text
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fulltextsIdGet: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('fulltextsIdGet', 'id', id)
+            const localVarPath = `/fulltexts/{id}`
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication JSON-Web-Token required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            localVarHeaderParameter['Accept'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve and list images.
          * @summary GET a list of images
          * @param {string} [sort] Parameter to sort results on
@@ -9442,6 +9701,39 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * List the full texts ingestion stored, each the text of one copy of a paper, for the papers the caller may see. A list never carries text: `redistributable` says whether GET /fulltexts/{id} returns it.
+         * @summary GET full texts
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [baseStudyId] the full texts of this base study
+         * @param {string} [source] only full texts from this ingestion source (&#x60;pubget&#x60;, &#x60;elsevier&#x60;, ...)
+         * @param {LicenseId} [license] only full texts whose copy has this licence
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fulltextsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, baseStudyId?: string, source?: string, license?: LicenseId, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FulltextList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fulltextsGet(sort, page, desc, pageSize, paginate, baseStudyId, source, license, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.fulltextsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Retrieve a full text: its provenance always, and its text only when the copy it was read from may be passed on (a Creative Commons, CC0 or public-domain licence stated by a named source, in a copy obtained publicly). Otherwise `text` is null and `text_withheld` says why and where the paper can be read.
+         * @summary GET a full text
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async fulltextsIdGet(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FulltextReturn>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.fulltextsIdGet(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StoreApi.fulltextsIdGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Retrieve and list images.
          * @summary GET a list of images
          * @param {string} [sort] Parameter to sort results on
@@ -10690,6 +10982,33 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.dataSourcesPost(dataSourceRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * List the full texts ingestion stored, each the text of one copy of a paper, for the papers the caller may see. A list never carries text: `redistributable` says whether GET /fulltexts/{id} returns it.
+         * @summary GET full texts
+         * @param {string} [sort] Parameter to sort results on
+         * @param {number} [page] page of results
+         * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+         * @param {number} [pageSize] number of results to show on a page
+         * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+         * @param {string} [baseStudyId] the full texts of this base study
+         * @param {string} [source] only full texts from this ingestion source (&#x60;pubget&#x60;, &#x60;elsevier&#x60;, ...)
+         * @param {LicenseId} [license] only full texts whose copy has this licence
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fulltextsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, baseStudyId?: string, source?: string, license?: LicenseId, options?: RawAxiosRequestConfig): AxiosPromise<FulltextList> {
+            return localVarFp.fulltextsGet(sort, page, desc, pageSize, paginate, baseStudyId, source, license, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve a full text: its provenance always, and its text only when the copy it was read from may be passed on (a Creative Commons, CC0 or public-domain licence stated by a named source, in a copy obtained publicly). Otherwise `text` is null and `text_withheld` says why and where the paper can be read.
+         * @summary GET a full text
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        fulltextsIdGet(id: string, options?: RawAxiosRequestConfig): AxiosPromise<FulltextReturn> {
+            return localVarFp.fulltextsIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Retrieve and list images.
          * @summary GET a list of images
          * @param {string} [sort] Parameter to sort results on
@@ -11806,6 +12125,35 @@ export class StoreApi extends BaseAPI {
      */
     public dataSourcesPost(dataSourceRequest?: DataSourceRequest, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).dataSourcesPost(dataSourceRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List the full texts ingestion stored, each the text of one copy of a paper, for the papers the caller may see. A list never carries text: `redistributable` says whether GET /fulltexts/{id} returns it.
+     * @summary GET full texts
+     * @param {string} [sort] Parameter to sort results on
+     * @param {number} [page] page of results
+     * @param {boolean} [desc] sort results by descending order (as opposed to ascending order)
+     * @param {number} [pageSize] number of results to show on a page
+     * @param {boolean} [paginate] whether to paginate results (true) or return all results at once (false)
+     * @param {string} [baseStudyId] the full texts of this base study
+     * @param {string} [source] only full texts from this ingestion source (&#x60;pubget&#x60;, &#x60;elsevier&#x60;, ...)
+     * @param {LicenseId} [license] only full texts whose copy has this licence
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public fulltextsGet(sort?: string, page?: number, desc?: boolean, pageSize?: number, paginate?: boolean, baseStudyId?: string, source?: string, license?: LicenseId, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).fulltextsGet(sort, page, desc, pageSize, paginate, baseStudyId, source, license, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve a full text: its provenance always, and its text only when the copy it was read from may be passed on (a Creative Commons, CC0 or public-domain licence stated by a named source, in a copy obtained publicly). Otherwise `text` is null and `text_withheld` says why and where the paper can be read.
+     * @summary GET a full text
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public fulltextsIdGet(id: string, options?: RawAxiosRequestConfig) {
+        return StoreApiFp(this.configuration).fulltextsIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
