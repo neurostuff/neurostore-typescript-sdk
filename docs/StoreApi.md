@@ -1208,7 +1208,7 @@ let y: number; //Y coordinate for spatial query (requires x, z, and radius) (opt
 let z: number; //Z coordinate for spatial query (requires x, y, and radius) (optional) (default to undefined)
 let radius: number; //Radius for spatial query (requires x, y, and z) (optional) (default to undefined)
 let yearMax: number; //Maximum publication year (inclusive) for study search (optional) (default to undefined)
-let modality: Array<'fmri' | 'smri' | 'dmri' | 'mrs' | 'mri' | 'eeg' | 'ieeg' | 'meg' | 'fnirs' | 'pet' | 'spect' | 'ct' | 'physiological' | 'other'>; //Only papers acquired by any of these modalities: the modalities their extraction record states, else those their methods section names. A paper with several modalities matches each of them. A parent also matches its children: `mri` matches fmri, smri, dmri and mrs, and `other` matches ct, ieeg and physiological. A child matches only itself. (optional) (default to undefined)
+let modality: Array<string>; //Only papers acquired by any of these modalities: the modalities their extraction record states, else those their methods section names. A paper with several modalities matches each of them. The values are study_schema\'s `Modality` (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/acquisition.yaml), spelled as it spells them (`fMRI`, `MRI`, `PET`, `other`, ...); any other value is refused. A value also matches the values whose `is_a` names it, so `MRI` matches `fMRI`, `sMRI`, `dMRI` and `MRS` too, and a refined value matches only itself. (optional) (default to undefined)
 let featureFilter: Array<string>; //Filter studies by feature content. Format: \"PipelineName[:version]:field_path=value\". Examples:   - \"TestPipeline:1.0.0:predictions.age_mean>20\" (specific version)   - \"TestPipeline:groups.diagnosis=ADHD\" (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with =, >, <, >=, <=.  (optional) (default to undefined)
 let pipelineConfig: Array<string>; //Filter studies by pipeline config content. Format: \"PipelineName[:version]:config_path=value\". Examples:   - \"TestPipeline:1.0.0:settings.min_age=20\" (specific version)   - \"TestPipeline:model.type=linear\" (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with =, >, <, >=, <=.  (optional) (default to undefined)
 let featureDisplay: string; //display features from pipelines (optional) (default to undefined)
@@ -1293,7 +1293,7 @@ const { status, data } = await apiInstance.baseStudiesGet(
 | **z** | [**number**] | Z coordinate for spatial query (requires x, y, and radius) | (optional) defaults to undefined|
 | **radius** | [**number**] | Radius for spatial query (requires x, y, and z) | (optional) defaults to undefined|
 | **yearMax** | [**number**] | Maximum publication year (inclusive) for study search | (optional) defaults to undefined|
-| **modality** | **Array<&#39;fmri&#39; &#124; &#39;smri&#39; &#124; &#39;dmri&#39; &#124; &#39;mrs&#39; &#124; &#39;mri&#39; &#124; &#39;eeg&#39; &#124; &#39;ieeg&#39; &#124; &#39;meg&#39; &#124; &#39;fnirs&#39; &#124; &#39;pet&#39; &#124; &#39;spect&#39; &#124; &#39;ct&#39; &#124; &#39;physiological&#39; &#124; &#39;other&#39;>** | Only papers acquired by any of these modalities: the modalities their extraction record states, else those their methods section names. A paper with several modalities matches each of them. A parent also matches its children: &#x60;mri&#x60; matches fmri, smri, dmri and mrs, and &#x60;other&#x60; matches ct, ieeg and physiological. A child matches only itself. | (optional) defaults to undefined|
+| **modality** | **Array&lt;string&gt;** | Only papers acquired by any of these modalities: the modalities their extraction record states, else those their methods section names. A paper with several modalities matches each of them. The values are study_schema\&#39;s &#x60;Modality&#x60; (https://github.com/neurostuff/study_schema/blob/main/src/study_schema/linkml/neuroimaging-study-storage/acquisition.yaml), spelled as it spells them (&#x60;fMRI&#x60;, &#x60;MRI&#x60;, &#x60;PET&#x60;, &#x60;other&#x60;, ...); any other value is refused. A value also matches the values whose &#x60;is_a&#x60; names it, so &#x60;MRI&#x60; matches &#x60;fMRI&#x60;, &#x60;sMRI&#x60;, &#x60;dMRI&#x60; and &#x60;MRS&#x60; too, and a refined value matches only itself. | (optional) defaults to undefined|
 | **featureFilter** | **Array&lt;string&gt;** | Filter studies by feature content. Format: \&quot;PipelineName[:version]:field_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:predictions.age_mean&gt;20\&quot; (specific version)   - \&quot;TestPipeline:groups.diagnosis&#x3D;ADHD\&quot; (latest version)  Field path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;.  | (optional) defaults to undefined|
 | **pipelineConfig** | **Array&lt;string&gt;** | Filter studies by pipeline config content. Format: \&quot;PipelineName[:version]:config_path&#x3D;value\&quot;. Examples:   - \&quot;TestPipeline:1.0.0:settings.min_age&#x3D;20\&quot; (specific version)   - \&quot;TestPipeline:model.type&#x3D;linear\&quot; (latest version)  Config path supports array notation with [], regex search with ~, and comparisons with &#x3D;, &gt;, &lt;, &gt;&#x3D;, &lt;&#x3D;.  | (optional) defaults to undefined|
 | **featureDisplay** | [**string**] | display features from pipelines | (optional) defaults to undefined|
@@ -2162,7 +2162,7 @@ let pageSize: number; //number of results to show on a page (optional) (default 
 let paginate: boolean; //whether to paginate results (true) or return all results at once (false) (optional) (default to true)
 let baseStudyId: string; //the full texts of this base study (optional) (default to undefined)
 let source: string; //only full texts from this ingestion source (`pubget`, `elsevier`, ...) (optional) (default to undefined)
-let license: LicenseId; //only full texts whose copy has this licence (optional) (default to undefined)
+let license: string; //only full texts whose copy has this licence (optional) (default to undefined)
 
 const { status, data } = await apiInstance.fulltextsGet(
     sort,
@@ -2187,7 +2187,7 @@ const { status, data } = await apiInstance.fulltextsGet(
 | **paginate** | [**boolean**] | whether to paginate results (true) or return all results at once (false) | (optional) defaults to true|
 | **baseStudyId** | [**string**] | the full texts of this base study | (optional) defaults to undefined|
 | **source** | [**string**] | only full texts from this ingestion source (&#x60;pubget&#x60;, &#x60;elsevier&#x60;, ...) | (optional) defaults to undefined|
-| **license** | **LicenseId** | only full texts whose copy has this licence | (optional) defaults to undefined|
+| **license** | [**string**] | only full texts whose copy has this licence | (optional) defaults to undefined|
 
 
 ### Return type
