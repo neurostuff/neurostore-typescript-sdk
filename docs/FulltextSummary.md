@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **base_study_id** | **string** |  | [optional] [default to undefined]
 **source** | **string** | The ingestion source the text came from (&#x60;pubget&#x60;, &#x60;elsevier&#x60;, ...). | [optional] [default to undefined]
 **source_version** | **string** |  | [optional] [default to undefined]
-**license** | [**LicenseId**](LicenseId.md) | The licence of the copy the text was read from. | [optional] [default to undefined]
+**license** | **string** | The licence of the copy the text was read from. | [optional] [default to undefined]
 **sha256** | **string** |  | [optional] [default to undefined]
 **text_copy** | **object** | The copy the text was read from (study_schema\&#39;s HeldCopy). | [optional] [default to undefined]
 **preferred** | **boolean** | Whether this is the base study\&#39;s &#x60;fulltext_id&#x60;. | [optional] [default to undefined]
